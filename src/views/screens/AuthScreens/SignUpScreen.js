@@ -79,10 +79,16 @@ const SignUpScreen = ({ navigation }) => {
     navigation.navigate("LoginScreen");
   }
 
-  // useEffect(() => {
-  //   const gender
-  //   }
-  // }, [third])
+  const disabledButton = () => {
+    return (
+      !password ||
+      !email ||
+      !firstname ||
+      !middlename ||
+      !lastname ||
+      password != reenterpassword
+    );
+  };
 
   function renderHeader() {
     return (
@@ -358,9 +364,14 @@ const SignUpScreen = ({ navigation }) => {
             label="Re-Enter Password"
             value={reenterpassword}
             secureTextEntry={!reshowPassword}
+            password={password}
             onChange={(value) => {
               setReEnterPassword(value);
-              utils.validatePassword(value, setReEnterPasswordError);
+              utils.revalidatePassword(
+                value,
+                password,
+                setReEnterPasswordError
+              );
             }}
             errorMsg={reenterpasswordError}
             appendComponent={
@@ -401,6 +412,7 @@ const SignUpScreen = ({ navigation }) => {
               backgroundColor: COLORS.primary,
             }}
             onPress={handleCreateAccount}
+            disabled={disabledButton()}
           />
         </KeyboardAwareScrollView>
       </View>
