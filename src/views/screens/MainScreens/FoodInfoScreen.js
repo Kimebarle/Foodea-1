@@ -26,13 +26,14 @@ import { useContext } from "react";
 import AuthContext from "../../../api/context/auth/AuthContext";
 
 const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
-  const { addToCart } = useContext(AuthContext);
+  const { addToCart, userId } = useContext(AuthContext);
+
   const [isLoading, setIsLoading] = useState(true);
   const productId = 5;
   const [quantity, setQuantity] = React.useState();
   const [displayFood, setDisplayFood] = React.useState(null);
   const [product_id, setProduct_Id] = React.useState();
-  const [customer_id, setCustomer_Id] = React.useState(8);
+  const [customer_id, setCustomer_Id] = React.useState();
   const [restaurant_id, setRestaurant_Id] = React.useState();
   const [quantity_product, setQuantity_Product] = React.useState(1);
   const [total, setTotal] = React.useState(1);
@@ -50,7 +51,7 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
       // const total_id = await response.data[0].total;
 
       setProduct_Id(product);
-      // console.log(product_id);
+      console.log(userId);
       setDisplayFood(data);
       setRestaurant_Id(rest_id);
       setQuantity_Product(qty_id);
@@ -68,14 +69,8 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
   }, []);
 
   function buyNowHandler() {
-    console.log(
-      customer_id,
-      product_id,
-      restaurant_id,
-      quantity_product,
-      total
-    );
-    addToCart(customer_id, product_id, restaurant_id, quantity_product, total);
+    console.log(userId, product_id, restaurant_id, quantity_product, total);
+    addToCart(userId, product_id, restaurant_id, quantity_product, total);
     navigation.navigate("Cart");
   }
 
@@ -159,9 +154,7 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
   }
 
   return (
-    <View style={{ flex: 1, 
-      height: SIZES.height,
-      width: SIZES.width, }}>
+    <View style={{ flex: 1, height: SIZES.height, width: SIZES.width }}>
       {/* header section */}
       <Header
         containerStyle={{

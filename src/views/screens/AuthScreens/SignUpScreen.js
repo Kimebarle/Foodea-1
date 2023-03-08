@@ -72,32 +72,10 @@ const SignUpScreen = ({ navigation }) => {
 
   function handleCreateAccount() {
     setBmi((dummyWeight / (dummyHeight * dummyHeight)) * 10000);
-    console.log(bmi);
     setGender("M");
-    console.log(
-      firstname,
-      middlename,
-      lastname,
-      dummyHeight,
-      dummyWeight,
-      phone,
-      bmi,
-      email,
-      password
-    );
 
-    register(
-      firstname,
-      middlename,
-      lastname,
-      dummyHeight,
-      phone,
-      dummyWeight,
-      gender,
-      bmi,
-      email,
-      password
-    );
+    register(email, password);
+    navigation.navigate("LoginScreen");
   }
 
   // useEffect(() => {

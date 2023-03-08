@@ -12,53 +12,34 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(false);
   const [logged_in, setLogged_in] = useState(false);
   const [userInfo, setUserInfo] = useState([]);
-  const [userId, setUserId] = React.useState(1);
+  const [userId, setUserId] = React.useState();
 
   const register = async (
-    firstname,
-    middlename,
-    lastname,
-    dummyHeight,
-    dummyWeight,
-    phone,
-    bmi,
+    // firstname,
+    // middlename,
+    // lastname,
+    // dummyHeight,
+    // dummyWeight,
+    // phone,
+    // bmi,
     email,
     password
   ) => {
-    axios
-      .post(`${BASE_URL}app_users`, {
-        firstname: firstname,
-        middlename: middlename,
-        lastname: lastname,
-        height: 100,
-        weight: 50,
-        gender: "M",
-        address: "Test",
-        contact_number: phone,
-        bmi: bmi,
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        console.log("response" + response);
-
-        setLogged_in(true);
-      })
-      .catch((error) => {
-        console.log(
-          firstname,
-          middlename,
-          lastname,
-          dummyHeight,
-          dummyWeight,
-          phone,
-          bmi,
-          email,
-          password
-        );
-        //console.log(firstname);
-        console.log("error" + error);
-      });
+    const response = await axios.post(`${BASE_URL}app_users`, {
+      firstname: "firstname",
+      middlename: "middlename",
+      lastname: "lastname",
+      height: 100,
+      weight: 50,
+      gender: "M",
+      address: "Test",
+      contact_number: "1231231",
+      bmi: 123,
+      email: email,
+      password: password,
+    });
+    setUserId(response.data.user_id);
+    setLogged_in(true);
   };
 
   const login = async (email, password) => {
@@ -68,7 +49,6 @@ export const AuthProvider = ({ children }) => {
       );
       if (response.data.length > 0) {
         if (response.data[0].password == password) {
-          let res = response.data;
           let id = response.data[0].user_id;
           AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
           setUserId(id);
@@ -100,7 +80,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const addToCart = async (
-    customer_id,
+    userId,
     product_id,
     restaurant_id,
     quantity_product,
@@ -108,7 +88,7 @@ export const AuthProvider = ({ children }) => {
   ) => {
     try {
       const response = await axios.post(`${BASE_URL}carts`, {
-        customer_id: customer_id,
+        customer_id: userId,
         product_id: product_id,
         restaurant_id: restaurant_id,
         quantity: quantity_product,
@@ -117,6 +97,7 @@ export const AuthProvider = ({ children }) => {
         payment_type: "Cash",
       });
       console.log(response.status);
+      console.log(userId, product_id, restaurant_id, quantity_product, total);
     } catch (error) {
       console.log(error);
     }

@@ -22,24 +22,32 @@ import axios from "axios";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import TransactionContext from "../../../api/context/auth/TransactionContext";
 import { BASE_URL } from "../../../api/context/auth/config";
+import { set } from "react-native-reanimated";
 
 const CartScreen = ({ navigation, containerStyle, item, imageStyle }) => {
   const { userInfo, userId } = useContext(AuthContext);
   const [myCart, setMyCart] = React.useState(null);
   const [productId, setProductId] = React.useState(null);
-  const [myCartList, setMyCartList] = React.useState(null);
+  const [myCartList, setMyCartList] = React.useState(dummyData.myCart);
   const [itemId, setItemId] = React.useState([]);
-
+  const [isLoading, setIsLoading] = React.useState(true);
   const fetchCart = async () => {
-    const response = await axios.get(`${BASE_URL}carts?customer_id[eq]=8`);
-    const data = await response.data;
-    setMyCart(data);
-    setMyCartList(data);
-    //console.log(myCart[1].product_details.product_name);
-    //console.log(myCartList["product_details"]);
+    if (userId === undefined) {
+      setMyCartList(dummyData.myCart);
+    } else {
+      const response = await axios.get(
+        `${BASE_URL}carts?customer_id[eq]=${userId}`
+      );
+      const data = await response.data;
+      // console.log(response.data[0].product_id);
+      setMyCartList(data);
+      setIsLoading(false);
+      console.log(userId);
+    }
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchCart();
   }, []);
 
@@ -101,10 +109,6 @@ const CartScreen = ({ navigation, containerStyle, item, imageStyle }) => {
   }
 
   function renderCartList() {
-    const cartItems = async () => {
-      const fetchData = async () => {};
-    };
-
     return (
       <SwipeListView
         data={myCartList}
@@ -152,7 +156,7 @@ const CartScreen = ({ navigation, containerStyle, item, imageStyle }) => {
               }}
             >
               <Text style={{ width: 150, ...FONTS.h5, fontSize: 14 }}>
-                {data.item.product_details.product_name}
+                {isLoading ? "Loading" : data.item.product_details.product_name}
                 {"\n"}
                 <Text
                   style={{
@@ -160,11 +164,11 @@ const CartScreen = ({ navigation, containerStyle, item, imageStyle }) => {
                     ...FONTS.h3,
                   }}
                 >
-                  ₱{data.item.product_details.price}
+                  ₱ {isLoading ? "Loading" : data.item.product_details.price}
                 </Text>
               </Text>
 
-                {/* Food Quantity
+              {/* Food Quantity
               <View
                 style={{
                   position: "absolute",
@@ -204,15 +208,22 @@ const CartScreen = ({ navigation, containerStyle, item, imageStyle }) => {
             onPress={() => {
               setItemId(data.item.id);
               console.log(data.item.id);
-              removeMyCartHandler(data.item.id)}}
+              removeMyCartHandler(data.item.id);
+            }}
           />
         )}
       />
     );
   }
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.white, height: SIZES.height,
-      width: SIZES.width, }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.white,
+        height: SIZES.height,
+        width: SIZES.width,
+      }}
+    >
       {/*   Header */}
       {renderHeader()}
 
