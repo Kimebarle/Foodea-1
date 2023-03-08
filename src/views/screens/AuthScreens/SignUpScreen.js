@@ -66,8 +66,8 @@ const SignUpScreen = ({ navigation }) => {
 
   const [selected, setSelected] = React.useState("");
   const data = [
-    { key: "1", value: "M" },
-    { key: "2", value: "F" },
+    { key: "M", value: "Male" },
+    { key: "F", value: "Female" },
   ];
 
   function handleCreateAccount() {

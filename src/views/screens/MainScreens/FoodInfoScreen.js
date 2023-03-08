@@ -154,13 +154,12 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
   }
 
   return (
-    <View style={{ flex: 1, height: SIZES.height, width: SIZES.width }}>
+    <View style={{ flex: 1, height: SIZES.height, width: SIZES.width, }}>
       {/* header section */}
       <Header
         containerStyle={{
-          height: 50,
+          height: 80,
           paddingHorizontal: SIZES.padding,
-          marginTop: 10,
           alignItems: "center",
         }}
         title={"Hamburger"}
