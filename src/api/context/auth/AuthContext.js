@@ -39,7 +39,6 @@ export const AuthProvider = ({ children }) => {
       password: password,
     });
     setUserId(response.data.user_id);
-    setLogged_in(true);
   };
 
   const login = async (email, password) => {

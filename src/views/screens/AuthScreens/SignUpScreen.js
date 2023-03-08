@@ -61,6 +61,7 @@ const SignUpScreen = ({ navigation }) => {
   const [bmi, setBmi] = React.useState(25);
   const [dummyHeight, setDummyHeight] = React.useState(170);
   const [dummyWeight, setDummyWeight] = React.useState(80);
+  const [disableButton, setDisableButton] = React.useState(true);
 
   const { register } = useContext(AuthContext);
 

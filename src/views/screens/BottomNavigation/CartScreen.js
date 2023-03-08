@@ -7,7 +7,7 @@ import {
   FlatList,
   Button,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import {
   Header,
   IconButton,
@@ -28,10 +28,10 @@ const CartScreen = ({ navigation, containerStyle, item, imageStyle }) => {
   const { userInfo, userId } = useContext(AuthContext);
   const [myCart, setMyCart] = React.useState(null);
   const [productId, setProductId] = React.useState(null);
-  const [myCartList, setMyCartList] = React.useState(dummyData.myCart);
+  const [myCartList, setMyCartList] = React.useState(null);
   const [itemId, setItemId] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const fetchCart = async () => {
+  const fetchCart = useCallback(async () => {
     if (userId === undefined) {
       setMyCartList(dummyData.myCart);
     } else {
@@ -40,16 +40,19 @@ const CartScreen = ({ navigation, containerStyle, item, imageStyle }) => {
       );
       const data = await response.data;
       // console.log(response.data[0].product_id);
+      console.log(response.data);
       setMyCartList(data);
       setIsLoading(false);
       console.log(userId);
     }
-  };
+  }, [myCartList, fetchCart]);
 
   useEffect(() => {
-    setIsLoading(true);
-    fetchCart();
-  }, []);
+    if (!myCartList) {
+      setIsLoading(true);
+      fetchCart();
+    }
+  }, [myCartList, fetchCart]);
 
   function updateQuantityHandler(newquantity, id) {
     const newMyCartList = myCartList.map((cl) =>
