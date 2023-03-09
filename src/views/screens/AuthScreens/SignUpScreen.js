@@ -460,14 +460,15 @@ const SignUpScreen = ({ navigation }) => {
           {/* Footer */}
           <TextButton
             label="Create Account"
+            disabled={disabledButton()}
             buttonContainerStyle={{
               marginTop: SIZES.radius,
               height: 55,
               borderRadius: SIZES.radius,
-              backgroundColor: COLORS.primary,
+              backgroundColor: !disabledButton() ? COLORS.primary : COLORS.transparentPrimray,
             }}
             onPress={handleCreateAccount}
-            disabled={disabledButton()}
+            
           />
         </KeyboardAwareScrollView>
       </View>

@@ -80,7 +80,7 @@ const AccountScreen = ({ navigation }) => {
             flexDirection: "row",
             paddingHorizontal: SIZES.radius,
             paddingVertical: 20,
-            backgroundColor: COLORS.gray,
+            backgroundColor: COLORS.primary,
             borderRadius: SIZES.radius,
           }}
         >
@@ -229,7 +229,7 @@ const AccountScreen = ({ navigation }) => {
                 style={{
                   height: 25,
                   width: 25,
-                  tintColor: COLORS.black,
+                  tintColor: COLORS.primary,
                   position: "absolute",
                   left: 5,
                   right: 0,
@@ -259,7 +259,7 @@ const AccountScreen = ({ navigation }) => {
                 style={{
                   height: 25,
                   width: 25,
-                  tintColor: COLORS.black,
+                  tintColor: COLORS.primary,
                   position: "absolute",
                   left: 5,
                   right: 0,
@@ -289,7 +289,7 @@ const AccountScreen = ({ navigation }) => {
                 style={{
                   height: 25,
                   width: 25,
-                  tintColor: COLORS.black,
+                  tintColor: COLORS.primary,
                   position: "absolute",
                   left: 5,
                   right: 0,
@@ -319,7 +319,7 @@ const AccountScreen = ({ navigation }) => {
                 style={{
                   height: 20,
                   width: 20,
-                  tintColor: COLORS.black,
+                  tintColor: COLORS.primary,
                   position: "absolute",
                   left: 5,
                   right: 0,
@@ -351,7 +351,7 @@ const AccountScreen = ({ navigation }) => {
                 style={{
                   height: 25,
                   width: 25,
-                  tintColor: COLORS.black,
+                  tintColor: COLORS.primary,
                   position: "absolute",
                   left: 7,
                   right: 0,
