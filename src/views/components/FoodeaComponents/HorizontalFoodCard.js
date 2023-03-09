@@ -9,9 +9,21 @@ import {
   dummyData,
 } from "../../../constants";
 import IconButton from "./IconButton";
+import { useEffect } from "react";
 
-const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress }) => {
-  const [isFavorite, setIsFavorite] = React.useState(true);
+const HorizontalFoodCard = ({
+  itemId,
+  containerStyle,
+  imageStyle,
+  item,
+  onPress,
+}) => {
+  const [isFavorite, setIsFavorite] = React.useState(false);
+
+  const favoriteHandler = () => {
+    console.log(itemId);
+    setIsFavorite(!isFavorite);
+  };
 
   return (
     <View style={{}}>
@@ -63,7 +75,7 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress }) => {
                 top: 0,
                 right: 0,
               }}
-              onPress={() => setIsFavorite(!isFavorite)}
+              onPress={favoriteHandler}
             />
           </View>
 

@@ -278,6 +278,7 @@ const TestScreen = ({ navigation }) => {
                 marginRight: index == trending.length - 1 ? SIZES.padding : 0,
               }}
               item={item}
+              itemId={item.id}
               onPress={() => {
                 setItemId(item.id);
                 navigation.navigate("FoodInfo", { itemValue: itemId });
@@ -305,13 +306,13 @@ const TestScreen = ({ navigation }) => {
               marginTop: SIZES.padding,
               marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
               borderWidth: selectedCategoryId == item.id ? 2 : 0,
-              borderColor: selectedCategoryId == item.id ? COLORS.primary : COLORS.white,
+              borderColor:
+                selectedCategoryId == item.id ? COLORS.primary : COLORS.white,
               marginRight:
                 index == dummyData.Restaurant.length - 1 ? SIZES.padding : 0,
               paddingHorizontal: 8,
               borderRadius: SIZES.radius,
-              backgroundColor:
-                COLORS.lightGray2,
+              backgroundColor: COLORS.lightGray2,
             }}
             onPress={() => {
               setSelectedCategoryId(item.id);
@@ -334,8 +335,7 @@ const TestScreen = ({ navigation }) => {
                 style={{
                   alignSelf: "center",
                   marginRight: SIZES.base,
-                  color:
-                    COLORS.primary,
+                  color: COLORS.primary,
                   ...FONTS.h3,
                 }}
               >

@@ -10,9 +10,15 @@ import {
 } from "../../../constants";
 
 import IconButton from "./IconButton";
-const VerticalFoodCard = ({ containerStyle, item, onPress }) => {
-  const [isFavorite, setIsFavorite] = React.useState(true);
+const VerticalFoodCard = ({ containerStyle, item, onPress, itemId }) => {
+  const [isFavorite, setIsFavorite] = React.useState(false);
   const [isAddCart, setAddCart] = React.useState(true);
+
+  const setFavorite = () => {
+    // const lmao = !isFavorite;
+    setIsFavorite(!isFavorite);
+    console.log(isFavorite);
+  };
 
   return (
     <TouchableOpacity
@@ -25,7 +31,6 @@ const VerticalFoodCard = ({ containerStyle, item, onPress }) => {
       }}
       onPress={onPress}
     >
-
       {/* Cart and Favorites */}
       <View style={{ flexDirection: "row" }}>
         {/* Cart */}
@@ -42,22 +47,21 @@ const VerticalFoodCard = ({ containerStyle, item, onPress }) => {
         /> */}
 
         <View>
-          <TouchableOpacity
-          onPress={() => setAddCart(!isAddCart)}>
+          <TouchableOpacity onPress={() => setAddCart(!isAddCart)}>
             <Image
-            source = {icons.cart}
-            style = {{
-              height: 25,
-              width: 25,
-              tintColor: COLORS.primary
-            }}
+              source={icons.cart}
+              style={{
+                height: 25,
+                width: 25,
+                tintColor: COLORS.primary,
+              }}
             />
           </TouchableOpacity>
         </View>
 
         {/* Favorites */}
         <IconButton
-          icon={isFavorite ? icons.favourite : icons.love}
+          icon={isFavorite ? icons.love : icons.favourite}
           iconStyle={{
             tintColor: COLORS.primary,
             position: "absolute",
@@ -65,7 +69,7 @@ const VerticalFoodCard = ({ containerStyle, item, onPress }) => {
             width: 25,
             left: 120,
           }}
-          onPress={() => setIsFavorite(!isFavorite)}
+          onPress={setFavorite}
         />
       </View>
 
@@ -76,7 +80,7 @@ const VerticalFoodCard = ({ containerStyle, item, onPress }) => {
           width: 150,
           alignSelf: "center",
           justifyContent: "center",
-          marginTop: SIZES.base
+          marginTop: SIZES.base,
         }}
       >
         <Image

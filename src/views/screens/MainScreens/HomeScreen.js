@@ -25,8 +25,6 @@ import {
   VerticalFoodCard,
 } from "../../components/FoodeaComponents";
 
-import { createContext } from "react";
-
 const Section = ({ title, onPress, children }) => {
   return (
     <View>
@@ -153,6 +151,8 @@ const HomeScreen = ({ navigation }) => {
                 marginRight: index == trending.length - 1 ? SIZES.padding : 0,
               }}
               item={item}
+              itemId={item.id}
+              // userId={userId}
               onPress={() => {
                 setItemId(item.id);
                 navigation.navigate("FoodInfo", { itemValue: itemId });
@@ -261,7 +261,7 @@ const HomeScreen = ({ navigation }) => {
               borderColor: COLORS.gray2,
               borderRadius: SIZES.radius,
             }}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate("Home")}
           >
             <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
           </TouchableOpacity>
@@ -309,6 +309,7 @@ const HomeScreen = ({ navigation }) => {
                 height: 110,
                 width: 110,
               }}
+              itemId={item.id}
               item={item}
               onPress={onPressHandler(foodId, item.id)}
             />

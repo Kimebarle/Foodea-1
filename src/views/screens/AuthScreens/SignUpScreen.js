@@ -33,6 +33,9 @@ import utils, { Utils } from "../../../utils/Utils";
 import { useContext } from "react";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { SelectList } from "react-native-dropdown-select-list";
+import { BASE_URL } from "../../../api/context/auth/config";
+import axios from "axios";
+import { Alert } from "react-native";
 
 const SignUpScreen = ({ navigation }) => {
   const [showPassword, setShowPasswod] = React.useState(false);
@@ -71,13 +74,65 @@ const SignUpScreen = ({ navigation }) => {
     { key: "F", value: "Female" },
   ];
 
-  function handleCreateAccount() {
-    setBmi((dummyWeight / (dummyHeight * dummyHeight)) * 10000);
-    setGender("M");
+  const checkIfRegistered = async (email) => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}app_users?email[eq]=${email}`
+      );
+      return response.data.length > 0;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
 
-    register(email, password);
-    navigation.navigate("LoginScreen");
-  }
+  const registerUser = async () => {
+    try {
+      const response = await axios.post(`${BASE_URL}app_users`, {
+        firstname: firstname,
+        middlename: middlename,
+        lastname: lastname,
+        height: 100,
+        weight: 50,
+        gender: "M",
+        address: "Test",
+        contact_number: "090123123123",
+        bmi: 123,
+        email: email,
+        password: password,
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+  const handleCreateAccount = async () => {
+    const userExist = await checkIfRegistered(email);
+    if (userExist) {
+      Alert.alert("Error Sign Up", "Existing Email", [
+        {
+          text: "Confirm",
+          onPress: () => console.log("Confirm"),
+          style: "cancel",
+        },
+      ]);
+    } else {
+      const newUser = await registerUser();
+      if (newUser) {
+        Alert.alert("Sign Up", "Successful", [
+          {
+            text: "Confirm",
+            onPress: () => navigation.navigate("LoginScreen"),
+            style: "cancel",
+          },
+        ]);
+      } else {
+        console.log("error register");
+      }
+    }
+  };
 
   const disabledButton = () => {
     return (

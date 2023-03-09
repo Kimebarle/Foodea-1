@@ -14,33 +14,6 @@ export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState([]);
   const [userId, setUserId] = React.useState();
 
-  const register = async (
-    // firstname,
-    // middlename,
-    // lastname,
-    // dummyHeight,
-    // dummyWeight,
-    // phone,
-    // bmi,
-    email,
-    password
-  ) => {
-    const response = await axios.post(`${BASE_URL}app_users`, {
-      firstname: "firstname",
-      middlename: "middlename",
-      lastname: "lastname",
-      height: 100,
-      weight: 50,
-      gender: "M",
-      address: "Test",
-      contact_number: "1231231",
-      bmi: 123,
-      email: email,
-      password: password,
-    });
-    setUserId(response.data.user_id);
-  };
-
   const login = async (email, password) => {
     try {
       const response = await axios.get(
@@ -118,7 +91,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         user,
         logged_in,
-        register,
+
         addToCart,
       }}
     >
