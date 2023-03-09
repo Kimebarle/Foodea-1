@@ -9,44 +9,43 @@ const Restaurant = [
     id: 1,
     name: "Jollibee",
     icon: require("../../assets/img/images/jollibee_logo.png"),
-    distance: 2
+    distance: 2,
   },
   {
     id: 2,
     name: "McDonalds",
     icon: require("../../assets/img/images/mcdonalds-png-logo-simple-m-1.png"),
-    distance: "3.8"
+    distance: "3.8",
   },
   {
     id: 3,
     name: "Chowking",
     icon: require("../../assets/img/images/chowking.png"),
-    distance: "1.1"
-  }
+    distance: "1.1",
+  },
 ];
 
 const Discount = [
   {
     id: 1,
     name: "Free Delivery",
-    icon: require("../../assets/img/icons/discount.png")
+    icon: require("../../assets/img/icons/discount.png"),
   },
   {
     id: 2,
     name: "10% OFF",
-    icon: require("../../assets/img/icons/discount.png")
+    icon: require("../../assets/img/icons/discount.png"),
   },
   {
     id: 3,
     name: "30% OFF",
-    icon: require("../../assets/img/icons/discount.png")
+    icon: require("../../assets/img/icons/discount.png"),
   },
   {
     id: 4,
     name: "50% OFF",
-    icon: require("../../assets/img/icons/discount.png")
-  }
-
+    icon: require("../../assets/img/icons/discount.png"),
+  },
 ];
 
 const other_restaurant = [
@@ -59,7 +58,7 @@ const other_restaurant = [
     distance: 3,
     label: "Filipino",
     food: "Chicken",
-    type: "Fast Food"
+    type: "Fast Food",
   },
   {
     id: 2,
@@ -70,7 +69,7 @@ const other_restaurant = [
     distance: 5,
     label: "American",
     food: "Fried Chicken",
-    type: "Fast Food"
+    type: "Fast Food",
   },
   {
     id: 3,
@@ -81,8 +80,7 @@ const other_restaurant = [
     distance: 5,
     label: "Filipino",
     food: "Pizza",
-    type: "Restaurant"
-
+    type: "Restaurant",
   },
 ];
 
@@ -90,7 +88,6 @@ const KFC_categories = [
   {
     id: 1,
     name: "All Food",
-
   },
   {
     id: 2,
@@ -105,10 +102,9 @@ const KFC_categories = [
   {
     id: 4,
     name: "Desserts",
-    icon: require("../../assets/img/dummyData/sundae.png")
-  }
+    icon: require("../../assets/img/dummyData/sundae.png"),
+  },
 ];
-
 
 const Manginasal_categories = [
   {
@@ -129,7 +125,7 @@ const Manginasal_categories = [
     id: 4,
     name: "Liempo",
     icon: require("../../assets/img/icons/liempo.png"),
-  }
+  },
 ];
 
 const Greenwich_categories = [
@@ -140,20 +136,19 @@ const Greenwich_categories = [
   {
     id: 2,
     name: "Pizza",
-    icon: require("../../assets/img/icons/pizza.png")
+    icon: require("../../assets/img/icons/pizza.png"),
   },
   {
     id: 3,
     name: "Pasta",
-    icon: require("../../assets/img/icons/spaghetti.png")
+    icon: require("../../assets/img/icons/spaghetti.png"),
   },
   {
     id: 4,
     name: "Chicken Meal",
-    icon: require("../../assets/img/icons/chicken_icon.png")
-  }
+    icon: require("../../assets/img/icons/chicken_icon.png"),
+  },
 ];
-
 
 const categories = [
   {
@@ -447,8 +442,7 @@ const Manginasal_liempo = {
   id: 2,
   name: "Liempo",
   name2: "Ingredients",
-  description:
-    "Delicious Mang inasal Liempo",
+  description: "Delicious Mang inasal Liempo",
   ingredients:
     "454 grams ground beef about 1 pound 1 tbsp olive oil, 1 tsp paprika, 1 tsp onion powder, 1 tsp garlic salt, 1 tbsp oyster sauce, ½ tsp black peppe, 1 large eg, 5 burger buns",
   categories: [1, 4],
@@ -465,8 +459,7 @@ const Manginasal_bbq = {
   id: 3,
   name: "Pork Barbeque",
   name2: "Ingredients",
-  description:
-    "Delicious Mang Inasal Pork Barbeque",
+  description: "Delicious Mang Inasal Pork Barbeque",
   ingredients:
     "454 grams ground beef about 1 pound 1 tbsp olive oil, 1 tsp paprika, 1 tsp onion powder, 1 tsp garlic salt, 1 tbsp oyster sauce, ½ tsp black peppe, 1 large eg, 5 burger buns",
   categories: [1, 3],
@@ -483,8 +476,7 @@ const Chicken_meal = {
   id: 1,
   name: "Chicken With Rice",
   name2: "Ingredients",
-  description:
-    "Delicious Chicken with rice KFC",
+  description: "Delicious Chicken with rice KFC",
   ingredients:
     "454 grams ground beef about 1 pound 1 tbsp olive oil, 1 tsp paprika, 1 tsp onion powder, 1 tsp garlic salt, 1 tbsp oyster sauce, ½ tsp black peppe, 1 large eg, 5 burger buns",
   categories: [1, 2],
@@ -501,8 +493,7 @@ const Chicken_sandwich = {
   id: 2,
   name: "Chicken Sandwich",
   name2: "Ingredients",
-  description:
-    "Delicious Chicken Sandwich KFC",
+  description: "Delicious Chicken Sandwich KFC",
   ingredients:
     "454 grams ground beef about 1 pound 1 tbsp olive oil, 1 tsp paprika, 1 tsp onion powder, 1 tsp garlic salt, 1 tbsp oyster sauce, ½ tsp black peppe, 1 large eg, 5 burger buns",
   categories: [1, 3],
@@ -519,8 +510,7 @@ const Sundae_kfc = {
   id: 3,
   name: "Sundae",
   name2: "Ingredients",
-  description:
-    "Delicious dessert KFC",
+  description: "Delicious dessert KFC",
   ingredients:
     "454 grams ground beef about 1 pound 1 tbsp olive oil, 1 tsp paprika, 1 tsp onion powder, 1 tsp garlic salt, 1 tbsp oyster sauce, ½ tsp black peppe, 1 large eg, 5 burger buns",
   categories: [1, 4],
@@ -537,8 +527,7 @@ const Pizza = {
   id: 1,
   name: "Pizza",
   name2: "Ingredients",
-  description:
-    "Delicious pizza in Greenwich",
+  description: "Delicious pizza in Greenwich",
   ingredients:
     "454 grams ground beef about 1 pound 1 tbsp olive oil, 1 tsp paprika, 1 tsp onion powder, 1 tsp garlic salt, 1 tbsp oyster sauce, ½ tsp black peppe, 1 large eg, 5 burger buns",
   categories: [1, 2],
@@ -555,8 +544,7 @@ const Pasta = {
   id: 2,
   name: "Pasta",
   name2: "Ingredients",
-  description:
-    "Delicious pasta in Greenwich",
+  description: "Delicious pasta in Greenwich",
   ingredients:
     "454 grams ground beef about 1 pound 1 tbsp olive oil, 1 tsp paprika, 1 tsp onion powder, 1 tsp garlic salt, 1 tbsp oyster sauce, ½ tsp black peppe, 1 large eg, 5 burger buns",
   categories: [1, 3],
@@ -573,8 +561,7 @@ const Chicken_Greenwich = {
   id: 3,
   name: "Chicken",
   name2: "Ingredients",
-  description:
-    "Delicious Chicken Meal in Greenwich",
+  description: "Delicious Chicken Meal in Greenwich",
   ingredients:
     "454 grams ground beef about 1 pound 1 tbsp olive oil, 1 tsp paprika, 1 tsp onion powder, 1 tsp garlic salt, 1 tbsp oyster sauce, ½ tsp black peppe, 1 large eg, 5 burger buns",
   categories: [1, 4],
@@ -622,7 +609,17 @@ const menu_restaurant = [
   {
     id: 1,
     name: "All Food",
-    list: [hamburger, Spaghetti, Hotdog, chowking, MangoPie, Sundae, Mcdo_Chicken_Sandwich, Dimsum_Chowking, Halo_halo_chowking],
+    list: [
+      hamburger,
+      Spaghetti,
+      Hotdog,
+      chowking,
+      MangoPie,
+      Sundae,
+      Mcdo_Chicken_Sandwich,
+      Dimsum_Chowking,
+      Halo_halo_chowking,
+    ],
   },
   {
     id: 2,
@@ -638,7 +635,7 @@ const menu_restaurant = [
     id: 4,
     name: "Chowking",
     list: [hamburger, Spaghetti, Hotdog, chowking, MangoPie, Sundae],
-  }
+  },
 ];
 
 const KFC_menu = [
@@ -646,7 +643,7 @@ const KFC_menu = [
     id: 1,
     name: "Trending",
     list: [Chicken_meal, Chicken_sandwich, Sundae_kfc],
-  }
+  },
 ];
 
 const Manginasal_menu = [
