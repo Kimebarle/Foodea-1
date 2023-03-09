@@ -18,6 +18,8 @@ const VerticalFoodCard = ({ containerStyle, item, onPress, itemId }) => {
     // const lmao = !isFavorite;
     setIsFavorite(!isFavorite);
     console.log(isFavorite);
+
+    console.log(itemId);
   };
 
   return (
@@ -61,7 +63,7 @@ const VerticalFoodCard = ({ containerStyle, item, onPress, itemId }) => {
 
         {/* Favorites */}
         <IconButton
-          icon={isFavorite ? icons.love : icons.favourite}
+          icon={isFavorite ? icons.favourite : icons.love}
           iconStyle={{
             tintColor: COLORS.primary,
             position: "absolute",

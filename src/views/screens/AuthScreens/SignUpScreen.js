@@ -48,9 +48,9 @@ const SignUpScreen = ({ navigation }) => {
   const [middleNameError, setMiddleNameError] = React.useState("");
   const [lastname, setLastName] = React.useState("");
   const [lastNameError, setLastNameError] = React.useState("");
-  const [height, setHeight] = React.useState(100);
+  const [height, setHeight] = React.useState();
   const [heightError, setHeightError] = React.useState("");
-  const [weight, setWeight] = React.useState(10);
+  const [weight, setWeight] = React.useState();
   const [weightError, setWeightError] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
@@ -108,11 +108,11 @@ const SignUpScreen = ({ navigation }) => {
         firstname: firstname,
         middlename: middlename,
         lastname: lastname,
-        height: 100,
-        weight: 50,
-        gender: "M",
+        height: weight,
+        weight: height,
+        gender: selected,
         address: "Test",
-        contact_number: "090123123123",
+        contact_number: "09213123123",
         bmi: 123,
         email: email,
         password: password,
@@ -339,8 +339,7 @@ const SignUpScreen = ({ navigation }) => {
               }}
               onChange={(value) => {
                 utils.validateInput(value, 1, setHeightError);
-                //setHeight(value);
-                console.log(height);
+                setHeight(value);
               }}
             />
 
@@ -356,7 +355,7 @@ const SignUpScreen = ({ navigation }) => {
               }}
               onChange={(value) => {
                 utils.validateInput(value, 1, setWeightError);
-                //setWeight(value);
+                setWeight(value);
               }}
             />
           </View>
@@ -490,10 +489,11 @@ const SignUpScreen = ({ navigation }) => {
               marginTop: SIZES.radius,
               height: 55,
               borderRadius: SIZES.radius,
-              backgroundColor: !disabledButton() ? COLORS.primary : COLORS.transparentPrimray,
+              backgroundColor: !disabledButton()
+                ? COLORS.primary
+                : COLORS.transparentPrimray,
             }}
             onPress={handleCreateAccount}
-
           />
         </KeyboardAwareScrollView>
       </View>
