@@ -17,7 +17,14 @@ import React, { useRef, useState } from "react";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 
 const EnterOTP = ({ navigation }) => {
+  const [otp, setOtp] = React.useState("");
   const [timer, setTimer] = React.useState(60);
+
+  const disabledButton = () => {
+    return (
+      !otp
+    );
+  };
 
   React.useEffect(() => {
     let interval = setInterval(() => {
@@ -137,31 +144,18 @@ const EnterOTP = ({ navigation }) => {
           marginHorizontal: SIZES.radius,
         }}
       >
-        <OTPInputView
-          pinCount={4}
-          style={{
-            width: "100%",
-            height: 50,
-          }}
-          codeInputFieldStyle={{
-            width: 65,
-            height: 65,
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.lightGray2,
-            color: COLORS.black,
-            ...FONTS.h3,
-          }}
-          onCodeFilled={(code) => {
-            console.log(code);
-          }}
+        <TextInput
+        label="Enter OTP"
+        value={otp}
+        maxLength={10}
+        placeholderTextColor={COLORS.gray}
+        onChangeText={(value) => setOtp(value)}
+
         />
 
         {/* TIMER */}
         {renderTimer()}
 
-
-        {/* Reset Password */}
-        {renderResetPasswordForm()}
 
       </View>
     );
@@ -193,7 +187,7 @@ const EnterOTP = ({ navigation }) => {
             backgroundColor: null,
           }}
           labelStyle={{
-            color: COLORS.primary,
+            color: COLORS.gray,
             ...FONTS.h4,
           }}
           onPress={() => setTimer(60)}
@@ -215,39 +209,21 @@ const EnterOTP = ({ navigation }) => {
       >
         <TextButton
           label="Continue"
+          disabled={disabledButton()}
           buttonContainerStyle={{
             height: 50,
             width: 250,
             alignItems: "center",
             borderRadius: SIZES.radius,
-            backgroundColor: COLORS.primary,
+            backgroundColor: !disabledButton() ? COLORS.primary : COLORS.transparentPrimray,
           }}
-          onPress={() => console.log("Continue")}
+          onPress={() => navigation.navigate("Resetpassword")}
         />
       </View>
     );
   }
 
-  function renderResetPasswordForm() {
-    return (
-      <TouchableOpacity onPress={() => navigation.navigate("Resetpassword")}>
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            style={{
-              ...FONTS.h2,
-            }}
-          >
-            Reset Password
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
+
   return (
     <View
       style={{

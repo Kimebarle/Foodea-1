@@ -227,7 +227,6 @@ const Resetpassword = ({ navigation }) => {
     return (
         <View
             style={{
-                justifyContent: "center",
                 alignItems: "center",
                 height: SIZES.height,
                 width: SIZES.width,
