@@ -51,7 +51,7 @@ const Section = ({ title, onPress, children }) => {
 };
 
 const TestScreen = ({ navigation }) => {
-  const { logout, user } = useContext(AuthContext);
+  const { logout, userId } = useContext(AuthContext);
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
   const [discountType, setDiscountType] = React.useState(1);
@@ -278,7 +278,9 @@ const TestScreen = ({ navigation }) => {
                 marginRight: index == trending.length - 1 ? SIZES.padding : 0,
               }}
               item={item}
+              // add a favorite component then pass the favorite value to the component
               itemId={item.id}
+              user_id={userId}
               onPress={() => {
                 setItemId(item.id);
                 navigation.navigate("FoodInfo", { itemValue: itemId });

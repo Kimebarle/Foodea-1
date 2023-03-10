@@ -8,18 +8,72 @@ import {
   constants,
   dummyData,
 } from "../../../constants";
+import axios from "axios";
+import { Alert } from "react-native";
 
 import IconButton from "./IconButton";
-const VerticalFoodCard = ({ containerStyle, item, onPress, itemId }) => {
-  const [isFavorite, setIsFavorite] = React.useState(false);
+import { BASE_URL } from "../../../api/context/auth/config";
+const VerticalFoodCard = ({
+  containerStyle,
+  item,
+  onPress,
+  itemId,
+  user_id,
+}) => {
+  const [isFavorite, setIsFavorite] = React.useState(true);
   const [isAddCart, setAddCart] = React.useState(true);
 
-  const setFavorite = () => {
-    // const lmao = !isFavorite;
-    setIsFavorite(!isFavorite);
-    console.log(isFavorite);
+  const checkedIsFavorite = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}favorites?user_id[eq]=${user_id}&&product_id[eq]=${itemId}`
+      );
+      console.log(response.data);
+      return response.data.length > 0;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
 
-    console.log(itemId);
+  const addToFavorites = async () => {
+    try {
+      const response = await axios.post(`${BASE_URL}favorites`, {
+        user_id: user_id,
+        product_id: itemId,
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+  const setFavorite = async () => {
+    const itemExist = await checkedIsFavorite();
+    if (itemExist) {
+      Alert.alert("Warning", "Item is already Favorited", [
+        {
+          text: "Confirm",
+          onPress: () => console.log("Item Already is Favorite"),
+          style: "cancel",
+        },
+      ]);
+    } else {
+      const newItem = await addToFavorites();
+      if (newItem) {
+        Alert.alert("Successful", "Added To Favorites", [
+          {
+            text: "Confirm",
+            onPress: () => console.log("added"),
+            style: "cancel",
+          },
+        ]);
+        setIsFavorite(!isFavorite);
+      } else {
+        console.log("cant add item");
+      }
+    }
   };
 
   return (
