@@ -37,7 +37,7 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { BASE_URL } from "../../../api/context/auth/config";
 import axios from "axios";
 import { Alert } from "react-native";
-import AwesomeAlert from "react-native-awesome-alerts";
+// import AwesomeAlert from "react-native-awesome-alerts";
 
 const SignUpScreen = ({ navigation }) => {
   const [showPassword, setShowPasswod] = React.useState(false);
@@ -68,9 +68,9 @@ const SignUpScreen = ({ navigation }) => {
   const [dummyWeight, setDummyWeight] = React.useState(80);
   const [checkValidEmail, setCheckValidEmail] = React.useState(false);
   const { register } = useContext(AuthContext);
-  const [showAlert, setShowAlert] = React.useState()
+  const [showAlert, setShowAlert] = React.useState();
 
-  const handleCheckEmail = value => {
+  const handleCheckEmail = (value) => {
     let re = /\S+@\S+\.\S+/;
     let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
@@ -80,9 +80,7 @@ const SignUpScreen = ({ navigation }) => {
     } else {
       setCheckValidEmail(true);
     }
-
-
-  }
+  };
 
   const [selected, setSelected] = React.useState("");
   const data = [
@@ -160,10 +158,6 @@ const SignUpScreen = ({ navigation }) => {
       password != reenterpassword
     );
   };
-
-
-
-
 
   function renderHeader() {
     return (
@@ -370,7 +364,7 @@ const SignUpScreen = ({ navigation }) => {
             maxLength={11}
             keyboardType="number-pad"
             onChange={(value) => {
-              setPhone(value)
+              setPhone(value);
               utils.validateInput(value, 11, setPhoneError);
             }}
             errorMsg={phoneError}
@@ -387,15 +381,17 @@ const SignUpScreen = ({ navigation }) => {
             label="Email"
             value={email}
             onChange={(value) => {
-              handleCheckEmail(value)
+              handleCheckEmail(value);
               setEmail(value);
             }}
             appendComponent={
-              <View style = {{
-                position: 'absolute',
-                bottom: 45,
-                right: 2,
-              }}>
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: 45,
+                  right: 2,
+                }}
+              >
                 {checkValidEmail ? (
                   <Text style={styles.textFailed}>Wrong format email</Text>
                 ) : (
@@ -552,9 +548,7 @@ const SignUpScreen = ({ navigation }) => {
       }}
     >
       {renderHeader()}
-      <ScrollView>
-        {renderSignupForm()}
-      </ScrollView>
+      <ScrollView>{renderSignupForm()}</ScrollView>
     </View>
   );
 };
@@ -563,8 +557,8 @@ export default SignUpScreen;
 
 const styles = StyleSheet.create({
   textFailed: {
-    alignSelf: 'flex-end',
-    color: 'red',
+    alignSelf: "flex-end",
+    color: "red",
     ...FONTS.h4,
   },
 });
