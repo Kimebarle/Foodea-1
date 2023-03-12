@@ -24,11 +24,22 @@ import {
     images,
 } from "../../../constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import utils, { Utils } from "../../../utils/Utils";
 
 const Resetpassword = ({ navigation }) => {
     const [newpassword, setNewPassword] = React.useState("");
+    const [newpasswordError, setPasswordError] = React.useState("");
     const [confirmpassword, setConfirmPassword] = React.useState("");
+    const [newconfirmpasswordError, setNewConfirmPasswordError] = React.useState("");
     const [showPassword, setShowPasswod] = React.useState(false);
+    const [reshowPassword, setReShowPasswod] = React.useState(false);
+
+    const disabledButton = () => {
+        return (
+            !newpassword ||
+            !confirmpassword
+        );
+    };
 
     function renderEmail() {
         return (
@@ -80,20 +91,28 @@ const Resetpassword = ({ navigation }) => {
                         <FormInput
                             containerStyle={{
                                 borderRadius: SIZES.radius,
-                                backgroundColor: COLORS.white,
                             }}
-                            placeholder="New Password"
+                            label="New Password"
                             value={newpassword}
-                            onChange={(text) => setNewPassword(text)}
-                            prependComponent={
-                                <Image
-                                    source={icons.Lock}
-                                    style={{
-                                        width: 25,
-                                        height: 25,
-                                        marginRight: SIZES.base,
-                                        alignSelf: "center",
+                            secureTextEntry={!showPassword}
+                            onChange={(value) => {
+                                setNewPassword(value);
+                                utils.validatePassword(value, setPasswordError);
+                            }}
+                            errorMsg={newpasswordError}
+                            appendComponent={
+                                <IconButton
+                                    icon={showPassword ? icons.disable_eye : icons.eye}
+                                    iconStyle={{
+                                        tintColor: COLORS.gray,
+                                        width: 20,
+                                        height: 20,
+                                        marginLeft: SIZES.base,
+                                        position: "absolute",
+                                        right: 0,
+                                        top: 12,
                                     }}
+                                    onPress={() => setShowPasswod(!showPassword)}
                                 />
                             }
                         />
@@ -102,35 +121,28 @@ const Resetpassword = ({ navigation }) => {
                         <FormInput
                             containerStyle={{
                                 borderRadius: SIZES.radius,
-                                backgroundColor: COLORS.white,
                             }}
-                            placeholder="Confirm Password"
+                            label="Confirm Password"
                             value={confirmpassword}
-                            secureTextEntry={!showPassword}
-                            onChange={(text) => setConfirmPassword(text)}
-                            prependComponent={
-                                <Image
-                                    source={icons.Lock}
-                                    style={{
-                                        width: 25,
-                                        height: 25,
-                                        marginRight: SIZES.base,
-                                        alignSelf: "center",
-                                    }}
-                                />
-                            }
+                            secureTextEntry={!reshowPassword}
+                            onChange={(value) => {
+                                setConfirmPassword(value);
+                                utils.validatePassword(value, setPasswordError);
+                            }}
+                            errorMsg={newconfirmpasswordError}
                             appendComponent={
                                 <IconButton
-                                    icon={showPassword ? icons.disable_eye : icons.eye}
+                                    icon={reshowPassword ? icons.disable_eye : icons.eye}
                                     iconStyle={{
                                         tintColor: COLORS.gray,
+                                        width: 20,
+                                        height: 20,
+                                        marginLeft: SIZES.base,
                                         position: "absolute",
-                                        height: 25,
-                                        width: 25,
-                                        top: 10,
                                         right: 0,
+                                        top: 12,
                                     }}
-                                    onPress={() => setShowPasswod(!showPassword)}
+                                    onPress={() => setReShowPasswod(!reshowPassword)}
                                 />
                             }
                         />
@@ -142,12 +154,15 @@ const Resetpassword = ({ navigation }) => {
                         </View>
                         <TextButton
                             label="Sign In"
+                            disabled={disabledButton()}
                             onPress={() => navigation.navigate("SurveyScreen")}
                             buttonContainerStyle={{
                                 marginTop: SIZES.padding,
                                 height: 55,
                                 borderRadius: SIZES.radius,
-                                backgroundColor: COLORS.primary,
+                                backgroundColor: !disabledButton()
+                                    ? COLORS.primary
+                                    : COLORS.transparentPrimray,
                             }}
                             labelStyle={{
                                 ...FONTS.h3,

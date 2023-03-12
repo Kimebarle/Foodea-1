@@ -150,6 +150,9 @@ const EnterOTP = ({ navigation }) => {
         maxLength={10}
         placeholderTextColor={COLORS.gray}
         onChangeText={(value) => setOtp(value)}
+        style = {{
+          textAlign: 'center',
+        }}
 
         />
 

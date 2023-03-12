@@ -33,6 +33,7 @@ import UserDetails from "../screens/InfoScreens/UserDetails";
 import AnotherOrder from "../screens/Delivery/AnotherOrder";
 import Favorite from "../screens/InfoScreens/Favorite";
 import Address from "../screens/InfoScreens/Address";
+import MyCartScreen from "../screens/BottomNavigation/MyCartScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -146,7 +147,7 @@ const BottomNavigation = () => {
 
       <Tab.Screen
         name="Cart"
-        component={CartScreen}
+        component={MyCartScreen}
         options={{
           tabBarActiveTintColor: COLORS.primary,
           tabBarIcon: ({ focused }) => (

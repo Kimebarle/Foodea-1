@@ -25,6 +25,19 @@ import { Alert } from "react-native";
 const Forgotpassword = ({ navigation, route }) => {
   const [email, setEmail] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
+  const [checkValidEmail, setCheckValidEmail] = React.useState(false);
+
+  const handleCheckEmail = (value) => {
+    let re = /\S+@\S+\.\S+/;
+    let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+    setEmail(value);
+    if (re.test(value) || regex.test(value)) {
+      setCheckValidEmail(false);
+    } else {
+      setCheckValidEmail(true);
+    }
+  };
 
   function isEnableSendEmail() {
     return email != "" && emailError == "";
@@ -164,19 +177,33 @@ const Forgotpassword = ({ navigation, route }) => {
           backgroundColor: COLORS.white,
         }}
       >
+        {/* Email */}
         <FormInput
-          label="Email Address"
-          value={email}
-          containerStyle={{
-            marginTop: SIZES.radius,
-          }}
-          onChange={(value) => {
-            utils.validateInput(value, 1, setEmailError);
-            setEmail(value);
-          }}
-          errorMsg={emailError}
-          appendComponent={<FormInputCheck value={email} error={emailError} />}
-        />
+            containerStyle={{
+              borderRadius: SIZES.radius,
+            }}
+            label="Email"
+            value={email}
+            onChange={(value) => {
+              handleCheckEmail(value);
+              setEmail(value);
+            }}
+            appendComponent={
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: 45,
+                  right: 2,
+                }}
+              >
+                {checkValidEmail ? (
+                  <Text style={styles.textFailed}>Wrong format email</Text>
+                ) : (
+                  <Text style={styles.textFailed}> </Text>
+                )}
+              </View>
+            }
+          />
       </View>
     );
   }
@@ -208,7 +235,7 @@ const Forgotpassword = ({ navigation, route }) => {
         {/* Form Input */}
         {renderFormInput()}
 
-        {/* OTP SCREEN */}
+        {/* OTP SCREEN
         <TouchableOpacity onPress={() => navigation.navigate("EnterOTP")}>
           <View
             style={{
@@ -224,7 +251,8 @@ const Forgotpassword = ({ navigation, route }) => {
               OTP SCREEN
             </Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        
         {/* Button */}
         <TextButton
           label="Send Email"
@@ -245,6 +273,12 @@ const Forgotpassword = ({ navigation, route }) => {
     </View>
   );
 };
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  textFailed: {
+    alignSelf: "flex-end",
+    color: "red",
+    ...FONTS.h4,
+  },
+});
 
 export default Forgotpassword;
