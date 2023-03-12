@@ -18,7 +18,7 @@ const HorizontalFoodCard = ({
   item,
   onPress,
 }) => {
-  const [isFavorite, setIsFavorite] = React.useState(false);
+  const [isFavorite, setIsFavorite] = React.useState(true);
 
   const favoriteHandler = () => {
     console.log(itemId);

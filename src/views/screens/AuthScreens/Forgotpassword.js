@@ -60,7 +60,7 @@ const Forgotpassword = ({ navigation, route }) => {
     const emailCheck = await checkEmail();
     if (emailCheck) {
       console.log("existing email");
-      navigation.navigate("EnterOTP");
+      navigation.navigate("EnterOTP", { emailValue: email });
     } else {
       Alert.alert("Error", "No Existing Email", [
         {
@@ -179,31 +179,31 @@ const Forgotpassword = ({ navigation, route }) => {
       >
         {/* Email */}
         <FormInput
-            containerStyle={{
-              borderRadius: SIZES.radius,
-            }}
-            label="Email"
-            value={email}
-            onChange={(value) => {
-              handleCheckEmail(value);
-              setEmail(value);
-            }}
-            appendComponent={
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: 45,
-                  right: 2,
-                }}
-              >
-                {checkValidEmail ? (
-                  <Text style={styles.textFailed}>Wrong format email</Text>
-                ) : (
-                  <Text style={styles.textFailed}> </Text>
-                )}
-              </View>
-            }
-          />
+          containerStyle={{
+            borderRadius: SIZES.radius,
+          }}
+          label="Email"
+          value={email}
+          onChange={(value) => {
+            handleCheckEmail(value);
+            setEmail(value);
+          }}
+          appendComponent={
+            <View
+              style={{
+                position: "absolute",
+                bottom: 45,
+                right: 2,
+              }}
+            >
+              {checkValidEmail ? (
+                <Text style={styles.textFailed}>Wrong format email</Text>
+              ) : (
+                <Text style={styles.textFailed}> </Text>
+              )}
+            </View>
+          }
+        />
       </View>
     );
   }
@@ -252,7 +252,7 @@ const Forgotpassword = ({ navigation, route }) => {
             </Text>
           </View>
         </TouchableOpacity> */}
-        
+
         {/* Button */}
         <TextButton
           label="Send Email"

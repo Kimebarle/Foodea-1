@@ -14,16 +14,17 @@ import {
   images,
 } from "../../../constants";
 import React, { useRef, useState } from "react";
-import OTPInputView from "@twotalltotems/react-native-otp-input";
 
-const EnterOTP = ({ navigation }) => {
+import { apiKey } from "../../../api/context/auth/config";
+
+const EnterOTP = ({ navigation, route }) => {
+  const { emailValue = "default1" } = route.params;
   const [otp, setOtp] = React.useState("");
-  const [timer, setTimer] = React.useState(60);
+  const [timer, setTimer] = React.useState(5);
+  const [otpGenerate, setOtpGenerate] = React.useState("default");
 
   const disabledButton = () => {
-    return (
-      !otp
-    );
+    return !otp;
   };
 
   React.useEffect(() => {
@@ -36,9 +37,40 @@ const EnterOTP = ({ navigation }) => {
         }
       });
     }, 1000);
+    //console.log("first" + otpGenerate);
 
-    return () => clearInterval(interval);
+    generateOtp();
+
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
+
+  const generateOtp = () => {
+    setTimer(5);
+    const randomNumber = Math.floor(Math.random() * 1000000);
+    const otpString = randomNumber.toString().padStart(6, "0");
+
+    // const message = {
+    //   to: "chriscalleja1220@gmail.com",
+    //   from: "foodea.bscs@gmail.com",
+    //   subject: "Password Reset",
+    //   text: `Your OTP is ${otpString}`,
+    //   html: `<h1>Your OTP is ${otpString}</h1>`,
+    // };
+
+    // sgMail
+    //   .send(message)
+    //   .then((response) => console.log(response))
+    //   .catch((error) => console.log(error));
+
+    return otpString;
+  };
+
+  const onPressHandler = async () => {
+    const kekw = generateOtp();
+    console.log(kekw);
+  };
 
   function renderHeader() {
     return (
@@ -145,21 +177,18 @@ const EnterOTP = ({ navigation }) => {
         }}
       >
         <TextInput
-        label="Enter OTP"
-        value={otp}
-        maxLength={10}
-        placeholderTextColor={COLORS.gray}
-        onChangeText={(value) => setOtp(value)}
-        style = {{
-          textAlign: 'center',
-        }}
-
+          label="Enter OTP"
+          value={otp}
+          maxLength={10}
+          placeholderTextColor={COLORS.gray}
+          onChangeText={(value) => setOtp(value)}
+          style={{
+            textAlign: "center",
+          }}
         />
 
         {/* TIMER */}
         {renderTimer()}
-
-
       </View>
     );
   }
@@ -193,7 +222,7 @@ const EnterOTP = ({ navigation }) => {
             color: COLORS.gray,
             ...FONTS.h4,
           }}
-          onPress={() => setTimer(60)}
+          onPress={generateOtp}
         />
       </View>
     );
@@ -205,7 +234,7 @@ const EnterOTP = ({ navigation }) => {
         style={{
           justifyContent: "center",
           alignItems: "center",
-          position: 'absolute',
+          position: "absolute",
           top: 700,
           left: 55,
         }}
@@ -218,14 +247,15 @@ const EnterOTP = ({ navigation }) => {
             width: 250,
             alignItems: "center",
             borderRadius: SIZES.radius,
-            backgroundColor: !disabledButton() ? COLORS.primary : COLORS.transparentPrimray,
+            backgroundColor: !disabledButton()
+              ? COLORS.primary
+              : COLORS.transparentPrimray,
           }}
-          onPress={() => navigation.navigate("Resetpassword")}
+          onPress={onPressHandler}
         />
       </View>
     );
   }
-
 
   return (
     <View
@@ -234,7 +264,8 @@ const EnterOTP = ({ navigation }) => {
         flex: 1,
         height: SIZES.height,
         width: SIZES.width,
-      }}>
+      }}
+    >
       {/* Header */}
       {renderHeader()}
 

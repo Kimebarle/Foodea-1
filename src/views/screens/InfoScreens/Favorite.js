@@ -17,6 +17,7 @@ import {
   COLORS,
   icons,
   FONTS,
+  dummyData,
 } from "../../../constants";
 import { Header, IconButton } from "../../components/FoodeaComponents";
 import AuthContext from "../../../api/context/auth/AuthContext";
@@ -25,8 +26,9 @@ import axios from "axios";
 
 const Favorite = ({ navigation, data }) => {
   const { userId } = useContext(AuthContext);
-  const [favorite, setFavorite] = React.useState(null);
+  const [favorite, setFavorite] = React.useState();
   const [isFavorite, setIsFavorite] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const fetchFavorite = async () => {
     if (userId === undefined) {
@@ -36,7 +38,9 @@ const Favorite = ({ navigation, data }) => {
           `${BASE_URL}favorites?user_id[eq]=${userId}`
         );
         setFavorite(response.data);
-        //console.log(response.data);
+        setIsLoading(false);
+
+        console.log(`${BASE_URL}favorites?user_id[eq]=${userId}`);
       } catch (error) {
         console.log(error);
       }
@@ -44,6 +48,7 @@ const Favorite = ({ navigation, data }) => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchFavorite();
   }, []);
 

@@ -106,9 +106,6 @@ const TestScreen = ({ navigation }) => {
     );
   }
 
-  function foodinfo() {
-    navigation.push("FoodInfo");
-  }
   function search() {
     navigation.push("Search");
   }
@@ -282,8 +279,7 @@ const TestScreen = ({ navigation }) => {
               itemId={item.id}
               user_id={userId}
               onPress={() => {
-                setItemId(item.id);
-                navigation.navigate("FoodInfo", { itemValue: itemId });
+                navigation.navigate("FoodInfo", { itemId: item.id });
               }}
             />
           )}

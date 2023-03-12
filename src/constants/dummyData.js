@@ -292,7 +292,7 @@ const myCart = [
 ];
 
 const hamburger = {
-  id: 1,
+  id: 10,
   name: "Hamburger",
   name2: "Ingredients",
   description:
@@ -685,36 +685,35 @@ const menu = [
   },
 ];
 
-  const my_cart = [
-    {
-      id: 1,
-      name: "Jollibee",
-      location: "Bagong Silang",
-      quantity: 1,
-      time: 30,
-      distance: 1,
-      icon: require("../../assets/img/dummyData/hamburger.png")
-    },
-    {
-      id: 2,
-      name: "McDonalds",
-      location: "Vicas",
-      quantity: 2,
-      time: 30,
-      distance: 2,
-      icon: require("../../assets/img/dummyData/sundae.png")
-    },
-    {
-      id: 3,
-      name: "Mang Inasal",
-      location: "Bagong Silang",
-      quantity: 1,
-      time: 20,
-      distance: 0.8,
-      icon: require("../../assets/img/dummyData/manginasal_chicken.png")
-    }
-  ];
-
+const my_cart = [
+  {
+    id: 1,
+    name: "Jollibee",
+    location: "Bagong Silang",
+    quantity: 1,
+    time: 30,
+    distance: 1,
+    icon: require("../../assets/img/dummyData/hamburger.png"),
+  },
+  {
+    id: 2,
+    name: "McDonalds",
+    location: "Vicas",
+    quantity: 2,
+    time: 30,
+    distance: 2,
+    icon: require("../../assets/img/dummyData/sundae.png"),
+  },
+  {
+    id: 3,
+    name: "Mang Inasal",
+    location: "Bagong Silang",
+    quantity: 1,
+    time: 20,
+    distance: 0.8,
+    icon: require("../../assets/img/dummyData/manginasal_chicken.png"),
+  },
+];
 
 export default {
   //   myProfile,
@@ -738,5 +737,5 @@ export default {
   KFC_menu,
   Greenwich_categories,
   Greenwich_menu,
-  my_cart
+  my_cart,
 };

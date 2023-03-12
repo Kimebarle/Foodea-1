@@ -27,9 +27,9 @@ import AuthContext from "../../../api/context/auth/AuthContext";
 
 const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
   const { addToCart, userId } = useContext(AuthContext);
-
+  const { itemId } = route.params;
   const [isLoading, setIsLoading] = useState(true);
-  const productId = 5;
+
   const [quantity, setQuantity] = React.useState();
   const [displayFood, setDisplayFood] = React.useState(null);
   const [product_id, setProduct_Id] = React.useState();
@@ -37,12 +37,13 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
   const [restaurant_id, setRestaurant_Id] = React.useState();
   const [quantity_product, setQuantity_Product] = React.useState(1);
   const [total, setTotal] = React.useState(1);
-  const [prod, setProd] = React.useState();
 
   // declare variable that would be used inside the function
   const fetchFood = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}foods?product_id[eq]=7`);
+      const response = await axios.get(
+        `${BASE_URL}foods?product_id[eq]=${itemId}`
+      );
       const data = await response.data;
       const product = await response.data[0].product_id;
       //const custom_id = await response.data[0].customer_id;
@@ -154,7 +155,7 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
   }
 
   return (
-    <View style={{ flex: 1, height: SIZES.height, width: SIZES.width, }}>
+    <View style={{ flex: 1, height: SIZES.height, width: SIZES.width }}>
       {/* header section */}
       <Header
         containerStyle={{
