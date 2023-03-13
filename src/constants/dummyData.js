@@ -693,7 +693,7 @@ const my_cart = [
     quantity: 1,
     time: 30,
     distance: 1,
-    icon: require("../../assets/img/dummyData/hamburger.png"),
+    icon: require("../../assets/img/images/jollibee_logo.png"),
   },
   {
     id: 2,
@@ -702,7 +702,7 @@ const my_cart = [
     quantity: 2,
     time: 30,
     distance: 2,
-    icon: require("../../assets/img/dummyData/sundae.png"),
+    icon: require("../../assets/img/images/mcdonalds-png-logo-simple-m-1.png"),
   },
   {
     id: 3,
@@ -711,7 +711,7 @@ const my_cart = [
     quantity: 1,
     time: 20,
     distance: 0.8,
-    icon: require("../../assets/img/dummyData/manginasal_chicken.png"),
+    icon: require("../../assets/img/images/manginasal.png"),
   },
 ];
 

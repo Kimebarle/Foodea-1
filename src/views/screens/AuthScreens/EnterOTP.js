@@ -14,6 +14,7 @@ import {
   images,
 } from "../../../constants";
 import React, { useRef, useState } from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { apiKey } from "../../../api/context/auth/config";
 
@@ -172,7 +173,7 @@ const EnterOTP = ({ navigation, route }) => {
       <View
         style={{
           flex: 1,
-          marginTop: SIZES.padding * 2,
+          marginTop: SIZES.padding,
           marginHorizontal: SIZES.radius,
         }}
       >
@@ -199,7 +200,8 @@ const EnterOTP = ({ navigation, route }) => {
         style={{
           flexDirection: "row",
           justifyContent: "center",
-          marginTop: 30,
+          marginTop: SIZES.radius,
+          marginBottom: SIZES.padding
         }}
       >
         <Text
@@ -228,35 +230,6 @@ const EnterOTP = ({ navigation, route }) => {
     );
   }
 
-  function renderFooter() {
-    return (
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          position: "absolute",
-          top: 700,
-          left: 55,
-        }}
-      >
-        <TextButton
-          label="Continue"
-          disabled={disabledButton()}
-          buttonContainerStyle={{
-            height: 50,
-            width: 250,
-            alignItems: "center",
-            borderRadius: SIZES.radius,
-            backgroundColor: !disabledButton()
-              ? COLORS.primary
-              : COLORS.transparentPrimray,
-          }}
-          onPress={onPressHandler}
-        />
-      </View>
-    );
-  }
-
   return (
     <View
       style={{
@@ -275,11 +248,36 @@ const EnterOTP = ({ navigation, route }) => {
       {/* OTP DETAILS */}
       {renderOTPDetails()}
 
-      {/* ENTER OTP */}
-      {renderOTPinputs()}
 
-      {/* FOOTER */}
-      {renderFooter()}
+
+      <KeyboardAwareScrollView
+        keyboardDismissMode="on-drag"
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingHorizontal: SIZES.padding,
+        }}
+      >
+        {/* ENTER OTP */}
+        {renderOTPinputs()}
+
+        <TextButton
+          label="Continue"
+          disabled={disabledButton()}
+          buttonContainerStyle={{
+            height: 50,
+            marginTop: SIZES.padding,
+            alignItems: "center",
+            borderRadius: SIZES.radius,
+            marginBottom: SIZES.padding,
+            backgroundColor: !disabledButton()
+              ? COLORS.primary
+              : COLORS.transparentPrimray,
+          }}
+          onPress={onPressHandler}
+        />
+      </KeyboardAwareScrollView>
+
+
     </View>
   );
 };

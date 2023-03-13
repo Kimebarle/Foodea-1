@@ -21,6 +21,7 @@ import { Header } from "../../components/FoodeaComponents";
 
 const MyCartScreen = ({ navigation }) => {
   const [id, setId] = React.useState();
+  const [itemId, setItemId] = React.useState([]);
   const pota = () => {
     console.log(id);
   };
@@ -96,6 +97,8 @@ const MyCartScreen = ({ navigation }) => {
                   marginTop: SIZES.radius,
                 }}
                 onPress={() => {
+                  setItemId(item.id);
+                  console.log(item.id);
                   navigation.navigate("CartScreen", { restaurantID: item.id });
                 }}
               >
