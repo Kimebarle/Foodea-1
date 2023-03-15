@@ -23,6 +23,7 @@ import AuthContext from "../../../api/context/auth/AuthContext";
 import TransactionContext from "../../../api/context/auth/TransactionContext";
 import { BASE_URL } from "../../../api/context/auth/config";
 import { set } from "react-native-reanimated";
+import { Alert } from "react-native";
 
 const CartScreen = ({ navigation, route }) => {
   const { restaurantID } = route.params;
@@ -32,6 +33,10 @@ const CartScreen = ({ navigation, route }) => {
   const [myCartList, setMyCartList] = React.useState(null);
   const [itemId, setItemId] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [price, setPrice] = React.useState(0);
+  const [orderQuantity, setOrderQuantity] = React.useState(0);
+  const [fee, setFee] = React.useState(0);
+
   const fetchCart = useCallback(async () => {
     if (userId === undefined) {
       setMyCartList(dummyData.myCart);
@@ -39,12 +44,20 @@ const CartScreen = ({ navigation, route }) => {
       const response = await axios.get(
         `${BASE_URL}carts?restaurant_id[eq]=${restaurantID}&&customer_id[eq]=${userId}`
       );
-      const data = await response.data;
-      // console.log(response.data[0].product_id);
-      console.log(restaurantID);
-      setMyCartList(data);
+
+      //console.log(response.data[0].product_details.price);
+
+      let totalPrice = 0;
+
+      for (let i = 0; i < response.data.length; i++) {
+        const price = parseInt(response.data[i].product_details.price);
+        totalPrice += price;
+      }
+
+      setPrice(totalPrice);
+      setOrderQuantity(response.data.length);
+      setMyCartList(response.data);
       setIsLoading(false);
-      console.log(userId);
     }
   }, [myCartList, fetchCart]);
 
@@ -62,15 +75,49 @@ const CartScreen = ({ navigation, route }) => {
     setMyCartList(newMyCartList);
   }
 
-  function removeMyCartHandler(id) {
-    let newMyCartList = [...myCartList];
-    const index = newMyCartList.findIndex((myCart) => myCart.id === id);
-    newMyCartList.splice(index, 1);
-    setMyCartList(newMyCartList);
-  }
+  const showAlertWithBooleanResponse = () => {
+    return new Promise((resolve) => {
+      Alert.alert(
+        "Do you want to remove this item from your cart?",
+        "",
+        [
+          {
+            text: "Cancel",
+            onPress: () => resolve(false),
+            style: "cancel",
+          },
+          {
+            text: "OK",
+            onPress: () => resolve(true),
+          },
+        ],
+        { cancelable: false }
+      );
+    });
+  };
 
-  function CardPayment() {
-    navigation.push("CardPayment");
+  async function removeMyCartHandler(id) {
+    const shouldContinue = await showAlertWithBooleanResponse();
+
+    if (shouldContinue) {
+      setIsLoading(true);
+      const response = await axios.delete(`${BASE_URL}carts/${id}`);
+      let totalPrice = 0;
+      let newMyCartList = [...myCartList];
+      const index = newMyCartList.findIndex((myCart) => myCart.id === id);
+      newMyCartList.splice(index, 1);
+      setMyCartList(newMyCartList);
+      setOrderQuantity(newMyCartList.length);
+      for (let i = 0; i < newMyCartList.length; i++) {
+        const price = parseInt(newMyCartList[i].product_details.price);
+        totalPrice += price;
+      }
+      setPrice(totalPrice);
+
+      setIsLoading(false);
+    } else {
+      console.log(showAlertWithBooleanResponse);
+    }
   }
 
   function renderHeader() {
@@ -124,7 +171,7 @@ const CartScreen = ({ navigation, route }) => {
         }}
         disableRightSwipe={true}
         rightOpenValue={-75}
-        renderItem={(data, rowMap) => (
+        renderItem={(data) => (
           <View
             style={{
               height: 100,
@@ -196,7 +243,7 @@ const CartScreen = ({ navigation, route }) => {
             </View>
           </View>
         )}
-        renderHiddenItem={(data, rowMap) => (
+        renderHiddenItem={(data) => (
           <IconButton
             containerStyle={{
               flex: 1,
@@ -210,8 +257,6 @@ const CartScreen = ({ navigation, route }) => {
               tintColor: COLORS.white,
             }}
             onPress={() => {
-              setItemId(data.item.id);
-              console.log(data.item.id);
               removeMyCartHandler(data.item.id);
             }}
           />
@@ -237,10 +282,10 @@ const CartScreen = ({ navigation, route }) => {
       {renderCartList()}
       {/*   Total Cost Section */}
       <FooterTotal
-        subTotal={37.97}
-        shippingFee={0.0}
-        number={2}
-        total={37.97}
+        subTotal={price}
+        shippingFee={fee}
+        number={orderQuantity}
+        total={price + fee}
         onPress={() => navigation.navigate("CardPayment")}
       />
     </View>
