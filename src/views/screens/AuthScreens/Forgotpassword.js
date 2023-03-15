@@ -263,8 +263,8 @@ const Forgotpassword = ({ navigation, route }) => {
             marginTop: SIZES.padding,
             borderRadius: SIZES.radius,
             backgroundColor: isEnableSendEmail()
-              ? COLORS.primary
-              : COLORS.transparentPrimray,
+            ? COLORS.primary
+            : COLORS.gray,
             marginBottom: SIZES.padding,
           }}
           onPress={sendEmailHandler}

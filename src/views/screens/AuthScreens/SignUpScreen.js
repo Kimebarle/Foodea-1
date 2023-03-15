@@ -487,7 +487,7 @@ const SignUpScreen = ({ navigation }) => {
               borderRadius: SIZES.radius,
               backgroundColor: !disabledButton()
                 ? COLORS.primary
-                : COLORS.transparentPrimray,
+                : COLORS.gray,
             }}
             onPress={handleCreateAccount}
           />

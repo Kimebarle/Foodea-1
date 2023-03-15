@@ -180,7 +180,8 @@ const EnterOTP = ({ navigation, route }) => {
         <TextInput
           label="Enter OTP"
           value={otp}
-          maxLength={10}
+          maxLength={6}
+          keyboardType="number-pad"
           placeholderTextColor={COLORS.gray}
           onChangeText={(value) => setOtp(value)}
           style={{
@@ -270,8 +271,8 @@ const EnterOTP = ({ navigation, route }) => {
             borderRadius: SIZES.radius,
             marginBottom: SIZES.padding,
             backgroundColor: !disabledButton()
-              ? COLORS.primary
-              : COLORS.transparentPrimray,
+            ? COLORS.primary
+            : COLORS.gray,
           }}
           onPress={onPressHandler}
         />

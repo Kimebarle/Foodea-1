@@ -259,10 +259,9 @@ const TestScreen = ({ navigation }) => {
   // BEST SELLER ON EACH RESTAURANT
   function renderTrendingSection() {
     return (
-      <Section
-        title="Best Seller!"
-        onPress={() => console.log(" Show All Trending Near You")}
-      >
+      <View style = {{
+        marginTop: SIZES.padding
+      }}>
         <FlatList
           data={trending}
           keyExtractor={(item) => `${item.id}`}
@@ -284,7 +283,7 @@ const TestScreen = ({ navigation }) => {
             />
           )}
         />
-      </Section>
+        </View>
     );
   }
 

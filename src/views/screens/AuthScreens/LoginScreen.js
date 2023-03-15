@@ -116,31 +116,33 @@ const LoginScreen = ({ navigation }) => {
                   onPress={handleSubmit}
                 />
 
+                <TouchableOpacity onPress={handleForgotPassword}>
+                  <Text
+                    style={{
+                      color: COLORS.primary,
+                      ...FONTS.h3,
+                      textAlign: "center",
+                      marginBottom: SIZES.padding
+                    }}
+                  >
+                    Forgot Password
+                  </Text>
+                </TouchableOpacity>
+
                 <Text
                   style={{
                     marginTop: SIZES.base,
                     ...FONTS.h3,
                     textAlign: "center",
+                    marginTop: SIZES.padding
                   }}
                 >
                   Don't have an account?{" "}
                 </Text>
 
                 <TouchableOpacity onPress={handleSignUpPress}>
-                  <Text style={{ color: COLORS.primary, textAlign: 'center', ...FONTS.h3, marginTop: SIZES.base, marginBottom: SIZES.padding }}>
+                  <Text style={{ color: COLORS.primary, textAlign: 'center', ...FONTS.h2 }}>
                     Sign Up</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleForgotPassword}>
-                  <Text
-                    style={{
-                      color: COLORS.primary,
-                      ...FONTS.h2,
-                      textAlign: "center",
-                      marginTop: SIZES.padding
-                    }}
-                  >
-                    Forgot Password
-                  </Text>
                 </TouchableOpacity>
               </>
             )}
