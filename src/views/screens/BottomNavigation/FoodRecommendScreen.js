@@ -9,14 +9,8 @@ import {
 } from "react-native";
 import React from "react";
 import { dummyData, SIZES, icons, COLORS, FONTS } from "../../../constants";
-import CustomImageCarousel from "../../components/FoodeaComponents/CustomImageCarousel";
-import {
-  Header,
-  Button,
-  VerticalFoodCard,
-  HorizontalFoodCard,
-  IconButton,
-} from "../../components/FoodeaComponents";
+
+import { Header, Button } from "../../components/FoodeaComponents";
 import RecommendationComponent from "../../components/FoodeaComponents/RecommendationComponent";
 
 const Section = ({ title, onPress, children, style }) => {
@@ -43,7 +37,7 @@ const Section = ({ title, onPress, children, style }) => {
 const FoodRecommendScreen = ({ navigation }) => {
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
   const [trending, setTrending] = React.useState([]);
-  const [itemId, setItemId] = React.useState([])
+  const [itemId, setItemId] = React.useState([]);
   const [isFavorite, setIsFavorite] = React.useState(true);
   const [isAddCart, setAddCart] = React.useState(true);
 
@@ -51,7 +45,7 @@ const FoodRecommendScreen = ({ navigation }) => {
     handleChangeCategory(selectedMenuType);
   }, []);
 
-  function handleChangeCategory(categoryId, menuTypeId) {
+  function handleChangeCategory(categoryId) {
     // Retrieve the Trending Food Menu
     let selectedTrending = dummyData.menu.find((a) => a.name == "Trending");
 
@@ -138,7 +132,6 @@ const FoodRecommendScreen = ({ navigation }) => {
             marginHorizontal: 5,
           }}
         />
-
       </View>
     </View>
   );

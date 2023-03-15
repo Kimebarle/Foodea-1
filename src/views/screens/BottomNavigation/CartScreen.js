@@ -36,7 +36,7 @@ const CartScreen = ({ navigation, route }) => {
   const [price, setPrice] = React.useState(0);
   const [orderQuantity, setOrderQuantity] = React.useState(0);
   const [fee, setFee] = React.useState(0);
-
+  const [calories, setCalories] = React.useState(0);
   const fetchCart = useCallback(async () => {
     if (userId === undefined) {
       setMyCartList(dummyData.myCart);
@@ -48,12 +48,17 @@ const CartScreen = ({ navigation, route }) => {
       //console.log(response.data[0].product_details.price);
 
       let totalPrice = 0;
-
+      let totalCalories = 0;
       for (let i = 0; i < response.data.length; i++) {
         const price = parseInt(response.data[i].product_details.price);
         totalPrice += price;
       }
 
+      for (let i = 0; i < response.data.length; i++) {
+        const calories = response.data[i].product_details.calories;
+        totalCalories += calories;
+      }
+      setCalories(totalCalories);
       setPrice(totalPrice);
       setOrderQuantity(response.data.length);
       setMyCartList(response.data);
@@ -194,7 +199,7 @@ const CartScreen = ({ navigation, route }) => {
                   width: "100%",
                   height: "100%",
                   position: "absolute",
-                  top: 10,
+                  top: 1,
                 }}
               />
             </View>
@@ -206,7 +211,7 @@ const CartScreen = ({ navigation, route }) => {
                 flexDirection: "row",
               }}
             >
-              <Text style={{ width: 150, ...FONTS.h5, fontSize: 14 }}>
+              <Text style={{ width: 150, ...FONTS.h5, fontSize: 13 }}>
                 {isLoading ? "Loading" : data.item.product_details.product_name}
                 {"\n"}
                 <Text
@@ -216,6 +221,16 @@ const CartScreen = ({ navigation, route }) => {
                   }}
                 >
                   ₱ {isLoading ? "Loading" : data.item.product_details.price}
+                </Text>
+                {"\n"}
+                <Text
+                  style={{
+                    color: COLORS.gray,
+                    ...FONTS.h5,
+                  }}
+                >
+                  {isLoading ? "Loading" : data.item.product_details.calories}{" "}
+                  calories
                 </Text>
               </Text>
 
@@ -282,6 +297,7 @@ const CartScreen = ({ navigation, route }) => {
       {renderCartList()}
       {/*   Total Cost Section */}
       <FooterTotal
+        totalCalories={calories}
         subTotal={price}
         shippingFee={fee}
         number={orderQuantity}
