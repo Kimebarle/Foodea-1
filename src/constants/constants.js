@@ -250,23 +250,15 @@ const tags = [
   },
   {
     id: 4,
-    label: "Asian",
-  },
-  {
-    id: 5,
     label: "Dessert",
   },
   {
-    id: 6,
+    id: 5,
     label: "Breakfast",
   },
   {
-    id: 7,
+    id: 6,
     label: "Vegetable",
-  },
-  {
-    id: 8,
-    label: "Taccos",
   },
 ];
 

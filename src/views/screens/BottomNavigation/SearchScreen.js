@@ -60,6 +60,7 @@ const SearchScreen = ({ navigation }) => {
   const [recommends, setRecommends] = React.useState([])
   const [menuList, setMenuList] = React.useState([])
   const [showFilterModal, setShowFilterModal] = React.useState(false)
+  const [itemId, setItemId] = React.useState([]);
 
   React.useEffect(() => {
     handleChangeCategory(selectedCategoryId, selectedMenuType)
@@ -236,7 +237,7 @@ const SearchScreen = ({ navigation }) => {
   function renderFoodCategories() {
     return (
       <FlatList
-        data={dummyData.categories}
+        data={dummyData.other_restaurant}
         keyExtractor={(item) => `${item.id}`}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -268,6 +269,95 @@ const SearchScreen = ({ navigation }) => {
       />
     )
   }
+
+  function renderOtherRestaurant() {
+    return (
+      <FlatList
+        data={dummyData.other_restaurant}
+        keyExtractor={(item) => `${item.id}`}
+        vertical
+        renderItem={({ item, index }) => (
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              height: 100,
+              width: 300,
+              marginLeft: SIZES.padding,
+              marginRight: SIZES.padding,
+              marginBottom: SIZES.base,
+              paddingHorizontal: 8,
+              borderRadius: SIZES.radius,
+              backgroundColor: COLORS.white,
+            }}
+            onPress={() => {
+              setItemId(item.id);
+              console.log(item.id);
+              navigation.navigate("HomeScreen");
+            }}
+          >
+            <Image
+              source={item.icon}
+              style={{
+                marginTop: 5,
+                height: 60,
+                width: 60,
+                alignSelf: "center",
+                marginRight: SIZES.radius,
+              }}
+            />
+
+            <View
+              style={{
+                marginTop: 5,
+              }}
+            >
+              <Text
+                style={{
+                  marginRight: SIZES.base,
+                  color: COLORS.black,
+                  ...FONTS.h2,
+                }}
+              >
+                {item.name}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: SIZES.base,
+                }}
+              >
+                <Text
+                  style={{
+                    ...FONTS.h4,
+                    color: COLORS.gray,
+                  }}
+                >
+                  {item.time} mins • {item.distance} km
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
+                <Text
+                  style={{
+                    ...FONTS.h5,
+                    fontSize: 10,
+                    color: COLORS.gray,
+                  }}
+                >
+                  {item.label} • {item.food} • {item.type}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
+    );
+  }
+
   return (
     <View style={{
       flex: 1, height: SIZES.height,
@@ -276,9 +366,8 @@ const SearchScreen = ({ navigation }) => {
       {/* Header */}
       <Header
         containerStyle={{
-          height: 50,
+          height: 80,
           paddingHorizontal: SIZES.padding,
-          marginTop: 10,
           alignItems: "center",
         }}
         title={"Search"}
@@ -329,27 +418,29 @@ const SearchScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <View style={{ paddingBottom: SIZES.padding }}>
-            {/* Food Categories */}
-            {renderFoodCategories()}
+            
+            <View
+              style={{
+                marginLeft: SIZES.padding,
+                marginBottom: SIZES.radius,
+              }}
+            >
+              <Text
+                style={{
+                  ...FONTS.h3,
+                }}
+              >
+                Restaurants
+              </Text>
+            </View>
+
+            {/* Other Restaurant */}
+            {renderOtherRestaurant()}
           </View>
         }
         renderItem={({ item, index }) => {
           return (
-            <HorizontalFoodCard
-              containerStyle={{
-                height: 130,
-                alignItems: "center",
-                marginHorizontal: SIZES.padding,
-                marginBottom: SIZES.radius,
-              }}
-              imageStyle={{
-                marginTop: 20,
-                height: 110,
-                width: 110,
-              }}
-              item={item}
-              onPress={() => console.log("kekw")}
-            />
+            <View></View>
           );
         }}
       />

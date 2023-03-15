@@ -309,6 +309,7 @@ const SignUpScreen = ({ navigation }) => {
             label="Gender"
             placeholder={"Select Gender"}
             setSelected={setSelected}
+            notFoundText='No Data Exists, Please Input Suitable Gender'
             boxStyles={{
               backgroundColor: COLORS.lightGray2,
               borderWidth: 0,
