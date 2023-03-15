@@ -44,7 +44,7 @@ const TwoPointSlider = ({ values, min, max, prefix, postfix, onValuesChange }) =
                             backgroundColor: COLORS.primary,
                             ...styles.shadow
                         }}/>
-                        <Text style = {{marginTop: 5, color: COLORS.darkGray, ...FONTS.body3}}>
+                        <Text style = {{marginTop: 5, color: COLORS.darkGray, ...FONTS.h3}}>
                             {prefix}{e.currentValue} {postfix}
                         </Text>
                     </View>

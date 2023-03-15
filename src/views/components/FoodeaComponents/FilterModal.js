@@ -91,7 +91,7 @@ const FilterModal = ({ isVisible, onClose }) => {
                                 label={item.label}
                                 labelStyle={{
                                     color: item.id == deliveryTime ? COLORS.white : COLORS.gray,
-                                    ...FONTS.body3
+                                    ...FONTS.h3
                                 }}
                                 buttonContainerStyle={{
                                     width: "30%",
@@ -105,23 +105,6 @@ const FilterModal = ({ isVisible, onClose }) => {
                             />
                         )
                     })}
-                </View>
-            </Section>
-        )
-    }
-
-    function renderPricingRange() {
-        return (
-            <Section title="Pricing Range">
-                <View style={{ alignItems: 'center' }}>
-                    <TwoPointSlider
-                        valus={[10, 50]}
-                        min={1}
-                        max={100}
-                        prefix="$"
-                        postfix=""
-                        onValuesChange={(values) => console.log(values)}
-                    />
                 </View>
             </Section>
         )
@@ -141,15 +124,17 @@ const FilterModal = ({ isVisible, onClose }) => {
                                 label={item.label}
                                 labelStyle={{
                                     color: item.id == tags ? COLORS.white : COLORS.gray,
-                                    ...FONTS.body3
+                                    ...FONTS.h4
                                 }}
                                 buttonContainerStyle={{
-                                    height: 50,
+                                    height: 30,
                                     margin: 5,
-                                    paddingHorizontal: SIZES.padding,
+                                    paddingHorizontal: SIZES.base,
                                     alignItems: 'center',
                                     borderRadius: SIZES.base,
-                                    backgroundColor: item.d == tags ? COLORS.primary : COLORS.lightGray2,
+                                    borderColor:
+                                        tags == item.id ? COLORS.primary : COLORS.white,
+                                    backgroundColor: COLORS.lightGray2
                                 }}
                                 onPress={() => setTags(item.id)}
                             />
@@ -225,35 +210,30 @@ const FilterModal = ({ isVisible, onClose }) => {
                         {/* Delivery Time */}
                         {renderDeliveryTime()}
 
-                        {/* Pricing Range */}
-                        {renderPricingRange()}
-
                         {/* Tags */}
                         {renderTags()}
 
                     </ScrollView>
 
                     {/* Apply Button */}
-                        <View style = {{
-                            position: 'absolute',
-                            bottom: 150,
-                            left: 0,
-                            right: 0,
-                            height: 110,
-                            paddingHorizontal: SIZES.padding,
-                            paddingVertical: SIZES.radius,
-                            backgroundColor: COLORS.white
-                        }}>
-                            <TextButton
+                    <View style={{
+                        paddingHorizontal: SIZES.padding,
+                        paddingVertical: SIZES.radius,
+                        backgroundColor: COLORS.white
+                    }}>
+                        <TextButton
                             label="Apply Filters"
                             buttonContainerStyle={{
                                 height: 50,
-                                borderRadius: SIZES.base,
-                                backgroundColor: COLORS.primary,
+                                marginTop: SIZES.padding,
+                                alignItems: "center",
+                                borderRadius: SIZES.radius,
+                                marginBottom: SIZES.padding,
+                                backgroundColor: COLORS.primary
                             }}
-                            onPress={() => console.log("Apply Filters")}
-                            />
-                        </View>
+                            onPress={() => console.log("Applied Filters")}
+                        />
+                    </View>
                 </Animated.View>
             </View>
         </Modal>
