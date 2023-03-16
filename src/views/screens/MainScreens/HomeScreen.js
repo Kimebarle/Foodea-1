@@ -24,6 +24,8 @@ import {
   HorizontalFoodCard,
   VerticalFoodCard,
 } from "../../components/FoodeaComponents";
+import axios from "axios";
+import { BASE_URL } from "../../../api/context/auth/config";
 
 const Section = ({ title, onPress, children }) => {
   return (
@@ -50,48 +52,57 @@ const Section = ({ title, onPress, children }) => {
   );
 };
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, route }) => {
   //   const { logout, user } = useContext(AuthContext);
+  const { restaurantId } = route.params;
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
-  const [trending, setTrending] = React.useState([]);
+  const [trending, setTrending] = React.useState();
   const [recommends, setRecommends] = React.useState([]);
   const [menuList, setMenuList] = React.useState([]);
   const [itemId, setItemId] = React.useState("");
   const [foodId, setFoodId] = React.useState();
 
-  React.useEffect(() => {
-    handleChangeCategory(selectedCategoryId, selectedMenuType);
-  }, []);
+  // React.useEffect(() => {
+  //   handleChangeCategory(selectedCategoryId, selectedMenuType);
+  // }, []);
 
   // Handler
 
-  function handleChangeCategory(categoryId, menuTypeId) {
-    // Retrieve the Trending Food Menu
-    let selectedTrending = dummyData.Greenwich_menu.find(
-      (a) => a.name == "Trending"
-    );
+  const fetchFoodFromRestaurant = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}foods?merchant_id[eq]=${restaurantId}`
+      );
+      setTrending(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    // Find the menu
-    let selectedMenu = dummyData.Greenwich_menu.find((a) => a.id == menuTypeId);
+  useEffect(() => {
+    fetchFoodFromRestaurant();
+  }, []);
 
-    // Set the trending menu based on the cateroryID
-    setTrending(
-      selectedTrending?.list.filter((a) => a.categories.includes(categoryId))
-    );
+  // function handleChangeCategory(categoryId, menuTypeId) {
+  //   // Retrieve the Trending Food Menu
+  //   let selectedTrending = dummyData.Greenwich_menu.find(
+  //     (a) => a.name == "Trending"
+  //   );
 
-    // Set menu based on the category ID
-    setMenuList(
-      selectedMenu?.list.filter((a) => a.categories.includes(categoryId))
-    );
-  }
+  //   // Find the menu
+  //   let selectedMenu = dummyData.Greenwich_menu.find((a) => a.id == menuTypeId);
 
-  function foodinfo() {
-    navigation.push("FoodInfo");
-  }
-  function search() {
-    navigation.push("Search");
-  }
+  //   // Set the trending menu based on the cateroryID
+  //   setTrending(
+  //     selectedTrending?.list.filter((a) => a.categories.includes(categoryId))
+  //   );
+
+  //   // Set menu based on the category ID
+  //   setMenuList(
+  //     selectedMenu?.list.filter((a) => a.categories.includes(categoryId))
+  //   );
+  // }
 
   function onPressHandler() {}
 
@@ -114,8 +125,8 @@ const HomeScreen = ({ navigation }) => {
                 index == dummyData.menu.length - 1 ? SIZES.padding : 0,
             }}
             onPress={() => {
-              setSelectedMenuType(item.id);
-              handleChangeCategory(selectedCategoryId, item.id);
+              // setSelectedMenuType(item.id);
+              // handleChangeCategory(selectedCategoryId, item.id);
             }}
           >
             <Text
@@ -141,7 +152,7 @@ const HomeScreen = ({ navigation }) => {
       >
         <FlatList
           data={trending}
-          keyExtractor={(item) => `${item.id}`}
+          keyExtractor={(item) => `${item.product_id}`}
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => (
@@ -154,8 +165,7 @@ const HomeScreen = ({ navigation }) => {
               itemId={item.id}
               // userId={userId}
               onPress={() => {
-                setItemId(item.id);
-                navigation.navigate("FoodInfo", { itemValue: itemId });
+                navigation.navigate("FoodInfo", { itemValue: item.product_id });
               }}
             />
           )}
@@ -277,8 +287,8 @@ const HomeScreen = ({ navigation }) => {
 
       {/* List */}
       <FlatList
-        data={menuList}
-        keyExtractor={(item) => `${item.id}`}
+        data={trending}
+        keyExtractor={(item) => `${item.product_id}`}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <View>
@@ -309,7 +319,7 @@ const HomeScreen = ({ navigation }) => {
                 height: 110,
                 width: 110,
               }}
-              itemId={item.id}
+              itemId={item.product_id}
               item={item}
               onPress={onPressHandler(foodId, item.id)}
             />

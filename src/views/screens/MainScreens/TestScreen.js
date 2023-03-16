@@ -124,7 +124,7 @@ const TestScreen = ({ navigation }) => {
             onPress={() => {
               setItemId(item.id);
               console.log(item.id);
-              navigation.navigate("HomeScreen");
+              navigation.navigate("HomeScreen", { restaurantId: item.id });
             }}
           >
             <Image

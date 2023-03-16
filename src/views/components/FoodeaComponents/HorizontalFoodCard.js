@@ -37,7 +37,10 @@ const HorizontalFoodCard = ({
         onPress={onPress}
       >
         {/* image */}
-        <Image source={item.image} style={imageStyle} />
+        <Image
+          source={require("../../../../assets/img/dummyData/hamburger.png")}
+          style={imageStyle}
+        />
         <View style={{ flex: 1 }}>
           {/* price */}
           <Text
@@ -51,16 +54,16 @@ const HorizontalFoodCard = ({
           </Text>
 
           {/* name */}
-          <Text style={{ fontSize: 20, marginLeft: 10, fontWeight: "bold" }}>
-            {item.name}
+          <Text style={{ fontSize: 18, marginLeft: 10, fontWeight: "bold" }}>
+            {item.product_name}
           </Text>
 
           {/* distance and waiting time */}
           <View style={{ flexDirection: "row", marginTop: 20 }}>
             <Image source={icons.location} />
-            <Text style={{ marginRight: 10 }}>{item.distance} km</Text>
+            <Text style={{ marginRight: 10 }}>2 km</Text>
             <Image source={icons.Waiting_Time} />
-            <Text style={{ marginRight: 20 }}>{item.time} mins</Text>
+            <Text style={{ marginRight: 20 }}>40 mins</Text>
           </View>
 
           {/* images */}
