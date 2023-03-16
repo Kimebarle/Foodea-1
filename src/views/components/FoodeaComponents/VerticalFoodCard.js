@@ -140,7 +140,7 @@ const VerticalFoodCard = ({
         }}
       >
         <Image
-          source={item.image}
+          source={require("../../../../assets/img/dummyData/hamburger.png")}
           style={{
             height: "100%",
             width: "100%",
@@ -155,7 +155,7 @@ const VerticalFoodCard = ({
           marginTop: -20,
         }}
       >
-        <Text style={{ ...FONTS.h3 }}>{item.name}</Text>
+        <Text style={{ ...FONTS.h3 }}>{item.product_name}</Text>
         <Text style={{ color: COLORS.black, textAlign: "center", ...FONTS.h2 }}>
           ₱ {item.price}
         </Text>

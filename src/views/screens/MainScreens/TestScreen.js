@@ -24,6 +24,9 @@ import {
   HorizontalFoodCard,
   VerticalFoodCard,
 } from "../../components/FoodeaComponents";
+import { BASE_URL } from "../../../api/context/auth/config";
+import axios from "axios";
+import { List } from "react-native-paper";
 
 const Section = ({ title, onPress, children }) => {
   return (
@@ -51,60 +54,33 @@ const Section = ({ title, onPress, children }) => {
 };
 
 const TestScreen = ({ navigation }) => {
-  const { logout, userId } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
-  const [discountType, setDiscountType] = React.useState(1);
-  const [selectedRestaurant, setSelectedRestaurant] = React.useState(1);
   const [trending, setTrending] = React.useState([]);
-  const [recommends, setRecommends] = React.useState([]);
   const [menuList, setMenuList] = React.useState([]);
-  const [restaurant, setRestaurant] = React.useState([]);
   const [itemId, setItemId] = React.useState([]);
-  const [isAddCart, setAddCart] = React.useState(true);
+
+  const [itemsDisplay, setItemDisplay] = React.useState(null);
 
   React.useEffect(() => {
-    handleChangeCategory(
-      selectedCategoryId,
-      selectedMenuType,
-      discountType,
-      selectedRestaurant
-    );
+    // handleChangeCategory(
+    //   selectedCategoryId,
+    //   selectedMenuType,
+    //   discountType,
+    //   selectedRestaurant
+    // );
+    getItemTable();
   }, []);
 
-  // Handler
-
-  function handleChangeCategory(categoryId, menuTypeId, restaurantId) {
-    // Retrieve the Trending Food Menu
-    let selectedTrending = dummyData.menu_restaurant.find(
-      (a) => a.name == "All Food"
-    );
-
-    // Find the menu
-    let selectedMenu = dummyData.menu_restaurant.find(
-      (a) => a.id == menuTypeId
-    );
-
-    // Find the restaurant
-    let selectedRestaurant = dummyData.other_restaurant.find(
-      (a) => a.id == restaurantId
-    );
-
-    // Set the trending menu based on the cateroryID
-    setTrending(
-      selectedTrending?.list.filter((a) => a.categories.includes(categoryId))
-    );
-
-    // Set menu based on the category ID
-    setMenuList(
-      selectedMenu?.list.filter((a) => a.categories.includes(categoryId))
-    );
-
-    // Set restaurant based on the category ID
-    setRestaurant(
-      selectedMenu?.list.filter((a) => a.categories.includes(categoryId))
-    );
-  }
+  const getItemTable = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}foods?merchant_id[eq]=1`);
+      setItemDisplay(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   function search() {
     navigation.push("Search");
@@ -259,12 +235,14 @@ const TestScreen = ({ navigation }) => {
   // BEST SELLER ON EACH RESTAURANT
   function renderTrendingSection() {
     return (
-      <View style = {{
-        marginTop: SIZES.padding
-      }}>
+      <View
+        style={{
+          marginTop: SIZES.padding,
+        }}
+      >
         <FlatList
-          data={trending}
-          keyExtractor={(item) => `${item.id}`}
+          data={itemsDisplay}
+          keyExtractor={(item) => `${item.product_id}`}
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => (
@@ -275,15 +253,15 @@ const TestScreen = ({ navigation }) => {
               }}
               item={item}
               // add a favorite component then pass the favorite value to the component
-              itemId={item.id}
+              itemId={item.product_id}
               user_id={userId}
               onPress={() => {
-                navigation.navigate("FoodInfo", { itemId: item.id });
+                navigation.navigate("FoodInfo", { itemId: item.product_id });
               }}
             />
           )}
         />
-        </View>
+      </View>
     );
   }
 

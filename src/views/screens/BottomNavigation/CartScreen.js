@@ -28,10 +28,7 @@ import { Alert } from "react-native";
 const CartScreen = ({ navigation, route }) => {
   const { restaurantID } = route.params;
   const { userInfo, userId } = useContext(AuthContext);
-  const [myCart, setMyCart] = React.useState(null);
-  const [productId, setProductId] = React.useState(null);
   const [myCartList, setMyCartList] = React.useState(null);
-  const [itemId, setItemId] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [price, setPrice] = React.useState(0);
   const [orderQuantity, setOrderQuantity] = React.useState(0);
@@ -80,6 +77,29 @@ const CartScreen = ({ navigation, route }) => {
     setMyCartList(newMyCartList);
   }
 
+  const onSubmitHandler = async () => {
+    let newCart = [...myCartList];
+
+    const deleteItems = newCart.map();
+
+    const updatedItems = newCart.map((item) => {
+      return {
+        ...item,
+        merchant_id: restaurantID,
+      };
+    });
+
+    const toJson = JSON.stringify(updatedItems);
+
+    // console.log(toJson);
+    try {
+      const response = await axios.post(`${BASE_URL}orders`, { toJson });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const showAlertWithBooleanResponse = () => {
     return new Promise((resolve) => {
       Alert.alert(
@@ -108,6 +128,7 @@ const CartScreen = ({ navigation, route }) => {
       setIsLoading(true);
       const response = await axios.delete(`${BASE_URL}carts/${id}`);
       let totalPrice = 0;
+      let totalCalories = 0;
       let newMyCartList = [...myCartList];
       const index = newMyCartList.findIndex((myCart) => myCart.id === id);
       newMyCartList.splice(index, 1);
@@ -117,8 +138,12 @@ const CartScreen = ({ navigation, route }) => {
         const price = parseInt(newMyCartList[i].product_details.price);
         totalPrice += price;
       }
+      for (let i = 0; i < newMyCartList.length; i++) {
+        const calories = parseInt(newMyCartList[i].product_details.calories);
+        totalCalories += calories;
+      }
       setPrice(totalPrice);
-
+      setCalories(totalCalories);
       setIsLoading(false);
     } else {
       console.log(showAlertWithBooleanResponse);
@@ -302,7 +327,7 @@ const CartScreen = ({ navigation, route }) => {
         shippingFee={fee}
         number={orderQuantity}
         total={price + fee}
-        onPress={() => navigation.navigate("CardPayment")}
+        onPress={onSubmitHandler}
       />
     </View>
   );

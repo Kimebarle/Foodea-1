@@ -23,6 +23,7 @@ import { Header, IconButton } from "../../components/FoodeaComponents";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { BASE_URL } from "../../../api/context/auth/config";
 import axios from "axios";
+import { Alert } from "react-native";
 
 const Favorite = ({ navigation, data }) => {
   const { userId } = useContext(AuthContext);
@@ -39,8 +40,6 @@ const Favorite = ({ navigation, data }) => {
         );
         setFavorite(response.data);
         setIsLoading(false);
-
-        console.log(`${BASE_URL}favorites?user_id[eq]=${userId}`);
       } catch (error) {
         console.log(error);
       }
@@ -52,11 +51,43 @@ const Favorite = ({ navigation, data }) => {
     fetchFavorite();
   }, []);
 
-  function removeFavorite(id) {
-    let newFavorite = [...favorite];
-    const index = newFavorite.findIndex((Favorites) => Favorites.id === id);
-    newFavorite.splice(index, 1);
-    setFavorite(newFavorite);
+  const showAlertWithBooleanResponse = () => {
+    return new Promise((resolve) => {
+      Alert.alert(
+        "Do you want to remove this item from your cart?",
+        "",
+        [
+          {
+            text: "Cancel",
+            onPress: () => resolve(false),
+            style: "cancel",
+          },
+          {
+            text: "OK",
+            onPress: () => resolve(true),
+          },
+        ],
+        { cancelable: false }
+      );
+    });
+  };
+
+  async function removeFavorite(id) {
+    const shouldContinue = await showAlertWithBooleanResponse();
+
+    if (shouldContinue) {
+      setIsLoading(true);
+      const response = await axios.delete(`${BASE_URL}favorites/${id}`);
+
+      console.log(response.data);
+      let newFavorite = [...favorite];
+      const index = newFavorite.findIndex((Favorites) => Favorites.id === id);
+      newFavorite.splice(index, 1);
+      setFavorite(newFavorite);
+      setIsLoading(false);
+    } else {
+      console.log("no");
+    }
   }
 
   function renderHeader() {
@@ -131,7 +162,6 @@ const Favorite = ({ navigation, data }) => {
                 height: 130,
                 width: 350,
               }}
-              onPress={() => console.log("Favorites")}
             >
               {/* image */}
               <Image
@@ -182,7 +212,7 @@ const Favorite = ({ navigation, data }) => {
                       top: 20,
                       right: 7,
                     }}
-                    onPress={() => removeFavorite(id)}
+                    onPress={() => removeFavorite(item.id)}
                   />
                 </View>
               </View>

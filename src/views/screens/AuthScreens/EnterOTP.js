@@ -19,7 +19,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { apiKey } from "../../../api/context/auth/config";
 
 const EnterOTP = ({ navigation, route }) => {
-  const { emailValue = "default1" } = route.params;
+  const { emailValue } = route.params;
   const [otp, setOtp] = React.useState("");
   const [timer, setTimer] = React.useState(5);
   const [otpGenerate, setOtpGenerate] = React.useState("default");
@@ -70,7 +70,10 @@ const EnterOTP = ({ navigation, route }) => {
 
   const onPressHandler = async () => {
     const kekw = generateOtp();
-    console.log(kekw);
+
+    let user_email = emailValue;
+    console.log(user_email);
+    navigation.navigate("Resetpassword", { passwordEmail: user_email });
   };
 
   function renderHeader() {
@@ -202,7 +205,7 @@ const EnterOTP = ({ navigation, route }) => {
           flexDirection: "row",
           justifyContent: "center",
           marginTop: SIZES.radius,
-          marginBottom: SIZES.padding
+          marginBottom: SIZES.padding,
         }}
       >
         <Text
@@ -249,8 +252,6 @@ const EnterOTP = ({ navigation, route }) => {
       {/* OTP DETAILS */}
       {renderOTPDetails()}
 
-
-
       <KeyboardAwareScrollView
         keyboardDismissMode="on-drag"
         contentContainerStyle={{
@@ -270,15 +271,11 @@ const EnterOTP = ({ navigation, route }) => {
             alignItems: "center",
             borderRadius: SIZES.radius,
             marginBottom: SIZES.padding,
-            backgroundColor: !disabledButton()
-            ? COLORS.primary
-            : COLORS.gray,
+            backgroundColor: !disabledButton() ? COLORS.primary : COLORS.gray,
           }}
           onPress={onPressHandler}
         />
       </KeyboardAwareScrollView>
-
-
     </View>
   );
 };
