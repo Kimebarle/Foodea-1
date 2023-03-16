@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Image, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import {
     Header,
     EditButton,
@@ -12,6 +12,9 @@ import {
 } from "../../components/FoodeaComponents";
 import { icons, SIZES, COLORS, dummyData, FONTS, images } from "../../../constants";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import utils, { Utils } from "../../../utils/Utils";
+
+import { SelectList } from "react-native-dropdown-select-list";
 
 const EditProfile = ({ navigation, route }) => {
 
@@ -40,6 +43,36 @@ const EditProfile = ({ navigation, route }) => {
     const [gender, setGender] = React.useState("");
     const [genderError, setGenderError] = React.useState("");
     const [bmi, setBmi] = React.useState();
+    const [checkValidEmail, setCheckValidEmail] = React.useState(false);
+
+    const disabledButton = () => {
+        return (
+            !password ||
+            !email ||
+            !firstname ||
+            !middlename ||
+            !lastname ||
+            password != reenterpassword
+        );
+    };
+
+    const handleCheckEmail = (value) => {
+        let re = /\S+@\S+\.\S+/;
+        let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+        setEmail(value);
+        if (re.test(value) || regex.test(value)) {
+            setCheckValidEmail(false);
+        } else {
+            setCheckValidEmail(true);
+        }
+    };
+
+    const [selected, setSelected] = React.useState("");
+    const data = [
+        { key: "M", value: "Male" },
+        { key: "F", value: "Female" },
+    ];
 
 
 
@@ -165,22 +198,26 @@ const EditProfile = ({ navigation, route }) => {
                     />
 
                     {/* Gender */}
-                    <FormInput
+                    <Text
+                        style={{
+                            color: COLORS.gray,
+                            ...FONTS.h3,
+                            fontSize: 15,
+                        }}
+                    >
+                        Gender
+                    </Text>
+
+                    <SelectList
+                        data={data}
                         label="Gender"
-                        placeholder="M or F"
-                        value={gender}
-                        maxLength={6}
-                        containerStyle={{
-                            flex: 1,
+                        placeholder={"Select Gender"}
+                        setSelected={setSelected}
+                        notFoundText='No Data Exists, Please Input Suitable Gender'
+                        boxStyles={{
+                            backgroundColor: COLORS.lightGray2,
+                            borderWidth: 0,
                         }}
-                        onChange={(value) => {
-                            utils.validateInput(value, 1, setGenderError);
-                            setGender(value);
-                        }}
-                        errorMsg={genderError}
-                        appendComponent={
-                            <FormInputCheck value={gender} error={genderError} />
-                        }
                     />
 
                     {/* Height and Weight */}
@@ -203,10 +240,6 @@ const EditProfile = ({ navigation, route }) => {
                                 utils.validateInput(value, 1, setHeightError);
                                 setHeight(value);
                             }}
-                            errorMsg={heightError}
-                            appendComponent={
-                                <FormInputCheck value={height} error={heightError} />
-                            }
                         />
 
                         <FormInput
@@ -223,10 +256,6 @@ const EditProfile = ({ navigation, route }) => {
                                 utils.validateInput(value, 1, setWeightError);
                                 setWeight(value);
                             }}
-                            errorMsg={weightError}
-                            appendComponent={
-                                <FormInputCheck value={weight} error={weightError} />
-                            }
                         />
                     </View>
 
@@ -238,12 +267,23 @@ const EditProfile = ({ navigation, route }) => {
                         label="Email"
                         value={email}
                         onChange={(value) => {
-                            utils.validateInput(value, 1, setEmailError);
+                            handleCheckEmail(value);
                             setEmail(value);
                         }}
-                        errorMsg={emailError}
                         appendComponent={
-                            <FormInputCheck value={email} error={emailError} />
+                            <View
+                                style={{
+                                    position: "absolute",
+                                    bottom: 50,
+                                    right: 2,
+                                }}
+                            >
+                                {checkValidEmail ? (
+                                    <Text style={styles.textFailed}>Wrong format email</Text>
+                                ) : (
+                                    <Text style={styles.textFailed}> </Text>
+                                )}
+                            </View>
                         }
                     />
 
@@ -254,16 +294,11 @@ const EditProfile = ({ navigation, route }) => {
                         }}
                         label="Phone Number"
                         value={phone}
-                        maxLength={13}
+                        maxLength={11}
                         keyboardType="number-pad"
                         onChange={(value) => {
-                            setPhone(
-                                value
-                                    .replace(/\s/g, "")
-                                    .replace(/(\d{4})/g, "$1 ")
-                                    .trim()
-                            );
-                            utils.validateInput(value, 13, setPhoneError);
+                            setPhone(value)
+                            utils.validateInput(value, 11, setPhoneError);
                         }}
                         errorMsg={phoneError}
                         appendComponent={
@@ -323,19 +358,23 @@ const EditProfile = ({ navigation, route }) => {
                             />
                         }
                     />
-                    <TextButton
-                        label="Save Details"
-                        buttonContainerStyle={{
-                            marginTop: SIZES.radius,
-                            marginBottom: SIZES.padding,
-                            height: 55,
-                            borderRadius: SIZES.radius,
-                            backgroundColor: COLORS.primary,
-                        }}
-                        onPress={() => console.log("Saved Details")}
-                    />
 
                 </KeyboardAwareScrollView >
+
+                <TextButton
+                    label="Save Details"
+                    disabled={disabledButton()}
+                    buttonContainerStyle={{
+                        marginTop: SIZES.radius,
+                        marginBottom: SIZES.padding,
+                        height: 55,
+                        borderRadius: SIZES.radius,
+                        backgroundColor: !disabledButton()
+                            ? COLORS.primary
+                            : COLORS.gray,
+                    }}
+                    onPress={() => console.log("Saved Details")}
+                />
 
             </View >
         )
@@ -382,3 +421,11 @@ const EditProfile = ({ navigation, route }) => {
 }
 
 export default EditProfile;
+
+const styles = StyleSheet.create({
+    textFailed: {
+        alignSelf: "flex-end",
+        color: "red",
+        ...FONTS.h4,
+    },
+});

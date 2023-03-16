@@ -47,42 +47,45 @@ const HorizontalFoodCard = ({
             style={{
               fontSize: 14,
               fontWeight: "bold",
-              marginLeft: 10,
+              marginLeft: 5,
             }}
           >
             ₱ {item.price}
           </Text>
 
           {/* name */}
-          <Text style={{ fontSize: 18, marginLeft: 10, fontWeight: "bold" }}>
+          <Text style={{ fontSize: 15.5, fontWeight: "bold", marginLeft: 5 }}>
             {item.product_name}
           </Text>
 
           {/* distance and waiting time */}
-          <View style={{ flexDirection: "row", marginTop: 20 }}>
-            <Image source={icons.location} />
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <Image source={icons.location} style = {{
+              height: 20,
+              width: 20, 
+              marginRight: 5,
+            }}/>
             <Text style={{ marginRight: 10 }}>2 km</Text>
-            <Image source={icons.Waiting_Time} />
+            <Image source={icons.Waiting_Time} style = {{
+              marginRight: 5,
+            }}/>
             <Text style={{ marginRight: 20 }}>40 mins</Text>
           </View>
 
           {/* images */}
-          <View style={{ position: "absolute", top: 0, right: 23 }}>
+          <View style={{ position: 'absolute', top: -10, right: 15 }}>
             <IconButton
               icon={isFavorite ? icons.favourite : icons.love}
               iconStyle={{
                 tintColor: COLORS.primary,
-                position: "absolute",
                 height: 25,
                 width: 25,
-                top: 0,
-                right: 0,
               }}
               onPress={favoriteHandler}
             />
           </View>
 
-          <View style={{ position: "absolute", top: 59, right: 23 }}>
+          <View style={{ position: "absolute", top: 59, right: 15 }}>
             <TouchableOpacity>
               <Image
                 source={icons.cart}

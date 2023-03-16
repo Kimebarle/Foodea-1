@@ -351,8 +351,8 @@ const MyAvatar = ({ navigation }) => {
   return (
     <View
       style={{
+        flex: 1,
         alignItems: "center",
-        justifyContent: "center",
         height: SIZES.height,
         width: SIZES.width,
       }}

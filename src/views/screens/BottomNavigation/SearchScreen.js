@@ -292,7 +292,6 @@ const SearchScreen = ({ navigation }) => {
             onPress={() => {
               setItemId(item.id);
               console.log(item.id);
-              navigation.navigate("HomeScreen");
             }}
           >
             <Image

@@ -41,9 +41,6 @@ const Section = ({ title, onPress, children }) => {
       >
         <Text style={{ flex: 1, ...FONTS.h3 }}>{title}</Text>
 
-        <TouchableOpacity onPress={onPress}>
-          <Text style={{ color: COLORS.primary, ...FONTS.h4 }}>Show All</Text>
-        </TouchableOpacity>
       </View>
 
       {/* Content */}
@@ -310,6 +307,7 @@ const HomeScreen = ({ navigation, route }) => {
             <HorizontalFoodCard
               containerStyle={{
                 height: 130,
+                width: 350,
                 alignItems: "center",
                 marginHorizontal: SIZES.padding,
                 marginBottom: SIZES.radius,

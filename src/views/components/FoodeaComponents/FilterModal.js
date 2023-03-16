@@ -116,6 +116,7 @@ const FilterModal = ({ isVisible, onClose }) => {
                 <View style={{
                     flexDirection: 'row',
                     flexWrap: 'wrap',
+                    marginBottom: SIZES.padding
                 }}>
                     {constants.tags.map((item, index) => {
                         return (
@@ -132,9 +133,8 @@ const FilterModal = ({ isVisible, onClose }) => {
                                     paddingHorizontal: SIZES.base,
                                     alignItems: 'center',
                                     borderRadius: SIZES.base,
-                                    borderColor:
-                                        tags == item.id ? COLORS.primary : COLORS.white,
-                                    backgroundColor: COLORS.lightGray2
+                                    backgroundColor:
+                                        tags == item.id ? COLORS.primary : COLORS.lightGray1,
                                 }}
                                 onPress={() => setTags(item.id)}
                             />
@@ -198,12 +198,7 @@ const FilterModal = ({ isVisible, onClose }) => {
                         />
                     </View>
 
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{
-                            paddingBottom: 250
-                        }}
-                    >
+                    
                         {/* Distance */}
                         {renderDistance()}
 
@@ -213,22 +208,19 @@ const FilterModal = ({ isVisible, onClose }) => {
                         {/* Tags */}
                         {renderTags()}
 
-                    </ScrollView>
 
                     {/* Apply Button */}
                     <View style={{
-                        paddingHorizontal: SIZES.padding,
-                        paddingVertical: SIZES.radius,
-                        backgroundColor: COLORS.white
+                        backgroundColor: COLORS.primary,
+                        borderRadius: SIZES.radius,
+                        marginTop: SIZES.padding, 
                     }}>
                         <TextButton
                             label="Apply Filters"
                             buttonContainerStyle={{
                                 height: 50,
-                                marginTop: SIZES.padding,
                                 alignItems: "center",
                                 borderRadius: SIZES.radius,
-                                marginBottom: SIZES.padding,
                                 backgroundColor: COLORS.primary
                             }}
                             onPress={() => console.log("Applied Filters")}

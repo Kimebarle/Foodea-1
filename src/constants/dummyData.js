@@ -121,6 +121,7 @@ const KFC_categories = [
   {
     id: 1,
     name: "All Food",
+    icon: require("../../assets/img/icons/junk_food.png")
   },
   {
     id: 2,
@@ -143,6 +144,7 @@ const Manginasal_categories = [
   {
     id: 1,
     name: "All Food",
+    icon: require("../../assets/img/icons/junk_food.png")
   },
   {
     id: 2,
@@ -165,6 +167,7 @@ const Greenwich_categories = [
   {
     id: 1,
     name: "All Food",
+    icon: require("../../assets/img/icons/junk_food.png")
   },
   {
     id: 2,
