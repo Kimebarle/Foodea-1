@@ -27,6 +27,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import utils, { Utils } from "../../../utils/Utils";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
+import { Alert } from "react-native";
 
 const Resetpassword = ({ navigation, route }) => {
   const { passwordEmail } = route.params;
@@ -50,8 +51,23 @@ const Resetpassword = ({ navigation, route }) => {
   };
 
   const onPressHandler = async () => {
-    const info = await getInfo();
-    console.log(info);
+    try {
+      // wait for troy to check
+      const info = await getInfo();
+      const response = await axios.patch(`${BASE_URL}app_users/${info}`, {
+        password: "asdasdasdasddasd",
+      });
+      console.log(response.data);
+      Alert.alert("Success", "", [
+        {
+          text: "Confirm",
+          onPress: () => navigation.navigate("LoginScreen"),
+          style: "cancel",
+        },
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   function renderEmail() {

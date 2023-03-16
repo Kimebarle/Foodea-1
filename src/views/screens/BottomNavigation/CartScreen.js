@@ -78,26 +78,28 @@ const CartScreen = ({ navigation, route }) => {
   }
 
   const onSubmitHandler = async () => {
-    let newCart = [...myCartList];
-
-    const deleteItems = newCart.map();
-
-    const updatedItems = newCart.map((item) => {
-      return {
-        ...item,
+    for (let i = 0; i < myCartList.length; i++) {
+      const response = await axios.post(`${BASE_URL}orders`, {
+        customer_id: userId,
         merchant_id: restaurantID,
-      };
-    });
-
-    const toJson = JSON.stringify(updatedItems);
-
-    // console.log(toJson);
-    try {
-      const response = await axios.post(`${BASE_URL}orders`, { toJson });
+        product_id: myCartList[i].product_id,
+        restaurant_id: restaurantID,
+        quantity: myCartList[i].quantity,
+        total: myCartList[i].total,
+        status: "Pending",
+        payment_type: "Cash",
+      });
       console.log(response.data);
-    } catch (error) {
-      console.log(error);
     }
+    let newCart = [...myCartList];
+    for (let i = 0; i < newCart.length; i++) {
+      const response = await axios.delete(`${BASE_URL}carts/${newCart[i].id}`);
+    }
+    newCart.splice(0, newCart.length);
+    setMyCartList(newCart);
+    setCalories(0);
+    setPrice(0);
+    setOrderQuantity(0);
   };
 
   const showAlertWithBooleanResponse = () => {
