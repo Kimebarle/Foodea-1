@@ -20,15 +20,27 @@ const VerticalFoodCard = ({
   itemId,
   user_id,
 }) => {
-  const [isFavorite, setIsFavorite] = React.useState(true);
+  const [isFavorite, setIsFavorite] = React.useState(false);
   const [isAddCart, setAddCart] = React.useState(true);
+
+  // const checkFavorites = async () => {
+  //   const response = await axios.get(
+  //     `${BASE_URL}favorites?user_id[eq]=${user_id}&&product_id[eq]=${itemId}`
+  //   );
+  //   setIsFavorite(dummyData.hamburger);
+  // };
+
+  // React.useEffect(() => {
+  //   checkFavorites();
+  // }, []);
 
   const checkedIsFavorite = async () => {
     try {
       const response = await axios.get(
         `${BASE_URL}favorites?user_id[eq]=${user_id}&&product_id[eq]=${itemId}`
       );
-      console.log(response.data);
+
+      //
       return response.data.length > 0;
     } catch (error) {
       console.log(error);
@@ -117,7 +129,7 @@ const VerticalFoodCard = ({
 
         {/* Favorites */}
         <IconButton
-          icon={isFavorite ? icons.favourite : icons.love}
+          icon={isFavorite ? icons.love : icons.favourite}
           iconStyle={{
             tintColor: COLORS.primary,
             position: "absolute",

@@ -73,6 +73,22 @@ const TestScreen = ({ navigation }) => {
     getItemTable();
   }, []);
 
+  const handleChangeCategory = async (id) => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}foods?merchant_id[eq]=${id}`,
+        {
+          params: {
+            _limit: 3,
+          },
+        }
+      );
+      setItemDisplay(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getItemTable = async () => {
     try {
       const response = await axios.get(`${BASE_URL}foods?merchant_id[eq]=1`);
@@ -290,8 +306,8 @@ const TestScreen = ({ navigation }) => {
               backgroundColor: COLORS.lightGray2,
             }}
             onPress={() => {
+              handleChangeCategory(item.id);
               setSelectedCategoryId(item.id);
-              handleChangeCategory(item.id, selectedMenuType);
             }}
           >
             <Image
