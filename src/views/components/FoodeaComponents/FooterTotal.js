@@ -12,6 +12,7 @@ const FooterTotal = ({
   onPress,
   number,
   totalCalories,
+  disable,
 }) => {
   return (
     <View>
@@ -82,6 +83,7 @@ const FooterTotal = ({
 
         {/* Button */}
         <TextButton
+          disabled={disable == null || disable.length === 0}
           buttonContainerStyle={{
             height: 60,
             marginTop: SIZES.padding,

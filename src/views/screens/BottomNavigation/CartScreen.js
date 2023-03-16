@@ -77,29 +77,57 @@ const CartScreen = ({ navigation, route }) => {
     setMyCartList(newMyCartList);
   }
 
+  const confirmAction = async () => {
+    return new Promise((resolve, reject) => {
+      Alert.alert(
+        "Place your Order",
+        "Are you sure you want to place your order?",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+            onPress: () => resolve(false),
+          },
+          {
+            text: "OK",
+            onPress: () => resolve(true),
+          },
+        ]
+      );
+    });
+  };
+
   const onSubmitHandler = async () => {
-    for (let i = 0; i < myCartList.length; i++) {
-      const response = await axios.post(`${BASE_URL}orders`, {
-        customer_id: userId,
-        merchant_id: restaurantID,
-        product_id: myCartList[i].product_id,
-        restaurant_id: restaurantID,
-        quantity: myCartList[i].quantity,
-        total: myCartList[i].total,
-        status: "Pending",
-        payment_type: "Cash",
-      });
-      console.log(response.data);
+    const decision = await confirmAction();
+
+    if (decision) {
+      for (let i = 0; i < myCartList.length; i++) {
+        const response = await axios.post(`${BASE_URL}orders`, {
+          customer_id: userId,
+          merchant_id: restaurantID,
+          product_id: myCartList[i].product_id,
+          restaurant_id: restaurantID,
+          quantity: myCartList[i].quantity,
+          total: myCartList[i].total,
+          status: "Pending",
+          payment_type: "Cash",
+        });
+        console.log(response.data);
+      }
+      let newCart = [...myCartList];
+      for (let i = 0; i < newCart.length; i++) {
+        const response = await axios.delete(
+          `${BASE_URL}carts/${newCart[i].id}`
+        );
+      }
+      newCart.splice(0, newCart.length);
+      setMyCartList(newCart);
+      setCalories(0);
+      setPrice(0);
+      setOrderQuantity(0);
+    } else {
+      console.log("cancel");
     }
-    let newCart = [...myCartList];
-    for (let i = 0; i < newCart.length; i++) {
-      const response = await axios.delete(`${BASE_URL}carts/${newCart[i].id}`);
-    }
-    newCart.splice(0, newCart.length);
-    setMyCartList(newCart);
-    setCalories(0);
-    setPrice(0);
-    setOrderQuantity(0);
   };
 
   const showAlertWithBooleanResponse = () => {
@@ -324,6 +352,7 @@ const CartScreen = ({ navigation, route }) => {
       {renderCartList()}
       {/*   Total Cost Section */}
       <FooterTotal
+        disable={myCartList}
         totalCalories={calories}
         subTotal={price}
         shippingFee={fee}
