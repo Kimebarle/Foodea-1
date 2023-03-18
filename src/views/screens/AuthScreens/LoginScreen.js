@@ -1,11 +1,13 @@
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
-import { useContext } from "react";
+import { useContext}  from "react";
+import React from "react";
 import {
   TextInput,
   Container,
   SafeAreaView,
   Button,
   TextButton,
+  Remember
 } from "../../components/FoodeaComponents";
 
 import {
@@ -44,6 +46,8 @@ const LoginScreen = ({ navigation }) => {
       .required("Email is required"),
     password: yup.string().trim().required("Password is required"),
   });
+
+  const [remember, setRemember] = React.useState(false);
 
   return (
     <View
@@ -101,6 +105,14 @@ const LoginScreen = ({ navigation }) => {
                   }
                   secureTextEntry
                   roundness={10}
+                />
+
+                <Remember
+                  containerStyle={{
+                    marginTop: SIZES.radius,
+                  }}
+                  isSelected={remember}
+                  onPress={() => setRemember(!remember)}
                 />
 
                 <TextButton

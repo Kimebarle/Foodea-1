@@ -307,7 +307,6 @@ const HomeScreen = ({ navigation, route }) => {
             <HorizontalFoodCard
               containerStyle={{
                 height: 130,
-                width: 350,
                 alignItems: "center",
                 marginHorizontal: SIZES.padding,
                 marginBottom: SIZES.radius,

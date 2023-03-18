@@ -47,14 +47,13 @@ const HorizontalFoodCard = ({
             style={{
               fontSize: 14,
               fontWeight: "bold",
-              marginLeft: 5,
             }}
           >
             ₱ {item.price}
           </Text>
 
           {/* name */}
-          <Text style={{ fontSize: 15.5, fontWeight: "bold", marginLeft: 5 }}>
+          <Text style={{ fontSize: 14, fontWeight: "bold",}}>
             {item.product_name}
           </Text>
 
@@ -65,15 +64,15 @@ const HorizontalFoodCard = ({
               width: 20, 
               marginRight: 5,
             }}/>
-            <Text style={{ marginRight: 10 }}>2 km</Text>
+            <Text style={{ marginRight: 10, fontWeight: "bold" }}>2 km</Text>
             <Image source={icons.Waiting_Time} style = {{
               marginRight: 5,
             }}/>
-            <Text style={{ marginRight: 20 }}>40 mins</Text>
+            <Text style={{ marginRight: 20, fontWeight: "bold" }}>40 mins</Text>
           </View>
 
           {/* images */}
-          <View style={{ position: 'absolute', top: -10, right: 15 }}>
+          <View style={{ position: 'absolute', top: -20, right: 15 }}>
             <IconButton
               icon={isFavorite ? icons.favourite : icons.love}
               iconStyle={{
@@ -85,7 +84,7 @@ const HorizontalFoodCard = ({
             />
           </View>
 
-          <View style={{ position: "absolute", top: 59, right: 15 }}>
+          <View style={{ position: "absolute", bottom: -20, right: 15 }}>
             <TouchableOpacity>
               <Image
                 source={icons.cart}
