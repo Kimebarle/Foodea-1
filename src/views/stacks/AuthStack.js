@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="SurveyScreen">
       <Stack.Screen
         options={{ headerShown: false }}
         name={"LandingPageScreen"}

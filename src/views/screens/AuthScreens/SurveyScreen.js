@@ -1,205 +1,46 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
-import {
-  SIZES,
-  FONTS,
-  COLORS,
-  icons,
-  dummyData,
-  constants,
-} from "../../../constants";
+import { SIZES, FONTS, COLORS } from "../../../constants";
 
 import { Header, TextButton } from "../../components/FoodeaComponents";
-
-import Checkbox from "expo-checkbox";
+import RadioForm, {
+  RadioButtonInput,
+  RadioButtonLabel,
+} from "react-native-simple-radio-button";
+import { RadioButton } from "react-native-paper";
 
 const SurveyScreen = ({ navigation }) => {
-  const [isChecked, setIsChecked] = React.useState({
-    chicken: false,
-    Fish: false,
-    Pork: false,
-    Beef: false,
-    Dairy: false,
-    Desserts: false,
-    jollibee: false,
-    mcdo: false,
-    kfc: false,
-    manginasal: false,
-  });
-
-  function renderMeatSection() {
-    return (
-      <View style={{ paddingHorizontal: SIZES.padding }}>
-        <Text style={{ paddingTop: SIZES.padding, ...FONTS.h3 }}>
-          What kind of Foods do you like?
-        </Text>
-        <View
-          style={{
-            paddingTop: SIZES.padding / 2,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Checkbox
-            style={{ marginRight: 20, width: 30, height: 30 }}
-            value={isChecked.chicken}
-            onValueChange={() =>
-              setIsChecked({ ...isChecked, chicken: !isChecked.chicken })
-            }
-            color={isChecked ? COLORS.primary : undefined}
-          />
-          <Text style={{ ...FONTS.h4 }}>Chicken</Text>
-        </View>
-        <View
-          style={{
-            paddingTop: SIZES.padding / 2,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Checkbox
-            style={{ marginRight: 20, width: 30, height: 30 }}
-            value={isChecked.Pork}
-            onValueChange={() =>
-              setIsChecked({ ...isChecked, Pork: !isChecked.Pork })
-            }
-            color={isChecked ? COLORS.primary : undefined}
-          />
-          <Text style={{ ...FONTS.h4 }}>Pork</Text>
-        </View>
-        <View
-          style={{
-            paddingTop: SIZES.padding / 2,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Checkbox
-            style={{ marginRight: 20, width: 30, height: 30 }}
-            value={isChecked.Beef}
-            onValueChange={() =>
-              setIsChecked({ ...isChecked, Beef: !isChecked.Beef })
-            }
-            color={isChecked ? COLORS.primary : undefined}
-          />
-          <Text style={{ ...FONTS.h4 }}>Beef</Text>
-        </View>
-        <View
-          style={{
-            paddingTop: SIZES.padding / 2,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Checkbox
-            style={{ marginRight: 20, width: 30, height: 30 }}
-            value={isChecked.Dairy}
-            onValueChange={() =>
-              setIsChecked({ ...isChecked, Dairy: !isChecked.Dairy })
-            }
-            color={isChecked ? COLORS.primary : undefined}
-          />
-          <Text style={{ ...FONTS.h4 }}>Dairy</Text>
-        </View>
-        <View
-          style={{
-            paddingTop: SIZES.padding / 2,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Checkbox
-            style={{ marginRight: 20, width: 30, height: 30 }}
-            value={isChecked.Desserts}
-            onValueChange={() =>
-              setIsChecked({ ...isChecked, Desserts: !isChecked.Desserts })
-            }
-            color={isChecked ? COLORS.primary : undefined}
-          />
-          <Text style={{ ...FONTS.h4 }}>Pizza</Text>
-        </View>
-      </View>
-    );
-  }
-
-  function renderRestaurantSection() {
-    return (
-      <View style={{ paddingLeft: SIZES.padding }}>
-        <View
-          style={{
-            paddingTop: SIZES.padding / 2,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Checkbox
-            style={{ marginRight: 20, width: 30, height: 30 }}
-            value={isChecked.jollibee}
-            onValueChange={() =>
-              setIsChecked({ ...isChecked, jollibee: !isChecked.jollibee })
-            }
-            color={isChecked ? COLORS.primary : undefined}
-          />
-          <Text style={{ ...FONTS.h4 }}>Jollibee</Text>
-        </View>
-        <View
-          style={{
-            paddingTop: SIZES.padding / 2,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Checkbox
-            style={{ marginRight: 20, width: 30, height: 30 }}
-            value={isChecked.mcdo}
-            onValueChange={() =>
-              setIsChecked({ ...isChecked, mcdo: !isChecked.mcdo })
-            }
-            color={isChecked ? COLORS.primary : undefined}
-          />
-          <Text style={{ ...FONTS.h4 }}>McDonalds</Text>
-        </View>
-        <View
-          style={{
-            paddingTop: SIZES.padding / 2,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Checkbox
-            style={{ marginRight: 20, width: 30, height: 30 }}
-            value={isChecked.kfc}
-            onValueChange={() =>
-              setIsChecked({ ...isChecked, kfc: !isChecked.kfc })
-            }
-            color={isChecked ? COLORS.primary : undefined}
-          />
-          <Text style={{ ...FONTS.h4 }}>KFC</Text>
-        </View>
-        <View
-          style={{
-            paddingTop: SIZES.padding / 2,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Checkbox
-            style={{ marginRight: 20, width: 30, height: 30 }}
-            value={isChecked.manginasal}
-            onValueChange={() =>
-              setIsChecked({ ...isChecked, manginasal: !isChecked.manginasal })
-            }
-            color={isChecked ? COLORS.primary : undefined}
-          />
-          <Text style={{ ...FONTS.h4 }}>Mang Inasal</Text>
-        </View>
-      </View>
-    );
-  }
+  const [value, setValue] = React.useState(0);
+  const items = [
+    {
+      label: "Sedentary (little or no exercise)",
+      value: 0,
+    },
+    {
+      label: "Lightly Active (exercise 1 - 3 days/week",
+      value: 1,
+    },
+    {
+      label: "Moderate Activity (exercise 3 - 5 days/week)",
+      value: 2,
+    },
+    {
+      label: "Active (exercise 6 - 7 days/week)",
+      value: 3,
+    },
+    {
+      label: "Very Active (hard exercise 6 - 7 days/week)",
+      value: 4,
+    },
+  ];
 
   function submitFunction() {
-    console.log(isChecked);
-    navigation.navigate("SurveyCalories");
+    console.log(items[value].label);
+    navigation.navigate("SurveyScreenInitial");
+  }
+
+  function renderChoices() {
+    return <View></View>;
   }
 
   function renderFooter() {
@@ -212,7 +53,7 @@ const SurveyScreen = ({ navigation }) => {
         }}
       >
         <TextButton
-          label="Submit"
+          label="Next"
           buttonContainerStyle={{
             position: "absolute",
             height: 60,
@@ -238,9 +79,9 @@ const SurveyScreen = ({ navigation }) => {
     >
       {/* {renderHeader()} */}
       <Text style={{ padding: SIZES.padding, ...FONTS.h2 }}>
-        Let us know about your preferences ...{" "}
+        Let us know about yourself ...{" "}
       </Text>
-      {renderMeatSection()}
+
       <Text
         style={{
           paddingTop: SIZES.padding,
@@ -248,10 +89,19 @@ const SurveyScreen = ({ navigation }) => {
           ...FONTS.h3,
         }}
       >
-        Restaurants the you like
+        How active are you?
       </Text>
-      {renderRestaurantSection()}
 
+      <View style={{ width: "80%", marginTop: 40 }}>
+        <RadioForm
+          radio_props={items}
+          initial={value}
+          onPress={(value) => setValue(value)}
+          buttonColor={COLORS.gray3}
+          labelStyle={{ ...FONTS.h5 }}
+          selectedButtonColor={COLORS.primary}
+        />
+      </View>
       {renderFooter()}
     </View>
   );
