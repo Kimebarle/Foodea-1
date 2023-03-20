@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 
 import {
   icons,
@@ -10,12 +10,20 @@ import {
   SIZES,
 } from "../../../constants";
 import { FormInput, TextButton } from "../../components/FoodeaComponents";
+import axios from "axios";
+import { BASE_URL } from "../../../api/context/auth/config";
+import AuthContext from "../../../api/context/auth/AuthContext";
 
-const SurveyScreenInitial = ({ navigation }) => {
+const SurveyScreenInitial = ({ navigation, route }) => {
+  const { pass3 } = route.params;
   const [question1, setQuestion1] = React.useState();
+  const { register } = useContext(AuthContext);
 
-  function submitHandler() {
-    console.log(height);
+  async function submitHandler() {
+    //const response = await axios.get(`${BASE_URL}app_users?firstname[eq]=Juan`);
+    const data = pass3.map((item) => ({ ...item, preferences: question1 }));
+
+    register(data);
   }
 
   function renderFormInput() {
@@ -57,6 +65,7 @@ const SurveyScreenInitial = ({ navigation }) => {
           paddingTop: SIZES.padding,
           paddingLeft: SIZES.padding,
           ...FONTS.h1,
+          marginTop: SIZES.radius,
         }}
       >
         Tell us about your preferences

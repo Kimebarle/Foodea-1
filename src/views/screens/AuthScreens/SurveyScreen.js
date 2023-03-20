@@ -9,38 +9,52 @@ import RadioForm, {
 } from "react-native-simple-radio-button";
 import { RadioButton } from "react-native-paper";
 
-const SurveyScreen = ({ navigation }) => {
+const SurveyScreen = ({ navigation, route }) => {
   const [value, setValue] = React.useState(0);
+  const { pass1 } = route.params;
   const items = [
     {
       label: "Sedentary (little or no exercise)",
       value: 0,
+      letter: "A",
     },
     {
       label: "Lightly Active (exercise 1 - 3 days/week",
       value: 1,
+      letter: "B",
     },
     {
       label: "Moderate Activity (exercise 3 - 5 days/week)",
       value: 2,
+      letter: "C",
     },
     {
       label: "Active (exercise 6 - 7 days/week)",
       value: 3,
+      letter: "D",
     },
     {
       label: "Very Active (hard exercise 6 - 7 days/week)",
       value: 4,
+      letter: "E",
     },
   ];
 
   function submitFunction() {
-    console.log(items[value].label);
-    navigation.navigate("SurveyScreenInitial");
-  }
+    let pass2 = [...pass1];
 
-  function renderChoices() {
-    return <View></View>;
+    const addAttribute = () => {
+      const updatedList = pass2.map((obj) => {
+        return { ...obj, lifestyle: items[value].letter };
+      });
+
+      pass2 = updatedList;
+    };
+    {
+      addAttribute();
+    }
+    // console.log(pass2);
+    navigation.navigate("SurveyScreenInitial", { pass3: pass2 });
   }
 
   function renderFooter() {
@@ -92,7 +106,7 @@ const SurveyScreen = ({ navigation }) => {
         How active are you?
       </Text>
 
-      <View style={{ width: "80%", marginTop: 40 }}>
+      <View style={{ width: "80%", marginTop: 40, left: 20 }}>
         <RadioForm
           radio_props={items}
           initial={value}
