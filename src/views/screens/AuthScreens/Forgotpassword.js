@@ -192,7 +192,7 @@ const Forgotpassword = ({ navigation, route }) => {
             <View
               style={{
                 position: "absolute",
-                bottom: 45,
+                bottom: 50,
                 right: 2,
               }}
             >

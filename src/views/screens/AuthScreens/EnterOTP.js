@@ -15,12 +15,13 @@ import {
 } from "../../../constants";
 import React, { useRef, useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import utils, { Utils } from "../../../utils/Utils";
 import { apiKey } from "../../../api/context/auth/config";
 
 const EnterOTP = ({ navigation, route }) => {
   const { emailValue } = route.params;
   const [otp, setOtp] = React.useState("");
+  const [otpError, setError] = React.useState("");
   const [timer, setTimer] = React.useState(5);
   const [otpGenerate, setOtpGenerate] = React.useState("default");
 
@@ -186,7 +187,10 @@ const EnterOTP = ({ navigation, route }) => {
           maxLength={6}
           keyboardType="number-pad"
           placeholderTextColor={COLORS.gray}
-          onChangeText={(value) => setOtp(value)}
+          onChangeText={(value) => {
+            setOtp(value);
+            utils.validateInput(value, 6, setError);
+          }}
           style={{
             textAlign: "center",
           }}

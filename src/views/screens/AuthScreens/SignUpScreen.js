@@ -21,6 +21,7 @@ import {
   IconButton,
   CheckBox,
   FormInputCheck,
+  Mods
 } from "../../components/FoodeaComponents";
 import {
   images,
@@ -57,6 +58,10 @@ const SignUpScreen = ({ navigation }) => {
   const [phone, setPhone] = React.useState("");
   const [phoneError, setPhoneError] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [age, setAge] = React.useState("");
+  const [ageError, setAgeError] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [addressError, setAddressError] = React.useState("");
   const [passwordError, setPasswordError] = React.useState("");
   const [reenterpassword, setReEnterPassword] = React.useState("");
   const [reenterpasswordError, setReEnterPasswordError] = React.useState("");
@@ -68,7 +73,7 @@ const SignUpScreen = ({ navigation }) => {
   const [dummyWeight, setDummyWeight] = React.useState(80);
   const [checkValidEmail, setCheckValidEmail] = React.useState(false);
   const { register } = useContext(AuthContext);
-  const [showAlert, setShowAlert] = React.useState();
+  const [showAlert, setShowAlert] = React.useState(false);
 
   const handleCheckEmail = (value) => {
     let re = /\S+@\S+\.\S+/;
@@ -155,6 +160,8 @@ const SignUpScreen = ({ navigation }) => {
       !firstname ||
       !middlename ||
       !lastname ||
+      !address ||
+      !age ||
       password != reenterpassword
     );
   };
@@ -294,27 +301,48 @@ const SignUpScreen = ({ navigation }) => {
             />
           </View>
 
-          <Text
-            style={{
-              color: COLORS.gray,
-              ...FONTS.h3,
-              fontSize: 15,
-            }}
-          >
-            Gender
-          </Text>
+            <View>
+              <Text
+                style={{
+                  color: COLORS.gray,
+                  ...FONTS.h3,
+                  fontSize: 15,
+                }}
+              >
+                Gender
+              </Text>
 
-          <SelectList
-            data={data}
-            label="Gender"
-            placeholder={"Select Gender"}
-            setSelected={setSelected}
-            notFoundText='No Data Exists, Please Input Suitable Gender'
-            boxStyles={{
-              backgroundColor: COLORS.lightGray2,
-              borderWidth: 0,
-            }}
-          />
+              <SelectList
+                data={data}
+                placeholder={"Select Gender"}
+                setSelected={setSelected}
+                notFoundText='No Data Exists, Please Input Suitable Gender'
+                boxStyles={{
+                  backgroundColor: COLORS.lightGray2,
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  flex: 1,
+                  height: SIZES.height > 800 ? 55 : 45,
+                  marginTop: SIZES.height > 800 ? SIZES.base : 0,
+                  borderRadius: SIZES.radius,
+                  backgroundColor: COLORS.lightGray2,
+                }}
+              />
+            </View>
+
+            <FormInput
+              label="Age"
+              value={age}
+              keyboardType="number-pad"
+              maxLength={3}
+              containerStyle={{
+                flex: 1,
+              }}
+              onChange={(value) => {
+                utils.validateInput(value, 1, setAgeError);
+                setAge(value);
+              }}
+            />
 
           {/* Height and Weight */}
           <View
@@ -354,6 +382,24 @@ const SignUpScreen = ({ navigation }) => {
               }}
             />
           </View>
+          
+          {/* Address */}
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+            }}
+            label="Address"
+            value={address}
+            maxLength={20}
+            onChange={(value) => {
+              setAddress(value);
+              utils.validateInput(value, 1, setAddressError);
+            }}
+            errorMsg={addressError}
+            appendComponent={
+              <FormInputCheck value={address} error={addressError} />
+            }
+          />
 
           {/* Phone Number */}
           <FormInput
@@ -478,6 +524,12 @@ const SignUpScreen = ({ navigation }) => {
           {/* Terms and Conditions */}
           {renderTerms()}
 
+          {/* <TouchableOpacity onPress={() => navigation.navigate("Mods")}>
+            <Text>
+              Modal
+            </Text>
+          </TouchableOpacity> */}
+
           {/* Footer */}
           <TextButton
             label="Create Account"
@@ -560,6 +612,8 @@ const styles = StyleSheet.create({
   textFailed: {
     alignSelf: "flex-end",
     color: "red",
+    position: 'absolute',
+    bottom: 10,
     ...FONTS.h4,
   },
 });
