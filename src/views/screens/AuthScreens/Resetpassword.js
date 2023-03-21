@@ -55,16 +55,6 @@ const Resetpassword = ({ navigation, route }) => {
       // wait for troy to check
       const info = await getInfo();
       const response = await axios.patch(`${BASE_URL}app_users/${info}`, {
-        // first_name: "asdasd",
-        // middlename: "asdjkahsd",
-        // lastname: "asdasd",
-        // height: 123,
-        // weight: 70,
-        // gender: "M",
-        // address: "test",
-        // contact_number: "1231231231",
-        // bmi: 123,
-        // email: "chris1@gmail.comm",
         password: newpassword,
       });
       console.log(response.data);

@@ -19,13 +19,17 @@ import {
 } from "../../../constants";
 import utils, { Utils } from "../../../utils/Utils";
 import axios from "axios";
-import { BASE_URL } from "../../../api/context/auth/config";
+import { apiKey, BASE_URL } from "../../../api/context/auth/config";
 import { Alert } from "react-native";
+import { sendGridEmail } from "react-native-sendgrid";
 
 const Forgotpassword = ({ navigation, route }) => {
   const [email, setEmail] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
   const [checkValidEmail, setCheckValidEmail] = React.useState(false);
+  const SENDGRIDAPIKEY = `${apiKey}`;
+  const FROMEMAIL = "foodea.bscs@gmail.com";
+  const TOEMAIL = email;
 
   const handleCheckEmail = (value) => {
     let re = /\S+@\S+\.\S+/;
@@ -40,7 +44,7 @@ const Forgotpassword = ({ navigation, route }) => {
   };
 
   function isEnableSendEmail() {
-    return email != "" && emailError == "";
+    return email != "" && checkValidEmail == false;
   }
 
   const checkEmail = async () => {
@@ -56,11 +60,36 @@ const Forgotpassword = ({ navigation, route }) => {
     }
   };
 
+  const sendEmail = async () => {
+    const SUBJECT = "OTP FOR PASSWORD RESET";
+    const randomNumber = Math.floor(Math.random() * 1000000);
+    const otpString = randomNumber.toString().padStart(6, "0");
+    const CONTACTDETAILS = `Your OTP is ${otpString}`;
+
+    const sendRequestChecker = sendGridEmail(
+      SENDGRIDAPIKEY,
+      TOEMAIL,
+      FROMEMAIL,
+      SUBJECT,
+      CONTACTDETAILS
+    );
+
+    return {
+      status: true,
+      value: otpString,
+    };
+  };
+
   const sendEmailHandler = async () => {
     const emailCheck = await checkEmail();
     if (emailCheck) {
-      console.log("existing email");
-      navigation.navigate("EnterOTP", { emailValue: email });
+      // console.log("existing email");
+      const sendRequestChecker = await sendEmail();
+      console.log(sendRequestChecker.value);
+      navigation.navigate("EnterOTP", {
+        emailValue: email,
+        otpValue: sendRequestChecker.value,
+      });
     } else {
       Alert.alert("Error", "No Existing Email", [
         {
@@ -235,24 +264,6 @@ const Forgotpassword = ({ navigation, route }) => {
         {/* Form Input */}
         {renderFormInput()}
 
-        {/* OTP SCREEN
-        <TouchableOpacity onPress={() => navigation.navigate("EnterOTP")}>
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{
-                ...FONTS.h2,
-              }}
-            >
-              OTP SCREEN
-            </Text>
-          </View>
-        </TouchableOpacity> */}
-
         {/* Button */}
         <TextButton
           label="Send Email"
@@ -262,9 +273,7 @@ const Forgotpassword = ({ navigation, route }) => {
             alignItems: "center",
             marginTop: SIZES.padding,
             borderRadius: SIZES.radius,
-            backgroundColor: isEnableSendEmail()
-            ? COLORS.primary
-            : COLORS.gray,
+            backgroundColor: isEnableSendEmail() ? COLORS.primary : COLORS.gray,
             marginBottom: SIZES.padding,
           }}
           onPress={sendEmailHandler}

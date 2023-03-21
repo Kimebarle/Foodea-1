@@ -10,9 +10,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <MainStack />
+      {/* <MainStack /> */}
       {/* <AuthStack /> */}
-      {/* {logged_in ? <MainStack /> : <AuthStack />} */}
+      {logged_in ? <MainStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }

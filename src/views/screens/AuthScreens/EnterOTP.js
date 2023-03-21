@@ -15,14 +15,20 @@ import {
 } from "../../../constants";
 import React, { useRef, useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Alert } from "react-native";
+import { sendGridEmail } from "react-native-sendgrid";
 
 import { apiKey } from "../../../api/context/auth/config";
 
 const EnterOTP = ({ navigation, route }) => {
-  const { emailValue } = route.params;
+  const { emailValue, otpValue } = route.params;
   const [otp, setOtp] = React.useState("");
   const [timer, setTimer] = React.useState(5);
   const [otpGenerate, setOtpGenerate] = React.useState("default");
+  const [newOtp, setNewOtp] = React.useState();
+  const FROMEMAIL = "foodea.bscs@gmail.com";
+  const TOEMAIL = emailValue;
+  const SENDGRIDAPIKEY = apiKey;
 
   const disabledButton = () => {
     return !otp;
@@ -40,7 +46,7 @@ const EnterOTP = ({ navigation, route }) => {
     }, 1000);
     //console.log("first" + otpGenerate);
 
-    generateOtp();
+    // generateOtp();
 
     return () => {
       clearInterval(interval);
@@ -48,32 +54,41 @@ const EnterOTP = ({ navigation, route }) => {
   }, []);
 
   const generateOtp = () => {
-    setTimer(5);
+    setTimer(60);
     const randomNumber = Math.floor(Math.random() * 1000000);
     const otpString = randomNumber.toString().padStart(6, "0");
+    setNewOtp(otpString);
+    console.log(otpString);
 
-    // const message = {
-    //   to: "chriscalleja1220@gmail.com",
-    //   from: "foodea.bscs@gmail.com",
-    //   subject: "Password Reset",
-    //   text: `Your OTP is ${otpString}`,
-    //   html: `<h1>Your OTP is ${otpString}</h1>`,
-    // };
+    const SUBJECT = "OTP FOR PASSWORD RESET";
+    const BODY = `Your OTP is ${otpString}`;
 
-    // sgMail
-    //   .send(message)
-    //   .then((response) => console.log(response))
-    //   .catch((error) => console.log(error));
-
-    return otpString;
+    const sendRequest = sendGridEmail(
+      SENDGRIDAPIKEY,
+      TOEMAIL,
+      FROMEMAIL,
+      SUBJECT,
+      BODY
+    );
   };
 
   const onPressHandler = async () => {
-    const kekw = generateOtp();
-
-    let user_email = emailValue;
-    console.log(user_email);
-    navigation.navigate("Resetpassword", { passwordEmail: user_email });
+    //const newOtp = generateOtp();
+    let value = otpValue;
+    if (value == otp || newOtp == otp) {
+      let user_email = emailValue;
+      console.log(user_email);
+      navigation.navigate("Resetpassword", { passwordEmail: user_email });
+    } else {
+      Alert.alert("Warning", "Your OTP code is not correct", [
+        {
+          text: "Confirm",
+          onPress: () => {
+            // handle confirmation here
+          },
+        },
+      ]);
+    }
   };
 
   function renderHeader() {
