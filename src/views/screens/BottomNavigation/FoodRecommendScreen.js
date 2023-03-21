@@ -12,6 +12,10 @@ import { dummyData, SIZES, icons, COLORS, FONTS } from "../../../constants";
 
 import { Header, Button } from "../../components/FoodeaComponents";
 import RecommendationComponent from "../../components/FoodeaComponents/RecommendationComponent";
+import axios from "axios";
+import { BASE_URL_RECOMMENDATION } from "../../../api/context/auth/config";
+import AuthContext from "../../../api/context/auth/AuthContext";
+import { useEffect } from "react";
 
 const Section = ({ title, onPress, children, style }) => {
   return (
@@ -35,25 +39,29 @@ const Section = ({ title, onPress, children, style }) => {
 };
 
 const FoodRecommendScreen = ({ navigation }) => {
-  const [selectedMenuType, setSelectedMenuType] = React.useState(1);
+  const { userId } = React.useContext(AuthContext);
   const [trending, setTrending] = React.useState([]);
   const [itemId, setItemId] = React.useState([]);
-  const [isFavorite, setIsFavorite] = React.useState(true);
-  const [isAddCart, setAddCart] = React.useState(true);
 
-  React.useEffect(() => {
-    handleChangeCategory(selectedMenuType);
+  const getData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL_RECOMMENDATION}/preferred_calorie/?id=8`
+      );
+
+      console.log(response.data.preferred_calorie);
+    } catch (error) {}
+  };
+
+  const getFoodItems = async () => {
+    try {
+      const response = await axios.get();
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
-
-  function handleChangeCategory(categoryId) {
-    // Retrieve the Trending Food Menu
-    let selectedTrending = dummyData.menu.find((a) => a.name == "Trending");
-
-    // Set the trending menu based on the cateroryID
-    setTrending(
-      selectedTrending?.list.filter((a) => a.categories.includes(categoryId))
-    );
-  }
 
   return (
     <View style={styles.container}>

@@ -66,12 +66,10 @@ const SignUpScreen = ({ navigation }) => {
   const [reenterpassword, setReEnterPassword] = React.useState("");
   const [reenterpasswordError, setReEnterPasswordError] = React.useState("");
   const [termsChecked, setTermsChecked] = React.useState(false);
-  const [gender, setGender] = React.useState("");
-  const [genderError, setGenderError] = React.useState("");
   const [bmi, setBmi] = React.useState(25);
-  const [dummyHeight, setDummyHeight] = React.useState(170);
-  const [dummyWeight, setDummyWeight] = React.useState(80);
   const [checkValidEmail, setCheckValidEmail] = React.useState(false);
+
+  const value = [{}];
   const { register } = useContext(AuthContext);
   const [showAlert, setShowAlert] = React.useState(false);
 
@@ -105,26 +103,10 @@ const SignUpScreen = ({ navigation }) => {
     }
   };
 
-  const registerUser = async () => {
-    try {
-      const response = await axios.post(`${BASE_URL}app_users`, {
-        firstname: firstname,
-        middlename: middlename,
-        lastname: lastname,
-        height: weight,
-        weight: height,
-        gender: selected,
-        address: "Test",
-        contact_number: "09213123123",
-        bmi: 123,
-        email: email,
-        password: password,
-      });
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
+  const bmiComputation = () => {
+    let value = (weight / height / height) * 10000;
+
+    return value;
   };
 
   const handleCreateAccount = async () => {
@@ -138,18 +120,25 @@ const SignUpScreen = ({ navigation }) => {
         },
       ]);
     } else {
-      const newUser = await registerUser();
-      if (newUser) {
-        Alert.alert("Sign Up", "Successful", [
-          {
-            text: "Confirm",
-            onPress: () => navigation.navigate("LoginScreen"),
-            style: "cancel",
-          },
-        ]);
-      } else {
-        console.log("error register");
-      }
+      const bmi_value = await bmiComputation();
+
+      const newValue = value.map((item) => ({
+        ...item,
+        fname: firstname,
+        lname: lastname,
+        mname: middlename,
+        height_data: height,
+        weight_data: weight,
+        gender_data: selected,
+        address_data: "Test",
+        age_data: 20,
+        contact_number_data: phone,
+        bmi_data: bmi_value,
+        email_data: email,
+        password_data: password,
+      }));
+
+      navigation.navigate("SurveyScreen", { pass1: newValue });
     }
   };
 
@@ -538,9 +527,7 @@ const SignUpScreen = ({ navigation }) => {
               marginTop: SIZES.radius,
               height: 55,
               borderRadius: SIZES.radius,
-              backgroundColor: !disabledButton()
-                ? COLORS.primary
-                : COLORS.gray,
+              backgroundColor: !disabledButton() ? COLORS.primary : COLORS.gray,
             }}
             onPress={handleCreateAccount}
           />

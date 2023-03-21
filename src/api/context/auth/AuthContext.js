@@ -5,7 +5,6 @@ import { BASE_URL } from "./config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
-// import { user_login } from "./user_api";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -13,6 +12,41 @@ export const AuthProvider = ({ children }) => {
   const [logged_in, setLogged_in] = useState(false);
   const [userInfo, setUserInfo] = useState([]);
   const [userId, setUserId] = React.useState();
+  const register = async (data) => {
+    try {
+      const response = await axios.post(`${BASE_URL}app_users`, {
+        firstname: data[0].fname,
+        middlename: data[0].mname,
+        lastname: data[0].lname,
+        weight: data[0].weight_data,
+        height: data[0].height_data,
+        gender: "M",
+        address: data[0].address_data,
+        age: data[0].age_data,
+        contact_number: data[0].contact_number_data,
+        bmi: data[0].bmi_data,
+        email: data[0].email_data,
+        password: data[0].password_data,
+        lifestyle: data[0].lifestyle,
+        preferences: data[0].preferences,
+      });
+      console.log(response.data);
+
+      let id = response.data.user_id;
+      setUserId(id);
+      Alert.alert("Successfully ", "Registered", [
+        {
+          text: "Confirm",
+          onPress: () => {
+            setLogged_in(true);
+          },
+          style: "cancel",
+        },
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const login = async (email, password) => {
     try {
@@ -91,7 +125,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         user,
         logged_in,
-
+        register,
         addToCart,
       }}
     >

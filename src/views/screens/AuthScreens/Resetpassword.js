@@ -55,7 +55,7 @@ const Resetpassword = ({ navigation, route }) => {
       // wait for troy to check
       const info = await getInfo();
       const response = await axios.patch(`${BASE_URL}app_users/${info}`, {
-        password: "asdasdasdasddasd",
+        password: newpassword,
       });
       console.log(response.data);
       Alert.alert("Success", "", [
