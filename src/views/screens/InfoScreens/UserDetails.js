@@ -8,7 +8,7 @@ import {
     icons,
     FONTS,
 } from "../../../constants";
-import { Header, TextButton, FormInput, IconButton, CheckBox, FormInputCheck } from '../../components/FoodeaComponents';
+import { Header, TextButton, FormInput, IconButton, CheckBox, FormInputCheck, EditButton } from '../../components/FoodeaComponents';
 
 const UserDetails = ({ navigation }) => {
 
@@ -72,6 +72,31 @@ const UserDetails = ({ navigation }) => {
         )
     }
 
+
+    function renderEditProfileButton() {
+        return (
+            <View
+                style={{
+                    left: 230,
+                    marginBottom: 20,
+                }}
+            >
+                <EditButton
+                    buttonContainerStyle={{
+                        width: 100,
+                        borderRadius: SIZES.base,
+                        backgroundColor: "#F54748",
+                    }}
+                    label="Edit Profile"
+                    labelStyle={{
+                        color: COLORS.white,
+                    }}
+                    onPress={() => navigation.navigate("EditProfile")}
+                />
+            </View>
+        );
+    }
+
     return (
         <View style={{
             flex: 1,
@@ -86,13 +111,17 @@ const UserDetails = ({ navigation }) => {
                 contentContainerStyle={{
                     paddingHorizontal: SIZES.radius,
                     paddingBottom: SIZES.padding,
-                    justifyContent: 'center',
                     marginTop: SIZES.radius
                 }}>
+
+                {/* Edit Profile */}
+                {renderEditProfileButton()}
+
                 {/* Logo */}
                 {renderLogo()}
+
                 {/* First Name */}
-                <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: SIZES.padding }}>
+                <View style={{ alignItems: 'center', marginTop: SIZES.padding }}>
                     <View
                         style={{
                             flexDirection: "row",
@@ -231,63 +260,7 @@ const UserDetails = ({ navigation }) => {
                         <Text style={{ ...FONTS.h3, color: COLORS.black, }}>65 kg</Text>
                     </View>
 
-                    {/* Email */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: 'center',
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.at}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: 'absolute',
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3 }}>JohnDough@gmail.com</Text>
-                    </View>
-
-                    {/* Phone Number */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: 'center',
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.phone}
-                            style={{
-                                height: 25,
-                                width: 25,
-                                tintColor: COLORS.black,
-                                position: 'absolute',
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3 }}>09123456789</Text>
-                    </View>
-
-                    {/* Phone Number */}
+                    {/* Password */}
                     <View
                         style={{
                             flexDirection: "row",

@@ -57,31 +57,6 @@ const MyAvatar = ({ navigation }) => {
     );
   }
 
-  function renderEditProfileButton() {
-    return (
-      <View
-        style={{
-          position: "absolute",
-          top: 90,
-          left: 250,
-        }}
-      >
-        <EditButton
-          buttonContainerStyle={{
-            width: 100,
-            borderRadius: SIZES.base,
-            backgroundColor: "#F54748",
-          }}
-          label="Edit Profile"
-          labelStyle={{
-            color: COLORS.white,
-          }}
-          onPress={() => navigation.navigate("EditProfile")}
-        />
-      </View>
-    );
-  }
-
   function renderBody() {
     return (
       <View
@@ -359,9 +334,6 @@ const MyAvatar = ({ navigation }) => {
     >
       {/* Header */}
       {renderHeader()}
-
-      {/* Edit Profile Button */}
-      {renderEditProfileButton()}
 
       {/* Body */}
       {renderBody()}

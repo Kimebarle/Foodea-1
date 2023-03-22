@@ -106,6 +106,7 @@ const TestScreen = ({ navigation }) => {
           <TouchableOpacity
             style={{
               flexDirection: "row",
+              alignItems: "center",
               height: 100,
               width: 300,
               marginLeft: SIZES.padding,
@@ -441,7 +442,7 @@ const TestScreen = ({ navigation }) => {
                 Other Restaurant
               </Text>
             </View>
-
+            
             {/* Other Restaurant */}
             {renderOtherRestaurant()}
           </View>

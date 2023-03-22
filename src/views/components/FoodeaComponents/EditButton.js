@@ -22,7 +22,8 @@ const EditButton = ({ label, labelStyle, buttonContainerStyle, onPress, }) => {
         >
             <Text style={{
                 color: COLORS.white,
-                ...FONTS.h3, ...labelStyle,
+                ...FONTS.h4, ...labelStyle,
+                alignSelf: 'center',
             }}>
                 {label}
             </Text>
