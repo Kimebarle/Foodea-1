@@ -10,7 +10,11 @@ import {
 import React from "react";
 import { dummyData, SIZES, icons, COLORS, FONTS } from "../../../constants";
 
-import { Header, Button } from "../../components/FoodeaComponents";
+import {
+  Header,
+  Button,
+  VerticalFoodCard,
+} from "../../components/FoodeaComponents";
 import RecommendationComponent from "../../components/FoodeaComponents/RecommendationComponent";
 import axios from "axios";
 import { BASE_URL_RECOMMENDATION } from "../../../api/context/auth/config";
@@ -33,6 +37,7 @@ const Section = ({ title, onPress, children, style }) => {
       </View>
 
       {/* Content */}
+
       {children}
     </View>
   );
@@ -40,26 +45,29 @@ const Section = ({ title, onPress, children, style }) => {
 
 const FoodRecommendScreen = ({ navigation }) => {
   const { userId } = React.useContext(AuthContext);
-  const [trending, setTrending] = React.useState([]);
+  const [recommendation, setRecommendation] = React.useState(null);
   const [itemId, setItemId] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [dummy, setDummy] = React.useState();
 
   const getData = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get(
-        `${BASE_URL_RECOMMENDATION}/preferred_calorie/?id=8`
+        `${BASE_URL_RECOMMENDATION}/recommendations/?id=8`
       );
 
-      console.log(response.data.preferred_calorie);
-    } catch (error) {}
-  };
-
-  const getFoodItems = async () => {
-    try {
-      const response = await axios.get();
-    } catch (error) {}
+      //console.log(response.data);
+      setRecommendation(response.data.foods);
+      // console.log(response.data.foods);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getData();
   }, []);
 
@@ -76,22 +84,23 @@ const FoodRecommendScreen = ({ navigation }) => {
       />
       <Section>
         <FlatList
-          data={trending}
-          keyExtractor={(item) => `${item.id}`}
+          data={isLoading ? dummy : recommendation}
+          keyExtractor={(item) => `${item.product_id}`}
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => (
             <RecommendationComponent
               containerStyle={{
                 marginLeft: index == 0 ? SIZES.padding : 18,
-                marginRight: index == trending.length - 1 ? SIZES.padding : 0,
+                // marginRight: index == trending.length - 1 ? SIZES.padding : 0,
                 height: 400,
                 width: 250,
               }}
               item={item}
               onPress={() => {
-                setItemId(item.id);
-                navigation.navigate("FoodInfo", { itemValue: itemId });
+                // setItemId(item.id);
+                //console.log(item.product_id);
+                navigation.navigate("FoodInfo", { itemId: item.product_id });
               }}
             />
           )}
@@ -107,28 +116,6 @@ const FoodRecommendScreen = ({ navigation }) => {
           top: 40,
         }}
       >
-        {/* <TouchableOpacity
-          style={{
-            backgroundColor: COLORS.lightGray2,
-            borderRadius: 15,
-            width: 50,
-            height: 50,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          
-          <Image
-            source={icons.reload}
-            style={{
-              tintColor: COLORS.primary,
-              width: 20,
-              height: 20,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          />
-        </TouchableOpacity> */}
         <Button
           title={"Buy Now"}
           style={{

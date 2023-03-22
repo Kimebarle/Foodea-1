@@ -34,6 +34,10 @@ const VerticalFoodCard = ({
   //   checkFavorites();
   // }, []);
 
+  // const updateUi = async () => {
+  //   const
+  // }
+
   const checkedIsFavorite = async () => {
     try {
       const response = await axios.get(

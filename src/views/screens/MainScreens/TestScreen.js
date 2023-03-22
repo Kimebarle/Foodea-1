@@ -64,12 +64,6 @@ const TestScreen = ({ navigation }) => {
   const [itemsDisplay, setItemDisplay] = React.useState(null);
 
   React.useEffect(() => {
-    // handleChangeCategory(
-    //   selectedCategoryId,
-    //   selectedMenuType,
-    //   discountType,
-    //   selectedRestaurant
-    // );
     getItemTable();
   }, []);
 
