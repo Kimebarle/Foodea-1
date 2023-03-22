@@ -1,5 +1,9 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import axios from "axios";
+import React, { useContext, useEffect } from "react";
+import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { TextInput } from "react-native-paper";
+import AuthContext from "../../../api/context/auth/AuthContext";
+import { BASE_URL } from "../../../api/context/auth/config";
 import {
     images,
     constants,
@@ -8,9 +12,30 @@ import {
     icons,
     FONTS,
 } from "../../../constants";
-import { Header, TextButton, FormInput, IconButton, CheckBox, FormInputCheck, EditButton } from '../../components/FoodeaComponents';
+import {
+    Header,
+    TextButton,
+    FormInput,
+    IconButton,
+    CheckBox,
+    FormInputCheck,
+} from "../../components/FoodeaComponents";
 
 const UserDetails = ({ navigation }) => {
+    const { userId } = useContext(AuthContext);
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [data, setData] = React.useState();
+    const getUserData = async () => {
+        setIsLoading(true);
+        const response = await axios.get(`${BASE_URL}app_users/${userId}`);
+        setData(response.data);
+        setIsLoading(false);
+    };
+
+    useEffect(() => {
+        setIsLoading(true);
+        getUserData();
+    }, []);
 
     function renderHeader() {
         return (
@@ -35,17 +60,21 @@ const UserDetails = ({ navigation }) => {
                         }}
                         onPress={() => navigation.goBack()}
                     >
-                        <Image source={icons.backarrow}
+                        <Image
+                            source={icons.backarrow}
                             style={{
                                 borderRadius: SIZES.radius,
-                                color: COLORS.gray2
-                            }} />
+                                color: COLORS.gray2,
+                            }}
+                        />
                     </TouchableOpacity>
                 }
                 rightComponent={
-                    <View style={{
-                        width: 40,
-                    }}></View>
+                    <View
+                        style={{
+                            width: 40,
+                        }}
+                    ></View>
                 }
             />
         );
@@ -53,23 +82,24 @@ const UserDetails = ({ navigation }) => {
 
     function renderLogo() {
         return (
-            <View style={{
-                marginTop: SIZES.padding,
-                height: 50,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: SIZES.padding,
-            }}>
+            <View
+                style={{
+                    marginTop: SIZES.padding,
+                    height: 50,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: SIZES.padding,
+                }}
+            >
                 <Image
                     source={images.profilepic}
                     resizeMode="contain"
                     style={{
                         width: 200,
-
                     }}
                 />
             </View>
-        )
+        );
     }
 
 
@@ -153,7 +183,7 @@ const UserDetails = ({ navigation }) => {
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: 'center',
+                            justifyContent: "center",
                             height: 50,
                             width: 300,
                             backgroundColor: COLORS.white,
@@ -168,12 +198,14 @@ const UserDetails = ({ navigation }) => {
                                 height: 20,
                                 width: 20,
                                 tintColor: COLORS.black,
-                                position: 'absolute',
+                                position: "absolute",
                                 left: 5,
                                 right: 0,
                             }}
                         />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black, }}></Text>
+                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
+                            {isLoading ? "Josh" : data[0].middlename}
+                        </Text>
                     </View>
 
                     {/* Last Name */}
@@ -181,7 +213,7 @@ const UserDetails = ({ navigation }) => {
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: 'center',
+                            justifyContent: "center",
                             height: 50,
                             width: 300,
                             backgroundColor: COLORS.white,
@@ -196,12 +228,14 @@ const UserDetails = ({ navigation }) => {
                                 height: 20,
                                 width: 20,
                                 tintColor: COLORS.black,
-                                position: 'absolute',
+                                position: "absolute",
                                 left: 5,
                                 right: 0,
                             }}
                         />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black, }}>Dough</Text>
+                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
+                            {isLoading ? "Josh" : data[0].lastname}
+                        </Text>
                     </View>
 
                     {/* Height */}
@@ -209,7 +243,7 @@ const UserDetails = ({ navigation }) => {
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: 'center',
+                            justifyContent: "center",
                             height: 50,
                             width: 300,
                             backgroundColor: COLORS.white,
@@ -224,12 +258,15 @@ const UserDetails = ({ navigation }) => {
                                 height: 20,
                                 width: 20,
                                 tintColor: COLORS.black,
-                                position: 'absolute',
+                                position: "absolute",
                                 left: 5,
                                 right: 0,
                             }}
                         />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black, }}>167 cm</Text>
+                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
+                            {" "}
+                            {isLoading ? "Josh" : data[0].height} cm
+                        </Text>
                     </View>
 
                     {/* Weight */}
@@ -237,7 +274,7 @@ const UserDetails = ({ navigation }) => {
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: 'center',
+                            justifyContent: "center",
                             height: 50,
                             width: 300,
                             backgroundColor: COLORS.white,
@@ -252,20 +289,85 @@ const UserDetails = ({ navigation }) => {
                                 height: 20,
                                 width: 20,
                                 tintColor: COLORS.black,
-                                position: 'absolute',
+                                position: "absolute",
                                 left: 5,
                                 right: 0,
                             }}
                         />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black, }}>65 kg</Text>
+                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
+                            {" "}
+                            {isLoading ? "Josh" : data[0].weight} kg
+                        </Text>
                     </View>
 
-                    {/* Password */}
+                    {/* Email */}
                     <View
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: 'center',
+                            justifyContent: "center",
+                            height: 50,
+                            width: 300,
+                            backgroundColor: COLORS.white,
+                            borderRadius: SIZES.radius,
+                            marginTop: SIZES.base,
+                            elevation: 5,
+                        }}
+                    >
+                        <Image
+                            source={icons.at}
+                            style={{
+                                height: 20,
+                                width: 20,
+                                tintColor: COLORS.black,
+                                position: "absolute",
+                                left: 5,
+                                right: 0,
+                            }}
+                        />
+                        <Text style={{ ...FONTS.h3 }}>
+                            {" "}
+                            {isLoading ? "Josh" : data[0].email}
+                        </Text>
+                    </View>
+
+                    {/* Phone Number */}
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            height: 50,
+                            width: 300,
+                            backgroundColor: COLORS.white,
+                            borderRadius: SIZES.radius,
+                            marginTop: SIZES.base,
+                            elevation: 5,
+                        }}
+                    >
+                        <Image
+                            source={icons.phone}
+                            style={{
+                                height: 25,
+                                width: 25,
+                                tintColor: COLORS.black,
+                                position: "absolute",
+                                left: 5,
+                                right: 0,
+                            }}
+                        />
+                        <Text style={{ ...FONTS.h3 }}>
+                            {" "}
+                            {isLoading ? "Josh" : data[0].contact_number}
+                        </Text>
+                    </View>
+
+                    {/* Phone Number */}
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "center",
                             height: 50,
                             width: 300,
                             backgroundColor: COLORS.white,
@@ -280,18 +382,29 @@ const UserDetails = ({ navigation }) => {
                                 height: 25,
                                 width: 25,
                                 tintColor: COLORS.black,
-                                position: 'absolute',
+                                position: "absolute",
                                 left: 5,
                                 right: 0,
                             }}
                         />
-                        <Text style={{ ...FONTS.h3 }}>Password</Text>
+                        <TextInput
+                            disabled
+                            style={{
+                                ...FONTS.h3,
+                                width: "100%",
+                                alignItems: "center",
+                                backfaceVisibility: COLORS.white,
+                                //left: 20,
+                                borderRadius: SIZES.radius,
+                            }}
+                            secureTextEntry
+                            value={isLoading ? "Josh" : data[0].password}
+                        />
                     </View>
                 </View>
             </ScrollView>
-
         </View>
-    )
-}
+    );
+};
 
 export default UserDetails;

@@ -19,24 +19,42 @@ const VerticalFoodCard = ({
   onPress,
   itemId,
   user_id,
+  merchant_id,
 }) => {
   const [isFavorite, setIsFavorite] = React.useState(false);
   const [isAddCart, setAddCart] = React.useState(true);
+  const [data, setData] = React.useState([]);
 
-  // const checkFavorites = async () => {
-  //   const response = await axios.get(
-  //     `${BASE_URL}favorites?user_id[eq]=${user_id}&&product_id[eq]=${itemId}`
-  //   );
-  //   setIsFavorite(dummyData.hamburger);
-  // };
+  const checkFavorites = async () => {
+    const responseFavorite = await axios.get(
+      `${BASE_URL}favorites?user_id[eq]=${user_id}`
+    );
+    // setIsFavorite();
+    const responseFood = await axios.get(
+      `${BASE_URL}foods?merchant_id[eq]=${merchant_id}`
+    );
 
-  // React.useEffect(() => {
-  //   checkFavorites();
-  // }, []);
+    const foods = responseFood.data;
+    const favorite = responseFavorite.data;
 
-  // const updateUi = async () => {
-  //   const
-  // }
+    // console.log(favorite[0].product_id);
+
+    const updatedFoods = foods.map((food) => {
+      const isCheck = favorite.some(
+        (favorite) => favorite.product_id === food.product_id
+      );
+    });
+
+    //setData(response.data);
+
+    // const isCheck = data.some((favorite) => favorite.product_id === item.id);
+    //setIsFavorite(isCheck);
+    //console.log(item.product_id);
+  };
+
+  React.useEffect(() => {
+    checkFavorites();
+  }, []);
 
   const checkedIsFavorite = async () => {
     try {
@@ -103,6 +121,7 @@ const VerticalFoodCard = ({
       }}
       onPress={onPress}
     >
+      <Text>{item.product_id}</Text>
       {/* Cart and Favorites */}
       <View style={{ flexDirection: "row" }}>
         {/* Cart */}

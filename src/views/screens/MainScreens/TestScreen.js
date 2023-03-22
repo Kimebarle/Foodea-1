@@ -266,6 +266,7 @@ const TestScreen = ({ navigation }) => {
               // add a favorite component then pass the favorite value to the component
               itemId={item.product_id}
               user_id={userId}
+              merchant_id={item.merchant_id}
               onPress={() => {
                 navigation.navigate("FoodInfo", { itemId: item.product_id });
               }}
