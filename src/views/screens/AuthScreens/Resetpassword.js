@@ -122,6 +122,7 @@ const Resetpassword = ({ navigation, route }) => {
             <FormInput
               containerStyle={{
                 borderRadius: SIZES.radius,
+                marginBottom: SIZES.padding,
               }}
               label="New Password"
               value={newpassword}
@@ -152,13 +153,14 @@ const Resetpassword = ({ navigation, route }) => {
             <FormInput
               containerStyle={{
                 borderRadius: SIZES.radius,
+                marginBottom: SIZES.padding,
               }}
               label="Confirm Password"
               value={confirmpassword}
               secureTextEntry={!reshowPassword}
               onChange={(value) => {
                 setConfirmPassword(value);
-                utils.validatePassword(value, setPasswordError);
+                utils.revalidatePassword(value, setNewConfirmPasswordError);
               }}
               errorMsg={newconfirmpasswordError}
               appendComponent={
@@ -177,11 +179,6 @@ const Resetpassword = ({ navigation, route }) => {
                 />
               }
             />
-            <View
-              style={{
-                alignItems: "flex-end",
-              }}
-            ></View>
             <TextButton
               label="Sign In"
               disabled={disabledButton()}

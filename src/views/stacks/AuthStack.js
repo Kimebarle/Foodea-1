@@ -10,6 +10,7 @@ import SurveyScreen from "../screens/AuthScreens/SurveyScreen";
 import Terms from "../screens/AuthScreens/Terms";
 import SurveyScreenInitial from "../screens/AuthScreens/SurveyScreenInitial";
 import SurveyCalories from "../screens/AuthScreens/SurveyCalories";
+import Mods from "../components/FoodeaComponents/Mods";
 
 const Stack = createNativeStackNavigator();
 
@@ -66,6 +67,11 @@ const AuthStack = () => {
         options={{ headerShown: false }}
         name={"SurveyCalories"}
         component={SurveyCalories}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name={"Mods"}
+        component={Mods}
       />
     </Stack.Navigator>
   );

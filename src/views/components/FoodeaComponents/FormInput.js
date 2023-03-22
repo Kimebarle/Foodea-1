@@ -31,8 +31,7 @@ const FormInput = ({
                 <Text style={{ color: COLORS.gray, ...FONTS.h4 }}>
                     {label}
                 </Text>
-
-                <Text style={{ color: COLORS.red, ...FONTS.h4 }}>
+                <Text style={{ color: COLORS.red, ...FONTS.h5 }}>
                     {errorMsg}
                 </Text>
             </View>

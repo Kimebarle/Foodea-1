@@ -30,9 +30,11 @@ import Input from "./Input";
 import CheckBox from "./CheckBox";
 import FooterTotalMap from "./FooterTotalMap";
 import Remember from "./Remember";
+import Mods from "./Mods";
+import LoadingAsset from "./LoadingAsset";
 
 export {
     Header, HorizontalFoodCard, CartQuantityButton, FoodDetails, IconLabel, IconButton,
     StepperInput, TotalCost, VerticalFoodCard, FilterModal, TwoPointSlider, TextButton, LineDivider, Ratings, FooterTotal, CardItem, FormInput,
-    FormInputCheck, RadioButton, TextIconButton, EditButton, RecommendationComponent, Input, CheckBox, FooterTotalMap, Remember
+    FormInputCheck, RadioButton, TextIconButton, EditButton, RecommendationComponent, Input, CheckBox, FooterTotalMap, Remember, Mods, LoadingAsset
 };

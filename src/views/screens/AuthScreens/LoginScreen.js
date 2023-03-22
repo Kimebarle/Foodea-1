@@ -146,10 +146,10 @@ const LoginScreen = ({ navigation }) => {
                     marginTop: SIZES.base,
                     ...FONTS.h3,
                     textAlign: "center",
-                    marginTop: SIZES.padding
+                    marginTop: 50
                   }}
                 >
-                  Don't have an account?{" "}
+                  Don't have an account?
                 </Text>
 
                 <TouchableOpacity onPress={handleSignUpPress}>

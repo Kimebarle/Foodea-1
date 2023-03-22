@@ -16,17 +16,17 @@ function validateEmail(value, setEmailError) {
 
 function validatePassword(value, setPasswordError) {
   if (value.length < 9) {
-    setPasswordError("Password must be 9 characters");
+    setPasswordError("Password needs 9 characters");
   } else {
     setPasswordError("");
   }
 }
 
-function revalidatePassword(value, password, setPasswordError) {
-  if (value.length < 9 && value != password) {
-    setPasswordError("Invalid Input");
+function revalidatePassword(value, setNewConfirmPasswordError) {
+  if (value.length < 9) {
+    setNewConfirmPasswordError("Enter new password");
   } else {
-    setPasswordError("");
+    setNewConfirmPasswordError("");
   }
 }
 
