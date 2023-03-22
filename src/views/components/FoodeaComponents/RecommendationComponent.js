@@ -67,36 +67,42 @@ const RecommendationComponent = ({ containerStyle, item, onPress }) => {
         <Image
           source={require("../../../../assets/img/dummyData/hamburger.png")}
           style={{
-            height: "100%",
+            height: 100,
             width: "100%",
           }}
         />
+
+        <View>
+          {/* Price */}
+          <Text
+            style={{
+              color: COLORS.primary,
+              fontSize: 18,
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}
+          >
+            ₱{item.price}
+          </Text>
+        </View>
       </View>
+
+
 
       {/* Text */}
-      <View style={{ flexDirection: "row" }}>
-        <Text style={{ ...FONTS.h3, marginLeft: 5, marginRight: 30 }}>
+      <View style={{ flexDirection: "row", marginTop: SIZES.radius, }}>
+        <Text style={{ ...FONTS.h3, marginLeft: 5, marginRight: 30, }}>
           {item.product_name}
         </Text>
-        <Text
-          style={{
-            color: COLORS.black,
-            ...FONTS.h2,
-            position: "absolute",
-            left: 160,
-          }}
-        >
-          ${item.price}
-        </Text>
       </View>
-      {/* Description */}
 
-      <View style={{ marginTop: 20 }}>
-        <Text style={{ marginLeft: 5, ...FONTS.h4 }}>Description</Text>
+      {/* Description */}
+      <View style={{ marginTop: 10 }}>
+        <Text style={{ marginLeft: 5, ...FONTS.h3, color: COLORS.primary,}}>Description</Text>
         <Text style={{ marginLeft: 5, fontSize: 12 }}>{item.description}</Text>
       </View>
       <View style={{ marginTop: 20 }}>
-        <Text style={{ marginLeft: 5, ...FONTS.h4 }}>Ingredients</Text>
+        <Text style={{ marginLeft: 5, ...FONTS.h3, color: COLORS.primary, }}>Ingredients</Text>
         <Text style={{ marginLeft: 5, fontSize: 12 }}>{item.description}</Text>
       </View>
     </TouchableOpacity>
