@@ -19,6 +19,7 @@ import {
     IconButton,
     CheckBox,
     FormInputCheck,
+    EditButton
 } from "../../components/FoodeaComponents";
 
 const UserDetails = ({ navigation }) => {
