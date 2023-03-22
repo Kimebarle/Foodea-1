@@ -121,7 +121,6 @@ const VerticalFoodCard = ({
       }}
       onPress={onPress}
     >
-      <Text>{item.product_id}</Text>
       {/* Cart and Favorites */}
       <View style={{ flexDirection: "row" }}>
         {/* Cart */}

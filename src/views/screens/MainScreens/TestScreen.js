@@ -70,12 +70,7 @@ const TestScreen = ({ navigation }) => {
   const handleChangeCategory = async (id) => {
     try {
       const response = await axios.get(
-        `${BASE_URL}foods?merchant_id[eq]=${id}`,
-        {
-          params: {
-            _limit: 3,
-          },
-        }
+        `${BASE_URL}foods?merchant_id[eq]=${id}&limit=4`
       );
       setItemDisplay(response.data);
     } catch (error) {
@@ -443,7 +438,7 @@ const TestScreen = ({ navigation }) => {
                 Other Restaurant
               </Text>
             </View>
-            
+
             {/* Other Restaurant */}
             {renderOtherRestaurant()}
           </View>
