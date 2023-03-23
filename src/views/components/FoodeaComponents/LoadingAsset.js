@@ -33,7 +33,7 @@ const LoadingAsset = ({
                     source={require("../../../../assets/img/images/loadasset.png")}
                     style={imageStyle}
                 />
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, alignItems: 'center' }}>
 
                     {/* name */}
                     <Text style={{ fontSize: 20, fontWeight: "bold", }}>
@@ -45,17 +45,19 @@ const LoadingAsset = ({
                         <Text style={{ fontSize: 10, fontWeight: "bold" }}>Just click the order now to discover the foods</Text>
                     </View>
 
-                    <TextButton
+                </View>
+                
+                <TextButton
                         label="Order Now"
                         buttonContainerStyle={{
                             marginTop: SIZES.radius,
                             height: 55,
+                            width: 150,
                             borderRadius: SIZES.radius,
                             backgroundColor: COLORS.primary
                         }}
                         onPress={() => navigation.navigate("FoodRecommendationScreen")}
                     />
-                </View>
         </View>
     );
 };

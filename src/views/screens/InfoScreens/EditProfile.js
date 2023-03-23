@@ -16,6 +16,7 @@ import {
   FormInputCheck,
   IconButton,
   CheckBox,
+  Button
 } from "../../components/FoodeaComponents";
 import {
   icons,
@@ -33,8 +34,8 @@ import { SelectList } from "react-native-dropdown-select-list";
 
 const EditProfile = ({ navigation, route }) => {
   const { data } = route.params;
-  const [showPassword, setShowPasswod] = React.useState(false);
-  const [resetshowPassword, setResetShowPasswod] = React.useState(false);
+  const [showPassword, setShowPasswod] = React.useState(true);
+  const [resetshowPassword, setResetShowPasswod] = React.useState(true);
   const [email, setEmail] = React.useState("");
   const [name, setName] = React.useState("");
   const [phone, setPhone] = React.useState("");
@@ -61,14 +62,18 @@ const EditProfile = ({ navigation, route }) => {
   const [checkValidEmail, setCheckValidEmail] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
 
+  const toggleHidePassword = () => {
+    setShowPasswod(!showPassword);
+  };
+
+  const toggleReHidePassword = () => {
+    setResetShowPasswod(!resetshowPassword);
+  };
+
   const disabledButton = () => {
     return (
       !password ||
-      !email ||
-      !firstname ||
-      !middlename ||
-      !lastname ||
-      password != reenterpassword
+      !resetpassword
     );
   };
 
@@ -111,7 +116,7 @@ const EditProfile = ({ navigation, route }) => {
           marginHorizontal: SIZES.padding,
           alignItems: "center",
         }}
-        title={"Edit Profile"}
+        title={"Edit Password"}
         leftComponent={
           <TouchableOpacity
             style={{
@@ -146,13 +151,11 @@ const EditProfile = ({ navigation, route }) => {
     return (
       <View
         style={{
-          flex: 1,
           width: 350,
           paddingHorizontal: SIZES.padding,
           paddingVertical: SIZES.padding,
           borderRadius: SIZES.radius,
           backgroundColor: COLORS.white,
-          justifyContent: "center",
         }}
       >
         <View
@@ -168,7 +171,7 @@ const EditProfile = ({ navigation, route }) => {
               ...FONTS.h1,
             }}
           >
-            Edit your details
+            Edit your password
           </Text>
         </View>
         <KeyboardAwareScrollView
@@ -182,168 +185,9 @@ const EditProfile = ({ navigation, route }) => {
             paddingBottom: SIZES.padding * 2,
           }}
         >
-          {/* First Name */}
-          <FormInput
-            containerStyle={{
-              borderRadius: SIZES.radius,
-            }}
-            label="First Name"
-            value={firstname}
-            onChange={(value) => {
-              utils.validateInput(value, 1, setFirstNameError);
-              setFirstName(value);
-            }}
-            errorMsg={firstNameError}
-            appendComponent={
-              <FormInputCheck value={firstname} error={firstNameError} />
-            }
-          />
-
-          {/* MIDDLE NAME */}
-          <FormInput
-            label="Middle Name"
-            value={middlename}
-            containerStyle={{
-              flex: 1,
-            }}
-            onChange={(value) => {
-              utils.validateInput(value, 1, setMiddleNameError);
-              setMiddleName(value);
-            }}
-            errorMsg={middleNameError}
-            appendComponent={
-              <FormInputCheck value={middlename} error={middleNameError} />
-            }
-          />
-
-          {/* LAST NAME */}
-          <FormInput
-            label="Last Name"
-            value={lastname}
-            containerStyle={{
-              flex: 1,
-            }}
-            onChange={(value) => {
-              utils.validateInput(value, 1, setLastNameError);
-              setLastName(value);
-            }}
-            errorMsg={lastNameError}
-            appendComponent={
-              <FormInputCheck value={lastname} error={lastNameError} />
-            }
-          />
-
-          {/* Gender */}
-          <Text
-            style={{
-              color: COLORS.gray,
-              ...FONTS.h3,
-              fontSize: 15,
-            }}
-          >
-            Gender
-          </Text>
-
-          <SelectList
-            data={data1}
-            label="Gender"
-            placeholder={"Select Gender"}
-            setSelected={setSelected}
-            notFoundText="No Data Exists, Please Input Suitable Gender"
-            boxStyles={{
-              backgroundColor: COLORS.lightGray2,
-              borderWidth: 0,
-            }}
-          />
-
-          {/* Height and Weight */}
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: SIZES.radius,
-            }}
-          >
-            <FormInput
-              label="Height"
-              value={height}
-              placeholder="cm"
-              keyboardType="number-pad"
-              maxLength={3}
-              containerStyle={{
-                flex: 1,
-              }}
-              onChange={(value) => {
-                utils.validateInput(value, 1, setHeightError);
-                setHeight(value);
-              }}
-            />
-
-            <FormInput
-              label="Weight"
-              value={weight}
-              maxLength={2}
-              placeholder="kg"
-              keyboardType="number-pad"
-              containerStyle={{
-                flex: 1,
-                marginLeft: SIZES.radius,
-              }}
-              onChange={(value) => {
-                utils.validateInput(value, 1, setWeightError);
-                setWeight(value);
-              }}
-            />
-          </View>
-
-          {/* Email */}
-          <FormInput
-            containerStyle={{
-              borderRadius: SIZES.radius,
-            }}
-            label="Email"
-            value={email}
-            onChange={(value) => {
-              handleCheckEmail(value);
-              setEmail(value);
-            }}
-            appendComponent={
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: 50,
-                  right: 2,
-                }}
-              >
-                {checkValidEmail ? (
-                  <Text style={styles.textFailed}>Wrong format email</Text>
-                ) : (
-                  <Text style={styles.textFailed}> </Text>
-                )}
-              </View>
-            }
-          />
-
-          {/* Phone Number */}
-          <FormInput
-            containerStyle={{
-              borderRadius: SIZES.radius,
-            }}
-            label="Phone Number"
-            value={phone}
-            maxLength={11}
-            keyboardType="number-pad"
-            onChange={(value) => {
-              setPhone(value);
-              utils.validateInput(value, 11, setPhoneError);
-            }}
-            errorMsg={phoneError}
-            appendComponent={
-              <FormInputCheck value={phone} error={phoneError} />
-            }
-          />
 
           {/* Password */}
-          <FormInput
+          {/* <FormInput
             containerStyle={{
               borderRadius: SIZES.radius,
             }}
@@ -355,7 +199,7 @@ const EditProfile = ({ navigation, route }) => {
               <IconButton
                 icon={showPassword ? icons.disable_eye : icons.eye}
                 iconStyle={{
-                  tintColor: COLORS.gray,
+                  tintColor: COLORS.gray, 
                   width: 20,
                   height: 20,
                   marginLeft: SIZES.base,
@@ -366,40 +210,77 @@ const EditProfile = ({ navigation, route }) => {
                 onPress={() => setShowPasswod(!showPassword)}
               />
             }
-          />
+          /> */}
+
+          {/* Password  */}
+          <View style={{
+            flexDirection: 'row',
+            marginBottom: SIZES.radius
+          }}>
+
+            <TextInput
+              style={{
+                ...FONTS.h3,
+                width: 300,
+                borderRadius: SIZES.radius,
+              }}
+              secureTextEntry={showPassword}
+              onChangeText={setPassword}
+              value={password}
+              label="Password"
+            />
+
+            <IconButton
+              icon={showPassword ? icons.eye : icons.disable_eye}
+              iconStyle={{
+                tintColor: COLORS.gray,
+                width: 20,
+                height: 20,
+                marginLeft: SIZES.base,
+                position: "absolute",
+                right: 15,
+                top: 20,
+              }}
+              onPress={toggleHidePassword}
+            />
+          </View>
 
           {/* Re-Enter Password */}
-          <FormInput
-            containerStyle={{
-              borderRadius: SIZES.radius,
-            }}
-            label="Re-Enter Password"
-            value={reenterpassword}
-            secureTextEntry={!reshowPassword}
-            onChange={(text) => setReEnterPassword(text)}
-            appendComponent={
-              <IconButton
-                icon={reshowPassword ? icons.disable_eye : icons.eye}
-                iconStyle={{
-                  tintColor: COLORS.gray,
-                  width: 20,
-                  height: 20,
-                  marginLeft: SIZES.base,
-                  position: "absolute",
-                  right: 0,
-                  top: 12,
-                }}
-                onPress={() => setReShowPasswod(!reshowPassword)}
-              />
-            }
-          />
+          <View style={{
+            flexDirection: 'row'
+          }}>
+            <TextInput
+              style={{
+                ...FONTS.h3,
+                width: 300,
+                borderRadius: SIZES.radius,
+              }}
+              secureTextEntry={resetshowPassword}
+              onChangeText={setResetPassword}
+              value={resetpassword}
+              label="Confirm Password"
+            />
+
+            <IconButton
+              icon={showPassword ? icons.eye : icons.disable_eye}
+              iconStyle={{
+                tintColor: COLORS.gray,
+                width: 20,
+                height: 20,
+                marginLeft: SIZES.base,
+                position: "absolute",
+                right: 15,
+                top: 20,
+              }}
+              onPress={toggleReHidePassword}
+            />
+          </View>
         </KeyboardAwareScrollView>
 
         <TextButton
-          label="Save Details"
+          label="Confirm"
           disabled={disabledButton()}
           buttonContainerStyle={{
-            marginTop: SIZES.radius,
             marginBottom: SIZES.padding,
             height: 55,
             borderRadius: SIZES.radius,
@@ -444,10 +325,15 @@ const EditProfile = ({ navigation, route }) => {
       {/* Header */}
       {renderHeader()}
 
-      <ScrollView>
+      <View style={{
+        justifyContent: 'center',
+        alignItems: "center",
+        flex: 1,
+      }}>
         {/* Form */}
         {renderForm()}
-      </ScrollView>
+      </View>
+
     </View>
   );
 };

@@ -47,286 +47,6 @@ const UserDetails = ({ navigation }) => {
 
   function renderHeader() {
     return (
-<<<<<<< Updated upstream
-        <View style={{
-            flex: 1,
-            height: SIZES.height,
-            width: SIZES.width,
-        }}>
-            {/* HEADER */}
-            {renderHeader()}
-
-
-            <ScrollView
-                contentContainerStyle={{
-                    paddingHorizontal: SIZES.radius,
-                    paddingBottom: SIZES.padding,
-                    marginTop: SIZES.radius
-                }}>
-
-                {/* Edit Profile */}
-                {renderEditProfileButton()}
-
-                {/* Logo */}
-                {renderLogo()}
-
-                {/* First Name */}
-                <View style={{ alignItems: 'center', marginTop: SIZES.padding }}>
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: 'center',
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.Name}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: 'absolute',
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black, }}>John</Text>
-                    </View>
-
-                    {/* Middle Name */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            marginTop: SIZES.base,
-                            borderRadius: SIZES.radius,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.Name}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-                            {isLoading ? "Josh" : data[0].middlename}
-                        </Text>
-                    </View>
-
-                    {/* Last Name */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.Name}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-                            {isLoading ? "Josh" : data[0].lastname}
-                        </Text>
-                    </View>
-
-                    {/* Height */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.height}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-                            {" "}
-                            {isLoading ? "Josh" : data[0].height} cm
-                        </Text>
-                    </View>
-
-                    {/* Weight */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.weight}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-                            {" "}
-                            {isLoading ? "Josh" : data[0].weight} kg
-                        </Text>
-                    </View>
-
-                    {/* Email */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.at}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3 }}>
-                            {" "}
-                            {isLoading ? "Josh" : data[0].email}
-                        </Text>
-                    </View>
-
-                    {/* Phone Number */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.phone}
-                            style={{
-                                height: 25,
-                                width: 25,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3 }}>
-                            {" "}
-                            {isLoading ? "Josh" : data[0].contact_number}
-                        </Text>
-                    </View>
-
-                    {/* Password */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                        }}
-                    >
-                        <Image
-                            source={icons.Lock}
-                            style={{
-                                height: 25,
-                                width: 25,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <TextInput
-                            disabled
-                            style={{
-                                ...FONTS.h3,
-                                height: 50,
-                                width: 300,
-                                backgroundColor: COLORS.transparentBlack1,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                borderRadius: SIZES.radius,
-                                borderTopRightRadius: SIZES.radius,
-                                borderTopLeftRadius: SIZES.radius, 
-                            }}
-                            secureTextEntry
-                            value={isLoading ? "Josh" : data[0].password}
-                        />
-                    </View>
-                </View>
-            </ScrollView>
-        </View>
-=======
       <Header
         containerStyle={{
           height: 80,
@@ -335,7 +55,6 @@ const UserDetails = ({ navigation }) => {
         }}
         title={"User Details"}
         leftComponent={
-          // Open Custom Drawer
           <TouchableOpacity
             style={{
               width: 40,
@@ -348,13 +67,7 @@ const UserDetails = ({ navigation }) => {
             }}
             onPress={() => navigation.goBack()}
           >
-            <Image
-              source={icons.backarrow}
-              style={{
-                borderRadius: SIZES.radius,
-                color: COLORS.gray2,
-              }}
-            />
+            <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
           </TouchableOpacity>
         }
         rightComponent={
@@ -365,55 +78,54 @@ const UserDetails = ({ navigation }) => {
           ></View>
         }
       />
->>>>>>> Stashed changes
     );
   }
 
-  function renderLogo() {
-    return (
-      <View
-        style={{
-          marginTop: SIZES.padding,
-          height: 50,
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: SIZES.padding,
-        }}
-      >
-        <Image
-          source={images.profilepic}
-          resizeMode="contain"
-          style={{
-            width: 200,
-          }}
-        />
-      </View>
-    );
-  }
+  // function renderLogo() {
+  //   return (
+  //     <View
+  //       style={{
+  //         marginTop: SIZES.padding,
+  //         height: 50,
+  //         alignItems: "center",
+  //         justifyContent: "center",
+  //         marginBottom: SIZES.padding,
+  //       }}
+  //     >
+  //       <Image
+  //         source={images.profilepic}
+  //         resizeMode="contain"
+  //         style={{
+  //           width: 200,
+  //         }}
+  //       />
+  //     </View>
+  //   );
+  // }
 
-  function renderEditProfileButton() {
-    return (
-      <View
-        style={{
-          left: 230,
-          marginBottom: 20,
-        }}
-      >
-        <EditButton
-          buttonContainerStyle={{
-            width: 100,
-            borderRadius: SIZES.base,
-            backgroundColor: "#F54748",
-          }}
-          label="Edit Profile"
-          labelStyle={{
-            color: COLORS.white,
-          }}
-          onPress={goToNext}
-        />
-      </View>
-    );
-  }
+  // function renderEditProfileButton() {
+  //   return (
+  //     <View
+  //       style={{
+  //         left: 230,
+  //         marginBottom: 20,
+  //       }}
+  //     >
+  //       <EditButton
+  //         buttonContainerStyle={{
+  //           width: 100,
+  //           borderRadius: SIZES.base,
+  //           backgroundColor: "#F54748",
+  //         }}
+  //         label="Edit Profile"
+  //         labelStyle={{
+  //           color: COLORS.white,
+  //         }}
+  //         onPress={goToNext}
+  //       />
+  //     </View>
+  //   );
+  // }
 
   return (
     <View
@@ -433,14 +145,16 @@ const UserDetails = ({ navigation }) => {
           marginTop: SIZES.radius,
         }}
       >
-        {/* Edit Profile */}
-        {renderEditProfileButton()}
+        {/* Edit Profile
+        {renderEditProfileButton()} */}
 
-        {/* Logo */}
-        {renderLogo()}
+        {/* Logo
+        {renderLogo()} */}
 
-        {/* First Name */}
+
         <View style={{ alignItems: "center", marginTop: SIZES.padding }}>
+
+          {/* First Name */}
           <View
             style={{
               flexDirection: "row",
@@ -678,6 +392,8 @@ const UserDetails = ({ navigation }) => {
                 right: 0,
               }}
             />
+
+            {/* Password  */}
             <TextInput
               disabled
               style={{
@@ -692,8 +408,23 @@ const UserDetails = ({ navigation }) => {
               value={isLoading ? "Josh" : data[0].password}
             />
           </View>
+
         </View>
       </ScrollView>
+
+      <TextButton
+        label="Edit Password"
+        buttonContainerStyle={{
+          justifyContent: 'center',
+          marginBottom: SIZES.padding,
+          alignSelf: 'center',
+          height: 55,
+          width: 300,
+          borderRadius: SIZES.radius,
+          backgroundColor: COLORS.primary
+        }}
+        onPress={goToNext}
+      />
     </View>
   );
 };
