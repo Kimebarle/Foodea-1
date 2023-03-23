@@ -39,8 +39,7 @@ const EditProfile = ({ navigation, route }) => {
   const [name, setName] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [resetpassword, setResetPassword] = React.useState("");
-  const [termsChecked, setTermsChecked] = React.useState(false);
+
   const [reshowPassword, setReShowPasswod] = React.useState(false);
   const [firstname, setFirstName] = React.useState("");
   const [firstNameError, setFirstNameError] = React.useState("");
@@ -98,7 +97,7 @@ const EditProfile = ({ navigation, route }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    if (!isLoading) {
+    if (isLoading) {
       showData();
     }
   }, []);
