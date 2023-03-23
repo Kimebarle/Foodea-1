@@ -88,7 +88,7 @@ const FooterTotal = ({
             height: 60,
             marginTop: SIZES.padding,
             borderRadius: SIZES.radius,
-            backgroundColor: COLORS.primary,
+            backgroundColor: disable == null || disable.length === 0 ? COLORS.gray : COLORS.primary,
           }}
           label="Place your order"
           onPress={onPress}

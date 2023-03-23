@@ -138,8 +138,7 @@ const Favorite = ({ navigation, data }) => {
         flex: 1,
         height: SIZES.height,
         width: SIZES.width,
-        height: SIZES.height,
-        width: SIZES.width,
+        alignItems: 'center',
       }}
     >
       {/* Header */}

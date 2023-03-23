@@ -363,7 +363,7 @@ const UserDetails = ({ navigation }) => {
                         </Text>
                     </View>
 
-                    {/* Phone Number */}
+                    {/* Password */}
                     <View
                         style={{
                             flexDirection: "row",
@@ -374,7 +374,6 @@ const UserDetails = ({ navigation }) => {
                             backgroundColor: COLORS.white,
                             borderRadius: SIZES.radius,
                             marginTop: SIZES.base,
-                            elevation: 5,
                         }}
                     >
                         <Image
@@ -392,11 +391,14 @@ const UserDetails = ({ navigation }) => {
                             disabled
                             style={{
                                 ...FONTS.h3,
-                                width: "100%",
+                                height: 50,
+                                width: 300,
+                                backgroundColor: COLORS.transparentBlack1,
+                                justifyContent: "center",
                                 alignItems: "center",
-                                backfaceVisibility: COLORS.white,
-                                //left: 20,
                                 borderRadius: SIZES.radius,
+                                borderTopRightRadius: SIZES.radius,
+                                borderTopLeftRadius: SIZES.radius, 
                             }}
                             secureTextEntry
                             value={isLoading ? "Josh" : data[0].password}
