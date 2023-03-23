@@ -29,7 +29,7 @@ const ActivityLogScreen = ({ navigation }) => {
     if (userId === undefined) {
     } else {
       const response = await axios.get(
-        `${BASE_URL}orders?customer_id[eq]=${userId}`
+        `${BASE_URL}orders?customer_id[eq]=${userId}&status[eq]=Paid`
       );
       const data = response.data;
       setMyActivityLogList(data);
