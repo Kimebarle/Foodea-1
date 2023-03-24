@@ -25,31 +25,28 @@ const RecommendationComponent = ({ containerStyle, item, onPress }) => {
       }}
       onPress={onPress}
     >
-      {/* Cart and Favorites */}
-      <View style={{ flexDirection: "row" }}>
-        {/* Cart */}
-
-        <IconButton
-          icon={isAddCart ? icons.cart : icons.cart_clicked}
-          iconStyle={{
-            tintColor: COLORS.primary,
-            position: "absolute",
-            height: 25,
-            width: 25,
-            left: 3,
-          }}
-          onPress={() => setAddCart(!isAddCart)}
-        />
+      {/* Calories and Favorites */}
+      <View style={{ flexDirection: "row", justifyContent: 'space-between' }}>
+        {/* Calories */}
+        <View>
+            <Image
+              source={icons.calories}
+              style={{
+                height: 25,
+                width: 25,
+                tintColor: COLORS.primary,
+              }}
+            />
+        </View>
+        
 
         {/* Favorites */}
         <IconButton
           icon={isFavorite ? icons.favourite : icons.love}
           iconStyle={{
             tintColor: COLORS.primary,
-            position: "absolute",
             height: 25,
             width: 25,
-            left: 200,
           }}
           onPress={() => setIsFavorite(!isFavorite)}
         />

@@ -30,7 +30,7 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
   const { itemId } = route.params;
   const [isLoading, setIsLoading] = useState(true);
 
-  const [quantity, setQuantity] = React.useState();
+  const [quantity, setQuantity] = React.useState(1);
   const [displayFood, setDisplayFood] = React.useState(null);
   const [product_id, setProduct_Id] = React.useState();
   const [customer_id, setCustomer_Id] = React.useState();
@@ -106,15 +106,6 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
             1.2 km away from you
           </Text>
         </View>
-
-        {/* Ratings */}
-        <Ratings
-          rating={4}
-          iconStyle={{
-            marginLeft: 3,
-            width: 13,
-          }}
-        />
       </View>
     );
   }
@@ -258,18 +249,10 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
               flexDirection: "row",
               marginTop: 10,
               paddingBottom: 10,
-              justifyContent: "space-evenly",
+              marginHorizontal: SIZES.radius,
+              justifyContent: "space-between",
             }}
           >
-            {/* Distance */}
-            <IconLabel
-              containerStyle={{}}
-              icon={icons.location}
-              iconStyle={{
-                tintColor: COLORS.gray,
-              }}
-              label="1.7m"
-            />
 
             {/* Duration */}
             <IconLabel

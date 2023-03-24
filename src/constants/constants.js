@@ -287,6 +287,29 @@ const survey1 = [
   },
 ];
 
+const captcha = [
+  {
+    id: 1,
+    image: require("../../assets/img/images/captcha1.png"),
+  },
+  {
+    id: 2,
+    image: require("../../assets/img/images/captcha2.png"),
+  },
+  {
+    id: 3,
+    image: require("../../assets/img/images/captcha3.png"),
+  },
+  {
+    id: 4,
+    image: require("../../assets/img/images/captcha4.png"),
+  },
+  {
+    id: 5,
+    image: require("../../assets/img/images/captcha5.png"),
+  }
+];
+
 export default {
   survey1,
   activityLog,
@@ -300,5 +323,6 @@ export default {
   bodyMeasurements,
   restaurant,
   pastnotifications,
-  Favorites
+  Favorites,
+  captcha
 };

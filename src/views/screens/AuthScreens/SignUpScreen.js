@@ -61,6 +61,18 @@ const SignUpScreen = ({ navigation }) => {
   const [age, setAge] = React.useState("");
   const [ageError, setAgeError] = React.useState("");
   const [address, setAddress] = React.useState("");
+  const [city, setCity] = React.useState("");
+  const [cityError, setCityError] = React.useState("");
+  const [brgy, setBrgy] = React.useState("");
+  const [brgyError, setBrgyError] = React.useState("");
+  const [zipCode, setZipCode] = React.useState("");
+  const [zipCodeError, setZipCodeError] = React.useState("");
+  const [day, setDay] = React.useState("");
+  const [dayError, setDayError] = React.useState("");
+  const [month, setMonth] = React.useState("");
+  const [monthError, setMonthError] = React.useState("");
+  const [year, setYear] = React.useState("");
+  const [yearError, setYearError] = React.useState("");
   const [addressError, setAddressError] = React.useState("");
   const [passwordError, setPasswordError] = React.useState("");
   const [reenterpassword, setReEnterPassword] = React.useState("");
@@ -290,48 +302,100 @@ const SignUpScreen = ({ navigation }) => {
             />
           </View>
 
-            <View>
-              <Text
-                style={{
-                  color: COLORS.gray,
-                  ...FONTS.h3,
-                  fontSize: 15,
-                }}
-              >
-                Gender
-              </Text>
+          <View>
+            <Text
+              style={{
+                color: COLORS.gray,
+                ...FONTS.h3,
+                fontSize: 15,
+              }}
+            >
+              Gender
+            </Text>
 
-              <SelectList
-                data={data}
-                placeholder={"Select Gender"}
-                setSelected={setSelected}
-                notFoundText='No Data Exists, Please Input Suitable Gender'
-                boxStyles={{
-                  backgroundColor: COLORS.lightGray2,
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  flex: 1,
-                  height: SIZES.height > 800 ? 55 : 45,
-                  marginTop: SIZES.height > 800 ? SIZES.base : 0,
-                  borderRadius: SIZES.radius,
-                  backgroundColor: COLORS.lightGray2,
-                }}
-              />
-            </View>
+            <SelectList
+              data={data}
+              placeholder={"Select Gender"}
+              setSelected={setSelected}
+              notFoundText='No Data Exists, Please Input Suitable Gender'
+              boxStyles={{
+                backgroundColor: COLORS.lightGray2,
+                alignItems: 'center',
+                flexDirection: 'row',
+                flex: 1,
+                height: SIZES.height > 800 ? 55 : 45,
+                marginTop: SIZES.height > 800 ? SIZES.base : 0,
+                borderRadius: SIZES.radius,
+                backgroundColor: COLORS.lightGray2,
+              }}
+            />
+          </View>
+          
+          <Text
+              style={{
+                color: COLORS.black,
+                ...FONTS.h3,
+                fontSize: 15,
+                marginTop: SIZES.base
+              }}
+            >
+              BIRTHDAY
+            </Text>
 
+          {/* Birthday */}
+          <View
+            style={{
+              flexDirection: "row",
+            }}
+          >
             <FormInput
-              label="Age"
-              value={age}
-              keyboardType="number-pad"
-              maxLength={3}
+              label="Month"
+              value={month}
+              placeholder="MM"
+              maxLength={10}
               containerStyle={{
                 flex: 1,
               }}
               onChange={(value) => {
-                utils.validateInput(value, 1, setAgeError);
-                setAge(value);
+                utils.validateInput(value, 1, setMonthError);
+                setMonth(value);
               }}
             />
+
+            <FormInput
+              label="Day"
+              value={day}
+              maxLength={2}
+              placeholder="DD"
+              keyboardType="number-pad"
+              containerStyle={{
+                flex: 1,
+                marginLeft: SIZES.radius,
+              }}
+              onChange={(value) => {
+                utils.validateInput(value, 1, setDayError);
+                setDay(value);
+              }}
+            />
+
+            <FormInput
+              label="Year"
+              value={year}
+              maxLength={4}
+              placeholder="YYYY"
+              keyboardType="number-pad"
+              containerStyle={{
+                flex: 1,
+                marginLeft: SIZES.radius,
+              }}
+              onChange={(value) => {
+                utils.validateInput(value, 1, setYearError);
+                setYear(value);
+              }}
+            />
+          </View>
+
+
 
           {/* Height and Weight */}
           <View
@@ -371,7 +435,7 @@ const SignUpScreen = ({ navigation }) => {
               }}
             />
           </View>
-          
+
           {/* Address */}
           <FormInput
             containerStyle={{
@@ -390,6 +454,62 @@ const SignUpScreen = ({ navigation }) => {
             }
           />
 
+          {/* City */}
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+            }}
+            label="City"
+            value={city}
+            maxLength={20}
+            onChange={(value) => {
+              setCity(value);
+              utils.validateInput(value, 1, setCityError);
+            }}
+            errorMsg={cityError}
+            appendComponent={
+              <FormInputCheck value={city} error={cityError} />
+            }
+          />
+
+          {/* Barangay */}
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+            }}
+            label="Barangay"
+            value={brgy}
+            maxLength={5}
+            keyboardType="number-pad"
+            onChange={(value) => {
+              setBrgy(value);
+              utils.validateInput(value, 1, setBrgyError);
+            }}
+            errorMsg={brgyError}
+            appendComponent={
+              <FormInputCheck value={brgy} error={brgyError} />
+            }
+          />
+
+          {/* ZIP CODE */}
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+            }}
+            label="ZIP CODE"
+            value={zipCode}
+            maxLength={4}
+            keyboardType="number-pad"
+            onChange={(value) => {
+              setZipCode(value);
+              utils.validateInput(value, 1, setZipCodeError);
+            }}
+            errorMsg={zipCodeError}
+            appendComponent={
+              <FormInputCheck value={zipCode} error={zipCodeError} />
+            }
+          />
+
           {/* Phone Number */}
           <FormInput
             containerStyle={{
@@ -397,11 +517,12 @@ const SignUpScreen = ({ navigation }) => {
             }}
             label="Phone Number"
             value={phone}
-            maxLength={11}
+            placeholder={"+63"}
+            maxLength={10}
             keyboardType="number-pad"
             onChange={(value) => {
               setPhone(value);
-              utils.validateInput(value, 11, setPhoneError);
+              utils.validateInput(value, 10, setPhoneError);
             }}
             errorMsg={phoneError}
             appendComponent={

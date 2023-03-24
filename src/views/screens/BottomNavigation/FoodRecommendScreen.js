@@ -117,9 +117,9 @@ const FoodRecommendScreen = ({ navigation }) => {
         }}
       >
         <Button
-          title={"Buy Now"}
+          title={"Add All to Cart"}
           style={{
-            width: 200,
+            width: 300,
             height: 50,
             borderRadius: 15,
             alignItems: "center",

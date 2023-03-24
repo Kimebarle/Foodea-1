@@ -22,7 +22,6 @@ const VerticalFoodCard = ({
   merchant_id,
 }) => {
   const [isFavorite, setIsFavorite] = React.useState(false);
-  const [isAddCart, setAddCart] = React.useState(true);
   const [data, setData] = React.useState([]);
 
   const checkFavorites = async () => {
@@ -137,16 +136,14 @@ const VerticalFoodCard = ({
         /> */}
 
         <View>
-          <TouchableOpacity onPress={() => setAddCart(!isAddCart)}>
             <Image
-              source={icons.cart}
+              source={icons.calories}
               style={{
                 height: 25,
                 width: 25,
                 tintColor: COLORS.primary,
               }}
             />
-          </TouchableOpacity>
         </View>
 
         {/* Favorites */}
@@ -189,10 +186,10 @@ const VerticalFoodCard = ({
           marginTop: -20,
         }}
       >
-        <Text style={{ ...FONTS.h3 }}>{item.product_name}</Text>
-        <Text style={{ color: COLORS.black, textAlign: "center", ...FONTS.h2 }}>
+        <Text style={{ color: COLORS.primary, textAlign: "center", ...FONTS.h2 }}>
           ₱ {item.price}
         </Text>
+        <Text style={{ ...FONTS.h3 }}>{item.product_name}</Text>
       </View>
     </TouchableOpacity>
   );

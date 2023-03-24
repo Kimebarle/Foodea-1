@@ -59,7 +59,6 @@ const SearchScreen = ({ navigation }) => {
   const [trending, setTrending] = React.useState([])
   const [recommends, setRecommends] = React.useState([])
   const [menuList, setMenuList] = React.useState([])
-  const [showFilterModal, setShowFilterModal] = React.useState(false)
   const [itemId, setItemId] = React.useState([]);
 
   React.useEffect(() => {
@@ -121,18 +120,6 @@ const SearchScreen = ({ navigation }) => {
           }}
           placeholder="Search food.."
         />
-        {/* Filter Button */}
-        <TouchableOpacity
-          onPress={() => setShowFilterModal(true)}
-        >
-          <Image
-            source={icons.filter}
-            style={{
-              height: 20,
-              width: 20,
-              tintColor: COLORS.black,
-            }} />
-        </TouchableOpacity>
       </View>
     )
   }
@@ -237,7 +224,7 @@ const SearchScreen = ({ navigation }) => {
   function renderFoodCategories() {
     return (
       <FlatList
-        data={dummyData.other_restaurant}
+        data={dummyData.Restaurant}
         keyExtractor={(item) => `${item.id}`}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -260,7 +247,7 @@ const SearchScreen = ({ navigation }) => {
           >
             <Image
               source={item.icon}
-              style={{ marginTop: 5, height: 50, width: 50 }} />
+              style={{ marginTop: 5, height: 40, width: 40, marginRight: 5 }} />
             <Text style={{ alignSelf: 'center', marginRight: SIZES.base, color: selectedCategoryId == item.id ? COLORS.white : COLORS.gray, ...FONTS.h3 }}>
               {item.name}
             </Text>
@@ -397,18 +384,12 @@ const SearchScreen = ({ navigation }) => {
           </TouchableOpacity>
         }
       />
+
       {/* Search Input*/}
       <View style={{ paddingTop: 10 }}>
         {renderSearch()}
       </View>
 
-      {/* Filter Section */}
-      {showFilterModal &&
-        <FilterModal
-          isVisible={showFilterModal}
-          onClose={() => setShowFilterModal(false)}
-        />
-      }
 
       {/* List */}
       <FlatList
@@ -418,24 +399,12 @@ const SearchScreen = ({ navigation }) => {
         ListHeaderComponent={
           <View style={{ paddingBottom: SIZES.padding }}>
             
-            <View
-              style={{
-                marginLeft: SIZES.padding,
-                marginBottom: SIZES.radius,
-              }}
-            >
-              <Text
-                style={{
-                  ...FONTS.h3,
-                }}
-              >
-                Restaurants
-              </Text>
-            </View>
-
-            {/* Other Restaurant */}
-            {renderOtherRestaurant()}
-          </View>
+            {/* Categories */}
+            {renderFoodCategories()}
+            
+            {/* Trending */}
+            {renderTrendingSection()}
+          </View> 
         }
         renderItem={({ item, index }) => {
           return (

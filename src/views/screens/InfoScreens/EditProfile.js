@@ -36,36 +36,16 @@ const EditProfile = ({ navigation, route }) => {
   const { data } = route.params;
   const [showPassword, setShowPasswod] = React.useState(true);
   const [resetshowPassword, setResetShowPasswod] = React.useState(true);
-  const [email, setEmail] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [phone, setPhone] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [resetpassword, setResetPassword] = React.useState("");
-  const [reshowPassword, setReShowPasswod] = React.useState(false);
   const [firstname, setFirstName] = React.useState("");
-  const [firstNameError, setFirstNameError] = React.useState("");
-  const [middlename, setMiddleName] = React.useState("");
-  const [middleNameError, setMiddleNameError] = React.useState("");
-  const [lastname, setLastName] = React.useState("");
-  const [lastNameError, setLastNameError] = React.useState("");
-  const [height, setHeight] = React.useState("");
-  const [heightError, setHeightError] = React.useState("");
-  const [weight, setWeight] = React.useState("");
-  const [weightError, setWeightError] = React.useState("");
-  const [emailError, setEmailError] = React.useState("");
-  const [phoneError, setPhoneError] = React.useState("");
-  const [reenterpassword, setReEnterPassword] = React.useState("");
-  const [gender, setGender] = React.useState("");
-  const [genderError, setGenderError] = React.useState("");
-  const [bmi, setBmi] = React.useState();
-  const [checkValidEmail, setCheckValidEmail] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
 
   const toggleHidePassword = () => {
     setShowPasswod(!showPassword);
   };
 
-  const toggleReHidePassword = () => {
+  const togglePassword = () => {
     setResetShowPasswod(!resetshowPassword);
   };
 
@@ -88,15 +68,9 @@ const EditProfile = ({ navigation, route }) => {
     }
   };
 
-  const [selected, setSelected] = React.useState("");
-  const data1 = [
-    { key: "M", value: "Male" },
-    { key: "F", value: "Female" },
-  ];
-
   const showData = () => {
     setIsLoading(true);
-    setFirstName(data.firstname);
+    // setFirstName(data.firstname);
     setIsLoading(false);
   };
 
@@ -185,32 +159,6 @@ const EditProfile = ({ navigation, route }) => {
           }}
         >
 
-          {/* Password */}
-          {/* <FormInput
-            containerStyle={{
-              borderRadius: SIZES.radius,
-            }}
-            label="Password"
-            value={password}
-            secureTextEntry={!showPassword}
-            onChange={(text) => setPassword(text)}
-            appendComponent={
-              <IconButton
-                icon={showPassword ? icons.disable_eye : icons.eye}
-                iconStyle={{
-                  tintColor: COLORS.gray, 
-                  width: 20,
-                  height: 20,
-                  marginLeft: SIZES.base,
-                  position: "absolute",
-                  right: 0,
-                  top: 12,
-                }}
-                onPress={() => setShowPasswod(!showPassword)}
-              />
-            }
-          /> */}
-
           {/* Password  */}
           <View style={{
             flexDirection: 'row',
@@ -261,7 +209,7 @@ const EditProfile = ({ navigation, route }) => {
             />
 
             <IconButton
-              icon={showPassword ? icons.eye : icons.disable_eye}
+              icon={resetshowPassword ? icons.eye : icons.disable_eye}
               iconStyle={{
                 tintColor: COLORS.gray,
                 width: 20,
@@ -271,7 +219,7 @@ const EditProfile = ({ navigation, route }) => {
                 right: 15,
                 top: 20,
               }}
-              onPress={toggleReHidePassword}
+              onPress={togglePassword}
             />
           </View>
         </KeyboardAwareScrollView>
@@ -286,28 +234,6 @@ const EditProfile = ({ navigation, route }) => {
             backgroundColor: !disabledButton() ? COLORS.primary : COLORS.gray,
           }}
           onPress={() => console.log("Saved Details")}
-        />
-      </View>
-    );
-  }
-
-  function renderImage() {
-    return (
-      <View
-        style={{
-          marginTop: SIZES.padding,
-          height: 40,
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: SIZES.padding,
-        }}
-      >
-        <Image
-          source={require("../../../../assets/img/images/Sample.png")}
-          resizeMode="contain"
-          style={{
-            width: 130,
-          }}
         />
       </View>
     );

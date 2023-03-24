@@ -98,12 +98,11 @@ const TestScreen = ({ navigation }) => {
         keyExtractor={(item) => `${item.id}`}
         vertical
         renderItem={({ item, index }) => (
+          <View>
           <TouchableOpacity
             style={{
               flexDirection: "row",
-              alignItems: "center",
               height: 100,
-              width: 300,
               marginLeft: SIZES.padding,
               marginRight: SIZES.padding,
               marginBottom: SIZES.base,
@@ -175,64 +174,7 @@ const TestScreen = ({ navigation }) => {
               </View>
             </View>
           </TouchableOpacity>
-        )}
-      />
-    );
-  }
-
-  // DISCOUNT
-  function renderMenuTypes() {
-    return (
-      <FlatList
-        horizontal
-        data={dummyData.Discount}
-        keyExtractor={(item) => `${item.id}`}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{
-          marginTop: 10,
-          marginBottom: 10,
-        }}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              height: 70,
-              marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
-              marginRight:
-                index == dummyData.Discount.length - 1 ? SIZES.padding : 0,
-              borderWidth: 1,
-              borderColor: COLORS.primary,
-              paddingHorizontal: 8,
-              borderRadius: SIZES.radius,
-              backgroundColor: COLORS.white,
-              elavation: 5,
-            }}
-            onPress={() => {
-              setItemId(item.id);
-              console.log(item.id);
-            }}
-          >
-            <Image
-              source={item.icon}
-              style={{
-                marginTop: 5,
-                height: 40,
-                width: 40,
-                alignSelf: "center",
-                marginRight: SIZES.radius,
-                tintColor: COLORS.primary,
-              }}
-            />
-            <Text
-              style={{
-                color: COLORS.primary,
-                alignSelf: "center",
-                ...FONTS.h3,
-              }}
-            >
-              {item.name}
-            </Text>
-          </TouchableOpacity>
+          </View>
         )}
       />
     );
@@ -402,25 +344,6 @@ const TestScreen = ({ navigation }) => {
 
             {/* BEST SELLER ON EACH RESTAURANT */}
             {renderTrendingSection()}
-
-            {/* DISCOUNT LABEL */}
-            <View
-              style={{
-                marginLeft: SIZES.padding,
-                marginTop: SIZES.padding,
-              }}
-            >
-              <Text
-                style={{
-                  ...FONTS.h3,
-                }}
-              >
-                Discounts
-              </Text>
-            </View>
-
-            {/* DISCOUNT */}
-            {renderMenuTypes()}
 
             {/* Other Restaurant Label */}
             <View

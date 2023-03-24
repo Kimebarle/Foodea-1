@@ -78,7 +78,7 @@ const BottomNavigation = () => {
       />
 
       <Tab.Screen
-        name="FoodRecommend"
+        name="Recommend"
         component={FoodRecommendScreen}
         options={{
           tabBarActiveTintColor: COLORS.primary,

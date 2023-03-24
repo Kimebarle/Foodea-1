@@ -221,7 +221,7 @@ const CartScreen = ({ navigation, route }) => {
 
   function renderCartList() {
     return (
-      <SwipeListView
+      <FlatList
         data={myCartList}
         keyExtractor={(item) => `${item.id}`}
         contentContainerStyle={{
@@ -229,8 +229,6 @@ const CartScreen = ({ navigation, route }) => {
           paddingHorizontal: SIZES.padding,
           paddingBottom: SIZES.padding4,
         }}
-        disableRightSwipe={true}
-        rightOpenValue={-75}
         renderItem={(data) => (
           <View
             style={{
@@ -311,25 +309,24 @@ const CartScreen = ({ navigation, route }) => {
                 />
               </View> */}
             </View>
+
+            <IconButton
+              containerStyle={{
+                flex: 1,
+                justifyContent: "flex-end",
+                position: 'absolute',
+                right: 10,
+              }}
+              icon={icons.Delete}
+              iconStyle={{
+                marginRight: 10,
+                tintColor: COLORS.black,
+              }}
+              onPress={() => {
+                removeMyCartHandler(data.item.id);
+              }}
+            />
           </View>
-        )}
-        renderHiddenItem={(data) => (
-          <IconButton
-            containerStyle={{
-              flex: 1,
-              justifyContent: "flex-end",
-              backgroundColor: COLORS.primary,
-              ...styles.cartItemContainer,
-            }}
-            icon={icons.Delete}
-            iconStyle={{
-              marginRight: 10,
-              tintColor: COLORS.white,
-            }}
-            onPress={() => {
-              removeMyCartHandler(data.item.id);
-            }}
-          />
         )}
       />
     );

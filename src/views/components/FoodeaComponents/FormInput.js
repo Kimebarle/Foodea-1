@@ -40,7 +40,7 @@ const FormInput = ({
                 flexDirection: 'row',
                 height: SIZES.height > 800 ? 55 : 45,
                 paddingHorizontal: SIZES.padding,
-                marginTop: SIZES.height > 800 ? SIZES.base : 0,
+                marginTop: SIZES.base,
                 borderRadius: SIZES.radius,
                 backgroundColor: COLORS.lightGray2,
                 ...inputContainerStyle
