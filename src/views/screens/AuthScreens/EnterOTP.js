@@ -17,7 +17,7 @@ import React, { useRef, useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Alert } from "react-native";
 import { sendGridEmail } from "react-native-sendgrid";
-
+import utils, { Utils } from "../../../utils/Utils";
 import { apiKey } from "../../../api/context/auth/config";
 
 const EnterOTP = ({ navigation, route }) => {

@@ -76,39 +76,18 @@ const AccountScreen = ({ navigation }) => {
       >
         <View
           style={{
-            marginTop: SIZES.padding,
             flexDirection: "row",
-            paddingHorizontal: SIZES.radius,
             paddingVertical: 20,
             backgroundColor: COLORS.primary,
             borderRadius: SIZES.radius,
+            justifyContent: "center",
+            alignItems: "center"
           }}
         >
-          <TouchableOpacity
-            style={{
-              width: 80,
-              height: 80,
-              flexDirection: "row",
-            }}
-          >
-            <Image
-              source={images.profilepic}
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: 40,
-                borderWidth: 1,
-                borderColor: COLORS.white,
-              }}
-            />
-          </TouchableOpacity>
-
           {/* DETAILS */}
           <View
             style={{
-              flex: 1,
               marginLeft: SIZES.radius,
-              alignItems: "flex-start",
             }}
           >
             <Text
