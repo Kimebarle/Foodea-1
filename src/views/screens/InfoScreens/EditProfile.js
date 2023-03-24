@@ -38,7 +38,6 @@ const EditProfile = ({ navigation, route }) => {
   const { user } = useContext(AuthContext);
   const [showPassword, setShowPasswod] = React.useState(true);
   const [resetshowPassword, setResetShowPasswod] = React.useState(true);
-  const [email, setEmail] = React.useState("");
 
   const [password, setPassword] = React.useState("");
   const [resetpassword, setResetPassword] = React.useState("");

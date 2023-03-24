@@ -54,7 +54,7 @@ const FoodRecommendScreen = ({ navigation }) => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${BASE_URL_RECOMMENDATION}/recommendations/?id=${user.user_id}`
+        `${BASE_URL_RECOMMENDATION}/recommendations/?id=9`
       );
 
       //console.log(response.data);

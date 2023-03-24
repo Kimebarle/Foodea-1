@@ -81,7 +81,7 @@ const AccountScreen = ({ navigation }) => {
             backgroundColor: COLORS.primary,
             borderRadius: SIZES.radius,
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           {/* DETAILS */}
@@ -178,7 +178,7 @@ const AccountScreen = ({ navigation }) => {
         }}
       >
         {/* Details */}
-        {renderDetails()}
+        {/* {renderDetails()} */}
 
         <View
           style={{
@@ -187,7 +187,6 @@ const AccountScreen = ({ navigation }) => {
             marginTop: SIZES.padding,
           }}
         >
-
           {/* Avatar */}
           <TouchableOpacity onPress={() => navigation.navigate("MyAvatar")}>
             <View

@@ -40,7 +40,6 @@ const Section = ({ title, onPress, children }) => {
         }}
       >
         <Text style={{ flex: 1, ...FONTS.h3 }}>{title}</Text>
-
       </View>
 
       {/* Content */}
@@ -55,9 +54,6 @@ const HomeScreen = ({ navigation, route }) => {
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
   const [trending, setTrending] = React.useState();
-  const [recommends, setRecommends] = React.useState([]);
-  const [menuList, setMenuList] = React.useState([]);
-  const [itemId, setItemId] = React.useState("");
   const [foodId, setFoodId] = React.useState();
 
   // React.useEffect(() => {

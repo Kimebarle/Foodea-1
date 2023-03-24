@@ -40,6 +40,7 @@ const Favorite = ({ navigation, data }) => {
         );
         setFavorite(response.data);
         setIsLoading(false);
+        console.log(`${BASE_URL}favorites?user_id[eq]=${userId}`);
       } catch (error) {
         console.log(error);
       }
@@ -138,7 +139,7 @@ const Favorite = ({ navigation, data }) => {
         flex: 1,
         height: SIZES.height,
         width: SIZES.width,
-        alignItems: 'center',
+        alignItems: "center",
       }}
     >
       {/* Header */}

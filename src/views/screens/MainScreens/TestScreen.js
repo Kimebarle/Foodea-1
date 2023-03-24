@@ -54,14 +54,15 @@ const Section = ({ title, onPress, children }) => {
 };
 
 const TestScreen = ({ navigation }) => {
-  const { userId } = useContext(AuthContext);
+  const { userId, user } = useContext(AuthContext);
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
   const [trending, setTrending] = React.useState([]);
   const [menuList, setMenuList] = React.useState([]);
   const [itemId, setItemId] = React.useState([]);
-
-  const [itemsDisplay, setItemDisplay] = React.useState(null);
+  const [favoritesDisplay, setFavoritesDisplay] = React.useState();
+  const [itemsDisplay, setItemDisplay] = React.useState();
+  const [foodDisplay, setFoodDisplay] = React.useState();
 
   React.useEffect(() => {
     getItemTable();
@@ -78,13 +79,38 @@ const TestScreen = ({ navigation }) => {
     }
   };
 
+  const getFavorites = async () => {
+    const favoritesResponse = await axios.get(
+      `${BASE_URL}favorites?user_id[eq]=${user.user_id}`
+    );
+    //const data = favoritesResponse.data;
+    //console.log(`${BASE_URL}carts?customer_id[eq]=${user.user_id}`);
+    setFavoritesDisplay(favoritesResponse.data);
+    const data = favoritesResponse.data;
+    return data;
+  };
+
+  const getFood = async () => {
+    const foodResponse = await axios.get(`${BASE_URL}foods?merchant_id[eq]=1`);
+    //setFoodDisplay(foodResponse.data);
+    //const data = foodResponse.data;
+    setFoodDisplay(foodResponse.data);
+    const data = foodResponse.data;
+    return data;
+  };
+
   const getItemTable = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}foods?merchant_id[eq]=1`);
-      setItemDisplay(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+    const foodData = await getFood();
+    const favoritesData = await getFavorites();
+    let food = [...foodData];
+    let favorite = [...favoritesData];
+
+    const foodWithFavorites = food.map((item) => ({
+      ...item,
+      isFavorite: favorite.some((fav) => fav.product_id === item.product_id),
+    }));
+
+    setItemDisplay(foodWithFavorites);
   };
 
   function search() {
@@ -258,12 +284,13 @@ const TestScreen = ({ navigation }) => {
                 marginRight: index == trending.length - 1 ? SIZES.padding : 0,
               }}
               item={item}
-              // add a favorite component then pass the favorite value to the component
+              Favorite={item.isFavorite}
               itemId={item.product_id}
               user_id={userId}
               merchant_id={item.merchant_id}
               onPress={() => {
-                navigation.navigate("FoodInfo", { itemId: item.product_id });
+                console.log(item.isFavorite);
+                //navigation.navigate("FoodInfo", { itemId: item.product_id });
               }}
             />
           )}
@@ -394,9 +421,6 @@ const TestScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <View>
-            {/* Delivery to section
-            {renderDeliveryTo()} */}
-
             {/* RESTAURANTS CATEGORIES */}
             {renderFoodCategories()}
 

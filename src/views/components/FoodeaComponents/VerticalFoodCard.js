@@ -20,8 +20,9 @@ const VerticalFoodCard = ({
   itemId,
   user_id,
   merchant_id,
+  Favorite,
 }) => {
-  const [isFavorite, setIsFavorite] = React.useState(false);
+  const [isFavorite, setIsFavorite] = React.useState(Favorite);
   const [isAddCart, setAddCart] = React.useState(true);
   const [data, setData] = React.useState([]);
 
@@ -86,13 +87,14 @@ const VerticalFoodCard = ({
   const setFavorite = async () => {
     const itemExist = await checkedIsFavorite();
     if (itemExist) {
-      Alert.alert("Warning", "Item is already Favorited", [
-        {
-          text: "Confirm",
-          onPress: () => console.log("Item Already is Favorite"),
-          style: "cancel",
-        },
-      ]);
+      console.log(item.product_id);
+      // Alert.alert("Warning", "Item is already Favorited", [
+      //   {
+      //     text: "Confirm",
+      //     onPress: () => console.log("Item Already is Favorite"),
+      //     style: "cancel",
+      //   },
+      // ]);
     } else {
       const newItem = await addToFavorites();
       if (newItem) {

@@ -21,7 +21,7 @@ import {
   IconButton,
   CheckBox,
   FormInputCheck,
-  Mods
+  Mods,
 } from "../../components/FoodeaComponents";
 import {
   images,
@@ -290,48 +290,48 @@ const SignUpScreen = ({ navigation }) => {
             />
           </View>
 
-            <View>
-              <Text
-                style={{
-                  color: COLORS.gray,
-                  ...FONTS.h3,
-                  fontSize: 15,
-                }}
-              >
-                Gender
-              </Text>
-
-              <SelectList
-                data={data}
-                placeholder={"Select Gender"}
-                setSelected={setSelected}
-                notFoundText='No Data Exists, Please Input Suitable Gender'
-                boxStyles={{
-                  backgroundColor: COLORS.lightGray2,
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  flex: 1,
-                  height: SIZES.height > 800 ? 55 : 45,
-                  marginTop: SIZES.height > 800 ? SIZES.base : 0,
-                  borderRadius: SIZES.radius,
-                  backgroundColor: COLORS.lightGray2,
-                }}
-              />
-            </View>
-
-            <FormInput
-              label="Age"
-              value={age}
-              keyboardType="number-pad"
-              maxLength={3}
-              containerStyle={{
-                flex: 1,
+          <View>
+            <Text
+              style={{
+                color: COLORS.gray,
+                ...FONTS.h3,
+                fontSize: 15,
               }}
-              onChange={(value) => {
-                utils.validateInput(value, 1, setAgeError);
-                setAge(value);
+            >
+              Gender
+            </Text>
+
+            <SelectList
+              data={data}
+              placeholder={"Select Gender"}
+              setSelected={setSelected}
+              notFoundText="No Data Exists, Please Input Suitable Gender"
+              boxStyles={{
+                backgroundColor: COLORS.lightGray2,
+                alignItems: "center",
+                flexDirection: "row",
+                flex: 1,
+                height: SIZES.height > 800 ? 55 : 45,
+                marginTop: SIZES.height > 800 ? SIZES.base : 0,
+                borderRadius: SIZES.radius,
+                backgroundColor: COLORS.lightGray2,
               }}
             />
+          </View>
+
+          <FormInput
+            label="Age"
+            value={age}
+            keyboardType="number-pad"
+            maxLength={3}
+            containerStyle={{
+              flex: 1,
+            }}
+            onChange={(value) => {
+              utils.validateInput(value, 1, setAgeError);
+              setAge(value);
+            }}
+          />
 
           {/* Height and Weight */}
           <View
@@ -371,7 +371,7 @@ const SignUpScreen = ({ navigation }) => {
               }}
             />
           </View>
-          
+
           {/* Address */}
           <FormInput
             containerStyle={{
@@ -478,11 +478,7 @@ const SignUpScreen = ({ navigation }) => {
             password={password}
             onChange={(value) => {
               setReEnterPassword(value);
-              utils.revalidatePassword(
-                value,
-                password,
-                setReEnterPasswordError
-              );
+              utils.validatePassword(value, setPasswordError);
             }}
             errorMsg={reenterpasswordError}
             appendComponent={
@@ -599,7 +595,7 @@ const styles = StyleSheet.create({
   textFailed: {
     alignSelf: "flex-end",
     color: "red",
-    position: 'absolute',
+    position: "absolute",
     bottom: 10,
     ...FONTS.h4,
   },
