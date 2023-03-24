@@ -108,8 +108,11 @@ const TestScreen = ({ navigation }) => {
     const foodWithFavorites = food.map((item) => ({
       ...item,
       isFavorite: favorite.some((fav) => fav.product_id === item.product_id),
+      favoriteId: favorite
+        .filter((id) => id.product_id === item.product_id)
+        .map((favorite) => favorite.id),
     }));
-
+    console.log(foodWithFavorites);
     setItemDisplay(foodWithFavorites);
   };
 
@@ -124,11 +127,12 @@ const TestScreen = ({ navigation }) => {
         keyExtractor={(item) => `${item.id}`}
         vertical
         renderItem={({ item, index }) => (
-          <View>
           <TouchableOpacity
             style={{
               flexDirection: "row",
+              alignItems: "center",
               height: 100,
+              width: 300,
               marginLeft: SIZES.padding,
               marginRight: SIZES.padding,
               marginBottom: SIZES.base,
@@ -200,7 +204,64 @@ const TestScreen = ({ navigation }) => {
               </View>
             </View>
           </TouchableOpacity>
-          </View>
+        )}
+      />
+    );
+  }
+
+  // DISCOUNT
+  function renderMenuTypes() {
+    return (
+      <FlatList
+        horizontal
+        data={dummyData.Discount}
+        keyExtractor={(item) => `${item.id}`}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          marginTop: 10,
+          marginBottom: 10,
+        }}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              height: 70,
+              marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
+              marginRight:
+                index == dummyData.Discount.length - 1 ? SIZES.padding : 0,
+              borderWidth: 1,
+              borderColor: COLORS.primary,
+              paddingHorizontal: 8,
+              borderRadius: SIZES.radius,
+              backgroundColor: COLORS.white,
+              elavation: 5,
+            }}
+            onPress={() => {
+              setItemId(item.id);
+              console.log(item.favoriteId);
+            }}
+          >
+            <Image
+              source={item.icon}
+              style={{
+                marginTop: 5,
+                height: 40,
+                width: 40,
+                alignSelf: "center",
+                marginRight: SIZES.radius,
+                tintColor: COLORS.primary,
+              }}
+            />
+            <Text
+              style={{
+                color: COLORS.primary,
+                alignSelf: "center",
+                ...FONTS.h3,
+              }}
+            >
+              {item.name}
+            </Text>
+          </TouchableOpacity>
         )}
       />
     );
@@ -227,11 +288,12 @@ const TestScreen = ({ navigation }) => {
               }}
               item={item}
               Favorite={item.isFavorite}
+              favorite_Id={item.favoriteId + 0}
               itemId={item.product_id}
               user_id={userId}
               merchant_id={item.merchant_id}
               onPress={() => {
-                console.log(item.isFavorite);
+                //console.log(item.isFavorite);
                 //navigation.navigate("FoodInfo", { itemId: item.product_id });
               }}
             />

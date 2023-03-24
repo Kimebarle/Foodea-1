@@ -26,19 +26,19 @@ const RecommendationComponent = ({ containerStyle, item, onPress }) => {
       onPress={onPress}
     >
       {/* Calories and Favorites */}
-      <View style={{ flexDirection: "row", justifyContent: 'space-between' }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         {/* Calories */}
-        <View>
-            <Image
-              source={icons.calories}
-              style={{
-                height: 25,
-                width: 25,
-                tintColor: COLORS.primary,
-              }}
-            />
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={icons.calories}
+            style={{
+              height: 25,
+              width: 25,
+              tintColor: COLORS.primary,
+            }}
+          />
+          <Text style={{ ...FONTS.h4 }}>{item.calories} calories</Text>
         </View>
-        
 
         {/* Favorites */}
         <IconButton
@@ -75,8 +75,8 @@ const RecommendationComponent = ({ containerStyle, item, onPress }) => {
             style={{
               color: COLORS.primary,
               fontSize: 18,
-              fontWeight: 'bold',
-              textAlign: 'center',
+              fontWeight: "bold",
+              textAlign: "center",
             }}
           >
             ₱{item.price}
@@ -84,22 +84,24 @@ const RecommendationComponent = ({ containerStyle, item, onPress }) => {
         </View>
       </View>
 
-
-
       {/* Text */}
-      <View style={{ flexDirection: "row", marginTop: SIZES.radius, }}>
-        <Text style={{ ...FONTS.h3, marginLeft: 5, marginRight: 30, }}>
+      <View style={{ flexDirection: "row", marginTop: SIZES.radius }}>
+        <Text style={{ ...FONTS.h3, marginLeft: 5, marginRight: 30 }}>
           {item.product_name}
         </Text>
       </View>
 
       {/* Description */}
       <View style={{ marginTop: 10 }}>
-        <Text style={{ marginLeft: 5, ...FONTS.h3, color: COLORS.primary,}}>Description</Text>
+        <Text style={{ marginLeft: 5, ...FONTS.h3, color: COLORS.primary }}>
+          Description
+        </Text>
         <Text style={{ marginLeft: 5, fontSize: 12 }}>{item.description}</Text>
       </View>
       <View style={{ marginTop: 20 }}>
-        <Text style={{ marginLeft: 5, ...FONTS.h3, color: COLORS.primary, }}>Ingredients</Text>
+        <Text style={{ marginLeft: 5, ...FONTS.h3, color: COLORS.primary }}>
+          Ingredients
+        </Text>
         <Text style={{ marginLeft: 5, fontSize: 12 }}>{item.description}</Text>
       </View>
     </TouchableOpacity>

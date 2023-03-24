@@ -21,40 +21,12 @@ const VerticalFoodCard = ({
   user_id,
   merchant_id,
   Favorite,
+  favorite_Id,
 }) => {
-  const [isFavorite, setIsFavorite] = React.useState(false);
+  const [isFavorite, setIsFavorite] = React.useState(Favorite);
   const [data, setData] = React.useState([]);
-
-  const checkFavorites = async () => {
-    const responseFavorite = await axios.get(
-      `${BASE_URL}favorites?user_id[eq]=${user_id}`
-    );
-    // setIsFavorite();
-    const responseFood = await axios.get(
-      `${BASE_URL}foods?merchant_id[eq]=${merchant_id}`
-    );
-
-    const foods = responseFood.data;
-    const favorite = responseFavorite.data;
-
-    // console.log(favorite[0].product_id);
-
-    const updatedFoods = foods.map((food) => {
-      const isCheck = favorite.some(
-        (favorite) => favorite.product_id === food.product_id
-      );
-    });
-
-    //setData(response.data);
-
-    // const isCheck = data.some((favorite) => favorite.product_id === item.id);
-    //setIsFavorite(isCheck);
-    //console.log(item.product_id);
-  };
-
-  React.useEffect(() => {
-    checkFavorites();
-  }, []);
+  const [favoriteId, setFavoriteId] = React.useState();
+  // React.useEffect(() => {}, []);
 
   const checkedIsFavorite = async () => {
     try {
@@ -62,7 +34,7 @@ const VerticalFoodCard = ({
         `${BASE_URL}favorites?user_id[eq]=${user_id}&&product_id[eq]=${itemId}`
       );
 
-      //
+      setData(response.data);
       return response.data.length > 0;
     } catch (error) {
       console.log(error);
@@ -76,6 +48,7 @@ const VerticalFoodCard = ({
         user_id: user_id,
         product_id: itemId,
       });
+
       return response.data;
     } catch (error) {
       console.log(error);
@@ -83,17 +56,59 @@ const VerticalFoodCard = ({
     }
   };
 
+  const confirmAction = async () => {
+    return new Promise((resolve, reject) => {
+      Alert.alert(
+        "Remove item from favorites",
+        "Are you sure you want to remove this item?",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+            onPress: () => resolve(false),
+          },
+          {
+            text: "Confirm",
+            onPress: () => resolve(true),
+          },
+        ]
+      );
+    });
+  };
+
+  const itemRemoval = async () => {
+    const response = await axios.get(
+      `${BASE_URL}favorites?user_id[eq]=${user_id}&product_id[eq]=${itemId}`
+    );
+    return response.data[0].id;
+  };
+
+  const updateFavorite = async (remove) => {
+    const response = await axios.delete(`${BASE_URL}favorites/${remove}`);
+    return response.data;
+  };
+
   const setFavorite = async () => {
     const itemExist = await checkedIsFavorite();
     if (itemExist) {
-      console.log(item.product_id);
-      // Alert.alert("Warning", "Item is already Favorited", [
-      //   {
-      //     text: "Confirm",
-      //     onPress: () => console.log("Item Already is Favorite"),
-      //     style: "cancel",
-      //   },
-      // ]);
+      const itemRemove = await confirmAction();
+      if (itemRemove) {
+        const remove = await itemRemoval();
+        const update = await updateFavorite(remove);
+        if (update) {
+          Alert.alert("Successful", "Item Remove", [
+            {
+              text: "Confirm",
+              onPress: () => {
+                setIsFavorite(!isFavorite);
+              },
+              style: "cancel",
+            },
+          ]);
+        }
+      } else {
+        console.log("cancel");
+      }
     } else {
       const newItem = await addToFavorites();
       if (newItem) {
@@ -137,15 +152,16 @@ const VerticalFoodCard = ({
           onPress={() => setAddCart(!isAddCart)}
         /> */}
 
-        <View>
-            <Image
-              source={icons.calories}
-              style={{
-                height: 25,
-                width: 25,
-                tintColor: COLORS.primary,
-              }}
-            />
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={icons.calories}
+            style={{
+              height: 25,
+              width: 25,
+              tintColor: COLORS.primary,
+            }}
+          />
+          <Text style={{ ...FONTS.h5 }}>{item.calories} calories</Text>
         </View>
 
         {/* Favorites */}
@@ -156,7 +172,7 @@ const VerticalFoodCard = ({
             position: "absolute",
             height: 25,
             width: 25,
-            left: 120,
+            left: 50,
           }}
           onPress={setFavorite}
         />
@@ -188,7 +204,9 @@ const VerticalFoodCard = ({
           marginTop: -20,
         }}
       >
-        <Text style={{ color: COLORS.primary, textAlign: "center", ...FONTS.h2 }}>
+        <Text
+          style={{ color: COLORS.primary, textAlign: "center", ...FONTS.h2 }}
+        >
           ₱ {item.price}
         </Text>
         <Text style={{ ...FONTS.h3 }}>{item.product_name}</Text>

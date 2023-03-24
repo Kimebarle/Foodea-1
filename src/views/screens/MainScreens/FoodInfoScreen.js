@@ -37,6 +37,7 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
   const [restaurant_id, setRestaurant_Id] = React.useState();
   const [quantity_product, setQuantity_Product] = React.useState(1);
   const [total, setTotal] = React.useState(1);
+  const [price, setPrice] = React.useState(1);
 
   // declare variable that would be used inside the function
   const fetchFood = async () => {
@@ -49,9 +50,10 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
       //const custom_id = await response.data[0].customer_id;
       const rest_id = await response.data[0].merchant_id;
       const qty_id = await response.data[0].stock;
-      // const total_id = await response.data[0].total;
+      const price_id = await response.data[0].price;
 
       setProduct_Id(product);
+      setPrice(price_id);
       console.log(userId);
       setDisplayFood(data);
       setRestaurant_Id(rest_id);
@@ -139,7 +141,7 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
             backgroundColor: COLORS.primary,
           }}
           label="Buy Now"
-          label2="$15.99"
+          label2={isLoading ? "$15.99" : "₱ " + quantity * price + ".00"}
         />
       </View>
     );
@@ -253,7 +255,6 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
               justifyContent: "space-between",
             }}
           >
-
             {/* Duration */}
             <IconLabel
               containerStyle={{

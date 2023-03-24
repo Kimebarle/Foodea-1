@@ -158,7 +158,7 @@ const HomeScreen = ({ navigation, route }) => {
               itemId={item.id}
               // userId={userId}
               onPress={() => {
-                navigation.navigate("FoodInfo", { itemValue: item.product_id });
+                navigation.navigate("FoodInfo", { itemId: item.product_id });
               }}
             />
           )}
