@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (email, password) => {
+  const login = async (email, password, remember = false) => {
     try {
       const response = await axios.get(
         `${BASE_URL}app_users?email[eq]=` + email
@@ -60,7 +60,14 @@ export const AuthProvider = ({ children }) => {
           setUserId(id);
           setUserInfo(response.data);
           console.log(userId);
-          setLogged_in(true);
+          setLogged_in("true");
+
+          // console.log(remember);
+          if (remember) {
+            SecureStore.setItemAsync("user", JSON.stringify(response.data[0]));
+            SecureStore.setItemAsync("logged_in", "true");
+            console.log(remember);
+          }
         } else {
           Alert.alert("Error Login", "Wrong Password", [
             {
@@ -120,6 +127,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         userId,
+        setUser,
         userInfo,
         login,
         logout,
@@ -127,6 +135,7 @@ export const AuthProvider = ({ children }) => {
         logged_in,
         register,
         addToCart,
+        setLogged_in,
       }}
     >
       {children}

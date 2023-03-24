@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
-import { useContext}  from "react";
+import { useContext } from "react";
 import React from "react";
 import {
   TextInput,
@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   Button,
   TextButton,
-  Remember
+  Remember,
 } from "../../components/FoodeaComponents";
 
 import {
@@ -25,9 +25,10 @@ import { Formik } from "formik";
 
 const LoginScreen = ({ navigation }) => {
   const { login } = useContext(AuthContext);
+  const [remember, setRemember] = React.useState(false);
 
   const handleOnSubmit = (values) => {
-    login(values.email, values.password, values);
+    login(values.email, values.password, remember);
   };
 
   const handleForgotPassword = () => {
@@ -46,8 +47,6 @@ const LoginScreen = ({ navigation }) => {
       .required("Email is required"),
     password: yup.string().trim().required("Password is required"),
   });
-
-  const [remember, setRemember] = React.useState(false);
 
   return (
     <View
@@ -134,7 +133,7 @@ const LoginScreen = ({ navigation }) => {
                       color: COLORS.primary,
                       ...FONTS.h3,
                       textAlign: "center",
-                      marginBottom: SIZES.padding
+                      marginBottom: SIZES.padding,
                     }}
                   >
                     Forgot Password
@@ -146,15 +145,22 @@ const LoginScreen = ({ navigation }) => {
                     marginTop: SIZES.base,
                     ...FONTS.h3,
                     textAlign: "center",
-                    marginTop: 50
+                    marginTop: 50,
                   }}
                 >
                   Don't have an account?
                 </Text>
 
                 <TouchableOpacity onPress={handleSignUpPress}>
-                  <Text style={{ color: COLORS.primary, textAlign: 'center', ...FONTS.h2 }}>
-                    Sign Up</Text>
+                  <Text
+                    style={{
+                      color: COLORS.primary,
+                      textAlign: "center",
+                      ...FONTS.h2,
+                    }}
+                  >
+                    Sign Up
+                  </Text>
                 </TouchableOpacity>
               </>
             )}
