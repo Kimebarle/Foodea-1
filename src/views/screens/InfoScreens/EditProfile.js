@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  Alert,
 } from "react-native";
 import {
   Header,
@@ -16,7 +17,7 @@ import {
   FormInputCheck,
   IconButton,
   CheckBox,
-  Button
+  Button,
 } from "../../components/FoodeaComponents";
 import {
   icons,
@@ -28,17 +29,21 @@ import {
 } from "../../../constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import utils, { Utils } from "../../../utils/Utils";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 
 import { SelectList } from "react-native-dropdown-select-list";
+import AuthContext from "../../../api/context/auth/AuthContext";
 
 const EditProfile = ({ navigation, route }) => {
-  const { data } = route.params;
+  const { user } = useContext(AuthContext);
   const [showPassword, setShowPasswod] = React.useState(true);
   const [resetshowPassword, setResetShowPasswod] = React.useState(true);
+
   const [password, setPassword] = React.useState("");
   const [resetpassword, setResetPassword] = React.useState("");
   const [firstname, setFirstName] = React.useState("");
+
+  const [checkValidEmail, setCheckValidEmail] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
 
   const toggleHidePassword = () => {
@@ -50,28 +55,35 @@ const EditProfile = ({ navigation, route }) => {
   };
 
   const disabledButton = () => {
-    return (
-      !password ||
-      !resetpassword
-    );
-  };
-
-  const handleCheckEmail = (value) => {
-    let re = /\S+@\S+\.\S+/;
-    let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-
-    setEmail(value);
-    if (re.test(value) || regex.test(value)) {
-      setCheckValidEmail(false);
-    } else {
-      setCheckValidEmail(true);
-    }
+    return !password || !resetpassword;
   };
 
   const showData = () => {
     setIsLoading(true);
-    // setFirstName(data.firstname);
+    //setFirstName(data.firstname);
     setIsLoading(false);
+  };
+
+  const passwordCheck = async () => {
+    if (user.password == password) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const onPressHandler = async () => {
+    const passwordBeforeChecker = await passwordCheck();
+    // console.log(passwordBeforeChecker);
+    if (passwordBeforeChecker) {
+      Alert.alert(
+        "Warning",
+        "Cannot change to existing password",
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+        { cancelable: false }
+      );
+    } else {
+    }
   };
 
   useEffect(() => {
@@ -160,11 +172,12 @@ const EditProfile = ({ navigation, route }) => {
         >
 
           {/* Password  */}
-          <View style={{
-            flexDirection: 'row',
-            marginBottom: SIZES.radius
-          }}>
-
+          <View
+            style={{
+              flexDirection: "row",
+              marginBottom: SIZES.radius,
+            }}
+          >
             <TextInput
               style={{
                 ...FONTS.h3,
@@ -193,9 +206,11 @@ const EditProfile = ({ navigation, route }) => {
           </View>
 
           {/* Re-Enter Password */}
-          <View style={{
-            flexDirection: 'row'
-          }}>
+          <View
+            style={{
+              flexDirection: "row",
+            }}
+          >
             <TextInput
               style={{
                 ...FONTS.h3,
@@ -239,6 +254,28 @@ const EditProfile = ({ navigation, route }) => {
     );
   }
 
+  function renderImage() {
+    return (
+      <View
+        style={{
+          marginTop: SIZES.padding,
+          height: 40,
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: SIZES.padding,
+        }}
+      >
+        <Image
+          source={require("../../../../assets/img/images/Sample.png")}
+          resizeMode="contain"
+          style={{
+            width: 130,
+          }}
+        />
+      </View>
+    );
+  }
+
   return (
     <View
       style={{
@@ -250,15 +287,16 @@ const EditProfile = ({ navigation, route }) => {
       {/* Header */}
       {renderHeader()}
 
-      <View style={{
-        justifyContent: 'center',
-        alignItems: "center",
-        flex: 1,
-      }}>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+        }}
+      >
         {/* Form */}
         {renderForm()}
       </View>
-
     </View>
   );
 };

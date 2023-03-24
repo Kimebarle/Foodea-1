@@ -59,7 +59,7 @@ const Favorites = [
     price: "49.00",
     distance: 3,
     time: 35,
-    image: require("../../assets/img/dummyData/hamburger.png")
+    image: require("../../assets/img/dummyData/hamburger.png"),
   },
   {
     id: 2,
@@ -67,7 +67,7 @@ const Favorites = [
     price: "65.00",
     distance: 3,
     time: 20,
-    image: require("../../assets/img/dummyData/spag.png")
+    image: require("../../assets/img/dummyData/spag.png"),
   },
   {
     id: 3,
@@ -75,7 +75,7 @@ const Favorites = [
     price: "50.00",
     distance: 3,
     time: 25,
-    image: require("../../assets/img/dummyData/hot_dog.png")
+    image: require("../../assets/img/dummyData/hot_dog.png"),
   },
 ];
 
@@ -126,7 +126,7 @@ const restaurant = [
     image: require("../../assets/img/images/mcdonalds-png-logo-simple-m-1.png"),
   },
   {
-    id: 3,
+    id: 6,
     name: "Chowking",
     distance: 10,
     time: 30,

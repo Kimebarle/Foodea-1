@@ -23,13 +23,14 @@ import {
 } from "../../components/FoodeaComponents";
 
 const UserDetails = ({ navigation }) => {
-  const { userId } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [next, setNext] = React.useState();
   const getUserData = async () => {
+    const userID = user.user_id;
     setIsLoading(true);
-    const response = await axios.get(`${BASE_URL}app_users/${userId}`);
+    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
     setData(response.data);
     setIsLoading(false);
   };
@@ -151,9 +152,7 @@ const UserDetails = ({ navigation }) => {
         {/* Logo
         {renderLogo()} */}
 
-
         <View style={{ alignItems: "center", marginTop: SIZES.padding }}>
-
           {/* First Name */}
           <View
             style={{
@@ -408,20 +407,19 @@ const UserDetails = ({ navigation }) => {
               value={isLoading ? "Josh" : data[0].password}
             />
           </View>
-
         </View>
       </ScrollView>
 
       <TextButton
         label="Edit Password"
         buttonContainerStyle={{
-          justifyContent: 'center',
+          justifyContent: "center",
           marginBottom: SIZES.padding,
-          alignSelf: 'center',
+          alignSelf: "center",
           height: 55,
           width: 300,
           borderRadius: SIZES.radius,
-          backgroundColor: COLORS.primary
+          backgroundColor: COLORS.primary,
         }}
         onPress={goToNext}
       />

@@ -21,7 +21,7 @@ import {
   IconButton,
   CheckBox,
   FormInputCheck,
-  Mods
+  Mods,
 } from "../../components/FoodeaComponents";
 import {
   images,
@@ -599,11 +599,7 @@ const SignUpScreen = ({ navigation }) => {
             password={password}
             onChange={(value) => {
               setReEnterPassword(value);
-              utils.revalidatePassword(
-                value,
-                password,
-                setReEnterPasswordError
-              );
+              utils.validatePassword(value, setPasswordError);
             }}
             errorMsg={reenterpasswordError}
             appendComponent={
@@ -720,7 +716,7 @@ const styles = StyleSheet.create({
   textFailed: {
     alignSelf: "flex-end",
     color: "red",
-    position: 'absolute',
+    position: "absolute",
     bottom: 10,
     ...FONTS.h4,
   },
