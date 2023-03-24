@@ -136,6 +136,7 @@ export const AuthProvider = ({ children }) => {
         register,
         addToCart,
         setLogged_in,
+        setUserId,
       }}
     >
       {children}

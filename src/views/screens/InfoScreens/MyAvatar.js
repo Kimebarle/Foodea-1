@@ -17,9 +17,7 @@ import {
 import AuthContext from "../../../api/context/auth/AuthContext";
 
 const MyAvatar = ({ navigation }) => {
-  const { userInfo } = useContext(AuthContext);
-
-  console.log(userInfo);
+  const { userInfo, user } = useContext(AuthContext);
 
   function renderHeader() {
     return (
@@ -83,7 +81,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h2,
             }}
           >
-            {userInfo[0].height}
+            {user.height}
             <Text> cm</Text>
           </Text>
           <Text
@@ -110,7 +108,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h2,
             }}
           >
-            {userInfo[0].bmi}
+            {user.bmi}
           </Text>
           <Text
             style={{
@@ -134,7 +132,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h2,
             }}
           >
-            {userInfo[0].weight} kg
+            {user.weight} kg
           </Text>
           <Text
             style={{
@@ -220,8 +218,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h4,
             }}
           >
-            {userInfo[0].firstname} {userInfo[0].middlename}{" "}
-            {userInfo[0].lastname}
+            {user.firstname} {user.middlename} {user.lastname}
           </Text>
         </View>
 
@@ -253,7 +250,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h4,
             }}
           >
-            {userInfo[0].email}
+            {user.email}
           </Text>
         </View>
 
@@ -285,7 +282,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h4,
             }}
           >
-            {userInfo[0].address}
+            {user.address}
           </Text>
         </View>
 
@@ -317,7 +314,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h4,
             }}
           >
-            {userInfo[0].contact_number}
+            {user.contact_number}
           </Text>
         </View>
       </View>

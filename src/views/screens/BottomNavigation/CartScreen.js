@@ -27,7 +27,7 @@ import { Alert } from "react-native";
 
 const CartScreen = ({ navigation, route }) => {
   const { restaurantID } = route.params;
-  const { userInfo, userId } = useContext(AuthContext);
+  const { userInfo, user, userId } = useContext(AuthContext);
   const [myCartList, setMyCartList] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [price, setPrice] = React.useState(0);
@@ -39,10 +39,10 @@ const CartScreen = ({ navigation, route }) => {
       setMyCartList(dummyData.myCart);
     } else {
       const response = await axios.get(
-        `${BASE_URL}carts?restaurant_id[eq]=${restaurantID}&&customer_id[eq]=${userId}`
+        `${BASE_URL}carts?customer_id[eq]=${userId}&&restaurant_id[eq]=${restaurantID}`
       );
 
-      //console.log(response.data[0].product_details.price);
+      // console.log(response.data[0].customer_id);
 
       let totalPrice = 0;
       let totalCalories = 0;
@@ -62,6 +62,9 @@ const CartScreen = ({ navigation, route }) => {
       setIsLoading(false);
     }
   }, [myCartList, fetchCart]);
+  // console.log(
+  //   `${BASE_URL}carts?customer_id[eq]=${user.user_id}&&restaurant_id[eq]=${restaurantID}`
+  // );
 
   useEffect(() => {
     if (!myCartList) {

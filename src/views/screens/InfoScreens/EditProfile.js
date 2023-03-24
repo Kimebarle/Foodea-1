@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  Alert,
 } from "react-native";
 import {
   Header,
@@ -16,7 +17,7 @@ import {
   FormInputCheck,
   IconButton,
   CheckBox,
-  Button
+  Button,
 } from "../../components/FoodeaComponents";
 import {
   icons,
@@ -28,36 +29,20 @@ import {
 } from "../../../constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import utils, { Utils } from "../../../utils/Utils";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 
 import { SelectList } from "react-native-dropdown-select-list";
+import AuthContext from "../../../api/context/auth/AuthContext";
 
 const EditProfile = ({ navigation, route }) => {
-  const { data } = route.params;
+  const { user } = useContext(AuthContext);
   const [showPassword, setShowPasswod] = React.useState(true);
   const [resetshowPassword, setResetShowPasswod] = React.useState(true);
   const [email, setEmail] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [phone, setPhone] = React.useState("");
+
   const [password, setPassword] = React.useState("");
   const [resetpassword, setResetPassword] = React.useState("");
-  const [reshowPassword, setReShowPasswod] = React.useState(false);
-  const [firstname, setFirstName] = React.useState("");
-  const [firstNameError, setFirstNameError] = React.useState("");
-  const [middlename, setMiddleName] = React.useState("");
-  const [middleNameError, setMiddleNameError] = React.useState("");
-  const [lastname, setLastName] = React.useState("");
-  const [lastNameError, setLastNameError] = React.useState("");
-  const [height, setHeight] = React.useState("");
-  const [heightError, setHeightError] = React.useState("");
-  const [weight, setWeight] = React.useState("");
-  const [weightError, setWeightError] = React.useState("");
-  const [emailError, setEmailError] = React.useState("");
-  const [phoneError, setPhoneError] = React.useState("");
-  const [reenterpassword, setReEnterPassword] = React.useState("");
-  const [gender, setGender] = React.useState("");
-  const [genderError, setGenderError] = React.useState("");
-  const [bmi, setBmi] = React.useState();
+
   const [checkValidEmail, setCheckValidEmail] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -70,34 +55,35 @@ const EditProfile = ({ navigation, route }) => {
   };
 
   const disabledButton = () => {
-    return (
-      !password ||
-      !resetpassword
-    );
+    return !password || !resetpassword;
   };
-
-  const handleCheckEmail = (value) => {
-    let re = /\S+@\S+\.\S+/;
-    let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-
-    setEmail(value);
-    if (re.test(value) || regex.test(value)) {
-      setCheckValidEmail(false);
-    } else {
-      setCheckValidEmail(true);
-    }
-  };
-
-  const [selected, setSelected] = React.useState("");
-  const data1 = [
-    { key: "M", value: "Male" },
-    { key: "F", value: "Female" },
-  ];
 
   const showData = () => {
     setIsLoading(true);
-    setFirstName(data.firstname);
+    //setFirstName(data.firstname);
     setIsLoading(false);
+  };
+
+  const passwordCheck = async () => {
+    if (user.password == password) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const onPressHandler = async () => {
+    const passwordBeforeChecker = await passwordCheck();
+    // console.log(passwordBeforeChecker);
+    if (passwordBeforeChecker) {
+      Alert.alert(
+        "Warning",
+        "Cannot change to existing password",
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+        { cancelable: false }
+      );
+    } else {
+    }
   };
 
   useEffect(() => {
@@ -184,7 +170,6 @@ const EditProfile = ({ navigation, route }) => {
             paddingBottom: SIZES.padding * 2,
           }}
         >
-
           {/* Password */}
           {/* <FormInput
             containerStyle={{
@@ -212,11 +197,12 @@ const EditProfile = ({ navigation, route }) => {
           /> */}
 
           {/* Password  */}
-          <View style={{
-            flexDirection: 'row',
-            marginBottom: SIZES.radius
-          }}>
-
+          <View
+            style={{
+              flexDirection: "row",
+              marginBottom: SIZES.radius,
+            }}
+          >
             <TextInput
               style={{
                 ...FONTS.h3,
@@ -245,9 +231,11 @@ const EditProfile = ({ navigation, route }) => {
           </View>
 
           {/* Re-Enter Password */}
-          <View style={{
-            flexDirection: 'row'
-          }}>
+          <View
+            style={{
+              flexDirection: "row",
+            }}
+          >
             <TextInput
               style={{
                 ...FONTS.h3,
@@ -285,7 +273,7 @@ const EditProfile = ({ navigation, route }) => {
             borderRadius: SIZES.radius,
             backgroundColor: !disabledButton() ? COLORS.primary : COLORS.gray,
           }}
-          onPress={() => console.log("Saved Details")}
+          onPress={onPressHandler}
         />
       </View>
     );
@@ -324,15 +312,16 @@ const EditProfile = ({ navigation, route }) => {
       {/* Header */}
       {renderHeader()}
 
-      <View style={{
-        justifyContent: 'center',
-        alignItems: "center",
-        flex: 1,
-      }}>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+        }}
+      >
         {/* Form */}
         {renderForm()}
       </View>
-
     </View>
   );
 };

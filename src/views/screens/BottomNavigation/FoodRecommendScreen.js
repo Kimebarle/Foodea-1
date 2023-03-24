@@ -44,7 +44,7 @@ const Section = ({ title, onPress, children, style }) => {
 };
 
 const FoodRecommendScreen = ({ navigation }) => {
-  const { userId } = React.useContext(AuthContext);
+  const { user } = React.useContext(AuthContext);
   const [recommendation, setRecommendation] = React.useState(null);
   const [itemId, setItemId] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -54,7 +54,7 @@ const FoodRecommendScreen = ({ navigation }) => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${BASE_URL_RECOMMENDATION}/recommendations/?id=8`
+        `${BASE_URL_RECOMMENDATION}/recommendations/?id=${user.user_id}`
       );
 
       //console.log(response.data);

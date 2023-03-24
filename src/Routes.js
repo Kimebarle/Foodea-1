@@ -8,7 +8,8 @@ import * as SecureStore from "expo-secure-store";
 import { useEffect } from "react";
 
 export default function App() {
-  const { logged_in, setLogged_in, setUser } = useContext(AuthContext);
+  const { logged_in, setLogged_in, setUser, setUserId } =
+    useContext(AuthContext);
 
   useEffect(() => {
     SecureStore.getItemAsync("user").then((response) => {
@@ -16,6 +17,7 @@ export default function App() {
       if (user) {
         setUser(user);
         setLogged_in(true);
+        setUserId(user.user_id);
       }
     });
   }, []);
