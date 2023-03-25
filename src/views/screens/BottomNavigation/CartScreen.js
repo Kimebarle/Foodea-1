@@ -34,6 +34,7 @@ const CartScreen = ({ navigation, route }) => {
   const [orderQuantity, setOrderQuantity] = React.useState(0);
   const [fee, setFee] = React.useState(0);
   const [calories, setCalories] = React.useState(0);
+
   const fetchCart = useCallback(async () => {
     if (userId === undefined) {
       setMyCartList(dummyData.myCart);
@@ -42,15 +43,16 @@ const CartScreen = ({ navigation, route }) => {
         `${BASE_URL}carts?customer_id[eq]=${userId}&&restaurant_id[eq]=${restaurantID}`
       );
 
-      // console.log(response.data[0].customer_id);
-
       let totalPrice = 0;
       let totalCalories = 0;
       for (let i = 0; i < response.data.length; i++) {
-        const price = parseInt(response.data[i].product_details.price);
+        const price =
+          parseInt(response.data[i].product_details.price) *
+          response.data[i].quantity;
         totalPrice += price;
       }
 
+      // console.log("total " + response.data[0].quantity);
       for (let i = 0; i < response.data.length; i++) {
         const calories = response.data[i].product_details.calories;
         totalCalories += calories;
@@ -62,9 +64,6 @@ const CartScreen = ({ navigation, route }) => {
       setIsLoading(false);
     }
   }, [myCartList, fetchCart]);
-  // console.log(
-  //   `${BASE_URL}carts?customer_id[eq]=${user.user_id}&&restaurant_id[eq]=${restaurantID}`
-  // );
 
   useEffect(() => {
     if (!myCartList) {
@@ -73,12 +72,12 @@ const CartScreen = ({ navigation, route }) => {
     }
   }, [myCartList, fetchCart]);
 
-  function updateQuantityHandler(newquantity, id) {
-    const newMyCartList = myCartList.map((cl) =>
-      cl.id === id ? { ...cl, quantity: newquantity } : cl
-    );
-    setMyCartList(newMyCartList);
-  }
+  // function updateQuantityHandler(newquantity, id) {
+  //   const newMyCartList = myCartList.map((cl) =>
+  //     cl.id === id ? { ...cl, quantity: newquantity } : cl
+  //   );
+  //   setMyCartList(newMyCartList);
+  // }
 
   const confirmAction = async () => {
     return new Promise((resolve, reject) => {
@@ -104,30 +103,31 @@ const CartScreen = ({ navigation, route }) => {
     const decision = await confirmAction();
 
     if (decision) {
-      for (let i = 0; i < myCartList.length; i++) {
-        const response = await axios.post(`${BASE_URL}orders`, {
-          customer_id: userId,
-          merchant_id: restaurantID,
-          product_id: myCartList[i].product_id,
-          restaurant_id: restaurantID,
-          quantity: myCartList[i].quantity,
-          total: myCartList[i].total,
-          status: "Pending",
-          payment_type: "Cash",
-        });
-        console.log(response.data);
-      }
-      let newCart = [...myCartList];
-      for (let i = 0; i < newCart.length; i++) {
-        const response = await axios.delete(
-          `${BASE_URL}carts/${newCart[i].id}`
-        );
-      }
-      newCart.splice(0, newCart.length);
-      setMyCartList(newCart);
-      setCalories(0);
-      setPrice(0);
-      setOrderQuantity(0);
+      navigation.navigate("CardPayment", { passingValue: myCartList });
+      // for (let i = 0; i < myCartList.length; i++) {
+      //   const response = await axios.post(`${BASE_URL}orders`, {
+      //     customer_id: userId,
+      //     merchant_id: restaurantID,
+      //     product_id: myCartList[i].product_id,
+      //     restaurant_id: restaurantID,
+      //     quantity: myCartList[i].quantity,
+      //     total: myCartList[i].total,
+      //     status: "Pending",
+      //     payment_type: "Cash",
+      //   });
+      //   console.log(response.data);
+      // }
+      // let newCart = [...myCartList];
+      // for (let i = 0; i < newCart.length; i++) {
+      //   const response = await axios.delete(
+      //     `${BASE_URL}carts/${newCart[i].id}`
+      //   );
+      // }
+      // newCart.splice(0, newCart.length);
+      // setMyCartList(newCart);
+      // setCalories(0);
+      // setPrice(0);
+      // setOrderQuantity(0);
     } else {
       console.log("cancel");
     }
@@ -288,36 +288,22 @@ const CartScreen = ({ navigation, route }) => {
                   {isLoading ? "Loading" : data.item.product_details.calories}{" "}
                   calories
                 </Text>
-              </Text>
-
-              {/* Food Quantity
-              <View
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  left: 90,
-                  bottom: 10,
-                }}
-              >
-                <StepperInput
-                  value={data.item.total}
-                  onAdd={() =>
-                    updateQuantityHandler(data.item.total + 1, data.item.id)
-                  }
-                  onMinus={() => {
-                    if (data.item.total > 1) {
-                      updateQuantityHandler(data.item.total - 1, data.item.id);
-                    }
+                <Text
+                  style={{
+                    color: COLORS.gray,
+                    ...FONTS.h5,
                   }}
-                />
-              </View> */}
+                >
+                  {isLoading ? "Loading" : data.item.quantity} Quantity
+                </Text>
+              </Text>
             </View>
 
             <IconButton
               containerStyle={{
                 flex: 1,
                 justifyContent: "flex-end",
-                position: 'absolute',
+                position: "absolute",
                 right: 10,
               }}
               icon={icons.Delete}
@@ -345,12 +331,8 @@ const CartScreen = ({ navigation, route }) => {
     >
       {/*   Header */}
       {renderHeader()}
-
-      {/* <Button title="Press" onPress={fetchCart} />
-      <Button title="Press" onPress={fetchData} /> */}
       {/*   Cart List */}
       {renderCartList()}
-      {/*   Total Cost Section */}
       <FooterTotal
         disable={myCartList}
         totalCalories={calories}

@@ -44,7 +44,7 @@ const AccountScreen = ({ navigation }) => {
               borderColor: COLORS.gray2,
               borderRadius: SIZES.radius,
             }}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate("BottomTab")}
           >
             <Image
               source={icons.backarrow}

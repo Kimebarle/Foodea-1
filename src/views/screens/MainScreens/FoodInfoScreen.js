@@ -47,23 +47,17 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
       );
       const data = await response.data;
       const product = await response.data[0].product_id;
-      //const custom_id = await response.data[0].customer_id;
       const rest_id = await response.data[0].merchant_id;
-      const qty_id = await response.data[0].stock;
       const price_id = await response.data[0].price;
-
       setProduct_Id(product);
       setPrice(price_id);
       console.log(userId);
       setDisplayFood(data);
       setRestaurant_Id(rest_id);
-      setQuantity_Product(qty_id);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
-    //console.log(displayFood[0].product_details.product_name);
-    //console.log(displayFood);
   };
 
   useEffect(() => {
@@ -73,7 +67,7 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
 
   function buyNowHandler() {
     console.log(userId, product_id, restaurant_id, quantity_product, total);
-    addToCart(userId, product_id, restaurant_id, quantity_product, total);
+    addToCart(userId, product_id, restaurant_id, quantity, total);
     navigation.navigate("Cart");
   }
 

@@ -7,7 +7,7 @@ import {
   ScrollView,
   Text,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { Button, Container } from "../../components/FoodeaComponents";
 import {
@@ -27,36 +27,11 @@ import {
 import { BASE_URL } from "../../../api/context/auth/config";
 import axios from "axios";
 import { List } from "react-native-paper";
-
-const Section = ({ title, onPress, children }) => {
-  return (
-    <View>
-      {/* Header */}
-      <View
-        style={{
-          flexDirection: "row",
-          marginHorizontal: SIZES.padding,
-          marginTop: 30,
-          marginBottom: 20,
-        }}
-      >
-        <Text style={{ flex: 1, ...FONTS.h3 }}>{title}</Text>
-
-        <TouchableOpacity onPress={onPress}>
-          <Text style={{ color: COLORS.primary, ...FONTS.h4 }}>Show All</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Content */}
-      {children}
-    </View>
-  );
-};
+import { useFocusEffect } from "@react-navigation/native";
 
 const TestScreen = ({ navigation }) => {
   const { userId, user } = useContext(AuthContext);
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
-  const [selectedMenuType, setSelectedMenuType] = React.useState(1);
   const [trending, setTrending] = React.useState([]);
   const [menuList, setMenuList] = React.useState([]);
   const [itemId, setItemId] = React.useState([]);
@@ -64,9 +39,16 @@ const TestScreen = ({ navigation }) => {
   const [itemsDisplay, setItemDisplay] = React.useState();
   const [foodDisplay, setFoodDisplay] = React.useState();
 
-  React.useEffect(() => {
-    getItemTable();
-  }, []);
+  // useFocusEffect(() => {}, [getItemTable]);
+
+  useFocusEffect(
+    useCallback(() => {
+      getItemTable();
+      getFavorites();
+      getFood();
+      setItemDisplay();
+    }, [getItemTable])
+  );
 
   const handleChangeCategory = async (id) => {
     try {
@@ -79,7 +61,7 @@ const TestScreen = ({ navigation }) => {
     }
   };
 
-  const getFavorites = async () => {
+  const getFavorites = useCallback(async () => {
     const favoritesResponse = await axios.get(
       `${BASE_URL}favorites?user_id[eq]=${user.user_id}`
     );
@@ -88,18 +70,21 @@ const TestScreen = ({ navigation }) => {
     setFavoritesDisplay(favoritesResponse.data);
     const data = favoritesResponse.data;
     return data;
-  };
+  }, []);
 
   const getFood = async () => {
     const foodResponse = await axios.get(`${BASE_URL}foods?merchant_id[eq]=1`);
-    //setFoodDisplay(foodResponse.data);
-    //const data = foodResponse.data;
+    // console.log("food");
     setFoodDisplay(foodResponse.data);
     const data = foodResponse.data;
     return data;
   };
 
-  const getItemTable = async () => {
+  // const getItemTable = useCallback(async () => {
+
+  // });
+
+  const getItemTable = useCallback(async () => {
     const foodData = await getFood();
     const favoritesData = await getFavorites();
     let food = [...foodData];
@@ -112,9 +97,8 @@ const TestScreen = ({ navigation }) => {
         .filter((id) => id.product_id === item.product_id)
         .map((favorite) => favorite.id),
     }));
-    console.log(foodWithFavorites);
     setItemDisplay(foodWithFavorites);
-  };
+  }, []);
 
   function search() {
     navigation.push("Search");
@@ -293,8 +277,7 @@ const TestScreen = ({ navigation }) => {
               user_id={userId}
               merchant_id={item.merchant_id}
               onPress={() => {
-                //console.log(item.isFavorite);
-                //navigation.navigate("FoodInfo", { itemId: item.product_id });
+                navigation.navigate("FoodInfo", { itemId: item.product_id });
               }}
             />
           )}
@@ -452,9 +435,9 @@ const TestScreen = ({ navigation }) => {
             {renderOtherRestaurant()}
           </View>
         }
-        renderItem={({ item, index }) => {
-          return <View></View>;
-        }}
+        // renderItem={({ item, index }) => {
+        //   return <View></View>;
+        // }}
       />
     </View>
   );

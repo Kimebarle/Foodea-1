@@ -17,9 +17,13 @@ import {
 } from "../../components/FoodeaComponents";
 import RecommendationComponent from "../../components/FoodeaComponents/RecommendationComponent";
 import axios from "axios";
-import { BASE_URL_RECOMMENDATION } from "../../../api/context/auth/config";
+import {
+  BASE_URL,
+  BASE_URL_RECOMMENDATION,
+} from "../../../api/context/auth/config";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { useEffect } from "react";
+import { Alert } from "react-native";
 
 const Section = ({ title, onPress, children, style }) => {
   return (
@@ -44,17 +48,38 @@ const Section = ({ title, onPress, children, style }) => {
 };
 
 const FoodRecommendScreen = ({ navigation }) => {
-  const { user } = React.useContext(AuthContext);
+  const { userId } = React.useContext(AuthContext);
   const [recommendation, setRecommendation] = React.useState(null);
   const [itemId, setItemId] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [dummy, setDummy] = React.useState();
 
+  const showAlertWithBooleanResponse = () => {
+    return new Promise((resolve) => {
+      Alert.alert(
+        "Do you want to remove this item from your cart?",
+        "",
+        [
+          {
+            text: "Cancel",
+            onPress: () => resolve(false),
+            style: "cancel",
+          },
+          {
+            text: "OK",
+            onPress: () => resolve(true),
+          },
+        ],
+        { cancelable: false }
+      );
+    });
+  };
+
   const getData = async () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${BASE_URL_RECOMMENDATION}/recommendations/?id=9`
+        `${BASE_URL_RECOMMENDATION}/recommendations/?id=${userId}`
       );
 
       //console.log(response.data);
@@ -92,14 +117,11 @@ const FoodRecommendScreen = ({ navigation }) => {
             <RecommendationComponent
               containerStyle={{
                 marginLeft: index == 0 ? SIZES.padding : 18,
-                // marginRight: index == trending.length - 1 ? SIZES.padding : 0,
                 height: 400,
                 width: 250,
               }}
               item={item}
               onPress={() => {
-                // setItemId(item.id);
-                //console.log(item.product_id);
                 navigation.navigate("FoodInfo", { itemId: item.product_id });
               }}
             />
@@ -116,7 +138,7 @@ const FoodRecommendScreen = ({ navigation }) => {
           top: 40,
         }}
       >
-        <Button
+        {/* <Button
           title={"Add All to Cart"}
           style={{
             width: 300,
@@ -126,7 +148,8 @@ const FoodRecommendScreen = ({ navigation }) => {
             justifyContent: "center",
             marginHorizontal: 5,
           }}
-        />
+          onPress={onPressHandler}
+        /> */}
       </View>
     </View>
   );
