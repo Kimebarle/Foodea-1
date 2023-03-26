@@ -140,16 +140,15 @@ const PersonalInfo = ({ navigation, route }) => {
               placeholder={"Select Gender"}
               setSelected={setSelected}
               notFoundText="No Data Exists, Please Input Suitable Gender"
-              // boxStyles={{
-              //     backgroundColor: COLORS.lightGray2,
-              //     alignItems: 'center',
-              //     flexDirection: 'row',
-              //     flex: 1,
-              //     height: SIZES.height > 800 ? 55 : 45,
-              //     marginTop: SIZES.height > 800 ? SIZES.base : 0,
-              //     borderRadius: SIZES.radius,
-              //     backgroundColor: COLORS.lightGray2,
-              // }}
+              boxStyles={{
+                  backgroundColor: COLORS.lightGray2,
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  height: SIZES.height > 800 ? 55 : 45,
+                  marginTop: SIZES.height > 800 ? SIZES.base : 0,
+                  borderRadius: SIZES.radius,
+                  backgroundColor: COLORS.lightGray2,
+              }}
             />
           </View>
           <TextButton

@@ -75,6 +75,48 @@ const SurveyScreen = ({ navigation, route }) => {
     );
   }
 
+  function renderHeader() {
+    return (
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        leftComponent={
+          // Open Custom Drawer
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
+            }}
+            onPress={() => navigation.goBack()}
+          >
+            <Image
+              source={icons.backarrow}
+              style={{
+                borderRadius: SIZES.radius,
+                color: COLORS.gray2,
+              }}
+            />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
+  }
+
   return (
     <View
       style={{
@@ -86,19 +128,19 @@ const SurveyScreen = ({ navigation, route }) => {
       {/* Header */}
       {renderHeader()}
 
-      <View style = {{
+      <View style={{
         height: 600,
         width: 350,
         justifyContent: 'center',
         backgroundColor: COLORS.white,
         borderRadius: SIZES.radius,
       }}>
-      
-      
 
-      <Text style={{ padding: SIZES.padding, ...FONTS.h2 }}>
-        Let us know about yourself ...{" "}
-      </Text>
+
+
+        <Text style={{ padding: SIZES.padding, ...FONTS.h2 }}>
+          Let us know about yourself ...{" "}
+        </Text>
 
         <Text
           style={{
@@ -110,17 +152,17 @@ const SurveyScreen = ({ navigation, route }) => {
           How active are you?
         </Text>
 
-      <View style={{ width: "80%", marginTop: 40, left: 20 }}>
-        <RadioForm
-          radio_props={items}
-          initial={value}
-          onPress={(value) => setValue(value)}
-          buttonColor={COLORS.gray3}
-          labelStyle={{ ...FONTS.h4, marginBottom: SIZES.padding,}}
-          selectedButtonColor={COLORS.primary}
-        />
-      </View>
-      {renderFooter()}
+        <View style={{ width: "80%", marginTop: 40, left: 20 }}>
+          <RadioForm
+            radio_props={items}
+            initial={value}
+            onPress={(value) => setValue(value)}
+            buttonColor={COLORS.gray3}
+            labelStyle={{ ...FONTS.h4, marginBottom: SIZES.padding, }}
+            selectedButtonColor={COLORS.primary}
+          />
+        </View>
+        {renderFooter()}
       </View>
     </View>
   );

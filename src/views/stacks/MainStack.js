@@ -34,6 +34,10 @@ import AnotherOrder from "../screens/Delivery/AnotherOrder";
 import Favorite from "../screens/InfoScreens/Favorite";
 import Address from "../screens/InfoScreens/Address";
 import MyCartScreen from "../screens/BottomNavigation/MyCartScreen";
+import Names from "../screens/InfoScreens/Names";
+import HeightWeight from "../screens/InfoScreens/HeightWeight";
+import EmailPhoneNumber from "../screens/InfoScreens/EmailPhoneNumber";
+import Password from "../screens/InfoScreens/Password";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -215,6 +219,10 @@ const MainStack = () => {
       <Stack.Screen name="Favorite" component={Favorite} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="Address" component={Address} />
+      <Stack.Screen name="Names" component={Names} />
+      <Stack.Screen name="HeightWeight" component={HeightWeight} />
+      <Stack.Screen name="EmailPhoneNumber" component={EmailPhoneNumber} />
+      <Stack.Screen name="Password" component={Password} />
     </Stack.Navigator>
   );
 };

@@ -133,7 +133,7 @@ const Captcha = ({ navigation, route }) => {
           justifyContent: "center",
           marginTop: SIZES.radius,
           height: 300,
-          width: 350,
+          width: 330,
           backgroundColor: COLORS.white,
           borderRadius: SIZES.radius,
           borderWidth: 1,
@@ -251,7 +251,7 @@ const Captcha = ({ navigation, route }) => {
       <View
         style={{
           marginTop: SIZES.radius,
-          width: 350,
+          width: 330,
           height: 150,
           borderWidth: 1,
           backgroundColor: COLORS.white,
@@ -279,7 +279,7 @@ const Captcha = ({ navigation, route }) => {
       <View
         style={{
           backgroundColor: COLORS.primary,
-          width: 350,
+          width: 330,
           height: 50,
           borderRadius: SIZES.radius,
           alignItems: "center",
@@ -318,7 +318,7 @@ const Captcha = ({ navigation, route }) => {
       <TextInput
         style={{
           ...FONTS.h3,
-          width: 350,
+          width: 330,
           borderRadius: SIZES.radius,
           textAlign: "center",
         }}
@@ -338,7 +338,7 @@ const Captcha = ({ navigation, route }) => {
       >
         <Text
           style={{
-            width: 350,
+            width: 330,
             fontWeight: "bold",
             ...FONTS.h4,
             lineHeight: 15,

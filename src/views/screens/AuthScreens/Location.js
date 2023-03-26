@@ -98,7 +98,7 @@ const Location = ({ navigation, route }) => {
             }}
             label="Address"
             value={address}
-            placeholder="Block, Street..."
+            placeholder="Block, Lot, Street..."
             maxLength={50}
             onChange={(value) => {
               setAddress(value);

@@ -46,6 +46,22 @@ const UserDetails = ({ navigation }) => {
     navigation.navigate("EditProfile", { data: next });
   };
 
+  const HandleNames = () => {
+    navigation.push("Names");
+  }
+
+  const HandleHeightandWeight = () => {
+    navigation.push("HeightWeight");
+  }
+
+  const HandleEmailPhone = () => {
+    navigation.push("EmailPhoneNumber");
+  }
+
+  const HandlePassword = () => {
+    navigation.push("Password");
+  }
+
   function renderHeader() {
     return (
       <Header
@@ -153,276 +169,128 @@ const UserDetails = ({ navigation }) => {
         {renderLogo()} */}
 
         <View style={{ alignItems: "center", marginTop: SIZES.padding }}>
-          {/* First Name */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              height: 50,
-              width: 300,
-              backgroundColor: COLORS.white,
-              borderRadius: SIZES.radius,
-              elevation: 5,
-            }}
-          >
-            <Image
-              source={icons.Name}
-              style={{
-                height: 20,
-                width: 20,
-                tintColor: COLORS.black,
-                position: "absolute",
-                left: 5,
-                right: 0,
-              }}
-            />
-            <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-              {isLoading ? "Josh" : data[0].firstname}
-            </Text>
-          </View>
 
-          {/* Middle Name */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              height: 50,
-              width: 300,
-              backgroundColor: COLORS.white,
-              marginTop: SIZES.base,
-              borderRadius: SIZES.radius,
-              elevation: 5,
-            }}
-          >
-            <Image
-              source={icons.Name}
+          {/* First Name, Middle Name, Last Name */}
+          <TouchableOpacity onPress={HandleNames}>
+            <View
               style={{
-                height: 20,
-                width: 20,
-                tintColor: COLORS.black,
-                position: "absolute",
-                left: 5,
-                right: 0,
-              }}
-            />
-            <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-              {isLoading ? "Josh" : data[0].middlename}
-            </Text>
-          </View>
-
-          {/* Last Name */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              height: 50,
-              width: 300,
-              backgroundColor: COLORS.white,
-              borderRadius: SIZES.radius,
-              marginTop: SIZES.base,
-              elevation: 5,
-            }}
-          >
-            <Image
-              source={icons.Name}
-              style={{
-                height: 20,
-                width: 20,
-                tintColor: COLORS.black,
-                position: "absolute",
-                left: 5,
-                right: 0,
-              }}
-            />
-            <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-              {isLoading ? "Josh" : data[0].lastname}
-            </Text>
-          </View>
-
-          {/* Height */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              height: 50,
-              width: 300,
-              backgroundColor: COLORS.white,
-              borderRadius: SIZES.radius,
-              marginTop: SIZES.base,
-              elevation: 5,
-            }}
-          >
-            <Image
-              source={icons.height}
-              style={{
-                height: 20,
-                width: 20,
-                tintColor: COLORS.black,
-                position: "absolute",
-                left: 5,
-                right: 0,
-              }}
-            />
-            <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-              {" "}
-              {isLoading ? "Josh" : data[0].height} cm
-            </Text>
-          </View>
-
-          {/* Weight */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              height: 50,
-              width: 300,
-              backgroundColor: COLORS.white,
-              borderRadius: SIZES.radius,
-              marginTop: SIZES.base,
-              elevation: 5,
-            }}
-          >
-            <Image
-              source={icons.weight}
-              style={{
-                height: 20,
-                width: 20,
-                tintColor: COLORS.black,
-                position: "absolute",
-                left: 5,
-                right: 0,
-              }}
-            />
-            <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-              {" "}
-              {isLoading ? "Josh" : data[0].weight} kg
-            </Text>
-          </View>
-
-          {/* Email */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              height: 50,
-              width: 300,
-              backgroundColor: COLORS.white,
-              borderRadius: SIZES.radius,
-              marginTop: SIZES.base,
-              elevation: 5,
-            }}
-          >
-            <Image
-              source={icons.at}
-              style={{
-                height: 20,
-                width: 20,
-                tintColor: COLORS.black,
-                position: "absolute",
-                left: 5,
-                right: 0,
-              }}
-            />
-            <Text style={{ ...FONTS.h3 }}>
-              {" "}
-              {isLoading ? "Josh" : data[0].email}
-            </Text>
-          </View>
-
-          {/* Phone Number */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              height: 50,
-              width: 300,
-              backgroundColor: COLORS.white,
-              borderRadius: SIZES.radius,
-              marginTop: SIZES.base,
-              elevation: 5,
-            }}
-          >
-            <Image
-              source={icons.phone}
-              style={{
-                height: 25,
-                width: 25,
-                tintColor: COLORS.black,
-                position: "absolute",
-                left: 5,
-                right: 0,
-              }}
-            />
-            <Text style={{ ...FONTS.h3 }}>
-              {" "}
-              {isLoading ? "Josh" : data[0].contact_number}
-            </Text>
-          </View>
-
-          {/* Phone Number */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              height: 50,
-              width: 300,
-              backgroundColor: COLORS.white,
-              borderRadius: SIZES.radius,
-              marginTop: SIZES.base,
-              elevation: 5,
-            }}
-          >
-            <Image
-              source={icons.Lock}
-              style={{
-                height: 25,
-                width: 25,
-                tintColor: COLORS.black,
-                position: "absolute",
-                left: 5,
-                right: 0,
-              }}
-            />
-
-            {/* Password  */}
-            <TextInput
-              disabled
-              style={{
-                ...FONTS.h3,
-                width: "100%",
+                flexDirection: "row",
                 alignItems: "center",
-                backfaceVisibility: COLORS.white,
-                //left: 20,
+                justifyContent: "center",
+                height: 50,
+                width: 300,
+                backgroundColor: COLORS.white,
                 borderRadius: SIZES.radius,
+                marginTop: SIZES.base,
+                elevation: 5,
               }}
-              secureTextEntry
-              value={isLoading ? "Josh" : data[0].password}
-            />
-          </View>
+            >
+              <Image
+                source={icons.Name}
+                style={{
+                  height: 25,
+                  width: 25,
+                  tintColor: COLORS.primary,
+                  position: "absolute",
+                  left: 5,
+                  right: 0,
+                }}
+              />
+              <Text style={{ ...FONTS.h3 }}>Name's</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* Height and Weight */}
+          <TouchableOpacity onPress={HandleHeightandWeight}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                height: 50,
+                width: 300,
+                backgroundColor: COLORS.white,
+                borderRadius: SIZES.radius,
+                marginTop: SIZES.base,
+                elevation: 5,
+              }}
+            >
+              <Image
+                source={icons.height}
+                style={{
+                  height: 25,
+                  width: 25,
+                  tintColor: COLORS.primary,
+                  position: "absolute",
+                  left: 5,
+                  right: 0,
+                }}
+              />
+              <Text style={{ ...FONTS.h3 }}>Height and Weight</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* Email and Phone Number */}
+          <TouchableOpacity onPress={HandleEmailPhone}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                height: 50,
+                width: 300,
+                backgroundColor: COLORS.white,
+                borderRadius: SIZES.radius,
+                marginTop: SIZES.base,
+                elevation: 5,
+              }}
+            >
+              <Image
+                source={icons.at}
+                style={{
+                  height: 25,
+                  width: 25,
+                  tintColor: COLORS.primary,
+                  position: "absolute",
+                  left: 5,
+                  right: 0,
+                }}
+              />
+              <Text style={{ ...FONTS.h3 }}>Email and Phone Number</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* Password */}
+          <TouchableOpacity onPress={HandlePassword}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                height: 50,
+                width: 300,
+                backgroundColor: COLORS.white,
+                borderRadius: SIZES.radius,
+                marginTop: SIZES.base,
+                elevation: 5,
+              }}
+            >
+              <Image
+                source={icons.Lock}
+                style={{
+                  height: 25,
+                  width: 25,
+                  tintColor: COLORS.primary,
+                  position: "absolute",
+                  left: 5,
+                  right: 0,
+                }}
+              />
+              <Text style={{ ...FONTS.h3 }}>Password</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
-
-      <TextButton
-        label="Edit Password"
-        buttonContainerStyle={{
-          justifyContent: "center",
-          marginBottom: SIZES.padding,
-          alignSelf: "center",
-          height: 55,
-          width: 300,
-          borderRadius: SIZES.radius,
-          backgroundColor: COLORS.primary,
-        }}
-        onPress={goToNext}
-      />
     </View>
   );
 };
