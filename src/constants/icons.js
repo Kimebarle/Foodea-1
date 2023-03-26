@@ -54,6 +54,7 @@ const horizontal_line = require("../../assets/img/icons/horizontal_line.png");
 const edit = require("../../assets/img/icons/edit.png");
 const Checkmark = require("../../assets/img/icons/Checkmark.png");
 const check_mark = require("../../assets/img/icons/check_mark.png");
+const calendar = require("../../assets/img/icons/calendar.png");
 
 export default {
   coupon,
@@ -111,5 +112,6 @@ export default {
   horizontal_line,
   edit,
   Checkmark,
-  check_mark
+  check_mark,
+  calendar
 };

@@ -128,7 +128,7 @@ const Location = ({ navigation, route }) => {
                         }}
                         label="Barangay"
                         value={brgy}
-                        maxLength={5}
+                        maxLength={3}
                         keyboardType="number-pad"
                         onChange={(value) => {
                             setBrgy(value);

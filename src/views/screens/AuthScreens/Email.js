@@ -34,6 +34,7 @@ import { Alert } from "react-native";
 const Email = ({ navigation, route }) => {
     const [email, setEmail] = React.useState("");
     const [passwordError, setPasswordError] = React.useState("");
+    const [phoneNumber, setPhoneNumber] = React.useState("");
     const [reenterpassword, setReEnterPassword] = React.useState("");
     const [reenterpasswordError, setReEnterPasswordError] = React.useState("");
     const [reshowPassword, setReShowPasswod] = React.useState(false);
@@ -80,7 +81,7 @@ const Email = ({ navigation, route }) => {
             <View
                 style={{
                     marginTop: SIZES.padding,
-                    height: 450,
+                    height: 500,
                 }}
             >
                 <View
@@ -92,7 +93,7 @@ const Email = ({ navigation, route }) => {
                         borderRadius: SIZES.radius,
                         backgroundColor: COLORS.white,
                         elevation: 5,
-                        
+
                     }}
                 >
                     <Text
@@ -109,7 +110,7 @@ const Email = ({ navigation, route }) => {
                             ...FONTS.h5,
                         }}
                     >
-                        Input your Email, Password, Confirm Password.
+                        Input your Email, Password, Confirm Password and Phone Number.
                     </Text>
 
                     {/* Email */}
@@ -124,7 +125,7 @@ const Email = ({ navigation, route }) => {
                         <TextInput
                             style={{
                                 ...FONTS.h3,
-                                width: 300,
+                                width: 250,
                                 borderRadius: SIZES.radius,
                             }}
                             onChangeText={(value) => {
@@ -150,6 +151,26 @@ const Email = ({ navigation, route }) => {
                         </View>
                     </View>
 
+                    <View style = {{
+                        marginBottom: SIZES.radius
+                    }}>
+                        {/* Phone */}
+                        <TextInput
+                            maxLength={10}
+                            style={{
+                                ...FONTS.h3,
+                                width: 250,
+                                borderRadius: SIZES.radius,
+                            }}
+                            onChangeText={(value) => {
+                                setPhoneNumber(value);
+                            }}
+                            value={phoneNumber}
+                            placeholder={"+63"}
+                            label="+63"
+                        />
+                    </View>
+
                     {/* Password  */}
                     <View
                         style={{
@@ -160,7 +181,7 @@ const Email = ({ navigation, route }) => {
                         <TextInput
                             style={{
                                 ...FONTS.h3,
-                                width: 300,
+                                width: 250,
                                 borderRadius: SIZES.radius,
                             }}
                             secureTextEntry={showPassword}
@@ -193,7 +214,7 @@ const Email = ({ navigation, route }) => {
                         <TextInput
                             style={{
                                 ...FONTS.h3,
-                                width: 300,
+                                width: 250,
                                 borderRadius: SIZES.radius,
                             }}
                             secureTextEntry={resetshowPassword}

@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
-import { SIZES, FONTS, COLORS } from "../../../constants";
-
+import { SIZES, FONTS, COLORS, icons, } from "../../../constants";
 import { Header, TextButton } from "../../components/FoodeaComponents";
 import RadioForm, {
   RadioButtonInput,
@@ -57,6 +56,48 @@ const SurveyScreen = ({ navigation, route }) => {
   //   navigation.navigate("SurveyScreenInitial", { pass3: pass2 });
   // }
 
+  function renderHeader() {
+    return (
+        <Header
+            containerStyle={{
+                height: 80,
+                marginHorizontal: SIZES.padding,
+                alignItems: "center",
+            }}
+            leftComponent={
+                // Open Custom Drawer
+                <TouchableOpacity
+                    style={{
+                        width: 40,
+                        height: 40,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderWidth: 1,
+                        borderColor: COLORS.gray2,
+                        borderRadius: SIZES.radius,
+                    }}
+                    onPress={() => navigation.goBack()}
+                >
+                    <Image
+                        source={icons.backarrow}
+                        style={{
+                            borderRadius: SIZES.radius,
+                            color: COLORS.gray2,
+                        }}
+                    />
+                </TouchableOpacity>
+            }
+            rightComponent={
+                <View
+                    style={{
+                        width: 40,
+                    }}
+                ></View>
+            }
+        />
+    );
+}
+
   function renderFooter() {
     return (
       <View
@@ -86,18 +127,22 @@ const SurveyScreen = ({ navigation, route }) => {
       style={{
         alignItems: 'center',
         height: SIZES.height,
-        justifyContent: 'center',
         width: SIZES.width,
       }}
     >
+      {/* Header */}
+      {renderHeader()}
+
       <View style = {{
-        height: 500,
+        height: 600,
         width: 350,
+        justifyContent: 'center',
         backgroundColor: COLORS.white,
         borderRadius: SIZES.radius,
       }}>
+      
+      
 
-      {/* {renderHeader()} */}
       <Text style={{ padding: SIZES.padding, ...FONTS.h2 }}>
         Let us know about yourself ...{" "}
       </Text>
@@ -118,7 +163,7 @@ const SurveyScreen = ({ navigation, route }) => {
           initial={value}
           onPress={(value) => setValue(value)}
           buttonColor={COLORS.gray3}
-          labelStyle={{ ...FONTS.h5 }}
+          labelStyle={{ ...FONTS.h4, marginBottom: SIZES.padding,}}
           selectedButtonColor={COLORS.primary}
         />
       </View>

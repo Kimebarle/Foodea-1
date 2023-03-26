@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React, { useContext } from "react";
 
 import {
@@ -9,7 +9,7 @@ import {
   FONTS,
   SIZES,
 } from "../../../constants";
-import { FormInput, TextButton } from "../../components/FoodeaComponents";
+import { FormInput, TextButton, Header, TextInput } from "../../components/FoodeaComponents";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
 import AuthContext from "../../../api/context/auth/AuthContext";
@@ -27,19 +27,70 @@ const SurveyScreenInitial = ({ navigation, route }) => {
     navigation.push("Captcha")
   }
 
+  function renderHeader() {
+    return (
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        leftComponent={
+          // Open Custom Drawer
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
+            }}
+            onPress={() => navigation.goBack()}
+          >
+            <Image
+              source={icons.backarrow}
+              style={{
+                borderRadius: SIZES.radius,
+                color: COLORS.gray2,
+              }}
+            />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
+  }
+
   function renderFormInput() {
     return (
       <View style={{ width: "80%", height: "80%", left: 30, top: 10 }}>
-        <FormInput
-          label={"Answer"}
-          value={question1}
-          onChange={(question1) => setQuestion1(question1)}
-          inputContainerStyle={{
-            borderWidth: 2,
-            borderColor: COLORS.primary,
+
+        <TextInput
+          style={{
+            ...FONTS.h3,
+            width: 250,
             borderRadius: SIZES.radius,
+            marginBottom: SIZES.padding
           }}
+          onChangeText={(value) => {
+            setQuestion1(value);
+          }}
+          value={question1}
+          label="Answer"
+          editable
+          multiline
+          numberOfLines={4}
+          maxLength={100}
         />
+
         <TextButton
           label={"Submit"}
           buttonContainerStyle={{
@@ -56,14 +107,16 @@ const SurveyScreenInitial = ({ navigation, route }) => {
   return (
     <View
       style={{
-        padding: SIZES.padding,
         height: SIZES.height,
         width: SIZES.width,
         alignItems: 'center',
-        justifyContent: 'center',
       }}
     >
-      <View style = {{
+
+      {/* Header */}
+      {renderHeader()}
+
+      <View style={{
         width: 350,
         height: 550,
         backgroundColor: COLORS.white,

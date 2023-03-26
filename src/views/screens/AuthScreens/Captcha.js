@@ -79,7 +79,7 @@ const Captcha = ({ navigation }) => {
                 justifyContent: 'center',
                 marginTop: SIZES.radius,
                 height: 300,
-                width: 350,
+                width: 300,
                 backgroundColor: COLORS.white,
                 borderRadius: SIZES.radius,
                 borderWidth: 1,
@@ -107,9 +107,9 @@ const Captcha = ({ navigation }) => {
                             <View>
                                 <Text>
 
-                                    These Terms of Use govern your use of the Foodea
+                                    These Terms of Use govern your use of the 
                                     {'\n'}
-                                    website and application.
+                                    Foodea website and application.
                                     {'\n'}
                                 </Text>
                             </View>
@@ -162,7 +162,7 @@ const Captcha = ({ navigation }) => {
         return (
             <View style={{
                 marginTop: SIZES.radius,
-                width: 350,
+                width: 300,
                 height: 150,
                 borderWidth: 1,
                 backgroundColor: COLORS.white,
@@ -183,22 +183,26 @@ const Captcha = ({ navigation }) => {
     }
 
     function renderFooter() {
-        return(
-            <View style = {{
+        return (
+            <View style={{
                 backgroundColor: COLORS.primary,
-                width: 350,
+                width: 300,
                 height: 50,
                 borderRadius: SIZES.radius,
                 alignItems: "center",
                 justifyContent: "center",
                 marginTop: SIZES.padding,
             }}>
-                <Text style = {{
-                    color: COLORS.white,
-                    ...FONTS.h3
-                }}>
-                    Submit
-                </Text>
+                <TouchableOpacity>
+                    <View>
+                        <Text style={{
+                            color: COLORS.white,
+                            ...FONTS.h3
+                        }}>
+                            Submit
+                        </Text>
+                    </View>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -218,7 +222,7 @@ const Captcha = ({ navigation }) => {
             <TextInput
                 style={{
                     ...FONTS.h3,
-                    width: 350,
+                    width: 300,
                     borderRadius: SIZES.radius,
                     textAlign: 'center'
                 }}
@@ -228,14 +232,14 @@ const Captcha = ({ navigation }) => {
                 value={Captcha}
             />
 
-            <View style = {{
+            <View style={{
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginTop: SIZES.base,
                 marginBottom: SIZES.padding
             }}>
-                <Text style = {{
-                    width: 350,
+                <Text style={{
+                    width: 300,
                     fontWeight: 'bold',
                     ...FONTS.h4,
                     lineHeight: 15,
