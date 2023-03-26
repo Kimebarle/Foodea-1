@@ -58,14 +58,24 @@ const MyCartScreen = ({ navigation }) => {
     const cartList = [...cartData];
     const restaurantList = [...restaurantData];
 
-    const matchingShops = cartList
+    const matchingShopIds = cartList
       .map((item) => item.restaurant_id)
       .filter((shopId, index, self) => self.indexOf(shopId) === index)
-      .map((shopId) =>
-        restaurantList.find((shop) => shop.merchant_id === shopId)
-      );
+      .map((shopId) => {
+        const matchingShop = restaurantList.find(
+          (shop) => shop.merchant_id === shopId
+        );
+        const matchingCartItems = cartList.filter(
+          (cartItem) => cartItem.restaurant_id === shopId
+        );
+        const totalItems = matchingCartItems.reduce(
+          (acc, cur) => acc + cur.quantity,
+          0
+        );
+        return { ...matchingShop, totalItems };
+      });
 
-    setCartData(matchingShops);
+    setCartData(matchingShopIds);
     setIsLoading(false);
   }, []);
 
@@ -181,17 +191,17 @@ const MyCartScreen = ({ navigation }) => {
                           color: COLORS.primary,
                         }}
                       >
-                        {item.name}
+                        {item.business_name}
                       </Text>
                       <Text style={{ ...FONTS.h5 }}>
-                        {item.quantity} item • {item.time} mins •{" "}
+                        {item.totalItems} item • {item.time} mins •{" "}
                         {item.distance} km
                       </Text>
                     </View>
                   </View>
 
                   <Image
-                    source={item.icon}
+                    source={require("../../../../assets/img/images/kfc-logo-1.png")}
                     style={{
                       height: 80,
                       width: 80,

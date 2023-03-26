@@ -50,7 +50,7 @@ const Discount = [
 
 const other_restaurant = [
   {
-    id: 1,
+    merchant_id: 1,
     restaurantcategories: [1],
     name: "Mang Inasal",
     icon: require("../../assets/img/images/manginasal.png"),
@@ -61,7 +61,7 @@ const other_restaurant = [
     type: "Fast Food",
   },
   {
-    id: 2,
+    merchant_id: 2,
     name: "KFC",
     restaurantcategories: [2],
     icon: require("../../assets/img/images/kfc-logo-1.png"),
@@ -72,7 +72,7 @@ const other_restaurant = [
     type: "Fast Food",
   },
   {
-    id: 3,
+    merchant_id: 3,
     name: "Greenwich",
     restaurantcategories: [3],
     icon: require("../../assets/img/images/Greenwich_Pizza_logo.png"),
@@ -88,7 +88,7 @@ const KFC_categories = [
   {
     id: 1,
     name: "All Food",
-    icon: require("../../assets/img/icons/junk_food.png")
+    icon: require("../../assets/img/icons/junk_food.png"),
   },
   {
     id: 2,
@@ -111,7 +111,7 @@ const Manginasal_categories = [
   {
     id: 1,
     name: "All Food",
-    icon: require("../../assets/img/icons/junk_food.png")
+    icon: require("../../assets/img/icons/junk_food.png"),
   },
   {
     id: 2,
@@ -134,7 +134,7 @@ const Greenwich_categories = [
   {
     id: 1,
     name: "All Food",
-    icon: require("../../assets/img/icons/junk_food.png")
+    icon: require("../../assets/img/icons/junk_food.png"),
   },
   {
     id: 2,
@@ -295,7 +295,7 @@ const myCart = [
 ];
 
 const hamburger = {
-  id: 10,
+  product_id: 10,
   name: "Hamburger",
   name2: "Ingredients",
   description:
@@ -313,7 +313,7 @@ const hamburger = {
 };
 
 const chowking = {
-  id: 2,
+  product_id: 2,
   name: "Pancit Bihon",
   description: "Delicious pancit bihon",
   categories: [3],
@@ -327,7 +327,7 @@ const chowking = {
 };
 
 const Spaghetti = {
-  id: 3,
+  product_id: 3,
   name: "Spaghetti",
   description: "Delicious spaghetti",
   categories: [2],
@@ -341,7 +341,7 @@ const Spaghetti = {
 };
 
 const Hotdog = {
-  id: 4,
+  product_id: 4,
   name: "Hotdog",
   description: "Delicious hotdog in bread",
   categories: [1],
@@ -355,7 +355,7 @@ const Hotdog = {
 };
 
 const MangoPie = {
-  id: 5,
+  product_id: 5,
   name: "MangoPie",
   description: "Delicious mangopie",
   categories: [1, 5],
@@ -369,7 +369,7 @@ const MangoPie = {
 };
 
 const Sundae = {
-  id: 6,
+  product_id: 6,
   name: "Sundae",
   description: "Delicious Sundae",
   categories: [2],
@@ -383,7 +383,7 @@ const Sundae = {
 };
 
 const Mcdo_Chicken_Sandwich = {
-  id: 7,
+  product_id: 7,
   name: "Chicken Sandwich",
   description: "McDonald's Chicken Sandwich",
   categories: [2],
@@ -397,7 +397,7 @@ const Mcdo_Chicken_Sandwich = {
 };
 
 const Dimsum_Chowking = {
-  id: 8,
+  product_id: 8,
   name: "Dimsum Chao Fan",
   description: "Chowking Dimsum Chao Fan",
   categories: [3],
@@ -411,7 +411,7 @@ const Dimsum_Chowking = {
 };
 
 const Halo_halo_chowking = {
-  id: 9,
+  product_id: 9,
   name: "Halo-halo",
   description: "Chowking Halo-halo",
   categories: [3],
@@ -425,7 +425,7 @@ const Halo_halo_chowking = {
 };
 
 const Manginasal_chicken = {
-  id: 1,
+  product_id: 1,
   name: "Chicken",
   name2: "Ingredients",
   description: "Delicious Mang inasal 1 Chicken",
@@ -442,7 +442,7 @@ const Manginasal_chicken = {
 };
 
 const Manginasal_liempo = {
-  id: 2,
+  product_id: 2,
   name: "Liempo",
   name2: "Ingredients",
   description: "Delicious Mang inasal Liempo",
@@ -459,7 +459,7 @@ const Manginasal_liempo = {
 };
 
 const Manginasal_bbq = {
-  id: 3,
+  product_id: 3,
   name: "Pork Barbeque",
   name2: "Ingredients",
   description: "Delicious Mang Inasal Pork Barbeque",
@@ -476,7 +476,7 @@ const Manginasal_bbq = {
 };
 
 const Chicken_meal = {
-  id: 1,
+  product_id: 1,
   name: "Chicken With Rice",
   name2: "Ingredients",
   description: "Delicious Chicken with rice KFC",
@@ -493,7 +493,7 @@ const Chicken_meal = {
 };
 
 const Chicken_sandwich = {
-  id: 2,
+  product_id: 2,
   name: "Chicken Sandwich",
   name2: "Ingredients",
   description: "Delicious Chicken Sandwich KFC",
@@ -510,7 +510,7 @@ const Chicken_sandwich = {
 };
 
 const Sundae_kfc = {
-  id: 3,
+  product_id: 3,
   name: "Sundae",
   name2: "Ingredients",
   description: "Delicious dessert KFC",
@@ -527,7 +527,7 @@ const Sundae_kfc = {
 };
 
 const Pizza = {
-  id: 1,
+  product_id: 1,
   name: "Pizza",
   name2: "Ingredients",
   description: "Delicious pizza in Greenwich",
@@ -544,7 +544,7 @@ const Pizza = {
 };
 
 const Pasta = {
-  id: 2,
+  product_id: 2,
   name: "Pasta",
   name2: "Ingredients",
   description: "Delicious pasta in Greenwich",
@@ -561,7 +561,7 @@ const Pasta = {
 };
 
 const Chicken_Greenwich = {
-  id: 3,
+  product_id: 3,
   name: "Chicken",
   name2: "Ingredients",
   description: "Delicious Chicken Meal in Greenwich",
