@@ -160,7 +160,7 @@ const Resetpassword = ({ navigation, route }) => {
               secureTextEntry={!reshowPassword}
               onChange={(value) => {
                 setConfirmPassword(value);
-                utils.revalidatePassword(value, setNewConfirmPasswordError);
+                utils.validatePassword(value, setPasswordError);
               }}
               errorMsg={newconfirmpasswordError}
               appendComponent={

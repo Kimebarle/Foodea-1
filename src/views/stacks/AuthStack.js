@@ -11,6 +11,12 @@ import Terms from "../screens/AuthScreens/Terms";
 import SurveyScreenInitial from "../screens/AuthScreens/SurveyScreenInitial";
 import SurveyCalories from "../screens/AuthScreens/SurveyCalories";
 import Mods from "../components/FoodeaComponents/Mods";
+import Welcome from "../screens/AuthScreens/Welcome";
+import SignupName from "../screens/AuthScreens/SignupName";
+import PersonalInfo from "../screens/AuthScreens/PersonalInfo";
+import Location from "../screens/AuthScreens/Location";
+import Email from "../screens/AuthScreens/Email";
+import Captcha from "../screens/AuthScreens/Captcha";
 
 const Stack = createNativeStackNavigator();
 
@@ -72,6 +78,36 @@ const AuthStack = () => {
         options={{ headerShown: false }}
         name={"Mods"}
         component={Mods}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name={"Welcome"}
+        component={Welcome}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name={"SignupName"}
+        component={SignupName}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name={"PersonalInfo"}
+        component={PersonalInfo}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name={"Location"}
+        component={Location}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name={"Email"}
+        component={Email}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name={"Captcha"}
+        component={Captcha}
       />
     </Stack.Navigator>
   );

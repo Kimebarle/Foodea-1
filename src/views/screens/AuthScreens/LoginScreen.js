@@ -35,6 +35,10 @@ const LoginScreen = ({ navigation }) => {
     navigation.push("Forgotpassword");
   };
 
+  const handleWelcome = () => {
+    navigation.push("Welcome");
+  };
+
   const handleSignUpPress = () => {
     navigation.push("SignUpScreen");
   };
@@ -137,6 +141,12 @@ const LoginScreen = ({ navigation }) => {
                     }}
                   >
                     Forgot Password
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={handleWelcome}> 
+                  <Text>
+                    Welcome
                   </Text>
                 </TouchableOpacity>
 

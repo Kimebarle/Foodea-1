@@ -116,7 +116,6 @@ const TestScreen = ({ navigation }) => {
               flexDirection: "row",
               alignItems: "center",
               height: 100,
-              width: 300,
               marginLeft: SIZES.padding,
               marginRight: SIZES.padding,
               marginBottom: SIZES.base,

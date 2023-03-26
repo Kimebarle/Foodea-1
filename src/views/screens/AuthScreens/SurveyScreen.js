@@ -11,7 +11,7 @@ import { RadioButton } from "react-native-paper";
 
 const SurveyScreen = ({ navigation, route }) => {
   const [value, setValue] = React.useState(0);
-  const { pass1 } = route.params;
+  // const { pass1 } = route.params;
   const items = [
     {
       label: "Sedentary (little or no exercise)",
@@ -40,22 +40,22 @@ const SurveyScreen = ({ navigation, route }) => {
     },
   ];
 
-  function submitFunction() {
-    let pass2 = [...pass1];
+  // function submitFunction() {
+  //   let pass2 = [...pass1];
 
-    const addAttribute = () => {
-      const updatedList = pass2.map((obj) => {
-        return { ...obj, lifestyle: items[value].letter };
-      });
+  //   const addAttribute = () => {
+  //     const updatedList = pass2.map((obj) => {
+  //       return { ...obj, lifestyle: items[value].letter };
+  //     });
 
-      pass2 = updatedList;
-    };
-    {
-      addAttribute();
-    }
-    // console.log(pass2);
-    navigation.navigate("SurveyScreenInitial", { pass3: pass2 });
-  }
+  //     pass2 = updatedList;
+  //   };
+  //   {
+  //     addAttribute();
+  //   }
+  //   // console.log(pass2);
+  //   navigation.navigate("SurveyScreenInitial", { pass3: pass2 });
+  // }
 
   function renderFooter() {
     return (
@@ -64,20 +64,18 @@ const SurveyScreen = ({ navigation, route }) => {
           marginTop: SIZES.radius,
           paddingBottom: SIZES.padding,
           paddingHorizontal: SIZES.padding,
+          alignItems: 'center',
         }}
       >
         <TextButton
           label="Next"
           buttonContainerStyle={{
-            position: "absolute",
             height: 60,
             width: 250,
-            left: 30,
-            top: 70,
             borderRadius: SIZES.radius,
             backgroundColor: COLORS.primary,
           }}
-          onPress={submitFunction}
+          onPress={() => navigation.navigate("SurveyScreenInitial")}
         />
       </View>
     );
@@ -86,11 +84,19 @@ const SurveyScreen = ({ navigation, route }) => {
   return (
     <View
       style={{
-        padding: SIZES.padding,
+        alignItems: 'center',
         height: SIZES.height,
+        justifyContent: 'center',
         width: SIZES.width,
       }}
     >
+      <View style = {{
+        height: 500,
+        width: 350,
+        backgroundColor: COLORS.white,
+        borderRadius: SIZES.radius,
+      }}>
+
       {/* {renderHeader()} */}
       <Text style={{ padding: SIZES.padding, ...FONTS.h2 }}>
         Let us know about yourself ...{" "}
@@ -117,6 +123,7 @@ const SurveyScreen = ({ navigation, route }) => {
         />
       </View>
       {renderFooter()}
+      </View>
     </View>
   );
 };
