@@ -22,8 +22,9 @@ import {
   BASE_URL_RECOMMENDATION,
 } from "../../../api/context/auth/config";
 import AuthContext from "../../../api/context/auth/AuthContext";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { Alert } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Section = ({ title, onPress, children, style }) => {
   return (
@@ -54,47 +55,47 @@ const FoodRecommendScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [dummy, setDummy] = React.useState();
 
-  const showAlertWithBooleanResponse = () => {
-    return new Promise((resolve) => {
-      Alert.alert(
-        "Do you want to remove this item from your cart?",
-        "",
-        [
-          {
-            text: "Cancel",
-            onPress: () => resolve(false),
-            style: "cancel",
-          },
-          {
-            text: "OK",
-            onPress: () => resolve(true),
-          },
-        ],
-        { cancelable: false }
-      );
-    });
-  };
-
   const getData = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get(
-        `${BASE_URL_RECOMMENDATION}/recommendations/?id=${userId}`
-      );
-
-      //console.log(response.data);
-      setRecommendation(response.data.foods);
-      // console.log(response.data.foods);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
+    const response = await axios.get(
+      `${BASE_URL_RECOMMENDATION}/recommendations/?id=${userId}`
+    );
+    return response.data.foods;
   };
 
-  useEffect(() => {
+  const getFavorites = async () => {
+    const response = await axios.get(
+      `${BASE_URL}favorites?user_id[eq]=${userId}`
+    );
+    return response.data;
+  };
+
+  const updateWithFavorites = useCallback(async () => {
     setIsLoading(true);
-    getData();
+    const favoritesData = await getFavorites();
+    const RecommendationData = await getData();
+    const favoritesList = [...favoritesData];
+    const recommendationList = [...RecommendationData];
+
+    const RecommendationWithFavorites = recommendationList.map((item) => ({
+      ...item,
+      isFavorite: favoritesList.some(
+        (fave) => fave.product_id === item.product_id
+      ),
+    }));
+
+    setRecommendation(RecommendationWithFavorites);
+    setIsLoading(false);
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(true);
+      updateWithFavorites();
+      // getData();
+      // getFavorites();
+      setRecommendation();
+    }, [updateWithFavorites])
+  );
 
   return (
     <View style={styles.container}>
@@ -121,6 +122,8 @@ const FoodRecommendScreen = ({ navigation }) => {
                 width: 250,
               }}
               item={item}
+              user_id={userId}
+              favorite={item.isFavorite}
               onPress={() => {
                 navigation.navigate("FoodInfo", { itemId: item.product_id });
               }}

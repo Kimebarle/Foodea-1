@@ -47,6 +47,7 @@ const TestScreen = ({ navigation }) => {
       getFavorites();
       getFood();
       setItemDisplay();
+      console.log("asdasd");
     }, [getItemTable])
   );
 
@@ -79,10 +80,6 @@ const TestScreen = ({ navigation }) => {
     const data = foodResponse.data;
     return data;
   };
-
-  // const getItemTable = useCallback(async () => {
-
-  // });
 
   const getItemTable = useCallback(async () => {
     const foodData = await getFood();
@@ -271,6 +268,7 @@ const TestScreen = ({ navigation }) => {
                 marginRight: index == trending.length - 1 ? SIZES.padding : 0,
               }}
               item={item}
+              userId={userId}
               Favorite={item.isFavorite}
               favorite_Id={item.favoriteId + 0}
               itemId={item.product_id}

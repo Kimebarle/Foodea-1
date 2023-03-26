@@ -9,10 +9,110 @@ import {
   dummyData,
 } from "../../../constants";
 import IconButton from "./IconButton";
+import { Alert } from "react-native";
+import axios from "axios";
+import { BASE_URL } from "../../../api/context/auth/config";
 
-const RecommendationComponent = ({ containerStyle, item, onPress }) => {
-  const [isFavorite, setIsFavorite] = React.useState(true);
-  const [isAddCart, setAddCart] = React.useState(true);
+const RecommendationComponent = ({
+  containerStyle,
+  item,
+  onPress,
+  favorite,
+  user_id,
+}) => {
+  const [isFavorite, setIsFavorite] = React.useState(favorite);
+
+  const checkedIsFavorite = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}favorites?user_id[eq]=${user_id}&&product_id[eq]=${item.product_id}`
+      );
+      return response.data.length > 0;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  const addToFavorites = async () => {
+    try {
+      const response = await axios.post(`${BASE_URL}favorites`, {
+        user_id: user_id,
+        product_id: item.product_id,
+      });
+      setIsFavorite(!isFavorite);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  const confirmAction = async () => {
+    return new Promise((resolve, reject) => {
+      Alert.alert(
+        "Remove item from favorites",
+        "Are you sure you want to remove this item?",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+            onPress: () => resolve(false),
+          },
+          {
+            text: "Confirm",
+            onPress: () => resolve(true),
+          },
+        ]
+      );
+    });
+  };
+
+  const itemRemoval = async () => {
+    const response = await axios.get(
+      `${BASE_URL}favorites?user_id[eq]=${user_id}&product_id[eq]=${item.product_id}`
+    );
+    return response.data[0].id;
+  };
+
+  const updateFavorite = async (remove) => {
+    const response = await axios.delete(`${BASE_URL}favorites/${remove}`);
+    return response.data;
+  };
+
+  const onPressHandler = async () => {
+    const itemExist = await checkedIsFavorite();
+    if (itemExist) {
+      const decision = await confirmAction();
+      if (decision) {
+        const remove = await itemRemoval();
+        const update = await updateFavorite(remove);
+        if (update) {
+          Alert.alert("Successful", "Item Remove", [
+            {
+              text: "Confirm",
+              onPress: () => {
+                setIsFavorite(!isFavorite);
+              },
+              style: "cancel",
+            },
+          ]);
+        }
+      } else {
+        console.log(decision);
+      }
+    } else {
+      const result = await addToFavorites();
+      if (result) {
+        Alert.alert(
+          "Success",
+          "Added To Favorites",
+          [{ text: "Confirm", style: "OK" }],
+          { cancelable: false }
+        );
+      }
+    }
+  };
 
   return (
     <TouchableOpacity
@@ -42,13 +142,13 @@ const RecommendationComponent = ({ containerStyle, item, onPress }) => {
 
         {/* Favorites */}
         <IconButton
-          icon={isFavorite ? icons.favourite : icons.love}
+          icon={isFavorite ? icons.love : icons.favourite}
           iconStyle={{
             tintColor: COLORS.primary,
             height: 25,
             width: 25,
           }}
-          onPress={() => setIsFavorite(!isFavorite)}
+          onPress={onPressHandler}
         />
       </View>
 
