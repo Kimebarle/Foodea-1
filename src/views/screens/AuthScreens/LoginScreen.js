@@ -119,7 +119,7 @@ const LoginScreen = ({ navigation }) => {
                 />
 
                 <TextButton
-                  label="Sign In"
+                  label="Login"
                   buttonContainerStyle={{
                     height: 55,
                     alignItems: "center",
@@ -143,12 +143,12 @@ const LoginScreen = ({ navigation }) => {
                     Forgot Password
                   </Text>
                 </TouchableOpacity>
-
+{/* 
                 <TouchableOpacity onPress={handleWelcome}> 
                   <Text>
                     Welcome
                   </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <Text
                   style={{
@@ -161,7 +161,7 @@ const LoginScreen = ({ navigation }) => {
                   Don't have an account?
                 </Text>
 
-                <TouchableOpacity onPress={handleSignUpPress}>
+                <TouchableOpacity onPress={handleWelcome}>
                   <Text
                     style={{
                       color: COLORS.primary,
