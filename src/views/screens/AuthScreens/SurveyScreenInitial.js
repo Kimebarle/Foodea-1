@@ -15,16 +15,60 @@ import { BASE_URL } from "../../../api/context/auth/config";
 import AuthContext from "../../../api/context/auth/AuthContext";
 
 const SurveyScreenInitial = ({ navigation, route }) => {
-  // const { pass3 } = route.params;
+  const { passedList5 } = route.params;
   const [question1, setQuestion1] = React.useState();
-  const { register } = useContext(AuthContext);
 
   async function submitHandler() {
-    //const response = await axios.get(`${BASE_URL}app_users?firstname[eq]=Juan`);
-    // const data = pass3.map((item) => ({ ...item, preferences: question1 }));
+    const tempList6 = [...passedList5];
 
-    // register(data);
-    navigation.push("Captcha")
+    const list6 = tempList6.map((item) => ({
+      ...item,
+      preferences: question1,
+    }));
+
+    navigation.navigate("Captcha", { passedList6: list6 });
+  }
+
+  function renderHeader() {
+    return (
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        leftComponent={
+          // Open Custom Drawer
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
+            }}
+            onPress={() => navigation.goBack()}
+          >
+            <Image
+              source={icons.backarrow}
+              style={{
+                borderRadius: SIZES.radius,
+                color: COLORS.gray2,
+              }}
+            />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
   }
 
   function renderHeader() {
@@ -137,12 +181,11 @@ const SurveyScreenInitial = ({ navigation, route }) => {
           Describe your food preferences or what you like in words. Use keywords
           related to your food likings such as: taste of food (spicy, sweet,
           etc.), name of food (fried chicken, burger, etc. ) or ingredients
-          (cheese, milk, etc.). Use english words only and it should be atleast 20
-          words.{" "}
+          (cheese, milk, etc.). Use english words only and it should be atleast
+          20 words.{" "}
         </Text>
 
         {renderFormInput()}
-
       </View>
     </View>
   );

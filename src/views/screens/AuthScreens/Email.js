@@ -1,29 +1,26 @@
 import {
-    StyleSheet,
-    TouchableOpacity,
-    Image,
-    View,
-    Text,
-    FlatList,
-
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  View,
+  Text,
+  FlatList,
 } from "react-native";
 import React, { useEffect } from "react";
 import {
-    TextButton,
-    FormInput,
-    FormInputCheck,
-    IconButton,
-    Header,
-    TextInput,
+  TextButton,
+  IconButton,
+  Header,
+  TextInput,
 } from "../../components/FoodeaComponents";
 import {
-    COLORS,
-    FONTS,
-    SIZES,
-    icons,
-    constants,
-    dummyData,
-    images,
+  COLORS,
+  FONTS,
+  SIZES,
+  icons,
+  constants,
+  dummyData,
+  images,
 } from "../../../constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import utils, { Utils } from "../../../utils/Utils";
@@ -52,29 +49,62 @@ const Email = ({ navigation, route }) => {
         setShowPasswod(!showPassword);
     };
 
-    const togglePassword = () => {
-        setResetShowPasswod(!resetshowPassword);
-    };
+  const togglePassword = () => {
+    setResetShowPasswod(!resetshowPassword);
+  };
 
-    const handleCheckEmail = (value) => {
-        let re = /\S+@\S+\.\S+/;
-        let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+  const handleCheckEmail = (value) => {
+    let re = /\S+@\S+\.\S+/;
+    let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
-        setEmail(value);
-        if (re.test(value) || regex.test(value)) {
-            setCheckValidEmail(false);
-        } else {
-            setCheckValidEmail(true);
-        }
-    };
+    setEmail(value);
+    if (re.test(value) || regex.test(value)) {
+      setCheckValidEmail(false);
+    } else {
+      setCheckValidEmail(true);
+    }
+  };
 
-    const disabledButton = () => {
-        return !email || !password || !resetpassword;
-    };
+  const disabledButton = () => {
+    // return !email || !password || !resetpassword;
+  };
 
-    const handleSignUpPress = () => {
-        navigation.push("SignUpScreen");
-    };
+  const emailChecker = async () => {
+    const response = await axios.get(`${BASE_URL}app_users?email[eq]=${email}`);
+    return response.data.length > 0;
+  };
+
+  const handleSignUpPress = async () => {
+    const result = await emailChecker();
+
+    if (result) {
+      Alert.alert(
+        "Error",
+        "Existing Email Already",
+        [
+          {
+            text: "OK",
+            onPress: () => {
+              // Code to handle confirmation
+            },
+          },
+        ],
+        { cancelable: false }
+      );
+    } else {
+      const tempList4 = [...passedList3];
+
+      const list4 = tempList4.map((item) => ({
+        ...item,
+        email: email,
+        password: password,
+      }));
+      navigation.navigate("SurveyScreen", { passedList4: list4 });
+    }
+    // console.log(result);
+    // console.log(passedList3);
+    // navigation.navigate("SurveyScreen")
+  };
 
     function renderDetails() {
         return (
@@ -190,20 +220,20 @@ const Email = ({ navigation, route }) => {
                             label="Password"
                         />
 
-                        <IconButton
-                            icon={showPassword ? icons.eye : icons.disable_eye}
-                            iconStyle={{
-                                tintColor: COLORS.gray,
-                                width: 20,
-                                height: 20,
-                                marginLeft: SIZES.base,
-                                position: "absolute",
-                                right: 15,
-                                top: 20,
-                            }}
-                            onPress={toggleHidePassword}
-                        />
-                    </View>
+            <IconButton
+              icon={showPassword ? icons.eye : icons.disable_eye}
+              iconStyle={{
+                tintColor: COLORS.gray,
+                width: 20,
+                height: 20,
+                marginLeft: SIZES.base,
+                position: "absolute",
+                right: 15,
+                top: 20,
+              }}
+              onPress={toggleHidePassword}
+            />
+          </View>
 
                     {/* Re-Enter Password */}
                     <View
@@ -223,134 +253,133 @@ const Email = ({ navigation, route }) => {
                             label="Confirm Password"
                         />
 
-                        <IconButton
-                            icon={resetshowPassword ? icons.eye : icons.disable_eye}
-                            iconStyle={{
-                                tintColor: COLORS.gray,
-                                width: 20,
-                                height: 20,
-                                marginLeft: SIZES.base,
-                                position: "absolute",
-                                right: 15,
-                                top: 20,
-                            }}
-                            onPress={togglePassword}
-                        />
-                    </View>
-
-
-                    <TextButton
-                        label="Next"
-                        disabled={disabledButton()}
-                        onPress={() => navigation.navigate("SurveyScreen")}
-                        buttonContainerStyle={{
-                            marginTop: SIZES.padding,
-                            height: 55,
-                            borderRadius: SIZES.radius,
-                            backgroundColor: !disabledButton()
-                                ? COLORS.primary
-                                : COLORS.transparentPrimray,
-                        }}
-                        labelStyle={{
-                            ...FONTS.h3,
-                        }}
-                    />
-                </View>
-            </View>
-        );
-    }
-
-    function renderHeader() {
-        return (
-            <Header
-                containerStyle={{
-                    height: 80,
-                    marginHorizontal: SIZES.padding,
-                    alignItems: "center",
-                }}
-                leftComponent={
-                    // Open Custom Drawer
-                    <TouchableOpacity
-                        style={{
-                            width: 40,
-                            height: 40,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderWidth: 1,
-                            borderColor: COLORS.gray2,
-                            borderRadius: SIZES.radius,
-                        }}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Image
-                            source={icons.backarrow}
-                            style={{
-                                borderRadius: SIZES.radius,
-                                color: COLORS.gray2,
-                            }}
-                        />
-                    </TouchableOpacity>
-                }
-                rightComponent={
-                    <View
-                        style={{
-                            width: 40,
-                        }}
-                    ></View>
-                }
+            <IconButton
+              icon={resetshowPassword ? icons.eye : icons.disable_eye}
+              iconStyle={{
+                tintColor: COLORS.gray,
+                width: 20,
+                height: 20,
+                marginLeft: SIZES.base,
+                position: "absolute",
+                right: 15,
+                top: 20,
+              }}
+              onPress={togglePassword}
             />
-        );
-    }
+          </View>
 
-    function renderLogo() {
-        return (
-            <View
-                style={{
-                    marginTop: SIZES.padding,
-                    height: 40,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: SIZES.padding,
-                }}
-            >
-                <Image
-                    source={images.Foodea_new_logo}
-                    resizeMode="contain"
-                    style={{
-                        width: 200,
-                    }}
-                />
-            </View>
-        );
-    }
-    return (
-        <View
-            style={{
-                alignItems: "center",
-                height: SIZES.height,
-                width: SIZES.width,
+          <TextButton
+            label="Next"
+            disabled={disabledButton()}
+            onPress={handleSignUpPress}
+            buttonContainerStyle={{
+              marginTop: SIZES.padding,
+              height: 55,
+              borderRadius: SIZES.radius,
+              backgroundColor: !disabledButton()
+                ? COLORS.primary
+                : COLORS.transparentPrimray,
             }}
-        >
-            {/* Header */}
-            {renderHeader()}
+            labelStyle={{
+              ...FONTS.h3,
+            }}
+          />
+        </View>
+      </View>
+    );
+  }
 
-            {/* Logo
+  function renderHeader() {
+    return (
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        leftComponent={
+          // Open Custom Drawer
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
+            }}
+            onPress={() => navigation.goBack()}
+          >
+            <Image
+              source={icons.backarrow}
+              style={{
+                borderRadius: SIZES.radius,
+                color: COLORS.gray2,
+              }}
+            />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
+  }
+
+  function renderLogo() {
+    return (
+      <View
+        style={{
+          marginTop: SIZES.padding,
+          height: 40,
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: SIZES.padding,
+        }}
+      >
+        <Image
+          source={images.Foodea_new_logo}
+          resizeMode="contain"
+          style={{
+            width: 200,
+          }}
+        />
+      </View>
+    );
+  }
+  return (
+    <View
+      style={{
+        alignItems: "center",
+        height: SIZES.height,
+        width: SIZES.width,
+      }}
+    >
+      {/* Header */}
+      {renderHeader()}
+
+      {/* Logo
             {renderLogo()} */}
 
-            {/* Email Address */}
-            {renderDetails()}
-        </View>
-    );
+      {/* Email Address */}
+      {renderDetails()}
+    </View>
+  );
 };
 
 export default Email;
 
 const styles = StyleSheet.create({
-    textFailed: {
-        alignSelf: "flex-end",
-        color: "red",
-        position: "absolute",
-        bottom: 10,
-        ...FONTS.h5,
-    },
+  textFailed: {
+    alignSelf: "flex-end",
+    color: "red",
+    position: "absolute",
+    bottom: 10,
+    ...FONTS.h5,
+  },
 });

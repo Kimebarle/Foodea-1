@@ -9,8 +9,8 @@ import RadioForm, {
 import { RadioButton } from "react-native-paper";
 
 const SurveyScreen = ({ navigation, route }) => {
+  const { passedList4 } = route.params;
   const [value, setValue] = React.useState(0);
-  // const { pass1 } = route.params;
   const items = [
     {
       label: "Sedentary (little or no exercise)",
@@ -39,64 +39,17 @@ const SurveyScreen = ({ navigation, route }) => {
     },
   ];
 
-  // function submitFunction() {
-  //   let pass2 = [...pass1];
+  const OnPressHandler = () => {
+    const tempList5 = [...passedList4];
 
-  //   const addAttribute = () => {
-  //     const updatedList = pass2.map((obj) => {
-  //       return { ...obj, lifestyle: items[value].letter };
-  //     });
-
-  //     pass2 = updatedList;
-  //   };
-  //   {
-  //     addAttribute();
-  //   }
-  //   // console.log(pass2);
-  //   navigation.navigate("SurveyScreenInitial", { pass3: pass2 });
-  // }
-
-  function renderHeader() {
-    return (
-        <Header
-            containerStyle={{
-                height: 80,
-                marginHorizontal: SIZES.padding,
-                alignItems: "center",
-            }}
-            leftComponent={
-                // Open Custom Drawer
-                <TouchableOpacity
-                    style={{
-                        width: 40,
-                        height: 40,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderWidth: 1,
-                        borderColor: COLORS.gray2,
-                        borderRadius: SIZES.radius,
-                    }}
-                    onPress={() => navigation.goBack()}
-                >
-                    <Image
-                        source={icons.backarrow}
-                        style={{
-                            borderRadius: SIZES.radius,
-                            color: COLORS.gray2,
-                        }}
-                    />
-                </TouchableOpacity>
-            }
-            rightComponent={
-                <View
-                    style={{
-                        width: 40,
-                    }}
-                ></View>
-            }
-        />
-    );
-}
+    const list5 = tempList5.map((item) => ({
+      ...item,
+      lifestyle: items[value].letter,
+    }));
+    // console.log(items[value].letter);
+    // console.log(passedList4);
+    navigation.navigate("SurveyScreenInitial", { passedList5: list5 });
+  };
 
   function renderFooter() {
     return (
@@ -105,7 +58,7 @@ const SurveyScreen = ({ navigation, route }) => {
           marginTop: SIZES.radius,
           paddingBottom: SIZES.padding,
           paddingHorizontal: SIZES.padding,
-          alignItems: 'center',
+          alignItems: "center",
         }}
       >
         <TextButton
@@ -116,7 +69,7 @@ const SurveyScreen = ({ navigation, route }) => {
             borderRadius: SIZES.radius,
             backgroundColor: COLORS.primary,
           }}
-          onPress={() => navigation.navigate("SurveyScreenInitial")}
+          onPress={OnPressHandler}
         />
       </View>
     );
@@ -125,7 +78,7 @@ const SurveyScreen = ({ navigation, route }) => {
   return (
     <View
       style={{
-        alignItems: 'center',
+        alignItems: "center",
         height: SIZES.height,
         width: SIZES.width,
       }}
@@ -147,15 +100,15 @@ const SurveyScreen = ({ navigation, route }) => {
         Let us know about yourself ...{" "}
       </Text>
 
-      <Text
-        style={{
-          paddingTop: SIZES.padding,
-          paddingLeft: SIZES.padding,
-          ...FONTS.h3,
-        }}
-      >
-        How active are you?
-      </Text>
+        <Text
+          style={{
+            paddingTop: SIZES.padding,
+            paddingLeft: SIZES.padding,
+            ...FONTS.h3,
+          }}
+        >
+          How active are you?
+        </Text>
 
       <View style={{ width: "80%", marginTop: 40, left: 20 }}>
         <RadioForm

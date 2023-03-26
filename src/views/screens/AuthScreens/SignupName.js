@@ -1,10 +1,10 @@
 import {
-    StyleSheet,
-    TouchableOpacity,
-    Image,
-    View,
-    Text,
-    FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  View,
+  Text,
+  FlatList,
 } from "react-native";
 import React, { useEffect } from "react";
 import {
@@ -17,13 +17,13 @@ import {
 
 } from "../../components/FoodeaComponents";
 import {
-    COLORS,
-    FONTS,
-    SIZES,
-    icons,
-    constants,
-    dummyData,
-    images,
+  COLORS,
+  FONTS,
+  SIZES,
+  icons,
+  constants,
+  dummyData,
+  images,
 } from "../../../constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import utils, { Utils } from "../../../utils/Utils";
@@ -65,104 +65,110 @@ const SignupName = ({ navigation, route }) => {
         setShowPicker(true);
     };
 
-    const disabledButton = () => {
-        return !Name || !LastName;
-    };
+  const disabledButton = () => {
+    // return !Name || !LastName;
+  };
 
-    const handleSignUpPress = () => {
-        navigation.push("SignUpScreen");
-    };
+  const handleSignUpPress = () => {
+    const list1 = list.map((item) => ({
+      ...item,
+      firstname: Name,
+      middlename: MiddleName,
+      lastname: LastName,
+    }));
 
-    function renderDetails() {
-        return (
-            <View
-                style={{
-                    marginTop: SIZES.padding,
-                    height: 650,
-                }}
-            >
-                <View
-                    style={{
-                        flex: 1,
-                        width: SIZES.width - SIZES.padding * 2,
-                        paddingHorizontal: SIZES.padding,
-                        paddingVertical: SIZES.radius,
-                        borderRadius: SIZES.radius,
-                        backgroundColor: COLORS.white,
-                        elevation: 5,
-                    }}
-                >
-                    <Text
-                        style={{
-                            width: "100%",
-                            color: COLORS.black,
-                            ...FONTS.h1,
-                        }}
-                    >
-                        Sign up your information
-                    </Text>
-                    <Text
-                        style={{
-                            ...FONTS.h5,
-                        }}
-                    >
-                        Input your First Name, Middle Name (optional), Last Name, Birthday.
-                    </Text>
+    console.log(list1);
+    navigation.navigate("PersonalInfo", { passedList: list1 });
+  };
 
-                    {/* First Name */}
-                    <FormInput
-                        containerStyle={{
-                            borderRadius: SIZES.radius,
-                            marginBottom: SIZES.radius,
-                            marginTop: SIZES.radius
-                        }}
-                        label="First Name"
-                        value={Name}
-                        maxLength={10}
-                        onChange={(value) => {
-                            setName(value);
-                            utils.validateInput(value, 1, setNameError);
-                        }}
-                        errorMsg={NameError}
-                        appendComponent={
-                            <FormInputCheck value={Name} error={NameError} />
-                        }
-                    />
+  function renderDetails() {
+    return (
+      <View
+        style={{
+          marginTop: SIZES.padding,
+          height: 650,
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            width: SIZES.width - SIZES.padding * 2,
+            paddingHorizontal: SIZES.padding,
+            paddingVertical: SIZES.radius,
+            borderRadius: SIZES.radius,
+            backgroundColor: COLORS.white,
+            elevation: 5,
+          }}
+        >
+          <Text
+            style={{
+              width: "100%",
+              color: COLORS.black,
+              ...FONTS.h1,
+            }}
+          >
+            Sign up your information
+          </Text>
+          <Text
+            style={{
+              ...FONTS.h5,
+            }}
+          >
+            Input your First Name, Middle Name (optional), Last Name, Birthday.
+          </Text>
 
-                    {/* Middle Name */}
-                    <FormInput
-                        containerStyle={{
-                            borderRadius: SIZES.radius,
-                            marginBottom: SIZES.radius,
-                        }}
-                        label="Middle Name"
-                        placeholder={"optional"}
-                        value={MiddleName}
-                        maxLength={10}
-                        onChange={(value) => {
-                            setMiddleName(value);
-                            utils.validateInput(value, 1, setMiddleNameError);
-                        }}
-                    />
+          {/* First Name */}
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+              marginTop: SIZES.radius,
+            }}
+            label="First Name"
+            value={Name}
+            maxLength={10}
+            onChange={(value) => {
+              setName(value);
+              utils.validateInput(value, 1, setNameError);
+            }}
+            errorMsg={NameError}
+            appendComponent={<FormInputCheck value={Name} error={NameError} />}
+          />
 
-                    {/* Last Name */}
-                    <FormInput
-                        containerStyle={{
-                            borderRadius: SIZES.radius,
-                            marginBottom: SIZES.radius,
-                        }}
-                        label="Last Name"
-                        value={LastName}
-                        maxLength={10}
-                        onChange={(value) => {
-                            setLastName(value);
-                            utils.validateInput(value, 1, setLastNameError);
-                        }}
-                        errorMsg={LastNameError}
-                        appendComponent={
-                            <FormInputCheck value={LastName} error={LastNameError} />
-                        }
-                    />
+          {/* Middle Name */}
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+            }}
+            label="Middle Name"
+            placeholder={"optional"}
+            value={MiddleName}
+            maxLength={10}
+            onChange={(value) => {
+              setMiddleName(value);
+              utils.validateInput(value, 1, setMiddleNameError);
+            }}
+          />
+
+          {/* Last Name */}
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+            }}
+            label="Last Name"
+            value={LastName}
+            maxLength={10}
+            onChange={(value) => {
+              setLastName(value);
+              utils.validateInput(value, 1, setLastNameError);
+            }}
+            errorMsg={LastNameError}
+            appendComponent={
+              <FormInputCheck value={LastName} error={LastNameError} />
+            }
+          />
 
                     <Text
                         style={{
@@ -238,87 +244,87 @@ const SignupName = ({ navigation, route }) => {
         );
     }
 
-    function renderHeader() {
-        return (
-            <Header
-                containerStyle={{
-                    height: 80,
-                    marginHorizontal: SIZES.padding,
-                    alignItems: "center",
-                }}
-                leftComponent={
-                    // Open Custom Drawer
-                    <TouchableOpacity
-                        style={{
-                            width: 40,
-                            height: 40,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderWidth: 1,
-                            borderColor: COLORS.gray2,
-                            borderRadius: SIZES.radius,
-                        }}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Image
-                            source={icons.backarrow}
-                            style={{
-                                borderRadius: SIZES.radius,
-                                color: COLORS.gray2,
-                            }}
-                        />
-                    </TouchableOpacity>
-                }
-                rightComponent={
-                    <View
-                        style={{
-                            width: 40,
-                        }}
-                    ></View>
-                }
-            />
-        );
-    }
-
-    function renderLogo() {
-        return (
-            <View
-                style={{
-                    marginTop: SIZES.padding,
-                    height: 40,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: SIZES.padding,
-                }}
-            >
-                <Image
-                    source={images.Foodea_new_logo}
-                    resizeMode="contain"
-                    style={{
-                        width: 200,
-                    }}
-                />
-            </View>
-        );
-    }
+  function renderHeader() {
     return (
-        <View
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        leftComponent={
+          // Open Custom Drawer
+          <TouchableOpacity
             style={{
-                alignItems: "center",
-                height: SIZES.height,
-                width: SIZES.width,
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
             }}
-        >
-            {/* Header */}
-            {renderHeader()}
+            onPress={() => navigation.goBack()}
+          >
+            <Image
+              source={icons.backarrow}
+              style={{
+                borderRadius: SIZES.radius,
+                color: COLORS.gray2,
+              }}
+            />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
+  }
 
-            {/* Logo
+  function renderLogo() {
+    return (
+      <View
+        style={{
+          marginTop: SIZES.padding,
+          height: 40,
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: SIZES.padding,
+        }}
+      >
+        <Image
+          source={images.Foodea_new_logo}
+          resizeMode="contain"
+          style={{
+            width: 200,
+          }}
+        />
+      </View>
+    );
+  }
+  return (
+    <View
+      style={{
+        alignItems: "center",
+        height: SIZES.height,
+        width: SIZES.width,
+      }}
+    >
+      {/* Header */}
+      {renderHeader()}
+
+      {/* Logo
             {renderLogo()} */}
 
-            {/* Email Address */}
-            {renderDetails()}
-        </View>
-    );
+      {/* Email Address */}
+      {renderDetails()}
+    </View>
+  );
 };
 
 export default SignupName;

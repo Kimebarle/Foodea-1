@@ -15,18 +15,18 @@ export const AuthProvider = ({ children }) => {
   const register = async (data) => {
     try {
       const response = await axios.post(`${BASE_URL}app_users`, {
-        firstname: data[0].fname,
-        middlename: data[0].mname,
-        lastname: data[0].lname,
-        weight: data[0].weight_data,
-        height: data[0].height_data,
-        gender: "M",
-        address: data[0].address_data,
-        age: data[0].age_data,
-        contact_number: data[0].contact_number_data,
-        bmi: data[0].bmi_data,
-        email: data[0].email_data,
-        password: data[0].password_data,
+        firstname: data[0].firstname,
+        middlename: data[0].middlename,
+        lastname: data[0].lastname,
+        weight: data[0].weight,
+        height: data[0].height,
+        gender: data[0].gender,
+        address: data[0].address,
+        age: data[0].age,
+        contact_number: data[0].contact_number,
+        bmi: data[0].bmi,
+        email: data[0].email,
+        password: data[0].password,
         lifestyle: data[0].lifestyle,
         preferences: data[0].preferences,
       });
@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }) => {
           style: "cancel",
         },
       ]);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
