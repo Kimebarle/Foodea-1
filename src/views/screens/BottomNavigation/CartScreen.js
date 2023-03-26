@@ -14,6 +14,7 @@ import {
   CartQuantityButton,
   StepperInput,
   FooterTotal,
+  LoadingAsset,
 } from "../../components/FoodeaComponents";
 import { FONTS, SIZES, COLORS, icons, dummyData } from "../../../constants";
 import { SwipeListView } from "react-native-swipe-list-view";
@@ -34,6 +35,7 @@ const CartScreen = ({ navigation, route }) => {
   const [orderQuantity, setOrderQuantity] = React.useState(0);
   const [fee, setFee] = React.useState(0);
   const [calories, setCalories] = React.useState(0);
+  const [itemLength, setItemLength] = React.useState(false);
 
   const fetchCart = useCallback(async () => {
     if (userId === undefined) {
@@ -57,6 +59,8 @@ const CartScreen = ({ navigation, route }) => {
         const calories = response.data[i].product_details.calories;
         totalCalories += calories;
       }
+
+      setItemLength(response.data > 0);
       setCalories(totalCalories);
       setPrice(totalPrice);
       setOrderQuantity(response.data.length);
@@ -332,7 +336,7 @@ const CartScreen = ({ navigation, route }) => {
       {/*   Header */}
       {renderHeader()}
       {/*   Cart List */}
-      {renderCartList()}
+      {itemLength ? <LoadingAsset /> : renderCartList()}
       <FooterTotal
         disable={myCartList}
         totalCalories={calories}

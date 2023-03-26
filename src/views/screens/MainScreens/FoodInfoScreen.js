@@ -67,8 +67,8 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
 
   function buyNowHandler() {
     console.log(userId, product_id, restaurant_id, quantity_product, total);
-    //addToCart(userId, product_id, restaurant_id, quantity, total);
-    //navigation.navigate("Cart");
+    addToCart(userId, product_id, restaurant_id, quantity, total);
+    navigation.navigate("Cart");
   }
 
   function renderRestaurant() {
