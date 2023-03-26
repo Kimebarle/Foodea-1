@@ -17,19 +17,21 @@ import {
   constants,
   FONTS,
 } from "../../../constants";
-import { Header } from "../../components/FoodeaComponents";
+import { Header, LoadingAsset } from "../../components/FoodeaComponents";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { BASE_URL } from "../../../api/context/auth/config";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import axios from "axios";
+import Spinner from "react-native-loading-spinner-overlay";
+
 const MyCartScreen = ({ navigation }) => {
   const { userId } = useContext(AuthContext);
   const [id, setId] = React.useState();
   const [itemId, setItemId] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [cartData, setCartData] = React.useState();
-
+  const [itemLength, setItemLength] = React.useState(false);
   const getCart = async () => {
     try {
       const response = await axios.get(
@@ -76,6 +78,7 @@ const MyCartScreen = ({ navigation }) => {
       });
 
     setCartData(matchingShopIds);
+    setItemLength(matchingShopIds.length > 0);
     setIsLoading(false);
   }, []);
 
@@ -138,6 +141,7 @@ const MyCartScreen = ({ navigation }) => {
         width: SIZES.width,
       }}
     >
+      <Spinner visible={isLoading} />
       {renderHeader()}
 
       <View
@@ -145,75 +149,93 @@ const MyCartScreen = ({ navigation }) => {
           flex: 1,
         }}
       >
-        <FlatList
-          data={isLoading ? dummyData.my_cart : cartData}
-          keyExtractor={(item, index) => {
-            return index.toString();
-          }}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                style={{
-                  marginTop: SIZES.radius,
-                }}
-                onPress={() => {
-                  setItemId(item.merchant_id);
-                  console.log(item.merchant_id);
-                  navigation.navigate("CartScreen", {
-                    restaurantID: item.merchant_id,
-                  });
-                }}
-              >
-                <View
+        {itemLength ? (
+          <FlatList
+            data={cartData}
+            keyExtractor={(item, index) => {
+              return index.toString();
+            }}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
                   style={{
-                    flex: 1,
-                    alignSelf: "center",
-                    justifyContent: "center",
-                    width: "90%",
-                    height: 100,
-                    backgroundColor: COLORS.lightGray2,
-                    flexDirection: "row",
-                    marginTop: SIZES.base,
-                    borderRadius: SIZES.radius,
+                    marginTop: SIZES.radius,
+                  }}
+                  onPress={() => {
+                    setItemId(item.merchant_id);
+                    console.log(item.merchant_id);
+                    navigation.navigate("CartScreen", {
+                      restaurantID: item.merchant_id,
+                    });
                   }}
                 >
                   <View
                     style={{
+                      flex: 1,
+                      alignSelf: "center",
+                      justifyContent: "center",
+                      width: "90%",
+                      height: 100,
+                      backgroundColor: COLORS.lightGray2,
                       flexDirection: "row",
-                      alignItems: "center",
+                      marginTop: SIZES.base,
+                      borderRadius: SIZES.radius,
                     }}
                   >
-                    <View style={{ marginRight: SIZES.base }}>
-                      <Text
-                        style={{
-                          ...FONTS.h3,
-                          marginBottom: 5,
-                          color: COLORS.primary,
-                        }}
-                      >
-                        {item.business_name}
-                      </Text>
-                      <Text style={{ ...FONTS.h5 }}>
-                        {item.totalItems} item • {item.time} mins •{" "}
-                        {item.distance} km
-                      </Text>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ marginRight: SIZES.base }}>
+                        <Text
+                          style={{
+                            ...FONTS.h3,
+                            marginBottom: 5,
+                            color: COLORS.primary,
+                          }}
+                        >
+                          {item.business_name}
+                        </Text>
+                        <Text style={{ ...FONTS.h5 }}>
+                          {item.totalItems} item • {item.time} mins •{" "}
+                          {item.distance} km
+                        </Text>
+                      </View>
                     </View>
-                  </View>
 
-                  <Image
-                    source={require("../../../../assets/img/images/kfc-logo-1.png")}
-                    style={{
-                      height: 80,
-                      width: 80,
-                      alignSelf: "center",
-                      marginLeft: 40,
-                    }}
-                  />
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
+                    <Image
+                      source={require("../../../../assets/img/images/kfc-logo-1.png")}
+                      style={{
+                        height: 80,
+                        width: 80,
+                        alignSelf: "center",
+                        marginLeft: 40,
+                      }}
+                    />
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        ) : (
+          <LoadingAsset
+            containerStyle={{
+              alignSelf: "center",
+              justifyContent: "center",
+              width: 250,
+              height: 250,
+            }}
+            imageStyle={{
+              width: "100%",
+              height: "100%",
+            }}
+            onPress={() => {
+              navigation.navigate("Home");
+            }}
+          />
+        )}
       </View>
     </View>
   );
