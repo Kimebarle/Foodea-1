@@ -8,11 +8,13 @@ import {
 } from "react-native";
 import React, { useEffect } from "react";
 import {
-  TextButton,
-  FormInput,
-  FormInputCheck,
-  IconButton,
-  Header,
+    TextButton,
+    FormInput,
+    FormInputCheck,
+    IconButton,
+    Header,
+    TextInput,
+
 } from "../../components/FoodeaComponents";
 import {
   COLORS,
@@ -28,16 +30,40 @@ import utils, { Utils } from "../../../utils/Utils";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
 import { Alert } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const SignupName = ({ navigation, route }) => {
-  const [Name, setName] = React.useState("");
-  const [NameError, setNameError] = React.useState("");
-  const [MiddleName, setMiddleName] = React.useState("Optional");
-  const [MiddleNameError, setMiddleNameError] = React.useState("");
-  const [LastName, setLastName] = React.useState("");
-  const [LastNameError, setLastNameError] = React.useState("");
+    const [Name, setName] = React.useState("");
+    const [NameError, setNameError] = React.useState("");
+    const [MiddleName, setMiddleName] = React.useState("");
+    const [MiddleNameError, setMiddleNameError] = React.useState("");
+    const [LastName, setLastName] = React.useState("");
+    const [LastNameError, setLastNameError] = React.useState("");
+    const [day, setDay] = React.useState("");
+    const [dayError, setDayError] = React.useState("");
+    const [month, setMonth] = React.useState("");
+    const [monthError, setMonthError] = React.useState("");
+    const [year, setYear] = React.useState("");
+    const [yearError, setYearError] = React.useState("");
+    const [date, setDate] = React.useState(new Date());
+    const [showPicker, setShowPicker] = React.useState(false);
+    const [age, setAge] = React.useState(null);
 
-  const list = [{}];
+    const handleDateChange = (event, selectedDate) => {
+        setShowPicker(false);
+        setDate(selectedDate);
+        calculateAge(selectedDate);
+    };
+
+    const calculateAge = (birthdate) => {
+        const ageInMillis = Date.now() - birthdate.getTime();
+        const ageInYears = ageInMillis / 1000 / 60 / 60 / 24 / 365;
+        setAge(Math.floor(ageInYears));
+    };
+
+    const showDatePicker = () => {
+        setShowPicker(true);
+    };
 
   const disabledButton = () => {
     // return !Name || !LastName;
@@ -144,26 +170,79 @@ const SignupName = ({ navigation, route }) => {
             }
           />
 
-          <TextButton
-            label="Next"
-            disabled={disabledButton()}
-            onPress={handleSignUpPress}
-            buttonContainerStyle={{
-              marginTop: SIZES.padding,
-              height: 55,
-              borderRadius: SIZES.radius,
-              backgroundColor: !disabledButton()
-                ? COLORS.primary
-                : COLORS.transparentPrimray,
-            }}
-            labelStyle={{
-              ...FONTS.h3,
-            }}
-          />
-        </View>
-      </View>
-    );
-  }
+                    <Text
+                        style={{
+                            color: COLORS.gray,
+                            ...FONTS.h3,
+                            fontSize: 15,
+                        }}
+                    >
+                        Birthday
+                    </Text>
+
+                    <View style={{
+                        flexDirection: 'row',
+                    }}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Birthday"
+                            editable={false}
+                            value={date.toLocaleDateString()}
+                        />
+
+                        <IconButton
+                            icon={icons.calendar}
+                            iconStyle={{
+                                tintColor: COLORS.gray,
+                                width: 25,
+                                height: 25,
+                                marginLeft: SIZES.base,
+                                position: "absolute",
+                                right: 10,
+                                top: 20,
+                            }}
+                            onPress={showDatePicker}
+                        />
+                    </View>
+
+                    {showPicker && (
+                        <DateTimePicker
+                            value={date}
+                            mode="date"
+                            display="default"
+                            onChange={handleDateChange}
+                        />
+                    )}
+                    {age !== null && <Text>You are {age} years old.</Text>}
+
+                    <KeyboardAwareScrollView
+                        keyboardDismissMode="on-drag"
+                        contentContainerStyle={{
+                            flexGrow: 1,
+                            paddingHorizontal: SIZES.padding,
+                        }}
+                    >
+                        <TextButton
+                            label="Next"
+                            disabled={disabledButton()}
+                            onPress={() => navigation.navigate("PersonalInfo")}
+                            buttonContainerStyle={{
+                                marginTop: SIZES.padding,
+                                height: 55,
+                                borderRadius: SIZES.radius,
+                                backgroundColor: !disabledButton()
+                                    ? COLORS.primary
+                                    : COLORS.transparentPrimray,
+                            }}
+                            labelStyle={{
+                                ...FONTS.h3,
+                            }}
+                        />
+                    </KeyboardAwareScrollView>
+                </View>
+            </View>
+        );
+    }
 
   function renderHeader() {
     return (
@@ -251,8 +330,12 @@ const SignupName = ({ navigation, route }) => {
 export default SignupName;
 
 const styles = StyleSheet.create({
-  forgotPassword: {
-    marginTop: 10,
-  },
-  signup_text: {},
+    forgotPassword: {
+        marginTop: 10,
+    },
+    signup_text: {},
+    input: {
+        width: 300,
+        height: 50,
+    },
 });

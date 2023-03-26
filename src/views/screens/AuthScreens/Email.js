@@ -29,17 +29,25 @@ import { BASE_URL } from "../../../api/context/auth/config";
 import { Alert } from "react-native";
 
 const Email = ({ navigation, route }) => {
-  const { passedList3 } = route.params;
-  const [email, setEmail] = React.useState("");
-  const [showPassword, setShowPasswod] = React.useState(true);
-  const [resetshowPassword, setResetShowPasswod] = React.useState(true);
-  const [password, setPassword] = React.useState("");
-  const [resetpassword, setResetPassword] = React.useState("");
-  const [checkValidEmail, setCheckValidEmail] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const toggleHidePassword = () => {
-    setShowPasswod(!showPassword);
-  };
+    const [email, setEmail] = React.useState("");
+    const [passwordError, setPasswordError] = React.useState("");
+    const [phoneNumber, setPhoneNumber] = React.useState("");
+    const [reenterpassword, setReEnterPassword] = React.useState("");
+    const [reenterpasswordError, setReEnterPasswordError] = React.useState("");
+    const [reshowPassword, setReShowPasswod] = React.useState(false);
+    const [showPassword, setShowPasswod] = React.useState(true);
+    const [resetshowPassword, setResetShowPasswod] = React.useState(true);
+
+    const [password, setPassword] = React.useState("");
+    const [resetpassword, setResetPassword] = React.useState("");
+    const [firstname, setFirstName] = React.useState("");
+
+    const [checkValidEmail, setCheckValidEmail] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    const toggleHidePassword = () => {
+        setShowPasswod(!showPassword);
+    };
 
   const togglePassword = () => {
     setResetShowPasswod(!resetshowPassword);
@@ -98,98 +106,119 @@ const Email = ({ navigation, route }) => {
     // navigation.navigate("SurveyScreen")
   };
 
-  function renderDetails() {
-    return (
-      <View
-        style={{
-          marginTop: SIZES.padding,
-          height: 450,
-        }}
-      >
-        <View
-          style={{
-            flex: 1,
-            width: SIZES.width - SIZES.padding * 2,
-            paddingHorizontal: SIZES.padding,
-            paddingVertical: SIZES.radius,
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.white,
-            elevation: 5,
-          }}
-        >
-          <Text
-            style={{
-              width: "100%",
-              color: COLORS.black,
-              ...FONTS.h1,
-            }}
-          >
-            Input your information
-          </Text>
-          <Text
-            style={{
-              ...FONTS.h5,
-            }}
-          >
-            Input your Email, Password, Confirm Password.
-          </Text>
-
-          {/* Email */}
-          <View
-            style={{
-              flexDirection: "row",
-              marginBottom: SIZES.radius,
-              marginTop: SIZES.radius,
-            }}
-          >
-            {/* Email */}
-            <TextInput
-              style={{
-                ...FONTS.h3,
-                width: 300,
-                borderRadius: SIZES.radius,
-              }}
-              onChangeText={(value) => {
-                handleCheckEmail(value);
-                setEmail(value);
-              }}
-              value={email}
-              label="Email"
-            />
-
+    function renderDetails() {
+        return (
             <View
-              style={{
-                position: "absolute",
-                bottom: 35,
-                right: 2,
-              }}
+                style={{
+                    marginTop: SIZES.padding,
+                    height: 500,
+                }}
             >
-              {checkValidEmail ? (
-                <Text style={styles.textFailed}>Wrong format email</Text>
-              ) : (
-                <Text style={styles.textFailed}> </Text>
-              )}
-            </View>
-          </View>
+                <View
+                    style={{
+                        flex: 1,
+                        width: SIZES.width - SIZES.padding * 2,
+                        paddingHorizontal: SIZES.padding,
+                        paddingVertical: SIZES.radius,
+                        borderRadius: SIZES.radius,
+                        backgroundColor: COLORS.white,
+                        elevation: 5,
 
-          {/* Password  */}
-          <View
-            style={{
-              flexDirection: "row",
-              marginBottom: SIZES.radius,
-            }}
-          >
-            <TextInput
-              style={{
-                ...FONTS.h3,
-                width: 300,
-                borderRadius: SIZES.radius,
-              }}
-              secureTextEntry={showPassword}
-              onChangeText={setPassword}
-              value={password}
-              label="Password"
-            />
+                    }}
+                >
+                    <Text
+                        style={{
+                            width: "100%",
+                            color: COLORS.black,
+                            ...FONTS.h1,
+                        }}
+                    >
+                        Input your information
+                    </Text>
+                    <Text
+                        style={{
+                            ...FONTS.h5,
+                        }}
+                    >
+                        Input your Email, Password, Confirm Password and Phone Number.
+                    </Text>
+
+                    {/* Email */}
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            marginBottom: SIZES.radius,
+                            marginTop: SIZES.radius
+                        }}
+                    >
+                        {/* Email */}
+                        <TextInput
+                            style={{
+                                ...FONTS.h3,
+                                width: 250,
+                                borderRadius: SIZES.radius,
+                            }}
+                            onChangeText={(value) => {
+                                handleCheckEmail(value);
+                                setEmail(value);
+                            }}
+                            value={email}
+                            label="Email"
+                        />
+
+                        <View
+                            style={{
+                                position: "absolute",
+                                bottom: 35,
+                                right: 2,
+                            }}
+                        >
+                            {checkValidEmail ? (
+                                <Text style={styles.textFailed}>Wrong format email</Text>
+                            ) : (
+                                <Text style={styles.textFailed}> </Text>
+                            )}
+                        </View>
+                    </View>
+
+                    <View style = {{
+                        marginBottom: SIZES.radius
+                    }}>
+                        {/* Phone */}
+                        <TextInput
+                            maxLength={10}
+                            style={{
+                                ...FONTS.h3,
+                                width: 250,
+                                borderRadius: SIZES.radius,
+                            }}
+                            onChangeText={(value) => {
+                                setPhoneNumber(value);
+                            }}
+                            value={phoneNumber}
+                            placeholder={"+63"}
+                            label="+63"
+                        />
+                    </View>
+
+                    {/* Password  */}
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            marginBottom: SIZES.radius,
+                        }}
+                    >
+                        <TextInput
+                            style={{
+                                ...FONTS.h3,
+                                width: 250,
+                                borderRadius: SIZES.radius,
+                            }}
+                            secureTextEntry={showPassword}
+                            onChangeText={setPassword}
+                            value={password}
+                            label="Password"
+                        />
 
             <IconButton
               icon={showPassword ? icons.eye : icons.disable_eye}
@@ -206,23 +235,23 @@ const Email = ({ navigation, route }) => {
             />
           </View>
 
-          {/* Re-Enter Password */}
-          <View
-            style={{
-              flexDirection: "row",
-            }}
-          >
-            <TextInput
-              style={{
-                ...FONTS.h3,
-                width: 300,
-                borderRadius: SIZES.radius,
-              }}
-              secureTextEntry={resetshowPassword}
-              onChangeText={setResetPassword}
-              value={resetpassword}
-              label="Confirm Password"
-            />
+                    {/* Re-Enter Password */}
+                    <View
+                        style={{
+                            flexDirection: "row",
+                        }}
+                    >
+                        <TextInput
+                            style={{
+                                ...FONTS.h3,
+                                width: 250,
+                                borderRadius: SIZES.radius,
+                            }}
+                            secureTextEntry={resetshowPassword}
+                            onChangeText={setResetPassword}
+                            value={resetpassword}
+                            label="Confirm Password"
+                        />
 
             <IconButton
               icon={resetshowPassword ? icons.eye : icons.disable_eye}

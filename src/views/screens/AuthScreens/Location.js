@@ -126,22 +126,24 @@ const Location = ({ navigation, route }) => {
             appendComponent={<FormInputCheck value={city} error={cityError} />}
           />
 
-          {/* Barangay */}
-          <FormInput
-            containerStyle={{
-              borderRadius: SIZES.radius,
-            }}
-            label="Barangay"
-            value={brgy}
-            maxLength={5}
-            keyboardType="number-pad"
-            onChange={(value) => {
-              setBrgy(value);
-              utils.validateInput(value, 1, setBrgyError);
-            }}
-            errorMsg={brgyError}
-            appendComponent={<FormInputCheck value={brgy} error={brgyError} />}
-          />
+                    {/* Barangay */}
+                    <FormInput
+                        containerStyle={{
+                            borderRadius: SIZES.radius,
+                        }}
+                        label="Barangay"
+                        value={brgy}
+                        maxLength={3}
+                        keyboardType="number-pad"
+                        onChange={(value) => {
+                            setBrgy(value);
+                            utils.validateInput(value, 1, setBrgyError);
+                        }}
+                        errorMsg={brgyError}
+                        appendComponent={
+                            <FormInputCheck value={brgy} error={brgyError} />
+                        }
+                    />
 
           {/* ZIP CODE */}
           <FormInput

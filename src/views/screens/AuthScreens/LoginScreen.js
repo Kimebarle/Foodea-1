@@ -63,7 +63,7 @@ const LoginScreen = ({ navigation }) => {
       <View
         style={{
           alignSelf: "center",
-          height: 500,
+          height: 550,
           width: 300,
           backgroundColor: COLORS.white,
           borderRadius: SIZES.radius,
@@ -138,6 +138,7 @@ const LoginScreen = ({ navigation }) => {
                       ...FONTS.h3,
                       textAlign: "center",
                       marginBottom: SIZES.padding,
+                      marginTop: SIZES.radius
                     }}
                   >
                     Forgot Password

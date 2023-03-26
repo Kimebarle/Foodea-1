@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
-import { SIZES, FONTS, COLORS } from "../../../constants";
-
+import { SIZES, FONTS, COLORS, icons, } from "../../../constants";
 import { Header, TextButton } from "../../components/FoodeaComponents";
 import RadioForm, {
   RadioButtonInput,
@@ -81,22 +80,25 @@ const SurveyScreen = ({ navigation, route }) => {
       style={{
         alignItems: "center",
         height: SIZES.height,
-        justifyContent: "center",
         width: SIZES.width,
       }}
     >
-      <View
-        style={{
-          height: 500,
-          width: 350,
-          backgroundColor: COLORS.white,
-          borderRadius: SIZES.radius,
-        }}
-      >
-        {/* {renderHeader()} */}
-        <Text style={{ padding: SIZES.padding, ...FONTS.h2 }}>
-          Let us know about yourself ...{" "}
-        </Text>
+      {/* Header */}
+      {renderHeader()}
+
+      <View style = {{
+        height: 600,
+        width: 350,
+        justifyContent: 'center',
+        backgroundColor: COLORS.white,
+        borderRadius: SIZES.radius,
+      }}>
+      
+      
+
+      <Text style={{ padding: SIZES.padding, ...FONTS.h2 }}>
+        Let us know about yourself ...{" "}
+      </Text>
 
         <Text
           style={{
@@ -108,17 +110,17 @@ const SurveyScreen = ({ navigation, route }) => {
           How active are you?
         </Text>
 
-        <View style={{ width: "80%", marginTop: 40, left: 20 }}>
-          <RadioForm
-            radio_props={items}
-            initial={value}
-            onPress={(value) => setValue(value)}
-            buttonColor={COLORS.gray3}
-            labelStyle={{ ...FONTS.h5 }}
-            selectedButtonColor={COLORS.primary}
-          />
-        </View>
-        {renderFooter()}
+      <View style={{ width: "80%", marginTop: 40, left: 20 }}>
+        <RadioForm
+          radio_props={items}
+          initial={value}
+          onPress={(value) => setValue(value)}
+          buttonColor={COLORS.gray3}
+          labelStyle={{ ...FONTS.h4, marginBottom: SIZES.padding,}}
+          selectedButtonColor={COLORS.primary}
+        />
+      </View>
+      {renderFooter()}
       </View>
     </View>
   );

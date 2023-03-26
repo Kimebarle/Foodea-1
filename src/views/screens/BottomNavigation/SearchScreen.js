@@ -22,6 +22,7 @@ import {
   HorizontalFoodCard,
   VerticalFoodCard,
   FilterModal,
+  SearchFoodCard
 } from "../../components/FoodeaComponents";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
@@ -106,6 +107,9 @@ const SearchScreen = ({ navigation }) => {
     );
   }
 
+  const handleOnPress = () => {
+    console.log("Search Food Card")
+  }
   function renderSearch() {
     return (
       <View
@@ -146,27 +150,22 @@ const SearchScreen = ({ navigation }) => {
 
   function renderTrendingSection() {
     return (
-      <Section
-        title="Trending Near You"
-        onPress={() => console.log(" Show All Trending Near You")}
-      >
+      <View style = {{
+        marginTop: SIZES.padding,
+      }}>
         <FlatList
           data={isLoading ? trending : display}
           keyExtractor={(item) => `${item.product_id}`}
-          horizontal
-          showsHorizontalScrollIndicator={false}
+          vertical
+          showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
-            <VerticalFoodCard
-              containerStyle={{
-                marginLeft: index == 0 ? SIZES.padding : 18,
-                marginRight: index == trending.length - 1 ? SIZES.padding : 0,
-              }}
+            <SearchFoodCard
               item={item}
-              onPress={() => console.log("Vertical FOod Card")}
+              onPress={handleOnPress}
             />
           )}
         />
-      </Section>
+        </View>
     );
   }
 
@@ -273,7 +272,7 @@ const SearchScreen = ({ navigation }) => {
         ListHeaderComponent={
           <View style={{ paddingBottom: SIZES.padding }}>
             {/* Categories */}
-            {renderFoodCategories()}
+            {/* {renderFoodCategories()} */}
 
             {/* Trending */}
             {renderTrendingSection()}
