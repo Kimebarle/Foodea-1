@@ -7,7 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import {
   dummyData,
   icons,
@@ -18,13 +18,73 @@ import {
   FONTS,
 } from "../../../constants";
 import { Header } from "../../components/FoodeaComponents";
-
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
+import { BASE_URL } from "../../../api/context/auth/config";
+import AuthContext from "../../../api/context/auth/AuthContext";
+import axios from "axios";
 const MyCartScreen = ({ navigation }) => {
+  const { userId } = useContext(AuthContext);
   const [id, setId] = React.useState();
   const [itemId, setItemId] = React.useState([]);
-  const pota = () => {
-    console.log(id);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [cartData, setCartData] = React.useState();
+
+  const getCart = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}carts?customer_id[eq]=${userId}`
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const getRestaurant = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}restaurants`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updatedCartList = useCallback(async () => {
+    setIsLoading(true);
+    const cartData = await getCart();
+    const restaurantData = await getRestaurant();
+
+    const cartList = [...cartData];
+    const restaurantList = [...restaurantData];
+
+    const matchingShopIds = cartList
+      .map((item) => item.restaurant_id)
+      .filter((shopId, index, self) => self.indexOf(shopId) === index)
+      .map((shopId) => {
+        const matchingShop = restaurantList.find(
+          (shop) => shop.merchant_id === shopId
+        );
+        const matchingCartItems = cartList.filter(
+          (cartItem) => cartItem.restaurant_id === shopId
+        );
+        const totalItems = matchingCartItems.reduce(
+          (acc, cur) => acc + cur.quantity,
+          0
+        );
+        return { ...matchingShop, totalItems };
+      });
+
+    setCartData(matchingShopIds);
+    setIsLoading(false);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(true);
+      updatedCartList();
+    }, [])
+  );
 
   function renderHeader() {
     return (
@@ -86,7 +146,7 @@ const MyCartScreen = ({ navigation }) => {
         }}
       >
         <FlatList
-          data={dummyData.my_cart}
+          data={isLoading ? dummyData.my_cart : cartData}
           keyExtractor={(item, index) => {
             return index.toString();
           }}
@@ -97,9 +157,11 @@ const MyCartScreen = ({ navigation }) => {
                   marginTop: SIZES.radius,
                 }}
                 onPress={() => {
-                  setItemId(item.id);
-                  console.log(item.id);
-                  navigation.navigate("CartScreen", { restaurantID: item.id });
+                  setItemId(item.merchant_id);
+                  console.log(item.merchant_id);
+                  navigation.navigate("CartScreen", {
+                    restaurantID: item.merchant_id,
+                  });
                 }}
               >
                 <View
@@ -129,17 +191,17 @@ const MyCartScreen = ({ navigation }) => {
                           color: COLORS.primary,
                         }}
                       >
-                        {item.name}
+                        {item.business_name}
                       </Text>
                       <Text style={{ ...FONTS.h5 }}>
-                        {item.quantity} item • {item.time} mins •{" "}
+                        {item.totalItems} item • {item.time} mins •{" "}
                         {item.distance} km
                       </Text>
                     </View>
                   </View>
 
                   <Image
-                    source={item.icon}
+                    source={require("../../../../assets/img/images/kfc-logo-1.png")}
                     style={{
                       height: 80,
                       width: 80,

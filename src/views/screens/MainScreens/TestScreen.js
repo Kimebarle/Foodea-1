@@ -38,19 +38,26 @@ const TestScreen = ({ navigation }) => {
   const [favoritesDisplay, setFavoritesDisplay] = React.useState();
   const [itemsDisplay, setItemDisplay] = React.useState();
   const [foodDisplay, setFoodDisplay] = React.useState();
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [restaurantData, setRestaurantData] = React.useState();
 
   // useFocusEffect(() => {}, [getItemTable]);
 
   useFocusEffect(
     useCallback(() => {
+      setIsLoading(true);
+      handleChangeCategory();
       getItemTable();
       getFavorites();
       getFood();
       setItemDisplay();
+      console.log("asdasd");
+      getRestaurant();
+      setSelectedCategoryId();
     }, [getItemTable])
   );
 
-  const handleChangeCategory = async (id) => {
+  const handleChangeCategory = useCallback(async (id) => {
     try {
       const response = await axios.get(
         `${BASE_URL}foods?merchant_id[eq]=${id}&limit=4`
@@ -59,14 +66,12 @@ const TestScreen = ({ navigation }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
 
   const getFavorites = useCallback(async () => {
     const favoritesResponse = await axios.get(
       `${BASE_URL}favorites?user_id[eq]=${user.user_id}`
     );
-    //const data = favoritesResponse.data;
-    //console.log(`${BASE_URL}carts?customer_id[eq]=${user.user_id}`);
     setFavoritesDisplay(favoritesResponse.data);
     const data = favoritesResponse.data;
     return data;
@@ -74,15 +79,10 @@ const TestScreen = ({ navigation }) => {
 
   const getFood = async () => {
     const foodResponse = await axios.get(`${BASE_URL}foods?merchant_id[eq]=1`);
-    // console.log("food");
     setFoodDisplay(foodResponse.data);
     const data = foodResponse.data;
     return data;
   };
-
-  // const getItemTable = useCallback(async () => {
-
-  // });
 
   const getItemTable = useCallback(async () => {
     const foodData = await getFood();
@@ -104,13 +104,20 @@ const TestScreen = ({ navigation }) => {
     navigation.push("Search");
   }
 
+  const getRestaurant = async () => {
+    setIsLoading(true);
+    const response = await axios.get(`${BASE_URL}restaurants`);
+    setRestaurantData(response.data);
+    setIsLoading(false);
+  };
+
   function renderOtherRestaurant() {
     return (
       <FlatList
-        data={dummyData.other_restaurant}
-        keyExtractor={(item) => `${item.id}`}
+        data={isLoading ? dummyData.other_restaurant : restaurantData}
+        keyExtractor={(item) => `${item.merchant_id}`}
         vertical
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <TouchableOpacity
             style={{
               flexDirection: "row",
@@ -124,13 +131,15 @@ const TestScreen = ({ navigation }) => {
               backgroundColor: COLORS.white,
             }}
             onPress={() => {
-              setItemId(item.id);
-              console.log(item.id);
-              navigation.navigate("HomeScreen", { restaurantId: item.id });
+              // setItemId(item.merchant_id);
+              console.log(item.merchant_id);
+              // navigation.navigate("HomeScreen", {
+              //   restaurantId: item.merchant_id,
+              // });
             }}
           >
             <Image
-              source={item.icon}
+              source={require("../../../../assets/img/images/kfc-logo-1.png")}
               style={{
                 marginTop: 5,
                 height: 75,
@@ -152,7 +161,7 @@ const TestScreen = ({ navigation }) => {
                   ...FONTS.h2,
                 }}
               >
-                {item.name}
+                {item.business_name}
               </Text>
               <View
                 style={{
@@ -270,6 +279,7 @@ const TestScreen = ({ navigation }) => {
                 marginRight: index == trending.length - 1 ? SIZES.padding : 0,
               }}
               item={item}
+              userId={userId}
               Favorite={item.isFavorite}
               favorite_Id={item.favoriteId + 0}
               itemId={item.product_id}

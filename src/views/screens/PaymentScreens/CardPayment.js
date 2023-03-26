@@ -37,7 +37,11 @@ const CardPayment = ({ navigation, route }) => {
         ...item,
       };
     });
-    console.log(updatedList);
+
+    navigation.navigate("CheckOut", {
+      selectedCard: selectedCard,
+      passedValues: newList,
+    });
   };
 
   function renderHeader() {
