@@ -10,8 +10,8 @@ import RadioForm, {
 import { RadioButton } from "react-native-paper";
 
 const SurveyScreen = ({ navigation, route }) => {
+  const { passedList4 } = route.params;
   const [value, setValue] = React.useState(0);
-  // const { pass1 } = route.params;
   const items = [
     {
       label: "Sedentary (little or no exercise)",
@@ -40,22 +40,17 @@ const SurveyScreen = ({ navigation, route }) => {
     },
   ];
 
-  // function submitFunction() {
-  //   let pass2 = [...pass1];
+  const OnPressHandler = () => {
+    const tempList5 = [...passedList4];
 
-  //   const addAttribute = () => {
-  //     const updatedList = pass2.map((obj) => {
-  //       return { ...obj, lifestyle: items[value].letter };
-  //     });
-
-  //     pass2 = updatedList;
-  //   };
-  //   {
-  //     addAttribute();
-  //   }
-  //   // console.log(pass2);
-  //   navigation.navigate("SurveyScreenInitial", { pass3: pass2 });
-  // }
+    const list5 = tempList5.map((item) => ({
+      ...item,
+      lifestyle: items[value].letter,
+    }));
+    // console.log(items[value].letter);
+    // console.log(passedList4);
+    navigation.navigate("SurveyScreenInitial", { passedList5: list5 });
+  };
 
   function renderFooter() {
     return (
@@ -64,7 +59,7 @@ const SurveyScreen = ({ navigation, route }) => {
           marginTop: SIZES.radius,
           paddingBottom: SIZES.padding,
           paddingHorizontal: SIZES.padding,
-          alignItems: 'center',
+          alignItems: "center",
         }}
       >
         <TextButton
@@ -75,7 +70,7 @@ const SurveyScreen = ({ navigation, route }) => {
             borderRadius: SIZES.radius,
             backgroundColor: COLORS.primary,
           }}
-          onPress={() => navigation.navigate("SurveyScreenInitial")}
+          onPress={OnPressHandler}
         />
       </View>
     );
@@ -84,45 +79,46 @@ const SurveyScreen = ({ navigation, route }) => {
   return (
     <View
       style={{
-        alignItems: 'center',
+        alignItems: "center",
         height: SIZES.height,
-        justifyContent: 'center',
+        justifyContent: "center",
         width: SIZES.width,
       }}
     >
-      <View style = {{
-        height: 500,
-        width: 350,
-        backgroundColor: COLORS.white,
-        borderRadius: SIZES.radius,
-      }}>
-
-      {/* {renderHeader()} */}
-      <Text style={{ padding: SIZES.padding, ...FONTS.h2 }}>
-        Let us know about yourself ...{" "}
-      </Text>
-
-      <Text
+      <View
         style={{
-          paddingTop: SIZES.padding,
-          paddingLeft: SIZES.padding,
-          ...FONTS.h3,
+          height: 500,
+          width: 350,
+          backgroundColor: COLORS.white,
+          borderRadius: SIZES.radius,
         }}
       >
-        How active are you?
-      </Text>
+        {/* {renderHeader()} */}
+        <Text style={{ padding: SIZES.padding, ...FONTS.h2 }}>
+          Let us know about yourself ...{" "}
+        </Text>
 
-      <View style={{ width: "80%", marginTop: 40, left: 20 }}>
-        <RadioForm
-          radio_props={items}
-          initial={value}
-          onPress={(value) => setValue(value)}
-          buttonColor={COLORS.gray3}
-          labelStyle={{ ...FONTS.h5 }}
-          selectedButtonColor={COLORS.primary}
-        />
-      </View>
-      {renderFooter()}
+        <Text
+          style={{
+            paddingTop: SIZES.padding,
+            paddingLeft: SIZES.padding,
+            ...FONTS.h3,
+          }}
+        >
+          How active are you?
+        </Text>
+
+        <View style={{ width: "80%", marginTop: 40, left: 20 }}>
+          <RadioForm
+            radio_props={items}
+            initial={value}
+            onPress={(value) => setValue(value)}
+            buttonColor={COLORS.gray3}
+            labelStyle={{ ...FONTS.h5 }}
+            selectedButtonColor={COLORS.primary}
+          />
+        </View>
+        {renderFooter()}
       </View>
     </View>
   );

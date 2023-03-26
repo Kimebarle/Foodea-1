@@ -143,7 +143,7 @@ const LoginScreen = ({ navigation }) => {
                     Forgot Password
                   </Text>
                 </TouchableOpacity>
-{/* 
+                {/* 
                 <TouchableOpacity onPress={handleWelcome}> 
                   <Text>
                     Welcome
