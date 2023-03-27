@@ -61,8 +61,9 @@ const TestScreen = ({ navigation }) => {
     const list = [...data];
     const updatedList = list
       .filter((item) => item.merchant_id === id)
-      .splice(0, 4);
+      .splice(0, 10);
     setItemDisplay(updatedList);
+    console.log(id);
   }, []);
 
   const getFavorites = useCallback(async () => {
@@ -75,7 +76,7 @@ const TestScreen = ({ navigation }) => {
   }, []);
 
   const getFood = async () => {
-    const foodResponse = await axios.get(`${BASE_URL}foods?limit=20`);
+    const foodResponse = await axios.get(`${BASE_URL}foods`);
     setFoodDisplay(foodResponse.data);
     const data = foodResponse.data;
     return data;

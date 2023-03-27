@@ -13,6 +13,7 @@ const FooterTotal = ({
   number,
   totalCalories,
   disable,
+  totalPrice,
 }) => {
   return (
     <View>
@@ -44,7 +45,7 @@ const FooterTotal = ({
           <Text style={{ flex: 1, ...FONTS.h3 }}>Total Calories</Text>
           <Image
             source={icons.calories}
-            style={{ width: 25, height: 25, tintColor: COLORS.gray }}
+            style={{ width: 25, height: 25, tintColor: COLORS.primary }}
           />
           <Text style={{ ...FONTS.h3 }}>{totalCalories}</Text>
         </View>
@@ -78,7 +79,7 @@ const FooterTotal = ({
         {/* Total */}
         <View style={{ flexDirection: "row", marginTop: SIZES.padding }}>
           <Text style={{ flex: 1, ...FONTS.h2 }}>Total</Text>
-          <Text style={{ ...FONTS.h2 }}>₱{total.toFixed(2)}</Text>
+          <Text style={{ ...FONTS.h2 }}>₱{total + shippingFee}.00</Text>
         </View>
 
         {/* Button */}
@@ -88,7 +89,10 @@ const FooterTotal = ({
             height: 60,
             marginTop: SIZES.padding,
             borderRadius: SIZES.radius,
-            backgroundColor: disable == null || disable.length === 0 ? COLORS.gray : COLORS.primary,
+            backgroundColor:
+              disable == null || disable.length === 0
+                ? COLORS.gray
+                : COLORS.primary,
           }}
           label="Place your order"
           onPress={onPress}

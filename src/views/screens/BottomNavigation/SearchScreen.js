@@ -27,35 +27,6 @@ import {
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
 
-function search() {
-  navigation.push("Search");
-}
-
-const Section = ({ title, onPress, children }) => {
-  return (
-    <View>
-      {/* Header */}
-      <View
-        style={{
-          flexDirection: "row",
-          marginHorizontal: SIZES.padding,
-          marginTop: 30,
-          marginBottom: 20,
-        }}
-      >
-        <Text style={{ flex: 1, ...FONTS.h3 }}>{title}</Text>
-
-        <TouchableOpacity onPress={onPress}>
-          <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>Show All</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Content */}
-      {children}
-    </View>
-  );
-};
-
 const SearchScreen = ({ navigation }) => {
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
@@ -67,6 +38,7 @@ const SearchScreen = ({ navigation }) => {
   const [search, setSearch] = React.useState("");
   const [display, setDisplay] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(true);
+  // const [dummyData, setDummyData] = React.useState(null);
   React.useEffect(() => {
     setIsLoading(true);
     getFoodData();
@@ -156,7 +128,7 @@ const SearchScreen = ({ navigation }) => {
         }}
       >
         <FlatList
-          data={isLoading ? trending : display}
+          data={display}
           keyExtractor={(item) => `${item.product_id}`}
           vertical
           showsVerticalScrollIndicator={false}

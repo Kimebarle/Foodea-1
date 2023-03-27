@@ -1,29 +1,29 @@
 import {
-    StyleSheet,
-    TouchableOpacity,
-    Image,
-    View,
-    Text,
-    FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  View,
+  Text,
+  FlatList,
 } from "react-native";
 import React, { useEffect } from "react";
 import {
-    TextButton,
-    FormInput,
-    FormInputCheck,
-    IconButton,
-    Header,
-    TextInput,
-    Button,
+  TextButton,
+  FormInput,
+  FormInputCheck,
+  IconButton,
+  Header,
+  TextInput,
+  Button,
 } from "../../components/FoodeaComponents";
 import {
-    COLORS,
-    FONTS,
-    SIZES,
-    icons,
-    constants,
-    dummyData,
-    images,
+  COLORS,
+  FONTS,
+  SIZES,
+  icons,
+  constants,
+  dummyData,
+  images,
 } from "../../../constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import utils, { Utils } from "../../../utils/Utils";
@@ -33,50 +33,67 @@ import { Alert } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 const SignupName = ({ navigation, route }) => {
-    const [Name, setName] = React.useState("");
-    const [NameError, setNameError] = React.useState("");
-    const [MiddleName, setMiddleName] = React.useState("");
-    const [MiddleNameError, setMiddleNameError] = React.useState("");
-    const [LastName, setLastName] = React.useState("");
-    const [LastNameError, setLastNameError] = React.useState("");
-    const [date, setDate] = React.useState(new Date());
-    const [showPicker, setShowPicker] = React.useState(false);
-    const [age, setAge] = React.useState(0);
+  const [Name, setName] = React.useState("");
+  const [NameError, setNameError] = React.useState("");
+  const [MiddleName, setMiddleName] = React.useState("");
+  const [MiddleNameError, setMiddleNameError] = React.useState("");
+  const [LastName, setLastName] = React.useState("");
+  const [LastNameError, setLastNameError] = React.useState("");
+  const [date, setDate] = React.useState(new Date());
+  const [showPicker, setShowPicker] = React.useState(false);
+  const [age, setAge] = React.useState(0);
 
-    const handleDateChange = (event, selectedDate) => {
-        setShowPicker(false);
-        setDate(selectedDate);
-        calculateAge(selectedDate);
-    };
+  const handleDateChange = (event, selectedDate) => {
+    setShowPicker(false);
+    setDate(selectedDate);
+    calculateAge(selectedDate);
+  };
 
-    const calculateAge = (birthdate) => {
-        const ageInMillis = Date.now() - birthdate.getTime();
-        const ageInYears = ageInMillis / 1000 / 60 / 60 / 24 / 365;
-        setAge(Math.floor(ageInYears));
-    };
+  const calculateAge = (birthdate) => {
+    const ageInMillis = Date.now() - birthdate.getTime();
+    const ageInYears = ageInMillis / 1000 / 60 / 60 / 24 / 365;
+    setAge(Math.floor(ageInYears));
+  };
 
-    const showDatePicker = () => {
-        setShowPicker(true);
-    };
+  const showDatePicker = () => {
+    setShowPicker(true);
+  };
 
     const disabledButton = () => {
         return !Name || !LastName || age < 18;
     };
 
-    const list = [{}];
+  const list = [{}];
 
-    const handleSignUpPress = () => {
-        const list1 = list.map((item) => ({
-            ...item,
-            firstname: Name,
-            middlename: MiddleName,
-            lastname: LastName,
-            age: age,
-        }));
+  const AgeCheck = () => {
+    return age > 18;
+  };
 
-        console.log(list1);
-        navigation.navigate("PersonalInfo", { passedList: list1 });
-    };
+  const handleSignUpPress = () => {
+    const agecheker = AgeCheck();
+    if (agecheker) {
+      const list1 = list.map((item) => ({
+        ...item,
+        firstname: Name,
+        middlename: MiddleName,
+        lastname: LastName,
+        age: age,
+      }));
+
+      console.log(list1);
+      navigation.navigate("PersonalInfo", { passedList: list1 });
+    } else {
+      Alert.alert("Error ", "Age must be 18 and above", [
+        {
+          text: "Confirm",
+          onPress: () => {
+            console.log("error");
+          },
+          style: "cancel",
+        },
+      ]);
+    }
+  };
 
     function renderDetails() {
         return (
@@ -167,165 +184,169 @@ const SignupName = ({ navigation, route }) => {
                         }
                     />
 
-                    <View style={{
-                        justifyContent: 'flex-start',
-                    }}>
-                        {/* Birthday */}
-                        <Text
-                            style={{
-                                color: COLORS.gray,
-                                ...FONTS.h3,
-                                fontSize: 15,
-                                marginTop: SIZES.base,
-                            }}
-                        >
-                            Birthday
-                        </Text>
-                    </View>
-
-                    <View
-                        style={{
-                            alignItems: "center",
-                        }}
-                    >
-                        <View
-                            style={{
-                                flexDirection: "row",
-                            }}
-                        >
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Birthday"
-                                editable={false}
-                                value={date.toLocaleDateString()}
-                            />
-                            <View
-                                style={{
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <TouchableOpacity style={{
-                                    marginLeft: SIZES.base
-                                }}
-                                    onPress={showDatePicker}
-                                >
-                                    <Image
-                                        source={require("../../../../assets/img/icons/calendar.png")}
-                                        style={{
-                                            height: 25,
-                                            width: 25,
-                                            tintColor: COLORS.primary
-                                        }} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                        {showPicker && (
-                            <DateTimePicker
-                                value={date}
-                                mode="date"
-                                display="default"
-                                onChange={handleDateChange}
-                            />
-                        )}
-                    </View>
-
-                    <TextButton
-                        label="Next"
-                        disabled={disabledButton()}
-                        onPress={handleSignUpPress}
-                        buttonContainerStyle={{
-                            marginTop: SIZES.padding,
-                            height: 55,
-                            borderRadius: SIZES.radius,
-                            backgroundColor: !disabledButton()
-                                ? COLORS.primary
-                                : COLORS.transparentPrimray,
-                        }}
-                        labelStyle={{
-                            ...FONTS.h3,
-                        }}
-                    />
-                </View>
-            </View>
-        );
-    }
-
-    function renderHeader() {
-        return (
-            <Header
-                containerStyle={{
-                    height: 80,
-                    marginHorizontal: SIZES.padding,
-                    alignItems: "center",
-                }}
-                leftComponent={
-                    // Open Custom Drawer
-                    <TouchableOpacity
-                        style={{
-                            width: 40,
-                            height: 40,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderWidth: 1,
-                            borderColor: COLORS.gray2,
-                            borderRadius: SIZES.radius,
-                        }}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Image
-                            source={icons.backarrow}
-                            style={{
-                                borderRadius: SIZES.radius,
-                                color: COLORS.gray2,
-                            }}
-                        />
-                    </TouchableOpacity>
-                }
-                rightComponent={
-                    <View
-                        style={{
-                            width: 40,
-                        }}
-                    ></View>
-                }
-            />
-        );
-    }
-
-    function renderLogo() {
-        return (
-            <View
-                style={{
-                    marginTop: SIZES.padding,
-                    height: 40,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: SIZES.padding,
-                }}
-            >
-                <Image
-                    source={images.Foodea_new_logo}
-                    resizeMode="contain"
-                    style={{
-                        width: 200,
-                    }}
-                />
-            </View>
-        );
-    }
-    return (
-        <View
+          <View
             style={{
-                alignItems: "center",
-                height: SIZES.height,
-                width: SIZES.width,
+              justifyContent: "flex-start",
             }}
-        >
-            {/* Header */}
-            {renderHeader()}
+          >
+            {/* Birthday */}
+            <Text
+              style={{
+                color: COLORS.gray,
+                ...FONTS.h3,
+                fontSize: 15,
+                marginTop: SIZES.base,
+              }}
+            >
+              Birthday
+            </Text>
+          </View>
 
-            {/* Logo
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <TextInput
+                style={styles.input}
+                placeholder="Birthday"
+                editable={false}
+                value={date.toLocaleDateString()}
+              />
+              <View
+                style={{
+                  justifyContent: "center",
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    marginLeft: SIZES.base,
+                  }}
+                  onPress={showDatePicker}
+                >
+                  <Image
+                    source={require("../../../../assets/img/icons/calendar.png")}
+                    style={{
+                      height: 25,
+                      width: 25,
+                      tintColor: COLORS.primary,
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {showPicker && (
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            )}
+          </View>
+
+          <TextButton
+            label="Next"
+            disabled={disabledButton()}
+            onPress={handleSignUpPress}
+            buttonContainerStyle={{
+              marginTop: SIZES.padding,
+              height: 55,
+              borderRadius: SIZES.radius,
+              backgroundColor: !disabledButton()
+                ? COLORS.primary
+                : COLORS.transparentPrimray,
+            }}
+            labelStyle={{
+              ...FONTS.h3,
+            }}
+          />
+        </View>
+      </View>
+    );
+  }
+
+  function renderHeader() {
+    return (
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        leftComponent={
+          // Open Custom Drawer
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
+            }}
+            onPress={() => navigation.goBack()}
+          >
+            <Image
+              source={icons.backarrow}
+              style={{
+                borderRadius: SIZES.radius,
+                color: COLORS.gray2,
+              }}
+            />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
+  }
+
+  function renderLogo() {
+    return (
+      <View
+        style={{
+          marginTop: SIZES.padding,
+          height: 40,
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: SIZES.padding,
+        }}
+      >
+        <Image
+          source={images.Foodea_new_logo}
+          resizeMode="contain"
+          style={{
+            width: 200,
+          }}
+        />
+      </View>
+    );
+  }
+  return (
+    <View
+      style={{
+        alignItems: "center",
+        height: SIZES.height,
+        width: SIZES.width,
+      }}
+    >
+      {/* Header */}
+      {renderHeader()}
+
+      {/* Logo
             {renderLogo()} */}
             <KeyboardAwareScrollView
                 enableOnAndroid={true}
@@ -344,12 +365,12 @@ const SignupName = ({ navigation, route }) => {
 export default SignupName;
 
 const styles = StyleSheet.create({
-    forgotPassword: {
-        marginTop: 10,
-    },
-    signup_text: {},
-    input: {
-        width: 230,
-        height: 50,
-    },
+  forgotPassword: {
+    marginTop: 10,
+  },
+  signup_text: {},
+  input: {
+    width: 230,
+    height: 50,
+  },
 });

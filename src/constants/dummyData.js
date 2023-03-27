@@ -6,19 +6,19 @@
 
 const Restaurant = [
   {
-    id: 1,
+    id: 3,
     name: "Jollibee",
     icon: require("../../assets/img/images/jollibee_logo.png"),
     distance: 2,
   },
   {
-    id: 2,
+    id: 4,
     name: "McDonalds",
     icon: require("../../assets/img/images/mcdonalds-png-logo-simple-m-1.png"),
     distance: "3.8",
   },
   {
-    id: 3,
+    id: 7,
     name: "Chowking",
     icon: require("../../assets/img/images/chowking.png"),
     distance: "1.1",
