@@ -24,6 +24,8 @@ const EditHeightWeight = ({ navigation }) => {
   const [weightError, setWeightError] = useState("");
   const [data, setData] = useState();
 
+  
+
   const getUserData = async () => {
     const userID = user.user_id;
     setIsLoading(true);

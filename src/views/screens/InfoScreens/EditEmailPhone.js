@@ -94,7 +94,7 @@ const EditEmailPhone = ({ navigation }) => {
     } else {
       console.log(decision);
     }
-
+  }
     const disabledButton = () => {
       return !phone || !email;
     };
@@ -164,41 +164,37 @@ const EditEmailPhone = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <View
-                style={{
-                  flexDirection: "row",
+              {/* Email */}
+              
+              <FormInput
+                containerStyle={{
+                  borderRadius: SIZES.radius,
+                  marginBottom: SIZES.radius,
+                  width: 300,
                 }}
-              >
-                {/* Email */}
-                <FormInput
-                  containerStyle={{
-                    borderRadius: SIZES.radius,
-                    marginBottom: SIZES.radius,
-                    width: 300,
-                  }}
-                  label="Email"
-                  value={email}
-                  maxLength={50}
-                  placeholder={isLoading ? "Josh" : data[0].email}
-                  onChange={(value) => {
-                    setEmail(value);
-                    handleCheckEmail(value);
-                  }}
-                />
-                <View
-                  style={{
-                    position: "absolute",
-                    bottom: 45,
-                    right: 2,
-                  }}
-                >
-                  {checkValidEmail ? (
-                    <Text style={styles.textFailed}>Wrong format email</Text>
-                  ) : (
-                    <Text style={styles.textFailed}> </Text>
-                  )}
-                </View>
-              </View>
+                label="Email"
+                value={email}
+                placeholder={isLoading ? "Josh" : data[0].email}
+                onChange={(value) => {
+                  setEmail(value);
+                  handleCheckEmail(value);
+                }}
+                appendComponent={
+                  <View
+                    style={{
+                      position: "absolute",
+                      bottom: 45,
+                      right: 2,
+                    }}
+                  >
+                    {checkValidEmail ? (
+                      <Text style={styles.textFailed}>Wrong format email</Text>
+                    ) : (
+                      <Text style={styles.textFailed}> </Text>
+                    )}
+                  </View>
+                }
+              />
             </View>
 
             <View
@@ -252,7 +248,6 @@ const EditEmailPhone = ({ navigation }) => {
       </View>
     );
   };
-};
 export default EditEmailPhone;
 
 const styles = StyleSheet.create({
