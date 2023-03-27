@@ -23,14 +23,13 @@ import {
 } from "../../components/FoodeaComponents";
 
 const UserDetails = ({ navigation }) => {
-  const { user } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [next, setNext] = React.useState();
   const getUserData = async () => {
-    const userID = user.user_id;
     setIsLoading(true);
-    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+    const response = await axios.get(`${BASE_URL}app_users/${userId}`);
     setData(response.data);
     setIsLoading(false);
   };
@@ -48,19 +47,19 @@ const UserDetails = ({ navigation }) => {
 
   const HandleNames = () => {
     navigation.push("Names");
-  }
+  };
 
   const HandleHeightandWeight = () => {
     navigation.push("HeightWeight");
-  }
+  };
 
   const HandleEmailPhone = () => {
     navigation.push("EmailPhoneNumber");
-  }
+  };
 
   const HandlePassword = () => {
     navigation.push("Password");
-  }
+  };
 
   function renderHeader() {
     return (
@@ -169,7 +168,6 @@ const UserDetails = ({ navigation }) => {
         {renderLogo()} */}
 
         <View style={{ alignItems: "center", marginTop: SIZES.padding }}>
-
           {/* First Name, Middle Name, Last Name */}
           <TouchableOpacity onPress={HandleNames}>
             <View

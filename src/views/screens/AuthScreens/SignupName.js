@@ -75,7 +75,7 @@ const SignupName = ({ navigation, route }) => {
     }));
 
     console.log(list1);
-    //navigation.navigate("PersonalInfo", { passedList: list1 });
+    navigation.navigate("PersonalInfo", { passedList: list1 });
   };
 
   function renderDetails() {
@@ -167,36 +167,35 @@ const SignupName = ({ navigation, route }) => {
             }
           />
 
-                    
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Birthday"
-                            editable={false}
-                            value={date.toLocaleDateString()}
-                        />
-                        <IconButton
-                            icon={icons.calendar}
-                            iconStyle={{
-                                tintColor: COLORS.gray,
-                                width: 25,
-                                height: 25,
-                                position: 'absolute',
-                                bottom: 15,
-                                right: 10,
-                            }}
-                            onPress={showDatePicker}
-                        />
-                        {/* <Button title="Select" onPress={showDatePicker} /> */}
+          <TextInput
+            style={styles.input}
+            placeholder="Birthday"
+            editable={false}
+            value={date.toLocaleDateString()}
+          />
+          <IconButton
+            icon={icons.calendar}
+            iconStyle={{
+              tintColor: COLORS.gray,
+              width: 25,
+              height: 25,
+              position: "absolute",
+              bottom: 15,
+              right: 10,
+            }}
+            onPress={showDatePicker}
+          />
+          {/* <Button title="Select" onPress={showDatePicker} /> */}
 
-                        {showPicker && (
-                            <DateTimePicker
-                                value={date}
-                                mode="date"
-                                display="default"
-                                onChange={handleDateChange}
-                            />
-                        )}
-                    {age !== null && <Text>You are {age} years old.</Text>}
+          {showPicker && (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display="default"
+              onChange={handleDateChange}
+            />
+          )}
+          {age !== null && <Text>You are {age} years old.</Text>}
 
           <TextButton
             label="Next"
@@ -305,12 +304,12 @@ const SignupName = ({ navigation, route }) => {
 export default SignupName;
 
 const styles = StyleSheet.create({
-    forgotPassword: {
-        marginTop: 10,
-    },
-    signup_text: {},
-    input: {
-        width: 250,
-        height: 50,
-    },
+  forgotPassword: {
+    marginTop: 10,
+  },
+  signup_text: {},
+  input: {
+    width: 250,
+    height: 50,
+  },
 });

@@ -59,9 +59,12 @@ export const AuthProvider = ({ children }) => {
           let id = response.data[0].user_id;
           AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
           setUserId(id);
-          setUserInfo(response.data);
-          console.log(userId);
-          setLogged_in("true");
+
+          SecureStore.setItemAsync(
+            "user",
+            JSON.stringify(response.data.length > 0)
+          );
+          console.log(remember);
 
           // console.log(remember);
           if (remember) {
