@@ -28,6 +28,7 @@ import utils, { Utils } from "../../../utils/Utils";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
 import { Alert } from "react-native";
+import sha256 from "sha256";
 
 const Resetpassword = ({ navigation, route }) => {
   const { passwordEmail } = route.params;
@@ -50,12 +51,17 @@ const Resetpassword = ({ navigation, route }) => {
     return response.data[0].user_id;
   };
 
+  const generateHash = (str) => {
+    return sha256(str);
+  };
+
   const onPressHandler = async () => {
+    const pass = generateHash(newpassword);
     try {
       // wait for troy to check
       const info = await getInfo();
       const response = await axios.patch(`${BASE_URL}app_users/${info}`, {
-        password: newpassword,
+        password: pass,
       });
       console.log(response.data);
       Alert.alert("Success", "Your password has been changed", [

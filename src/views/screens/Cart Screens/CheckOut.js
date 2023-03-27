@@ -93,8 +93,8 @@ const CheckOut = ({ navigation, route }) => {
     const list1 = [...passedValues];
     const decision = await confirmAction();
     if (decision) {
-      //const add = await addToOrders(list1);
-      //const deleteCart = await deleteFromCarts();
+      const add = await addToOrders(list1);
+      const deleteCart = await deleteFromCarts();
       navigation.navigate("Success");
     } else {
       console.log(decision);

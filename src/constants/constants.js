@@ -108,7 +108,7 @@ const pastnotifications = [
 
 const restaurant = [
   {
-    id: 1,
+    id: 7,
     name: "Jollibee",
     distance: 4,
     time: 30,
@@ -117,7 +117,7 @@ const restaurant = [
     image: require("../../assets/img/images/jollibee_logo.png"),
   },
   {
-    id: 2,
+    id: 4,
     name: "McDonald's",
     distance: 10,
     time: 30,
@@ -291,28 +291,28 @@ const captcha = [
   {
     id: 1,
     image: require("../../assets/img/images/captcha1.png"),
-    text: 'Ts14ay'
+    text: "Ts14ay",
   },
   {
     id: 2,
     image: require("../../assets/img/images/captcha2.png"),
-    text: 'CS41gO'
+    text: "CS41gO",
   },
   {
     id: 3,
     image: require("../../assets/img/images/captcha3.png"),
-    text: 'AG71Sh'
+    text: "AG71Sh",
   },
   {
     id: 4,
     image: require("../../assets/img/images/captcha4.png"),
-    text: 'VLM113'
+    text: "VLM113",
   },
   {
     id: 5,
     image: require("../../assets/img/images/captcha5.png"),
-    text: 'ANE13S'
-  }
+    text: "ANE13S",
+  },
 ];
 
 export default {
@@ -329,5 +329,5 @@ export default {
   restaurant,
   pastnotifications,
   Favorites,
-  captcha
+  captcha,
 };

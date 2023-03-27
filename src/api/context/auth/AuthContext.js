@@ -4,6 +4,7 @@ import axios from "axios";
 import { BASE_URL } from "./config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
+import sha256 from "sha256";
 
 const AuthContext = createContext();
 
@@ -13,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState([]);
   const [userId, setUserId] = React.useState();
   const register = async (data) => {
+    const pass = generateHash(data[0].password);
     try {
       const response = await axios.post(`${BASE_URL}app_users`, {
         firstname: data[0].firstname,
@@ -26,12 +28,13 @@ export const AuthProvider = ({ children }) => {
         contact_number: data[0].phone,
         bmi: data[0].bmi,
         email: data[0].email,
-        password: data[0].password,
+        password: pass,
         lifestyle: data[0].lifestyle,
         preferences: data[0].preferences,
       });
       console.log(response.data);
       setUserId(response.data.user_id);
+      setUser(response.data);
       Alert.alert("Successfully ", "Registered", [
         {
           text: "Confirm",
@@ -43,32 +46,21 @@ export const AuthProvider = ({ children }) => {
       ]);
     } catch (error) {
       console.log(error);
-      console.log(
-        data[0].firstname,
-        data[0].firstname,
-        data[0].lastname,
-        data[0].weight,
-        data[0].height,
-        data[0].gender,
-        data[0].address,
-        data[0].age,
-        data[0].phone,
-        data[0].bmi,
-        data[0].email,
-        data[0].password,
-        data[0].lifestyle,
-        data[0].preferences
-      );
     }
   };
 
+  const generateHash = (str) => {
+    return sha256(str);
+  };
+
   const login = async (email, password, remember = false) => {
+    const pw = generateHash(password);
     try {
       const response = await axios.get(
         `${BASE_URL}app_users?email[eq]=` + email
       );
       if (response.data.length > 0) {
-        if (response.data[0].password == password) {
+        if (response.data[0].password == pw) {
           let id = response.data[0].user_id;
           AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
           setUserId(id);
