@@ -15,89 +15,89 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Alert } from "react-native";
 
 const EditNames = ({ navigation }) => {
-  const { user } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [firstname, setFirstName] = React.useState("");
-  const [firstnameError, setFirstNameError] = React.useState("");
-  const [middleName, setMiddleName] = React.useState("");
-  const [middleNameError, setMiddleNameError] = React.useState("");
-  const [lastname, setLastName] = React.useState("");
-  const [lastnameError, setLastNameError] = React.useState("");
-  const [data, setData] = React.useState();
-  const [date, setDate] = React.useState(new Date());
-  const [showPicker, setShowPicker] = React.useState(false);
-  const [age, setAge] = React.useState(0);
+    const { user } = useContext(AuthContext);
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [firstname, setFirstName] = React.useState("");
+    const [firstnameError, setFirstNameError] = React.useState("");
+    const [middleName, setMiddleName] = React.useState("");
+    const [middleNameError, setMiddleNameError] = React.useState("");
+    const [lastname, setLastName] = React.useState("");
+    const [lastnameError, setLastNameError] = React.useState("");
+    const [data, setData] = React.useState();
+    const [date, setDate] = React.useState(new Date());
+    const [showPicker, setShowPicker] = React.useState(false);
+    const [age, setAge] = React.useState(0);
 
-  const handleDateChange = (event, selectedDate) => {
-    setShowPicker(false);
-    setDate(selectedDate);
-    calculateAge(selectedDate);
-  };
+    const handleDateChange = (event, selectedDate) => {
+        setShowPicker(false);
+        setDate(selectedDate);
+        calculateAge(selectedDate);
+    };
 
-  const calculateAge = (birthdate) => {
-    const ageInMillis = Date.now() - birthdate.getTime();
-    const ageInYears = ageInMillis / 1000 / 60 / 60 / 24 / 365;
-    setAge(Math.floor(ageInYears));
-  };
+    const calculateAge = (birthdate) => {
+        const ageInMillis = Date.now() - birthdate.getTime();
+        const ageInYears = ageInMillis / 1000 / 60 / 60 / 24 / 365;
+        setAge(Math.floor(ageInYears));
+    };
 
-  const showDatePicker = () => {
-    setShowPicker(true);
-  };
+    const showDatePicker = () => {
+        setShowPicker(true);
+    };
 
-  const getUserData = async () => {
-    const userID = user.user_id;
-    setIsLoading(true);
-    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
-    setData(response.data);
-    setIsLoading(false);
-  };
+    const getUserData = async () => {
+        const userID = user.user_id;
+        setIsLoading(true);
+        const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+        setData(response.data);
+        setIsLoading(false);
+    };
 
-  useEffect(() => {
-    setIsLoading(true);
-    getUserData();
-  }, []);
+    useEffect(() => {
+        setIsLoading(true);
+        getUserData();
+    }, []);
 
-  const confirmAction = async () => {
-    return new Promise((resolve, reject) => {
-      Alert.alert(
-        "Update Your Information",
-        "Are you sure you want to update your information",
-        [
-          {
-            text: "Cancel",
-            style: "cancel",
-            onPress: () => resolve(false),
-          },
-          {
-            text: "Confirm",
-            onPress: () => resolve(true),
-          },
-        ]
-      );
-    });
-  };
+    const confirmAction = async () => {
+        return new Promise((resolve, reject) => {
+            Alert.alert(
+                "Update Your Information",
+                "Are you sure you want to update your information",
+                [
+                    {
+                        text: "Cancel",
+                        style: "cancel",
+                        onPress: () => resolve(false),
+                    },
+                    {
+                        text: "Confirm",
+                        onPress: () => resolve(true),
+                    },
+                ]
+            );
+        });
+    };
 
-  const AgeCheck = () => {
-    return age < 18;
-  };
+    const AgeCheck = () => {
+        return age < 18;
+    };
 
-  const updateDetails = async () => {
-    try {
-      const response = await axios.patch(
-        `${BASE_URL}app_users/${user.user_id}`,
-        {
-          firstname: firstname,
-          middleName: middleName,
-          lastname: lastname,
-          age: age,
+    const updateDetails = async () => {
+        try {
+            const response = await axios.patch(
+                `${BASE_URL}app_users/${user.user_id}`,
+                {
+                    firstname: firstname,
+                    middleName: middleName,
+                    lastname: lastname,
+                    age: age,
+                }
+            );
+            return response.data.length > 0;
+        } catch (error) {
+            console.log(error);
+            return false;
         }
-      );
-      return response.data.length > 0;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  };
+    };
 
   const HandleSubmit = async () => {
     const decision = await confirmAction();
@@ -133,41 +133,41 @@ const EditNames = ({ navigation }) => {
     }
   };
 
-  function renderHeader() {
-    return (
-      <Header
-        containerStyle={{
-          height: 80,
-          marginHorizontal: SIZES.padding,
-          alignItems: "center",
-        }}
-        title={"Edit Details"}
-        leftComponent={
-          <TouchableOpacity
-            style={{
-              width: 40,
-              height: 40,
-              alignItems: "center",
-              justifyContent: "center",
-              borderWidth: 1,
-              borderColor: COLORS.gray2,
-              borderRadius: SIZES.radius,
-            }}
-            onPress={() => navigation.goBack()}
-          >
-            <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
-          </TouchableOpacity>
+        function renderHeader() {
+            return (
+                <Header
+                    containerStyle={{
+                        height: 80,
+                        marginHorizontal: SIZES.padding,
+                        alignItems: "center",
+                    }}
+                    title={"Edit Details"}
+                    leftComponent={
+                        <TouchableOpacity
+                            style={{
+                                width: 40,
+                                height: 40,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderWidth: 1,
+                                borderColor: COLORS.gray2,
+                                borderRadius: SIZES.radius,
+                            }}
+                            onPress={() => navigation.goBack()}
+                        >
+                            <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
+                        </TouchableOpacity>
+                    }
+                    rightComponent={
+                        <View
+                            style={{
+                                width: 40,
+                            }}
+                        ></View>
+                    }
+                />
+            );
         }
-        rightComponent={
-          <View
-            style={{
-              width: 40,
-            }}
-          ></View>
-        }
-      />
-    );
-  }
 
   return (
     <View
@@ -281,45 +281,45 @@ const EditNames = ({ navigation }) => {
           </Text>
         </View>
 
-        <View
-          style={{
-            alignItems: "center",
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-            }}
-          >
-            <TextInput
-              style={styles.input}
-              placeholder="Birthday"
-              editable={false}
-              disabled
-              value={date.toLocaleDateString()}
-            />
-            <View
-              style={{
-                justifyContent: "center",
-              }}
-            >
-              <TouchableOpacity
-                style={{
-                  marginLeft: SIZES.base,
-                }}
-                onPress={showDatePicker}
-              >
-                <Image
-                  source={require("../../../../assets/img/icons/calendar.png")}
-                  style={{
-                    height: 25,
-                    width: 25,
-                    tintColor: COLORS.primary,
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
+                        <View
+                            style={{
+                                alignItems: "center",
+                            }}
+                        >
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                }}
+                            >
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Birthday"
+                                    editable={false}
+                                    disabled
+                                    value={date.toLocaleDateString()}
+                                />
+                                <View
+                                    style={{
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <TouchableOpacity
+                                        style={{
+                                            marginLeft: SIZES.base,
+                                        }}
+                                        onPress={showDatePicker}
+                                    >
+                                        <Image
+                                            source={require("../../../../assets/img/icons/calendar.png")}
+                                            style={{
+                                                height: 25,
+                                                width: 25,
+                                                tintColor: COLORS.primary,
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
 
           {showPicker && (
             <DateTimePicker
@@ -373,15 +373,16 @@ const EditNames = ({ navigation }) => {
 
 export default EditNames;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  input: {
-    width: 270,
-    height: 50,
-  },
-});
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        input: {
+            width: 270,
+            height: 50,
+            textAlign: 'center'
+        },
+    });

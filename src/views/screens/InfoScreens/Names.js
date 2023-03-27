@@ -62,6 +62,10 @@ const Names = ({ navigation }) => {
         getUserData();
     }, []);
 
+    const handleEditNames = () => {
+        navigation.push("EditFirstName");
+    }
+
     function renderHeader() {
         return (
             <Header
@@ -328,11 +332,10 @@ const Names = ({ navigation }) => {
                         />
                     )}
                 </View>
-
                 <View style = {{
                     alignItems: "center",
                 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate("EditNames")}>
+                    <TouchableOpacity onPress={handleEditNames}>
                         <View
                             style={{
                                 flexDirection: "row",
@@ -346,22 +349,11 @@ const Names = ({ navigation }) => {
                                 elevation: 5,
                             }}
                         >
-                            {/* <Image
-                                source={icons.edit}
-                                style={{
-                                    height: 20,
-                                    width: 20,
-                                    tintColor: COLORS.white,
-                                    position: "absolute",
-                                    right: 15
-
-                                }}
-                            /> */}
-
                             <Text style={{ ...FONTS.h3, color: COLORS.white }}>Edit Details</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
+                
             </View>
         </View>
     );
