@@ -161,13 +161,18 @@ const RecommendationComponent = ({
           alignSelf: "center",
         }}
       >
-        <Image
-          source={{ uri: item.product_image }}
-          style={{
-            height: 100,
-            width: "100%",
-          }}
-        />
+        <View style = {{
+          alignItems: "center",
+          marginTop: SIZES.padding
+        }}>
+          <Image
+            source={{ uri: item.product_image }}
+            style={{
+              height: 150,
+              width: 150,
+            }}
+          />
+        </View>
 
         <View>
           {/* Price */}
@@ -184,7 +189,7 @@ const RecommendationComponent = ({
         </View>
       </View>
 
-      <View style = {{
+      <View style={{
         marginTop: 50
       }}>
         {/* Text */}

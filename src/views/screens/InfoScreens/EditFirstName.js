@@ -34,7 +34,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Alert } from "react-native";
 
-const EditNames = ({ navigation }) => {
+const EditFirstName = ({ navigation }) => {
     const { user } = useContext(AuthContext);
     const [isLoading, setIsLoading] = React.useState(true);
     const [firstname, setFirstName] = React.useState("");
@@ -408,7 +408,7 @@ const EditNames = ({ navigation }) => {
     };
 };
 
-export default EditNames;
+export default EditFirstName;
 
     const styles = StyleSheet.create({
         container: {

@@ -237,7 +237,7 @@ const EditEmailPhone = ({ navigation }) => {
         </View>
     );
 };
-
+};
 export default EditEmailPhone;
 
 const styles = StyleSheet.create({
@@ -248,4 +248,4 @@ const styles = StyleSheet.create({
         bottom: 10,
         ...FONTS.h5,
     },
-});
+})
