@@ -92,8 +92,7 @@ const HeightWeight = ({ navigation }) => {
             <View style={{ flex: 1, marginTop: SIZES.padding }}>
 
                 <View style={{
-                    alignItems: 'center',
-                    marginBottom: SIZES.padding
+                    justifyContent: 'flex-start',
                 }}>
                     {/* Height */}
                     <Text
@@ -101,11 +100,18 @@ const HeightWeight = ({ navigation }) => {
                             color: COLORS.black,
                             ...FONTS.h3,
                             fontSize: 15,
-                            marginTop: SIZES.base
+                            marginTop: SIZES.base,
+                            marginLeft: SIZES.padding
                         }}
                     >
                         Height
                     </Text>
+                </View>
+
+                <View style={{
+                    alignItems: 'center',
+                }}>
+
                     <View
                         style={{
                             flexDirection: "row",
@@ -138,20 +144,26 @@ const HeightWeight = ({ navigation }) => {
                 </View>
 
                 <View style={{
-                    alignItems: 'center',
-                    marginBottom: SIZES.padding,
+                    justifyContent: 'flex-start',
                 }}>
-
+                    {/* Weight */}
                     <Text
                         style={{
                             color: COLORS.black,
                             ...FONTS.h3,
                             fontSize: 15,
-                            marginTop: SIZES.base
+                            marginTop: SIZES.base,
+                            marginLeft: SIZES.padding
                         }}
                     >
                         Weight
                     </Text>
+                </View>
+
+                <View style={{
+                    alignItems: 'center',
+                    marginBottom: SIZES.padding,
+                }}>
 
                     {/* Weight */}
                     <View
@@ -183,9 +195,37 @@ const HeightWeight = ({ navigation }) => {
                             {isLoading ? "Josh" : data[0].weight} kg
                         </Text>
                     </View>
-                </View>
 
-                
+                    <TouchableOpacity onPress={() => navigation.navigate("EditHeightWeight")}>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                height: 50,
+                                width: 300,
+                                backgroundColor: COLORS.primary,
+                                borderRadius: SIZES.radius,
+                                marginTop: 100,
+                                elevation: 5,
+                            }}
+                        >
+                            {/* <Image
+                                source={icons.edit}
+                                style={{
+                                    height: 20,
+                                    width: 20,
+                                    tintColor: COLORS.white,
+                                    position: "absolute",
+                                    right: 15
+
+                                }}
+                            /> */}
+
+                            <Text style={{ ...FONTS.h3, color: COLORS.white }}>Edit Details</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );

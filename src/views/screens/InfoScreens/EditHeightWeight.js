@@ -4,6 +4,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { TextInput } from "react-native-paper";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { BASE_URL } from "../../../api/context/auth/config";
+import utils, { Utils } from "../../../utils/Utils";
 import {
     images,
     constants,
@@ -22,15 +23,20 @@ import {
     EditButton,
 } from "../../components/FoodeaComponents";
 
-const EmailPhoneNumber = ({ navigation }) => {
+const EditHeightWeight= ({ navigation }) => {
     const { user } = useContext(AuthContext);
     const [isLoading, setIsLoading] = React.useState(true);
+    const [height, setHeight] = React.useState("");
+    const [heightError, setHeightError] = React.useState("");
+    const [weight, setWeight] = React.useState("");
+    const [weightError, setWeightError] = React.useState("");
     const [data, setData] = React.useState();
     const [next, setNext] = React.useState();
     const getUserData = async () => {
         const userID = user.user_id;
         setIsLoading(true);
         const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+        setHeight(response.data[0].height)
         setData(response.data);
         setIsLoading(false);
     };
@@ -40,6 +46,10 @@ const EmailPhoneNumber = ({ navigation }) => {
         getUserData();
     }, []);
 
+    const HandleSubmit = () => {
+        console.log("Saved Details")
+    }
+
     function renderHeader() {
         return (
             <Header
@@ -48,7 +58,7 @@ const EmailPhoneNumber = ({ navigation }) => {
                     marginHorizontal: SIZES.padding,
                     alignItems: "center",
                 }}
-                title={"Email and Number"}
+                title={"Edit Height and Weight"}
                 leftComponent={
                     <TouchableOpacity
                         style={{
@@ -84,119 +94,61 @@ const EmailPhoneNumber = ({ navigation }) => {
                 flex: 1,
                 height: SIZES.height,
                 width: SIZES.width,
+                backgroundColor: COLORS.white
             }}
         >
             {/* HEADER */}
             {renderHeader()}
 
-            <View style={{ flex: 1, marginTop: SIZES.padding }}>
+            <View style={{ marginTop: SIZES.padding, }}>
 
                 <View style={{
-                    justifyContent: 'flex-start',
+                    alignItems: 'center',
                 }}>
-                    {/* Email */}
-                    <Text
-                        style={{
-                            color: COLORS.black,
-                            ...FONTS.h3,
-                            fontSize: 15,
-                            marginTop: SIZES.base,
-                            marginLeft: SIZES.padding
+                    <FormInput
+                        containerStyle={{
+                            borderRadius: SIZES.radius,
+                            marginBottom: SIZES.radius,
+                            width: 300
                         }}
-                    >
-                        Email
-                    </Text>
+                        label="Height"
+                        keyboardType="number-pad"
+                        value={height}
+                        maxLength={3}
+                        onChange={(value) => {
+                            setHeight(value);
+                            utils.validateInput(value, 1, setHeightError);
+                        }}
+                    />
                 </View>
 
                 <View style={{
                     alignItems: 'center',
-                    marginBottom: SIZES.padding
                 }}>
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
+
+                    {/* Middle Name */}
+                    <FormInput
+                        containerStyle={{
                             borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                            elevation: 5,
+                            marginBottom: SIZES.radius,
+                            width: 300
                         }}
-                    >
-                        <Image
-                            source={icons.at}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3 }}>
-                            {" "}
-                            {isLoading ? "Josh" : data[0].email}
-                        </Text>
-                    </View>
+                        label="Weight"
+                        value={weight}
+                        keyboardType="number-pad"
+                        maxLength={2}
+                        onChange={(value) => {
+                            setWeight(value);
+                            utils.validateInput(value, 1, setWeightError);
+                        }}
+                    />
                 </View>
 
                 <View style={{
-                    justifyContent: 'flex-start',
-                }}>
-                    {/* Phone Number */}
-                    <Text
-                        style={{
-                            color: COLORS.black,
-                            ...FONTS.h3,
-                            fontSize: 15,
-                            marginTop: SIZES.base,
-                            marginLeft: SIZES.padding
-                        }}
-                    >
-                        Phone Number
-                    </Text>
-                </View>
-
-                <View style={{
-                    alignItems: 'center',
-                    marginBottom: SIZES.padding,
+                    alignItems: "center",
                 }}>
 
-                    {/* Phone Number */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.phone}
-                            style={{
-                                height: 25,
-                                width: 25,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3 }}>
-                            {" "}
-                            {isLoading ? "Josh" : data[0].contact_number}
-                        </Text>
-                    </View>
-
-                    <TouchableOpacity onPress={() => navigation.navigate("EditEmailPhone")}>
+                    <TouchableOpacity onPress={HandleSubmit}>
                         <View
                             style={{
                                 flexDirection: "row",
@@ -222,16 +174,14 @@ const EmailPhoneNumber = ({ navigation }) => {
                                 }}
                             /> */}
 
-                            <Text style={{ ...FONTS.h3, color: COLORS.white }}>Edit Details</Text>
+                            <Text style={{ ...FONTS.h3, color: COLORS.white }}>Submit</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
-
-
             </View>
         </View>
     );
 };
 
 
-export default EmailPhoneNumber;
+export default EditHeightWeight;
