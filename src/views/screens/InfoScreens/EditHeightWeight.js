@@ -1,8 +1,3 @@
-import axios from "axios";
-import React, { useContext, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
-import { TextInput } from "react-native-paper";
-import AuthContext from "../../../api/context/auth/AuthContext";
 import { BASE_URL } from "../../../api/context/auth/config";
 import utils, { Utils } from "../../../utils/Utils";
 import {
@@ -13,35 +8,30 @@ import {
     icons,
     FONTS,
 } from "../../../constants";
-import {
-    Header,
-    TextButton,
-    FormInput,
-    IconButton,
-    CheckBox,
-    FormInputCheck,
-    EditButton,
-} from "../../components/FoodeaComponents";
+import { Header, FormInput } from "../../components/FoodeaComponents";
 import { Alert } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useContext, useState, useEffect } from "react";
+import AuthContext from "../../../api/context/auth/AuthContext";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import axios from "axios";
 
 const EditHeightWeight = ({ navigation }) => {
-    const { user } = useContext(AuthContext);
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [height, setHeight] = React.useState();
-    const [heightError, setHeightError] = React.useState("");
-    const [weight, setWeight] = React.useState();
-    const [weightError, setWeightError] = React.useState("");
-    const [data, setData] = React.useState();
-    const [next, setNext] = React.useState();
-    const getUserData = async () => {
-        const userID = user.user_id;
-        setIsLoading(true);
-        const response = await axios.get(`${BASE_URL}app_users/${userID}`);
-        setHeight(response.data[0].height);
-        setData(response.data);
-        setIsLoading(false);
-    };
+  const { user } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const [height, setHeight] = useState();
+  const [heightError, setHeightError] = useState("");
+  const [weight, setWeight] = useState();
+  const [weightError, setWeightError] = useState("");
+  const [data, setData] = useState();
+
+  const getUserData = async () => {
+    const userID = user.user_id;
+    setIsLoading(true);
+    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+    setHeight(response.data[0].height);
+    setData(response.data);
+    setIsLoading(false);
+  };
 
     useEffect(() => {
         setIsLoading(true);
@@ -98,27 +88,24 @@ const EditHeightWeight = ({ navigation }) => {
         if (decision) {
             const update = await updateHeightWeight(bmi);
 
-            Alert.alert(
-                "Confirmation",
-                "Your details have been successfully updated.",
-                [
-                    {
-                        text: "Confirm",
-                        style: "cancel",
-                        onPress: () => {
-                            console.log("Confirm");
-                            navigation.goBack();
-                        },
-                    },
-                ]
-            );
-        } else {
-            console.log(bmi);
-        }
-
-        const disabledButton = () => {
-            return !height || !weight
-        };
+      Alert.alert(
+        "Confirmation",
+        "Your details have been successfully updated.",
+        [
+          {
+            text: "Confirm",
+            style: "cancel",
+            onPress: () => {
+              console.log("Confirm");
+              navigation.goBack();
+            },
+          },
+        ]
+      );
+    } else {
+      console.log(bmi);
+    }
+  };
 
         function renderHeader() {
             return (
@@ -168,83 +155,85 @@ const EditHeightWeight = ({ navigation }) => {
                 {/* HEADER */}
                 {renderHeader()}
 
-                <KeyboardAwareScrollView
-                    enableOnAndroid={true}
-                    keyboardDismissMode="on-drag"
-                    keyboardShouldPersistTaps={"handled"}
-                    extraScrollHeight={-200}
-                    contentContainerStyle={{
-                        marginTop: SIZES.base,
-                        flexGrow: 1,
-                        paddingBottom: SIZES.padding * 2,
-                    }}
-                >
-                    <View style={{ marginTop: SIZES.padding, }}>
+      <View style={{ marginTop: SIZES.padding }}>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+              width: 300,
+            }}
+            label="Height"
+            keyboardType="number-pad"
+            value={height}
+            maxLength={3}
+            onChange={(value) => {
+              setHeight(value);
+              utils.validateInput(value, 1, setHeightError);
+            }}
+          />
+        </View>
 
-                        <View style={{
-                            alignItems: 'center',
-                        }}>
-                            <FormInput
-                                containerStyle={{
-                                    borderRadius: SIZES.radius,
-                                    marginBottom: SIZES.radius,
-                                    width: 300
-                                }}
-                                label="Height"
-                                keyboardType="number-pad"
-                                value={height}
-                                maxLength={3}
-                                onChange={(value) => {
-                                    setHeight(value);
-                                    utils.validateInput(value, 1, setHeightError);
-                                }}
-                            />
-                        </View>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          {/* Middle Name */}
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+              width: 300,
+            }}
+            label="Weight"
+            value={weight}
+            keyboardType="number-pad"
+            maxLength={2}
+            onChange={(value) => {
+              setWeight(value);
+              utils.validateInput(value, 1, setWeightError);
+            }}
+          />
+        </View>
 
-                        <View style={{
-                            alignItems: 'center',
-                        }}>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity onPress={HandleSubmit}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                height: 50,
+                width: 300,
+                backgroundColor: COLORS.primary,
+                borderRadius: SIZES.radius,
+                marginTop: 100,
+                elevation: 5,
+              }}
+            >
+              {/* <Image
+                                source={icons.edit}
+                                style={{
+                                    height: 20,
+                                }}
+                            /> */}
 
-                            {/* Middle Name */}
-                            <FormInput
-                                containerStyle={{
-                                    borderRadius: SIZES.radius,
-                                    marginBottom: SIZES.radius,
-                                    width: 300
-                                }}
-                                label="Weight"
-                                value={weight}
-                                keyboardType="number-pad"
-                                maxLength={2}
-                                onChange={(value) => {
-                                    setWeight(value);
-                                    utils.validateInput(value, 1, setWeightError);
-                                }}
-                            />
-                        </View>
-
-                        <View style={{
-                            alignItems: 'center',
-                        }}>
-                            <TextButton
-                                label="Submit"
-                                disabled={disabledButton()}
-                                buttonContainerStyle={{
-                                    height: 50,
-                                    width: 300,
-                                    marginTop: SIZES.padding,
-                                    alignItems: "center",
-                                    borderRadius: SIZES.radius,
-                                    marginBottom: SIZES.padding,
-                                    backgroundColor: !disabledButton() ? COLORS.primary : COLORS.gray,
-                                }}
-                                onPress={HandleSubmit}
-                            />
-                        </View>
-                    </View>
-                </KeyboardAwareScrollView>
+              <Text style={{ ...FONTS.h3, color: COLORS.white }}>Submit</Text>
             </View>
-        );
-    };
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 };
-    export default EditHeightWeight;
+
+export default EditHeightWeight;
