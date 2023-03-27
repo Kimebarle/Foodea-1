@@ -77,7 +77,9 @@ const Captcha = ({ navigation, route }) => {
 
   const onPressHandler = () => {
     const check = captchaChecker();
+
     if (check) {
+      //console.log(passedList6);
       register(passedList6);
     }
   };

@@ -164,7 +164,6 @@ const VerticalFoodCard = ({
           onPress={setFavorite}
         />
       </View>
-
       {/* Image */}
       <View
         style={{
@@ -177,7 +176,7 @@ const VerticalFoodCard = ({
       >
         <Image
           source={{
-            uri: "https://foodea-bucket.s3.us-east-2.amazonaws.com/images/test/123/sXl880XtXLdzpqD7m8yXFoFX8kKauFmXWL4blMsx.png?fbclid=IwAR1e8OmyR9vmGKBjqwdLCPPqKqi7z2zGedLovB41YtVP22y2Y4ADAfv4THg",
+            uri: item.product_image,
           }}
           style={{
             height: "100%",

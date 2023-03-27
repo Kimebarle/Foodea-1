@@ -133,9 +133,9 @@ const TestScreen = ({ navigation }) => {
             onPress={() => {
               // setItemId(item.merchant_id);
               console.log(item.merchant_id);
-              // navigation.navigate("HomeScreen", {
-              //   restaurantId: item.merchant_id,
-              // });
+              navigation.navigate("HomeScreen", {
+                restaurantId: item.merchant_id,
+              });
             }}
           >
             <Image
