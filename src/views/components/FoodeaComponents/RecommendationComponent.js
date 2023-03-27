@@ -162,7 +162,7 @@ const RecommendationComponent = ({
         }}
       >
         <Image
-          source={require("../../../../assets/img/dummyData/hamburger.png")}
+          source={{ uri: item.product_image }}
           style={{
             height: 100,
             width: "100%",

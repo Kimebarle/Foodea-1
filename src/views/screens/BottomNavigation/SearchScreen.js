@@ -22,7 +22,7 @@ import {
   HorizontalFoodCard,
   VerticalFoodCard,
   FilterModal,
-  SearchFoodCard
+  SearchFoodCard,
 } from "../../components/FoodeaComponents";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
@@ -108,8 +108,8 @@ const SearchScreen = ({ navigation }) => {
   }
 
   const handleOnPress = () => {
-    console.log("Search Food Card")
-  }
+    console.log("Search Food Card");
+  };
   function renderSearch() {
     return (
       <View
@@ -150,71 +150,21 @@ const SearchScreen = ({ navigation }) => {
 
   function renderTrendingSection() {
     return (
-      <View style = {{
-        marginTop: SIZES.padding,
-      }}>
+      <View
+        style={{
+          marginTop: SIZES.padding,
+        }}
+      >
         <FlatList
           data={isLoading ? trending : display}
           keyExtractor={(item) => `${item.product_id}`}
           vertical
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
-            <SearchFoodCard
-              item={item}
-              onPress={handleOnPress}
-            />
+            <SearchFoodCard item={item} onPress={handleOnPress} />
           )}
         />
-        </View>
-    );
-  }
-
-  function renderFoodCategories() {
-    return (
-      <FlatList
-        data={dummyData.Restaurant}
-        keyExtractor={(item) => `${item.id}`}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              height: 55,
-              marginTop: SIZES.padding,
-              marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
-              marginRight:
-                index == dummyData.categories.length - 1 ? SIZES.padding : 0,
-              paddingHorizontal: 8,
-              borderRadius: SIZES.radius,
-              backgroundColor:
-                selectedCategoryId == item.id
-                  ? COLORS.primary
-                  : COLORS.lightGray2,
-            }}
-            onPress={() => {
-              setSelectedCategoryId(item.id);
-              handleChangeCategory(item.id, selectedMenuType);
-            }}
-          >
-            <Image
-              source={item.icon}
-              style={{ marginTop: 5, height: 40, width: 40, marginRight: 5 }}
-            />
-            <Text
-              style={{
-                alignSelf: "center",
-                marginRight: SIZES.base,
-                color:
-                  selectedCategoryId == item.id ? COLORS.white : COLORS.gray,
-                ...FONTS.h3,
-              }}
-            >
-              {item.name}
-            </Text>
-          </TouchableOpacity>
-        )}
-      />
+      </View>
     );
   }
 

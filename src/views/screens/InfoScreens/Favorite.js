@@ -91,7 +91,7 @@ const Favorite = ({ navigation, data }) => {
       newFavorite.splice(index, 1);
       setFavorite(newFavorite);
       setIsLoading(false);
-      setItemLength(response.data.length > 0);
+      setItemLength(newFavorite.length > 0);
     } else {
       console.log("no");
     }
