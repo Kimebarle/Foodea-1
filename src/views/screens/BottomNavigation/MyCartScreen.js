@@ -220,21 +220,25 @@ const MyCartScreen = ({ navigation }) => {
             }}
           />
         ) : (
-          <LoadingAsset
-            containerStyle={{
-              alignSelf: "center",
-              justifyContent: "center",
-              width: 250,
-              height: 250,
-            }}
-            imageStyle={{
-              width: "100%",
-              height: "100%",
-            }}
-            onPress={() => {
-              navigation.navigate("Home");
-            }}
-          />
+          <View style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+            <LoadingAsset
+              containerStyle={{
+                width: 250,
+                height: 250,
+              }}
+              imageStyle={{
+                width: "100%",
+                height: "100%",
+              }}
+              onPress={() => {
+                navigation.navigate("Home");
+              }}
+            />
+          </View>
         )}
       </View>
     </View>

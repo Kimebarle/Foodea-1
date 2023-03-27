@@ -27,7 +27,7 @@ const LoadingAsset = ({
   };
 
   return (
-    <View style={{ alignItems: "center", ...containerStyle }}>
+    <View style={{ alignItems: "center", justifyContent: 'center', ...containerStyle }}>
       {/* image */}
       <Image
         source={require("../../../../assets/img/images/loadasset.png")}

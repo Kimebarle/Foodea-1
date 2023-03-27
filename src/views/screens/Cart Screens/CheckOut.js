@@ -135,7 +135,7 @@ const CheckOut = ({ navigation, route }) => {
               flexDirection: "row",
               alignItems: "center",
             }}
-            onPress={() => {}}
+            onPress={() => { }}
           >
             <Image
               source={icons.pinlocation}
@@ -162,7 +162,7 @@ const CheckOut = ({ navigation, route }) => {
         <Text style={{ ...FONTS.h3 }}>Add Coupon</Text>
 
         <FormInput
-          ContainerStyle={{
+          inputContainerStyle={{
             marginTop: 0,
             paddingLeft: SIZES.padding,
             paddingRight: 0,
@@ -176,10 +176,30 @@ const CheckOut = ({ navigation, route }) => {
             setCoupon(value);
           }}
           placeholder="Coupon Code"
+          appendComponent={
+            <TouchableOpacity>
+              <View style={{
+                width: 60,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: COLORS.primary,
+              }}>
+
+                <Image
+                  source={icons.coupon}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    tintColor: COLORS.white
+                  }} />
+              </View>
+            </TouchableOpacity>
+          }
         />
       </View>
     );
   }
+
   return (
     <View
       style={{
