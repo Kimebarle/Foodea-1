@@ -25,18 +25,9 @@ import {
 const CardPayment = ({ navigation, route }) => {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const { passingValue } = route.params;
-  function CheckOut() {
-    navigation.push("CheckOut");
-  }
 
   const onPressHandler = () => {
     const newList = [...passingValue];
-
-    const updatedList = newList.map((item) => {
-      return {
-        ...item,
-      };
-    });
 
     navigation.navigate("CheckOut", {
       selectedCard: selectedCard,

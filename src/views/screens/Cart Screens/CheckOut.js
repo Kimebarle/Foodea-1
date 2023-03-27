@@ -21,12 +21,26 @@ import AuthContext from "../../../api/context/auth/AuthContext";
 const CheckOut = ({ navigation, route }) => {
   const { user } = useContext(AuthContext);
   const [coupon, setCoupon] = React.useState();
+  const [totalPrice, setTotalPrice] = React.useState(5);
 
   const [selectedCard, setSelectedCard] = React.useState(null);
+  const { passedValues } = route.params;
   React.useEffect(() => {
+    getTotal();
     let { selectedCard } = route.params;
     setSelectedCard(selectedCard);
   }, []);
+
+  const getTotal = () => {
+    const list = [...passedValues];
+
+    let totalPrice = 0;
+    list.forEach((item) => {
+      totalPrice += item.product_details.price * item.quantity;
+    });
+    setTotalPrice(totalPrice);
+    console.log(totalPrice);
+  };
 
   function renderHeader() {
     return (
@@ -199,9 +213,9 @@ const CheckOut = ({ navigation, route }) => {
       </KeyboardAwareScrollView>
 
       <FooterTotal
-        subTotal={37.97}
+        subTotal={totalPrice}
         shippingFee={0.0}
-        total={37.97}
+        total={totalPrice}
         onPress={() => navigation.replace("Success")}
       />
     </View>
