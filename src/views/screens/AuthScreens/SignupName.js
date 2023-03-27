@@ -174,9 +174,7 @@ const SignupName = ({ navigation, route }) => {
                         }
                     />
 
-                    <View style={{
-                        flexDirection: 'row'
-                    }}>
+                    
                         <TextInput
                             style={styles.input}
                             placeholder="Birthday"
@@ -190,8 +188,8 @@ const SignupName = ({ navigation, route }) => {
                                 width: 25,
                                 height: 25,
                                 position: 'absolute',
-                                top: 20,
-                                right: 20,
+                                bottom: 15,
+                                right: 10,
                             }}
                             onPress={showDatePicker}
                         />
@@ -205,7 +203,6 @@ const SignupName = ({ navigation, route }) => {
                                 onChange={handleDateChange}
                             />
                         )}
-                    </View>
                     {age !== null && <Text>You are {age} years old.</Text>}
 
                     <TextButton
@@ -320,7 +317,7 @@ const styles = StyleSheet.create({
     },
     signup_text: {},
     input: {
-        width: 300,
+        width: 250,
         height: 50,
     },
 });

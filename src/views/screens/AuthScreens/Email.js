@@ -140,50 +140,55 @@ const Email = ({ navigation, route }) => {
           </Text>
 
           {/* Email */}
-          <View
-            style={{
-              flexDirection: "row",
-              marginBottom: SIZES.radius,
-              marginTop: SIZES.radius,
-            }}
-          >
-            {/* Email */}
-            <TextInput
-              style={{
-                ...FONTS.h3,
-                width: 300,
-                borderRadius: SIZES.radius,
-              }}
-              onChangeText={(value) => {
-                handleCheckEmail(value);
-                setEmail(value);
-              }}
-              value={email}
-              label="Email"
-            />
-
+          <View style={{
+            alignItems: 'center',
+          }}>
             <View
               style={{
-                position: "absolute",
-                bottom: 35,
-                right: 2,
+                flexDirection: "row",
+                marginBottom: SIZES.radius,
+                marginTop: SIZES.radius,
               }}
             >
-              {checkValidEmail ? (
-                <Text style={styles.textFailed}>Wrong format email</Text>
-              ) : (
-                <Text style={styles.textFailed}> </Text>
-              )}
+              {/* Email */}
+              <TextInput
+                style={{
+                  ...FONTS.h3,
+                  width: 250,
+                  borderRadius: SIZES.radius,
+                }}
+                onChangeText={(value) => {
+                  handleCheckEmail(value);
+                  setEmail(value);
+                }}
+                value={email}
+                label="Email"
+              />
+
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: 35,
+                  right: 2,
+                }}
+              >
+                {checkValidEmail ? (
+                  <Text style={styles.textFailed}>Wrong format email</Text>
+                ) : (
+                  <Text style={styles.textFailed}> </Text>
+                )}
+              </View>
             </View>
           </View>
 
-          <View style = {{
+          <View style={{
+            alignItems: 'center',
             marginBottom: SIZES.radius
           }}>
             <TextInput
               style={{
                 ...FONTS.h3,
-                width: 300,
+                width: 250,
                 borderRadius: SIZES.radius,
               }}
               onChangeText={setPhoneNumber}
@@ -194,70 +199,78 @@ const Email = ({ navigation, route }) => {
           </View>
 
           {/* Password  */}
-          <View
-            style={{
-              flexDirection: "row",
-              marginBottom: SIZES.radius,
-            }}
-          >
-            <TextInput
+          <View style={{
+            alignItems: 'center',
+          }}>
+            <View
               style={{
-                ...FONTS.h3,
-                width: 300,
-                borderRadius: SIZES.radius,
+                flexDirection: "row",
+                marginBottom: SIZES.radius,
               }}
-              secureTextEntry={showPassword}
-              onChangeText={setPassword}
-              value={password}
-              label="Password"
-            />
+            >
+              <TextInput
+                style={{
+                  ...FONTS.h3,
+                  width: 250,
+                  borderRadius: SIZES.radius,
+                }}
+                secureTextEntry={showPassword}
+                onChangeText={setPassword}
+                value={password}
+                label="Password"
+              />
 
-            <IconButton
-              icon={showPassword ? icons.eye : icons.disable_eye}
-              iconStyle={{
-                tintColor: COLORS.gray,
-                width: 20,
-                height: 20,
-                marginLeft: SIZES.base,
-                position: "absolute",
-                right: 15,
-                top: 20,
-              }}
-              onPress={toggleHidePassword}
-            />
+              <IconButton
+                icon={showPassword ? icons.eye : icons.disable_eye}
+                iconStyle={{
+                  tintColor: COLORS.gray,
+                  width: 20,
+                  height: 20,
+                  marginLeft: SIZES.base,
+                  position: "absolute",
+                  right: 15,
+                  top: 20,
+                }}
+                onPress={toggleHidePassword}
+              />
+            </View>
           </View>
 
           {/* Re-Enter Password */}
-          <View
-            style={{
-              flexDirection: "row",
-            }}
-          >
-            <TextInput
+          <View style = {{
+            alignItems: "center",
+          }}>
+            <View
               style={{
-                ...FONTS.h3,
-                width: 300,
-                borderRadius: SIZES.radius,
+                flexDirection: "row",
               }}
-              secureTextEntry={resetshowPassword}
-              onChangeText={setResetPassword}
-              value={resetpassword}
-              label="Confirm Password"
-            />
+            >
+              <TextInput
+                style={{
+                  ...FONTS.h3,
+                  width: 250,
+                  borderRadius: SIZES.radius,
+                }}
+                secureTextEntry={resetshowPassword}
+                onChangeText={setResetPassword}
+                value={resetpassword}
+                label="Confirm Password"
+              />
 
-            <IconButton
-              icon={resetshowPassword ? icons.eye : icons.disable_eye}
-              iconStyle={{
-                tintColor: COLORS.gray,
-                width: 20,
-                height: 20,
-                marginLeft: SIZES.base,
-                position: "absolute",
-                right: 15,
-                top: 20,
-              }}
-              onPress={togglePassword}
-            />
+              <IconButton
+                icon={resetshowPassword ? icons.eye : icons.disable_eye}
+                iconStyle={{
+                  tintColor: COLORS.gray,
+                  width: 20,
+                  height: 20,
+                  marginLeft: SIZES.base,
+                  position: "absolute",
+                  right: 15,
+                  top: 20,
+                }}
+                onPress={togglePassword}
+              />
+            </View>
           </View>
 
 
@@ -359,7 +372,7 @@ const Email = ({ navigation, route }) => {
 
       {/* Logo
             {renderLogo()} */}
-
+      
       {/* Email Address */}
       {renderDetails()}
     </View>
