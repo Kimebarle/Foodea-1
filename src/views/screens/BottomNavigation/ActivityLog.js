@@ -16,7 +16,7 @@ import {
   constants,
   FONTS,
 } from "../../../constants";
-import { Header } from "../../components/FoodeaComponents";
+import { Header, LoadingActivity } from "../../components/FoodeaComponents";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
 import AuthContext from "../../../api/context/auth/AuthContext";
@@ -24,6 +24,7 @@ import AuthContext from "../../../api/context/auth/AuthContext";
 const ActivityLogScreen = ({ navigation }) => {
   const { userId } = useContext(AuthContext);
   const [myActivityLogList, setMyActivityLogList] = React.useState(null);
+  const [itemLength, setItemLength] = React.useState(true);
 
   const fetchOrder = async () => {
     if (userId === undefined) {
@@ -32,6 +33,7 @@ const ActivityLogScreen = ({ navigation }) => {
         `${BASE_URL}orders?customer_id[eq]=${userId}&status[eq]=Paid`
       );
       const data = response.data;
+      setItemLength(response.data.length > 0);
       setMyActivityLogList(data);
     }
 
@@ -100,102 +102,120 @@ const ActivityLogScreen = ({ navigation }) => {
           flex: 1,
         }}
       >
-        <FlatList
-          data={myActivityLogList}
-          keyExtractor={(item, index) => {
-            return index.toString();
-          }}
-          renderItem={({ item }) => {
-            return (
-              <View
-                style={{
-                  flex: 1,
-                  alignSelf: "center",
-                  justifyContent: "center",
-                  padding: SIZES.padding,
-                  width: "90%",
-                  height: "100%",
-                  backgroundColor: COLORS.lightGray2,
-                  flexDirection: "column",
-                  marginTop: SIZES.radius,
-                  borderRadius: SIZES.radius,
-                }}
-              >
-                <TouchableOpacity>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      paddingBottom: 10,
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Text style={{ ...FONTS.h3, width: 100 }}>
-                      {item.date}{" "}
-                    </Text>
-                    {/* <Text style={{ ...FONTS.h3 }}>{item.time}</Text> */}
-                  </View>
-                  <View style={{ flexDirection: "row" }}>
-                    <View style={{ flexDirection: "column" }}>
-                      <View style={{ flexDirection: "row", marginBottom: 5 }}>
-                        <Image source={icons.Restaurant} />
-                        <Text style={{ ...FONTS.h5 }}>
-                          {item.product_details.product_name}
-                        </Text>
-                      </View>
-                      <View style={{ flexDirection: "row", marginBottom: 5 }}>
-                        <Image
-                          source={icons.location}
-                          style={{
-                            width: 22,
-                            height: 22,
-                            tintColor: COLORS.blue,
-                          }}
-                        />
-                        <Text style={{ ...FONTS.h5 }}> Celina Homes</Text>
-                      </View>
-                      <View style={{ flexDirection: "row" }}>
-                        <Image
-                          source={icons.Payment}
-                          style={{
-                            width: 22,
-                            height: 22,
-                          }}
-                        />
-                        <Text style={{ ...FONTS.h5 }}>
-                          {" "}
-                          {item.product_details.price}
-                        </Text>
-                      </View>
-                    </View>
+        {itemLength ? (
+          <FlatList
+            data={myActivityLogList}
+            keyExtractor={(item, index) => {
+              return index.toString();
+            }}
+            renderItem={({ item }) => {
+              return (
+                <View
+                  style={{
+                    flex: 1,
+                    alignSelf: "center",
+                    justifyContent: "center",
+                    padding: SIZES.padding,
+                    width: "90%",
+                    height: "100%",
+                    backgroundColor: COLORS.lightGray2,
+                    flexDirection: "column",
+                    marginTop: SIZES.radius,
+                    borderRadius: SIZES.radius,
+                  }}
+                >
+                  <TouchableOpacity>
                     <View
                       style={{
-                        top: 70,
-                        left: 215,
-                        flexDirection: "column",
-                        position: "absolute",
+                        flexDirection: "row",
+                        paddingBottom: 10,
+                        justifyContent: "space-between",
                       }}
                     >
-                      <TouchableOpacity onPress={() => {}}>
-                        <Image source={icons.delete_icon} style={{}} />
-                      </TouchableOpacity>
-                      <TouchableOpacity style={{}} onPress={() => {}}>
-                        <Text
-                          style={{
-                            ...FONTS.h3,
-                            fontSize: 12,
-                            color: COLORS.primary,
-                          }}
-                        >
-                          Order Again
-                        </Text>
-                      </TouchableOpacity>
+                      <Text style={{ ...FONTS.h3, width: 100 }}>
+                        {item.date}{" "}
+                      </Text>
+                      {/* <Text style={{ ...FONTS.h3 }}>{item.time}</Text> */}
                     </View>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            );
-          }}
-        />
+                    <View style={{ flexDirection: "row" }}>
+                      <View style={{ flexDirection: "column" }}>
+                        <View style={{ flexDirection: "row", marginBottom: 5 }}>
+                          <Image source={icons.Restaurant} />
+                          <Text style={{ ...FONTS.h5 }}>
+                            {item.product_details.product_name}
+                          </Text>
+                        </View>
+                        <View style={{ flexDirection: "row", marginBottom: 5 }}>
+                          <Image
+                            source={icons.location}
+                            style={{
+                              width: 22,
+                              height: 22,
+                              tintColor: COLORS.blue,
+                            }}
+                          />
+                          <Text style={{ ...FONTS.h5 }}> Celina Homes</Text>
+                        </View>
+                        <View style={{ flexDirection: "row" }}>
+                          <Image
+                            source={icons.Payment}
+                            style={{
+                              width: 22,
+                              height: 22,
+                            }}
+                          />
+                          <Text style={{ ...FONTS.h5 }}>
+                            {" "}
+                            {item.product_details.price}
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          top: 70,
+                          left: 215,
+                          flexDirection: "column",
+                          position: "absolute",
+                        }}
+                      >
+                        <TouchableOpacity onPress={() => {}}>
+                          <Image source={icons.delete_icon} style={{}} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{}} onPress={() => {}}>
+                          <Text
+                            style={{
+                              ...FONTS.h3,
+                              fontSize: 12,
+                              color: COLORS.primary,
+                            }}
+                          >
+                            Order Again
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
+          />
+        ) : (
+          <LoadingActivity
+            containerStyle={{
+              alignSelf: "center",
+              justifyContent: "center",
+              width: 100,
+              height: 100,
+            }}
+            imageStyle={{
+              width: 150,
+              height: 150,
+            }}
+            onPress={() => {
+              navigation.navigate("Home");
+            }}
+          />
+        )}
       </View>
     </View>
   );

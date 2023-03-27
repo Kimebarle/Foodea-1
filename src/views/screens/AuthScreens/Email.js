@@ -193,7 +193,7 @@ const Email = ({ navigation, route }) => {
               }}
               onChangeText={setPhoneNumber}
               value={phoneNumber}
-              label="+63"
+              label="+63 Phone Number"
               maxLength={10}
             />
           </View>

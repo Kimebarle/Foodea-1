@@ -139,19 +139,6 @@ const VerticalFoodCard = ({
     >
       {/* Cart and Favorites */}
       <View style={{ flexDirection: "row" }}>
-        {/* Cart */}
-        {/* <IconButton
-          icon={isAddCart ? icons.cart : icons.cart_clicked}
-          iconStyle={{
-            tintColor: COLORS.primary,
-            position: "absolute",
-            height: 25,
-            width: 25,
-            left: 3,
-          }}
-          onPress={() => setAddCart(!isAddCart)}
-        /> */}
-
         <View style={{ flexDirection: "row" }}>
           <Image
             source={icons.calories}
@@ -189,7 +176,9 @@ const VerticalFoodCard = ({
         }}
       >
         <Image
-          source={require("../../../../assets/img/dummyData/hamburger.png")}
+          source={{
+            uri: "https://foodea-bucket.s3.us-east-2.amazonaws.com/images/test/123/sXl880XtXLdzpqD7m8yXFoFX8kKauFmXWL4blMsx.png?fbclid=IwAR1e8OmyR9vmGKBjqwdLCPPqKqi7z2zGedLovB41YtVP22y2Y4ADAfv4THg",
+          }}
           style={{
             height: "100%",
             width: "100%",
