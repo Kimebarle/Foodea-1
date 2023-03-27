@@ -5,22 +5,23 @@ import { TextInput } from "react-native-paper";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { BASE_URL } from "../../../api/context/auth/config";
 import utils, { Utils } from "../../../utils/Utils";
+import { Alert } from "react-native";
 import {
-    images,
-    constants,
-    SIZES,
-    COLORS,
-    icons,
-    FONTS,
+  images,
+  constants,
+  SIZES,
+  COLORS,
+  icons,
+  FONTS,
 } from "../../../constants";
 import {
-    Header,
-    TextButton,
-    FormInput,
-    IconButton,
-    CheckBox,
-    FormInputCheck,
-    EditButton,
+  Header,
+  TextButton,
+  FormInput,
+  IconButton,
+  CheckBox,
+  FormInputCheck,
+  EditButton,
 } from "../../components/FoodeaComponents";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -55,68 +56,89 @@ const EditEmailPhone = ({ navigation }) => {
         setIsLoading(false);
     };
 
-    useEffect(() => {
-        setIsLoading(true);
-        getUserData();
-    }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    getUserData();
+  }, []);
 
-    const HandleSubmit = () => {
-        console.log("Saved Details")
+  const confirmAction = async () => {
+    return new Promise((resolve, reject) => {
+      Alert.alert(
+        "Update Your Information",
+        "Are you sure you want to update your information",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+            onPress: () => resolve(false),
+          },
+          {
+            text: "Confirm",
+            onPress: () => resolve(true),
+          },
+        ]
+      );
+    });
+  };
+
+  const HandleSubmit = async () => {
+    const decision = await confirmAction();
+    if (decision) {
+    } else {
+      console.log(decision);
     }
 
     const disabledButton = () => {
         return !phone || !email
     };
 
-    function renderHeader() {
-        return (
-            <Header
-                containerStyle={{
-                    height: 80,
-                    marginHorizontal: SIZES.padding,
-                    alignItems: "center",
-                }}
-                title={"Edit Email and Number"}
-                leftComponent={
-                    <TouchableOpacity
-                        style={{
-                            width: 40,
-                            height: 40,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderWidth: 1,
-                            borderColor: COLORS.gray2,
-                            borderRadius: SIZES.radius,
-                        }}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
-                    </TouchableOpacity>
-                }
-                rightComponent={
-                    <View
-                        style={{
-                            width: 40,
-                        }}
-                    ></View>
-                }
-            />
-        );
-    }
-
-
-
+  function renderHeader() {
     return (
-        <View
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        title={"Edit Email and Number"}
+        leftComponent={
+          <TouchableOpacity
             style={{
-                flex: 1,
-                height: SIZES.height,
-                width: SIZES.width,
-                backgroundColor: COLORS.white
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
             }}
-        >
-            {/* HEADER */}
-            {renderHeader()}
+            onPress={() => navigation.goBack()}
+          >
+            <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
+  }
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        height: SIZES.height,
+        width: SIZES.width,
+        backgroundColor: COLORS.white,
+      }}
+    >
+      {/* HEADER */}
+      {renderHeader()}
 
             <KeyboardAwareScrollView
                 enableOnAndroid={true}
@@ -215,7 +237,6 @@ const EditEmailPhone = ({ navigation }) => {
         </View>
     );
 };
-
 
 export default EditEmailPhone;
 

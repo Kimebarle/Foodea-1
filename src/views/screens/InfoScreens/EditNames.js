@@ -1,132 +1,208 @@
 import axios from "axios";
 import React, { useContext, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { BASE_URL } from "../../../api/context/auth/config";
 import utils, { Utils } from "../../../utils/Utils";
 import {
-    images,
-    constants,
-    SIZES,
-    COLORS,
-    icons,
-    FONTS,
+  images,
+  constants,
+  SIZES,
+  COLORS,
+  icons,
+  FONTS,
 } from "../../../constants";
 import {
-    Header,
-    TextButton,
-    FormInput,
-    IconButton,
-    CheckBox,
-    FormInputCheck,
-    EditButton,
-    Button,
-    TextInput
+  Header,
+  TextButton,
+  FormInput,
+  IconButton,
+  CheckBox,
+  FormInputCheck,
+  EditButton,
+  Button,
+  TextInput,
 } from "../../components/FoodeaComponents";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Alert } from "react-native";
 
 const EditNames = ({ navigation }) => {
-    const { user } = useContext(AuthContext);
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [firstname, setFirstName] = React.useState("");
-    const [firstnameError, setFirstNameError] = React.useState("");
-    const [middleName, setMiddleName] = React.useState("");
-    const [middleNameError, setMiddleNameError] = React.useState("");
-    const [lastname, setLastName] = React.useState("");
-    const [lastnameError, setLastNameError] = React.useState("");
-    const [data, setData] = React.useState();
-    const [next, setNext] = React.useState();
-    const [date, setDate] = React.useState(new Date());
-    const [showPicker, setShowPicker] = React.useState(false);
-    const [age, setAge] = React.useState(0);
+  const { user } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [firstname, setFirstName] = React.useState("");
+  const [firstnameError, setFirstNameError] = React.useState("");
+  const [middleName, setMiddleName] = React.useState("");
+  const [middleNameError, setMiddleNameError] = React.useState("");
+  const [lastname, setLastName] = React.useState("");
+  const [lastnameError, setLastNameError] = React.useState("");
+  const [data, setData] = React.useState();
+  const [date, setDate] = React.useState(new Date());
+  const [showPicker, setShowPicker] = React.useState(false);
+  const [age, setAge] = React.useState(0);
 
-    const handleDateChange = (event, selectedDate) => {
-        setShowPicker(false);
-        setDate(selectedDate);
-        calculateAge(selectedDate);
-    };
+  const handleDateChange = (event, selectedDate) => {
+    setShowPicker(false);
+    setDate(selectedDate);
+    calculateAge(selectedDate);
+  };
 
-    const calculateAge = (birthdate) => {
-        const ageInMillis = Date.now() - birthdate.getTime();
-        const ageInYears = ageInMillis / 1000 / 60 / 60 / 24 / 365;
-        setAge(Math.floor(ageInYears));
-    };
+  const calculateAge = (birthdate) => {
+    const ageInMillis = Date.now() - birthdate.getTime();
+    const ageInYears = ageInMillis / 1000 / 60 / 60 / 24 / 365;
+    setAge(Math.floor(ageInYears));
+  };
 
-    const showDatePicker = () => {
-        setShowPicker(true);
-    };
+  const showDatePicker = () => {
+    setShowPicker(true);
+  };
 
-    const getUserData = async () => {
-        const userID = user.user_id;
-        setIsLoading(true);
-        const response = await axios.get(`${BASE_URL}app_users/${userID}`);
-        setData(response.data);
-        setIsLoading(false);
-    };
+  const getUserData = async () => {
+    const userID = user.user_id;
+    setIsLoading(true);
+    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+    setData(response.data);
+    setIsLoading(false);
+  };
 
-    useEffect(() => {
-        setIsLoading(true);
-        getUserData();
-    }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    getUserData();
+  }, []);
 
-    const HandleSubmit = () => {
-        console.log("Saved Details")
+  const confirmAction = async () => {
+    return new Promise((resolve, reject) => {
+      Alert.alert(
+        "Update Your Information",
+        "Are you sure you want to update your information",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+            onPress: () => resolve(false),
+          },
+          {
+            text: "Confirm",
+            onPress: () => resolve(true),
+          },
+        ]
+      );
+    });
+  };
+
+  const AgeCheck = () => {
+    return age < 18;
+  };
+
+  const updateDetails = async () => {
+    try {
+      const response = await axios.patch(
+        `${BASE_URL}app_users/${user.user_id}`,
+        {
+          firstname: firstname,
+          middleName: middleName,
+          lastname: lastname,
+          age: age,
+        }
+      );
+      return response.data.length > 0;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  const HandleSubmit = async () => {
+    const decision = await confirmAction();
+    if (decision) {
+      const BirthdayCheck = AgeCheck();
+      if (BirthdayCheck) {
+        Alert.alert("Warning", "Age should be over 18", [
+          {
+            text: "Cancel",
+            style: "cancel",
+            onPress: () => {
+              console.log("Confirm");
+            },
+          },
+        ]);
+      } else {
+        const update = await updateDetails();
+        Alert.alert(
+          "Confirmation",
+          "Your details have been successfully updated.",
+          [
+            {
+              text: "Confirm",
+              style: "cancel",
+              onPress: () => {
+                console.log("Confirm");
+                navigation.goBack();
+              },
+            },
+          ]
+        );
+      }
     }
 
     const disabledButton = () => {
         return !firstname || !middleName || !lastname;
     };
 
-    function renderHeader() {
-        return (
-            <Header
-                containerStyle={{
-                    height: 80,
-                    marginHorizontal: SIZES.padding,
-                    alignItems: "center",
-                }}
-                title={"Edit Details"}
-                leftComponent={
-                    <TouchableOpacity
-                        style={{
-                            width: 40,
-                            height: 40,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderWidth: 1,
-                            borderColor: COLORS.gray2,
-                            borderRadius: SIZES.radius,
-                        }}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
-                    </TouchableOpacity>
-                }
-                rightComponent={
-                    <View
-                        style={{
-                            width: 40,
-                        }}
-                    ></View>
-                }
-            />
-        );
-    }
-
-
-
+  function renderHeader() {
     return (
-        <View
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        title={"Edit Details"}
+        leftComponent={
+          <TouchableOpacity
             style={{
-                flex: 1,
-                height: SIZES.height,
-                width: SIZES.width,
-                backgroundColor: COLORS.white
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
             }}
-        >
-            {/* HEADER */}
-            {renderHeader()}
+            onPress={() => navigation.goBack()}
+          >
+            <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
+  }
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        height: SIZES.height,
+        width: SIZES.width,
+        backgroundColor: COLORS.white,
+      }}
+    >
+      {/* HEADER */}
+      {renderHeader()}
 
 
             <KeyboardAwareScrollView
@@ -235,42 +311,45 @@ const EditNames = ({ navigation }) => {
                         </Text>
                     </View>
 
-                    <View
-                        style={{
-                            alignItems: "center",
-                        }}
-                    >
-                        <View
-                            style={{
-                                flexDirection: "row",
-                            }}
-                        >
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Birthday"
-                                editable={false}
-                                value={date.toLocaleDateString()}
-                            />
-                            <View
-                                style={{
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <TouchableOpacity style={{
-                                    marginLeft: SIZES.base
-                                }}
-                                    onPress={showDatePicker}
-                                >
-                                    <Image
-                                        source={require("../../../../assets/img/icons/calendar.png")}
-                                        style={{
-                                            height: 25,
-                                            width: 25,
-                                            tintColor: COLORS.primary
-                                        }} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+            }}
+          >
+            <TextInput
+              style={styles.input}
+              placeholder="Birthday"
+              editable={false}
+              disabled
+              value={date.toLocaleDateString()}
+            />
+            <View
+              style={{
+                justifyContent: "center",
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  marginLeft: SIZES.base,
+                }}
+                onPress={showDatePicker}
+              >
+                <Image
+                  source={require("../../../../assets/img/icons/calendar.png")}
+                  style={{
+                    height: 25,
+                    width: 25,
+                    tintColor: COLORS.primary,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
 
                         {showPicker && (
                             <DateTimePicker
@@ -328,7 +407,6 @@ const EditNames = ({ navigation }) => {
         </View>
     );
 };
-
 
 export default EditNames;
 

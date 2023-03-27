@@ -6,104 +6,167 @@ import AuthContext from "../../../api/context/auth/AuthContext";
 import { BASE_URL } from "../../../api/context/auth/config";
 import utils, { Utils } from "../../../utils/Utils";
 import {
-    images,
-    constants,
-    SIZES,
-    COLORS,
-    icons,
-    FONTS,
+  images,
+  constants,
+  SIZES,
+  COLORS,
+  icons,
+  FONTS,
 } from "../../../constants";
 import {
-    Header,
-    TextButton,
-    FormInput,
-    IconButton,
-    CheckBox,
-    FormInputCheck,
-    EditButton,
+  Header,
+  TextButton,
+  FormInput,
+  IconButton,
+  CheckBox,
+  FormInputCheck,
+  EditButton,
 } from "../../components/FoodeaComponents";
+import { Alert } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const EditHeightWeight = ({ navigation }) => {
-    const { user } = useContext(AuthContext);
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [height, setHeight] = React.useState("");
-    const [heightError, setHeightError] = React.useState("");
-    const [weight, setWeight] = React.useState("");
-    const [weightError, setWeightError] = React.useState("");
-    const [data, setData] = React.useState();
-    const [next, setNext] = React.useState();
-    const getUserData = async () => {
-        const userID = user.user_id;
-        setIsLoading(true);
-        const response = await axios.get(`${BASE_URL}app_users/${userID}`);
-        setHeight(response.data[0].height)
-        setData(response.data);
-        setIsLoading(false);
-    };
+  const { user } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [height, setHeight] = React.useState();
+  const [heightError, setHeightError] = React.useState("");
+  const [weight, setWeight] = React.useState();
+  const [weightError, setWeightError] = React.useState("");
+  const [data, setData] = React.useState();
+  const [next, setNext] = React.useState();
+  const getUserData = async () => {
+    const userID = user.user_id;
+    setIsLoading(true);
+    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+    setHeight(response.data[0].height);
+    setData(response.data);
+    setIsLoading(false);
+  };
 
-    useEffect(() => {
-        setIsLoading(true);
-        getUserData();
-    }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    getUserData();
+  }, []);
 
-    const HandleSubmit = () => {
-        console.log("Saved Details")
+  const confirmAction = async () => {
+    return new Promise((resolve, reject) => {
+      Alert.alert(
+        "Update Your Information",
+        "Are you sure you want to update your information",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+            onPress: () => resolve(false),
+          },
+          {
+            text: "Confirm",
+            onPress: () => resolve(true),
+          },
+        ]
+      );
+    });
+  };
+
+  const BmiCalculation = () => {
+    const bmi = (weight / (height * height)) * 10000;
+    return bmi;
+  };
+
+  const updateHeightWeight = async (bmi) => {
+    try {
+      const response = await axios.patch(
+        `${BASE_URL}app_users/${user.user_id}`,
+        {
+          height: height,
+          weight: weight,
+          bmi: bmi,
+        }
+      );
+      console.log(response.data);
+      return response.data.length > 0;
+    } catch (error) {
+      console.log(error);
+
+      return false;
+    }
+  };
+
+  const HandleSubmit = async () => {
+    const decision = await confirmAction();
+    const bmi = BmiCalculation();
+    if (decision) {
+      const update = await updateHeightWeight(bmi);
+
+      Alert.alert(
+        "Confirmation",
+        "Your details have been successfully updated.",
+        [
+          {
+            text: "Confirm",
+            style: "cancel",
+            onPress: () => {
+              console.log("Confirm");
+              navigation.goBack();
+            },
+          },
+        ]
+      );
+    } else {
+      console.log(bmi);
     }
 
     const disabledButton = () => {
         return !height || !weight
     };
 
-    function renderHeader() {
-        return (
-            <Header
-                containerStyle={{
-                    height: 80,
-                    marginHorizontal: SIZES.padding,
-                    alignItems: "center",
-                }}
-                title={"Edit Height and Weight"}
-                leftComponent={
-                    <TouchableOpacity
-                        style={{
-                            width: 40,
-                            height: 40,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderWidth: 1,
-                            borderColor: COLORS.gray2,
-                            borderRadius: SIZES.radius,
-                        }}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
-                    </TouchableOpacity>
-                }
-                rightComponent={
-                    <View
-                        style={{
-                            width: 40,
-                        }}
-                    ></View>
-                }
-            />
-        );
-    }
-
-
-
+  function renderHeader() {
     return (
-        <View
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        title={"Edit Height and Weight"}
+        leftComponent={
+          <TouchableOpacity
             style={{
-                flex: 1,
-                height: SIZES.height,
-                width: SIZES.width,
-                backgroundColor: COLORS.white
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
             }}
-        >
-            {/* HEADER */}
-            {renderHeader()}
+            onPress={() => navigation.goBack()}
+          >
+            <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
+  }
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        height: SIZES.height,
+        width: SIZES.width,
+        backgroundColor: COLORS.white,
+      }}
+    >
+      {/* HEADER */}
+      {renderHeader()}
 
             <KeyboardAwareScrollView
                 enableOnAndroid={true}
@@ -183,6 +246,5 @@ const EditHeightWeight = ({ navigation }) => {
         </View>
     );
 };
-
 
 export default EditHeightWeight;

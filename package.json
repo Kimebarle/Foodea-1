@@ -48,6 +48,7 @@
     "react-native-shadow-2": "^7.0.6",
     "react-native-simple-radio-button": "^2.7.4",
     "react-native-swipe-list-view": "^3.2.9",
+    "sha256": "^0.2.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
