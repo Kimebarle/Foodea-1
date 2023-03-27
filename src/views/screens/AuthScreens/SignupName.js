@@ -60,7 +60,7 @@ const SignupName = ({ navigation, route }) => {
     };
 
     const disabledButton = () => {
-        // return !Name || !LastName || age < 18;
+        return !Name || !LastName || age < 18;
     };
 
     const list = [{}];
@@ -83,7 +83,7 @@ const SignupName = ({ navigation, route }) => {
             <View
                 style={{
                     marginTop: SIZES.padding,
-                    height: 650,
+                    height: 600,
                 }}
             >
                 <View
@@ -114,6 +114,7 @@ const SignupName = ({ navigation, route }) => {
                         Input your First Name, Middle Name (optional), Last Name, Birthday.
                     </Text>
 
+
                     {/* First Name */}
                     <FormInput
                         containerStyle={{
@@ -123,7 +124,7 @@ const SignupName = ({ navigation, route }) => {
                         }}
                         label="First Name"
                         value={Name}
-                        maxLength={10}
+                        maxLength={30}
                         onChange={(value) => {
                             setName(value);
                             utils.validateInput(value, 1, setNameError);
@@ -139,9 +140,8 @@ const SignupName = ({ navigation, route }) => {
                             marginBottom: SIZES.radius,
                         }}
                         label="Middle Name"
-                        placeholder={"optional"}
                         value={MiddleName}
-                        maxLength={10}
+                        maxLength={30}
                         onChange={(value) => {
                             setMiddleName(value);
                             utils.validateInput(value, 1, setMiddleNameError);
@@ -156,7 +156,7 @@ const SignupName = ({ navigation, route }) => {
                         }}
                         label="Last Name"
                         value={LastName}
-                        maxLength={10}
+                        maxLength={30}
                         onChange={(value) => {
                             setLastName(value);
                             utils.validateInput(value, 1, setLastNameError);
@@ -327,9 +327,16 @@ const SignupName = ({ navigation, route }) => {
 
             {/* Logo
             {renderLogo()} */}
+            <KeyboardAwareScrollView
+                enableOnAndroid={true}
+                contentContainerStyle={{
+                    extraHeight: 300,
+                }}
+            >
+                {/* Email Address */}
+                {renderDetails()}
 
-            {/* Email Address */}
-            {renderDetails()}
+            </KeyboardAwareScrollView>
         </View>
     );
 };

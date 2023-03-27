@@ -63,7 +63,7 @@ const Email = ({ navigation, route }) => {
   };
 
   const disabledButton = () => {
-    // return !email || !password || !resetpassword;
+    return !email || !password || !resetpassword;
   };
 
   const emailChecker = async () => {
@@ -378,8 +378,15 @@ const Email = ({ navigation, route }) => {
       {/* Logo
             {renderLogo()} */}
 
-      {/* Email Address */}
-      {renderDetails()}
+      <KeyboardAwareScrollView
+        enableOnAndroid={true}
+        contentContainerStyle={{
+          extraHeight: 400,
+        }}
+      >
+        {/* Email Address */}
+        {renderDetails()}
+      </KeyboardAwareScrollView>
     </View>
   );
 };

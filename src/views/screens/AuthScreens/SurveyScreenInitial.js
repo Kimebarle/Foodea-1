@@ -13,6 +13,7 @@ import { FormInput, TextButton, Header, TextInput } from "../../components/Foode
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
 import AuthContext from "../../../api/context/auth/AuthContext";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const SurveyScreenInitial = ({ navigation, route }) => {
   const { passedList5 } = route.params;
@@ -28,6 +29,9 @@ const SurveyScreenInitial = ({ navigation, route }) => {
 
     navigation.navigate("Captcha", { passedList6: list6 });
   }
+  const disabledButton = () => {
+    return !question1;
+  };
 
   function renderHeader() {
     return (
@@ -115,8 +119,8 @@ const SurveyScreenInitial = ({ navigation, route }) => {
 
   function renderFormInput() {
     return (
-      <View style={{ width: "80%", height: "80%", left: 30, top: 10 }}>
-        <View style ={{
+      <View style={{ width: "80%", height: 550, left: 30, top: 10 }}>
+        <View style={{
           alignItems: "center",
         }}>
           <TextInput
@@ -141,10 +145,14 @@ const SurveyScreenInitial = ({ navigation, route }) => {
 
         <TextButton
           label={"Submit"}
+          disabled={disabledButton()}
           buttonContainerStyle={{
             height: 50,
             borderRadius: SIZES.radius,
             marginTop: SIZES.padding,
+            backgroundColor: !disabledButton()
+              ? COLORS.primary
+              : COLORS.transparentPrimray,
           }}
           onPress={submitHandler}
         />
@@ -189,7 +197,9 @@ const SurveyScreenInitial = ({ navigation, route }) => {
           20 words.{" "}
         </Text>
 
-        {renderFormInput()}
+        
+          {renderFormInput()}
+        
       </View>
     </View>
   );

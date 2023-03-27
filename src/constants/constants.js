@@ -312,7 +312,22 @@ const captcha = [
     id: 5,
     image: require("../../assets/img/images/captcha5.png"),
     text: 'ANE13S'
-  }
+  },
+  {
+    id: 6,
+    image: require("../../assets/img/images/captcha6.png"),
+    text: 'ASk111'
+  },
+  {
+    id: 7,
+    image: require("../../assets/img/images/captcha7.png"),
+    text: 'ApHN18'
+  },
+  {
+    id: 8,
+    image: require("../../assets/img/images/captcha8.png"),
+    text: 'APVSK1'
+  },
 ];
 
 export default {

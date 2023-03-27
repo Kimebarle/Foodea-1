@@ -1,19 +1,21 @@
 import { BASE_URL } from "../../../api/context/auth/config";
 import utils, { Utils } from "../../../utils/Utils";
 import {
-    images,
-    constants,
-    SIZES,
-    COLORS,
-    icons,
-    FONTS,
+  images,
+  constants,
+  SIZES,
+  COLORS,
+  icons,
+  FONTS,
 } from "../../../constants";
-import { Header, FormInput } from "../../components/FoodeaComponents";
+import { Header, FormInput, TextButton } from "../../components/FoodeaComponents";
 import { Alert } from "react-native";
+import React from "react";
 import { useContext, useState, useEffect } from "react";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import axios from "axios";
+import { TextInput } from "react-native-paper";
 
 const EditHeightWeight = ({ navigation }) => {
   const { user } = useContext(AuthContext);
@@ -22,9 +24,13 @@ const EditHeightWeight = ({ navigation }) => {
   const [heightError, setHeightError] = useState("");
   const [weight, setWeight] = useState();
   const [weightError, setWeightError] = useState("");
+  const [bmi, setBMI] = React.useState();
+  const [bmiError, setBMIError] = useState("");
   const [data, setData] = useState();
 
-  
+  const disabledButton = () => {
+    return !height || !weight;
+  };
 
   const getUserData = async () => {
     const userID = user.user_id;
@@ -35,60 +41,60 @@ const EditHeightWeight = ({ navigation }) => {
     setIsLoading(false);
   };
 
-    useEffect(() => {
-        setIsLoading(true);
-        getUserData();
-    }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    getUserData();
+  }, []);
 
-    const confirmAction = async () => {
-        return new Promise((resolve, reject) => {
-            Alert.alert(
-                "Update Your Information",
-                "Are you sure you want to update your information",
-                [
-                    {
-                        text: "Cancel",
-                        style: "cancel",
-                        onPress: () => resolve(false),
-                    },
-                    {
-                        text: "Confirm",
-                        onPress: () => resolve(true),
-                    },
-                ]
-            );
-        });
-    };
+  const confirmAction = async () => {
+    return new Promise((resolve, reject) => {
+      Alert.alert(
+        "Update Your Information",
+        "Are you sure you want to update your information",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+            onPress: () => resolve(false),
+          },
+          {
+            text: "Confirm",
+            onPress: () => resolve(true),
+          },
+        ]
+      );
+    });
+  };
 
-    const BmiCalculation = () => {
-        const bmi = (weight / (height * height)) * 10000;
-        return bmi;
-    };
+  const BmiCalculation = () => {
+    const bmi = (weight / (height * height)) * 10000;
+    return bmi;
+  };
 
-    const updateHeightWeight = async (bmi) => {
-        try {
-            const response = await axios.patch(
-                `${BASE_URL}app_users/${user.user_id}`,
-                {
-                    height: height,
-                    weight: weight,
-                    bmi: bmi,
-                }
-            );
-            console.log(response.data);
-            return response.data.length > 0;
-        } catch (error) {
-            console.log(error);
-
-            return false;
+  const updateHeightWeight = async (bmi) => {
+    try {
+      const response = await axios.patch(
+        `${BASE_URL}app_users/${user.user_id}`,
+        {
+          height: height,
+          weight: weight,
+          bmi: bmi,
         }
-    };
+      );
+      console.log(response.data);
+      return response.data.length > 0;
+    } catch (error) {
+      console.log(error);
 
-    const HandleSubmit = async () => {
-        const decision = await confirmAction();
-        const bmi = BmiCalculation();
-        if (decision) {
-            const update = await updateHeightWeight(bmi);
+      return false;
+    }
+  };
+
+  const HandleSubmit = async () => {
+    const decision = await confirmAction();
+    const bmi = BmiCalculation();
+    if (decision) {
+      const update = await updateHeightWeight(bmi);
 
       Alert.alert(
         "Confirmation",
@@ -109,53 +115,53 @@ const EditHeightWeight = ({ navigation }) => {
     }
   };
 
-        function renderHeader() {
-            return (
-                <Header
-                    containerStyle={{
-                        height: 80,
-                        marginHorizontal: SIZES.padding,
-                        alignItems: "center",
-                    }}
-                    title={"Edit Height and Weight"}
-                    leftComponent={
-                        <TouchableOpacity
-                            style={{
-                                width: 40,
-                                height: 40,
-                                alignItems: "center",
-                                justifyContent: "center",
-                                borderWidth: 1,
-                                borderColor: COLORS.gray2,
-                                borderRadius: SIZES.radius,
-                            }}
-                            onPress={() => navigation.goBack()}
-                        >
-                            <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
-                        </TouchableOpacity>
-                    }
-                    rightComponent={
-                        <View
-                            style={{
-                                width: 40,
-                            }}
-                        ></View>
-                    }
-                />
-            );
+  function renderHeader() {
+    return (
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        title={"Edit Height and Weight"}
+        leftComponent={
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
+            }}
+            onPress={() => navigation.goBack()}
+          >
+            <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
+          </TouchableOpacity>
         }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
+  }
 
-        return (
-            <View
-                style={{
-                    flex: 1,
-                    height: SIZES.height,
-                    width: SIZES.width,
-                    backgroundColor: COLORS.white,
-                }}
-            >
-                {/* HEADER */}
-                {renderHeader()}
+  return (
+    <View
+      style={{
+        flex: 1,
+        height: SIZES.height,
+        width: SIZES.width,
+        backgroundColor: COLORS.white,
+      }}
+    >
+      {/* HEADER */}
+      {renderHeader()}
 
       <View style={{ marginTop: SIZES.padding }}>
         <View
@@ -163,6 +169,7 @@ const EditHeightWeight = ({ navigation }) => {
             alignItems: "center",
           }}
         >
+          {/* Height */}
           <FormInput
             containerStyle={{
               borderRadius: SIZES.radius,
@@ -185,7 +192,7 @@ const EditHeightWeight = ({ navigation }) => {
             alignItems: "center",
           }}
         >
-          {/* Middle Name */}
+          {/* Weight */}
           <FormInput
             containerStyle={{
               borderRadius: SIZES.radius,
@@ -203,35 +210,75 @@ const EditHeightWeight = ({ navigation }) => {
           />
         </View>
 
+        <View style={{
+          justifyContent: 'flex-start',
+        }}>
+          {/* BMI */}
+          <Text
+            style={{
+              color: COLORS.gray,
+              ...FONTS.h3,
+              fontSize: 15,
+              marginTop: SIZES.base,
+              marginLeft: SIZES.padding * 1.3
+            }}
+          >
+            BMI
+          </Text>
+        </View>
         <View
           style={{
             alignItems: "center",
           }}
         >
-          <TouchableOpacity onPress={HandleSubmit}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                height: 50,
-                width: 300,
-                backgroundColor: COLORS.primary,
-                borderRadius: SIZES.radius,
-                marginTop: 100,
-                elevation: 5,
-              }}
-            >
-              {/* <Image
-                                source={icons.edit}
-                                style={{
-                                    height: 20,
-                                }}
-                            /> */}
+          {/* BMI */}
+          <TextInput
+            label="BMI"
+            disabled
+            style={{
+              width: 300,
+              height: 50,
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+            }} />
+          {/* <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+              width: 300,
+            }}
+            label="Weight"
+            value={bmi}
+            keyboardType="number-pad"
+            maxLength={2}
+            onChange={(value) => {
+              setBMI(value);
+              utils.validateInput(value, 1, setBMIError);
+            }}
+          /> */}
+        </View>
 
-              <Text style={{ ...FONTS.h3, color: COLORS.white }}>Submit</Text>
-            </View>
-          </TouchableOpacity>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <TextButton
+            label="Submit"
+            disabled={disabledButton()}
+            buttonContainerStyle={{
+              height: 50,
+              width: 300,
+              marginTop: SIZES.padding,
+              alignItems: "center",
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.padding,
+              backgroundColor: !disabledButton()
+                ? COLORS.primary
+                : COLORS.gray,
+            }}
+            onPress={HandleSubmit}
+          />
         </View>
       </View>
     </View>

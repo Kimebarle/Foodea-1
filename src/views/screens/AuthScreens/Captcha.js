@@ -26,6 +26,7 @@ import {
   images,
 } from "../../../constants";
 import AuthContext from "../../../api/context/auth/AuthContext";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Captcha = ({ navigation, route }) => {
   const { register } = useContext(AuthContext);
@@ -73,6 +74,10 @@ const Captcha = ({ navigation, route }) => {
     } else {
       return false;
     }
+  };
+
+  const disabledButton = () => {
+    return !Captcha;
   };
 
   const onPressHandler = () => {
@@ -279,17 +284,8 @@ const Captcha = ({ navigation, route }) => {
   function renderFooter() {
     return (
       <View
-        style={{
-          backgroundColor: COLORS.primary,
-          width: 330,
-          height: 50,
-          borderRadius: SIZES.radius,
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: SIZES.padding,
-        }}
       >
-        <TouchableOpacity onPress={onPressHandler}>
+        {/* <TouchableOpacity onPress={onPressHandler}>
           <Text
             style={{
               color: COLORS.white,
@@ -298,7 +294,24 @@ const Captcha = ({ navigation, route }) => {
           >
             Submit
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+
+        <TextButton
+            label="Submit"
+            disabled={disabledButton()}
+            onPress={onPressHandler}
+            buttonContainerStyle={{
+              marginTop: SIZES.padding,
+              height: 55,
+              borderRadius: SIZES.radius,
+              backgroundColor: !disabledButton()
+                ? COLORS.primary
+                : COLORS.transparentPrimray,
+            }}
+            labelStyle={{
+              ...FONTS.h3,
+            }}
+          />
       </View>
     );
   }
@@ -311,48 +324,58 @@ const Captcha = ({ navigation, route }) => {
       {/* Header */}
       {renderHeader()}
 
+      <KeyboardAwareScrollView
+        enableOnAndroid={true}
+        contentContainerStyle={{
+          extraHeight: 400,
+        }}
+      >
+
       {/* Terms of Use */}
       {renderTerms()}
+
 
       {/* Captcha */}
       {renderCaptcha()}
 
-      <TextInput
-        style={{
-          ...FONTS.h3,
-          width: 330,
-          borderRadius: SIZES.radius,
-          textAlign: "center",
-        }}
-        onChangeText={(value) => {
-          setCaptcha(value);
-        }}
-        value={Captcha}
-      />
-
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: SIZES.base,
-          marginBottom: SIZES.padding,
-        }}
-      >
-        <Text
+      
+        <TextInput
           style={{
+            ...FONTS.h3,
             width: 330,
-            fontWeight: "bold",
-            ...FONTS.h4,
-            lineHeight: 15,
+            borderRadius: SIZES.radius,
+            textAlign: "center",
+          }}
+          onChangeText={(value) => {
+            setCaptcha(value);
+          }}
+          value={Captcha}
+        />
+
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: SIZES.base,
+            marginBottom: SIZES.padding,
           }}
         >
-          By pressing the submit button, you agreeing to our Terms and that you
-          have read our Data Use Policy.
-        </Text>
-      </View>
+          <Text
+            style={{
+              width: 330,
+              fontWeight: "bold",
+              ...FONTS.h4,
+              lineHeight: 15,
+            }}
+          >
+            By pressing the submit button, you agreeing to our Terms and that you
+            have read our Data Use Policy.
+          </Text>
+        </View>
 
-      {/* Submit Button */}
-      {renderFooter()}
+        {/* Submit Button */}
+        {renderFooter()}
+      </KeyboardAwareScrollView>
     </View>
   );
 };
