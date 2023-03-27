@@ -312,6 +312,7 @@ const captcha = [
     id: 5,
     image: require("../../assets/img/images/captcha5.png"),
     text: 'ANE13S'
+  },
   {
     id: 6,
     image: require("../../assets/img/images/captcha6.png"),

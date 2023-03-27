@@ -37,22 +37,11 @@ const Map = ({ navigation }) => {
         }}
         title={"MAP"}
         leftComponent={
-          // Open Custom
-
-          <TouchableOpacity
+          <View
             style={{
               width: 40,
-              height: 40,
-              alignItems: "center",
-              justifyContent: "center",
-              borderWidth: 1,
-              borderColor: COLORS.gray2,
-              borderRadius: SIZES.radius,
             }}
-            onPress={() => navigation.goBack()}
-          >
-            <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
-          </TouchableOpacity>
+          ></View>
         }
         rightComponent={
           <View
@@ -93,13 +82,16 @@ const Map = ({ navigation }) => {
           >
             {dummyData.track_order_status.map((item, index) => {
               return (
-                <View key={`StatusList-${index}`}>
+                <View style = {{
+                }} 
+                key={`StatusList-${index}`}>
                   <View
                     style={{
                       flexDirection: "column",
+                      justifyContent: 'center',
                       flex: 1,
                       alignItems: "center",
-                      width: 100,
+                      width: 105
                     }}
                   >
                     <Image
@@ -151,8 +143,8 @@ const Map = ({ navigation }) => {
                     >
                       <Text
                         style={{
-                          ...FONTS.h5,
                           fontSize: 10,
+                          fontWeight: 'bold',
                         }}
                       >
                         {item.title}
@@ -197,7 +189,7 @@ const Map = ({ navigation }) => {
               </Text>
               <Text
                 style={{
-                  ...FONTS.h3,
+                  ...FONTS.h4,
                 }}
               >
                 35 mins
@@ -236,7 +228,7 @@ const Map = ({ navigation }) => {
               </Text>
               <Text
                 style={{
-                  ...FONTS.h3,
+                  ...FONTS.h4,
                 }}
               >
                 Phase 7B Package 1 Block 57 Excess Lot
