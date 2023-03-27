@@ -1,37 +1,17 @@
 import axios from "axios";
 import React, { useContext, useEffect } from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { BASE_URL } from "../../../api/context/auth/config";
 import utils, { Utils } from "../../../utils/Utils";
-import {
-  images,
-  constants,
-  SIZES,
-  COLORS,
-  icons,
-  FONTS,
-} from "../../../constants";
+import { SIZES, COLORS, icons, FONTS } from "../../../constants";
 import {
   Header,
-  TextButton,
   FormInput,
-  IconButton,
-  CheckBox,
   FormInputCheck,
-  EditButton,
-  Button,
   TextInput,
 } from "../../components/FoodeaComponents";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Alert } from "react-native";
 
 const EditNames = ({ navigation }) => {
@@ -151,10 +131,7 @@ const EditNames = ({ navigation }) => {
         );
       }
     }
-
-    const disabledButton = () => {
-        return !firstname || !middleName || !lastname;
-    };
+  };
 
   function renderHeader() {
     return (
@@ -204,112 +181,105 @@ const EditNames = ({ navigation }) => {
       {/* HEADER */}
       {renderHeader()}
 
+      <View style={{ marginTop: SIZES.padding }}>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+              width: 300,
+            }}
+            label="First Name"
+            value={firstname}
+            placeholder={isLoading ? "Josh" : data[0].firstname}
+            maxLength={15}
+            onChange={(value) => {
+              setFirstName(value);
+              utils.validateInput(value, 1, setFirstNameError);
+            }}
+            errorMsg={firstnameError}
+            appendComponent={
+              <FormInputCheck value={firstname} error={firstnameError} />
+            }
+          />
+        </View>
 
-            <KeyboardAwareScrollView
-                enableOnAndroid={true}
-                keyboardDismissMode="on-drag"
-                keyboardShouldPersistTaps={"handled"}
-                extraScrollHeight={-200}
-                contentContainerStyle={{
-                    marginTop: SIZES.base,
-                    flexGrow: 1,
-                    paddingBottom: SIZES.padding * 2,
-                }}
-            >
-                <View style={{ marginTop: SIZES.padding, }}>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          {/* Middle Name */}
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+              width: 300,
+            }}
+            label="Middle Name"
+            value={middleName}
+            placeholder={isLoading ? "Josh" : data[0].middlename}
+            maxLength={15}
+            onChange={(value) => {
+              setMiddleName(value);
+              utils.validateInput(value, 1, setMiddleNameError);
+            }}
+            errorMsg={middleNameError}
+            appendComponent={
+              <FormInputCheck value={middleName} error={middleNameError} />
+            }
+          />
+        </View>
 
-                    <View style={{
-                        alignItems: 'center',
-                    }}>
-                        <FormInput
-                            containerStyle={{
-                                borderRadius: SIZES.radius,
-                                marginBottom: SIZES.radius,
-                                width: 300
-                            }}
-                            label="First Name"
-                            value={firstname}
-                            placeholder={isLoading ? "Josh" : data[0].firstname}
-                            maxLength={15}
-                            onChange={(value) => {
-                                setFirstName(value);
-                                utils.validateInput(value, 1, setFirstNameError);
-                            }}
-                            errorMsg={firstnameError}
-                            appendComponent={
-                                <FormInputCheck value={firstname} error={firstnameError} />
-                            }
-                        />
-                    </View>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          {/* Last Name */}
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+              width: 300,
+            }}
+            label="Last Name"
+            value={lastname}
+            placeholder={isLoading ? "Josh" : data[0].lastname}
+            maxLength={15}
+            onChange={(value) => {
+              setLastName(value);
+              utils.validateInput(value, 1, setLastNameError);
+            }}
+            errorMsg={lastnameError}
+            appendComponent={
+              <FormInputCheck value={lastname} error={lastnameError} />
+            }
+          />
+        </View>
 
-                    <View style={{
-                        alignItems: 'center',
-                    }}>
-
-                        {/* Middle Name */}
-                        <FormInput
-                            containerStyle={{
-                                borderRadius: SIZES.radius,
-                                marginBottom: SIZES.radius,
-                                width: 300
-                            }}
-                            label="Middle Name"
-                            value={middleName}
-                            placeholder={isLoading ? "Josh" : data[0].middlename}
-                            maxLength={15}
-                            onChange={(value) => {
-                                setMiddleName(value);
-                                utils.validateInput(value, 1, setMiddleNameError);
-                            }}
-                            errorMsg={middleNameError}
-                            appendComponent={
-                                <FormInputCheck value={middleName} error={middleNameError} />
-                            }
-                        />
-                    </View>
-
-                    <View style={{
-                        alignItems: "center",
-                    }}>
-
-                        {/* Last Name */}
-                        <FormInput
-                            containerStyle={{
-                                borderRadius: SIZES.radius,
-                                marginBottom: SIZES.radius,
-                                width: 300
-                            }}
-                            label="Last Name"
-                            value={lastname}
-                            placeholder={isLoading ? "Josh" : data[0].lastname}
-                            maxLength={15}
-                            onChange={(value) => {
-                                setLastName(value);
-                                utils.validateInput(value, 1, setLastNameError);
-                            }}
-                            errorMsg={lastnameError}
-                            appendComponent={
-                                <FormInputCheck value={lastname} error={lastnameError} />
-                            }
-                        />
-                    </View>
-
-                    <View style={{
-                        justifyContent: 'flex-start',
-                    }}>
-                        {/* Birthday */}
-                        <Text
-                            style={{
-                                color: COLORS.black,
-                                ...FONTS.h3,
-                                fontSize: 15,
-                                marginTop: SIZES.base,
-                                marginLeft: SIZES.padding
-                            }}
-                        >
-                            Birthday
-                        </Text>
-                    </View>
+        <View
+          style={{
+            justifyContent: "flex-start",
+          }}
+        >
+          {/* Birthday */}
+          <Text
+            style={{
+              color: COLORS.black,
+              ...FONTS.h3,
+              fontSize: 15,
+              marginTop: SIZES.base,
+              marginLeft: SIZES.padding,
+            }}
+          >
+            Birthday
+          </Text>
+        </View>
 
         <View
           style={{
@@ -351,75 +321,67 @@ const EditNames = ({ navigation }) => {
             </View>
           </View>
 
-                        {showPicker && (
-                            <DateTimePicker
-                                value={date}
-                                mode="date"
-                                display="default"
-                                onChange={handleDateChange}
-                            />
-                        )}
-                    </View>
-
-
-                    {/* <View style={{
-                        alignItems: 'center',
-                    }}>
-                        <TouchableOpacity onPress={HandleSubmit}>
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    height: 50,
-                                    width: 300,
-                                    backgroundColor: COLORS.primary,
-                                    borderRadius: SIZES.radius,
-                                    marginTop: 100,
-                                    elevation: 5,
-                                }}
-                            >
-                                <Text style={{ ...FONTS.h3, color: COLORS.white }}>Submit</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View> */}
-
-                    <View style = {{
-                        alignItems: 'center',
-                    }}>
-                        <TextButton
-                            label="Submit"
-                            disabled={disabledButton()}
-                            buttonContainerStyle={{
-                                height: 50,
-                                width: 300,
-                                marginTop: SIZES.padding,
-                                alignItems: "center",
-                                borderRadius: SIZES.radius,
-                                marginBottom: SIZES.padding,
-                                backgroundColor: !disabledButton() ? COLORS.primary : COLORS.gray,
-                            }}
-                            onPress={HandleSubmit}
-                        />
-                    </View>
-                </View>
-            </KeyboardAwareScrollView>
+          {showPicker && (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display="default"
+              onChange={handleDateChange}
+            />
+          )}
         </View>
-    );
+
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity onPress={HandleSubmit}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                height: 50,
+                width: 300,
+                backgroundColor: COLORS.primary,
+                borderRadius: SIZES.radius,
+                marginTop: 100,
+                elevation: 5,
+              }}
+            >
+              {/* <Image
+                                source={icons.edit}
+                                style={{
+                                    height: 20,
+                                    width: 20,
+                                    tintColor: COLORS.white,
+                                    position: "absolute",
+                                    right: 15
+
+                                }}
+                            /> */}
+
+              <Text style={{ ...FONTS.h3, color: COLORS.white }}>Submit</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 };
 
 export default EditNames;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    input: {
-        width: 270,
-        height: 50,
-        textAlign: 'center'
-    },
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    width: 270,
+    height: 50,
+  },
 });
