@@ -33,19 +33,17 @@ import { useEffect, useContext } from "react";
 
 import { SelectList } from "react-native-dropdown-select-list";
 import AuthContext from "../../../api/context/auth/AuthContext";
+import axios from "axios";
+import sha256 from "sha256";
+import { BASE_URL } from "../../../api/context/auth/config";
 
 const EditProfile = ({ navigation, route }) => {
   const { user } = useContext(AuthContext);
   const [showPassword, setShowPasswod] = React.useState(true);
   const [resetshowPassword, setResetShowPasswod] = React.useState(true);
-
   const [password, setPassword] = React.useState("");
   const [resetpassword, setResetPassword] = React.useState("");
-  const [firstname, setFirstName] = React.useState("");
-
-  const [checkValidEmail, setCheckValidEmail] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
-
   const toggleHidePassword = () => {
     setShowPasswod(!showPassword);
   };
@@ -58,6 +56,10 @@ const EditProfile = ({ navigation, route }) => {
     return !password || !resetpassword;
   };
 
+  const generateHash = (str) => {
+    return sha256(str);
+  };
+
   const showData = () => {
     setIsLoading(true);
     //setFirstName(data.firstname);
@@ -65,15 +67,28 @@ const EditProfile = ({ navigation, route }) => {
   };
 
   const passwordCheck = async () => {
-    if (user.password == password) {
+    if (resetpassword == password) {
       return true;
     } else {
       return false;
     }
   };
 
+  const passwordChecker = async () => {
+    return password == user.password;
+  };
+
+  const updatePassword = async (password, resetpassword) => {
+    const hash = generateHash(password);
+
+    const response = axios.patch(`${BASE_URL}app_users/${user.user_id}`, {
+      password: hash,
+    });
+    console.log(response.data);
+  };
+
   const onPressHandler = async () => {
-    const passwordBeforeChecker = await passwordCheck();
+    const passwordBeforeChecker = await passwordChecker();
     // console.log(passwordBeforeChecker);
     if (passwordBeforeChecker) {
       Alert.alert(
@@ -83,6 +98,26 @@ const EditProfile = ({ navigation, route }) => {
         { cancelable: false }
       );
     } else {
+      const update = await passwordCheck();
+      if (update) {
+        const updatePass = await updatePassword(password, resetpassword);
+        Alert.alert(
+          "Confirmation",
+          "Your details have been successfully updated.",
+          [
+            {
+              text: "Confirm",
+              style: "cancel",
+              onPress: () => {
+                console.log("Confirm");
+                navigation.goBack();
+              },
+            },
+          ]
+        );
+      } else {
+        console.log(update);
+      }
     }
   };
 
@@ -170,7 +205,6 @@ const EditProfile = ({ navigation, route }) => {
             paddingBottom: SIZES.padding * 2,
           }}
         >
-
           {/* Password  */}
           <View
             style={{
@@ -248,7 +282,7 @@ const EditProfile = ({ navigation, route }) => {
             borderRadius: SIZES.radius,
             backgroundColor: !disabledButton() ? COLORS.primary : COLORS.gray,
           }}
-          onPress={() => console.log("Saved Details")}
+          onPress={onPressHandler}
         />
       </View>
     );
