@@ -167,35 +167,60 @@ const SignupName = ({ navigation, route }) => {
             }
           />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Birthday"
-            editable={false}
-            value={date.toLocaleDateString()}
-          />
-          <IconButton
-            icon={icons.calendar}
-            iconStyle={{
-              tintColor: COLORS.gray,
-              width: 25,
-              height: 25,
-              position: "absolute",
-              bottom: 15,
-              right: 10,
+          <View
+            style={{
+              alignItems: "center",
             }}
-            onPress={showDatePicker}
-          />
-          {/* <Button title="Select" onPress={showDatePicker} /> */}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <TextInput
+                style={styles.input}
+                placeholder="Birthday"
+                editable={false}
+                value={date.toLocaleDateString()}
+              />
 
-          {showPicker && (
-            <DateTimePicker
-              value={date}
-              mode="date"
-              display="default"
-              onChange={handleDateChange}
-            />
-          )}
-          {age !== null && <Text>You are {age} years old.</Text>}
+              {/* <IconButton
+                            icon={icons.calendar}
+                            iconStyle={{
+                                tintColor: COLORS.gray,
+                                width: 25,
+                                height: 25,
+                                top: 18,
+                                left: 10,
+                            }}
+                            onPress={showDatePicker}
+                        /> */}
+              <View
+                style={{
+                  justifyContent: "center",
+                }}
+              >
+                <Button
+                  title="Show"
+                  onPress={showDatePicker}
+                  style={{
+                    borderRadius: SIZES.radius,
+                    marginLeft: SIZES.base,
+                    width: 100,
+                  }}
+                />
+              </View>
+            </View>
+
+            {showPicker && (
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            )}
+          </View>
 
           <TextButton
             label="Next"
@@ -309,7 +334,7 @@ const styles = StyleSheet.create({
   },
   signup_text: {},
   input: {
-    width: 250,
+    width: 190,
     height: 50,
   },
 });
