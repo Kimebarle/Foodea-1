@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { BASE_URL } from "../../../api/context/auth/config";
+import utils, { Utils } from "../../../utils/Utils";
 import {
     images,
     constants,
@@ -24,9 +25,15 @@ import {
 } from "../../components/FoodeaComponents";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const Names = ({ navigation }) => {
+const EditNames = ({ navigation }) => {
     const { user } = useContext(AuthContext);
     const [isLoading, setIsLoading] = React.useState(true);
+    const [firstname, setFirstName] = React.useState("");
+    const [firstnameError, setFirstNameError] = React.useState("");
+    const [middleName, setMiddleName] = React.useState("");
+    const [middleNameError, setMiddleNameError] = React.useState("");
+    const [lastname, setLastName] = React.useState("");
+    const [lastnameError, setLastNameError] = React.useState("");
     const [data, setData] = React.useState();
     const [next, setNext] = React.useState();
     const [date, setDate] = React.useState(new Date());
@@ -62,6 +69,10 @@ const Names = ({ navigation }) => {
         getUserData();
     }, []);
 
+    const HandleSubmit = () => {
+        console.log("Saved Details")
+    }
+
     function renderHeader() {
         return (
             <Header
@@ -70,7 +81,7 @@ const Names = ({ navigation }) => {
                     marginHorizontal: SIZES.padding,
                     alignItems: "center",
                 }}
-                title={"Name's"}
+                title={"Edit Details"}
                 leftComponent={
                     <TouchableOpacity
                         style={{
@@ -106,79 +117,36 @@ const Names = ({ navigation }) => {
                 flex: 1,
                 height: SIZES.height,
                 width: SIZES.width,
+                backgroundColor: COLORS.white
             }}
         >
             {/* HEADER */}
             {renderHeader()}
 
-            <View style={{ flex: 1, marginTop: SIZES.padding }}>
-
-                <View style={{
-                    justifyContent: 'flex-start',
-                }}>
-                    {/* First Name */}
-                    <Text
-                        style={{
-                            color: COLORS.black,
-                            ...FONTS.h3,
-                            fontSize: 15,
-                            marginTop: SIZES.base,
-                            marginLeft: SIZES.padding
-                        }}
-                    >
-                        First Name
-                    </Text>
-                </View>
+            <View style={{ marginTop: SIZES.padding, }}>
 
                 <View style={{
                     alignItems: 'center',
                 }}>
-
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
+                    <FormInput
+                        containerStyle={{
                             borderRadius: SIZES.radius,
-                            elevation: 5,
+                            marginBottom: SIZES.radius,
+                            width: 300
                         }}
-                    >
-                        <Image
-                            source={icons.Name}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-                            {isLoading ? "Josh" : data[0].firstname}
-                        </Text>
-                    </View>
-                </View>
-
-
-                <View style={{
-                    justifyContent: 'flex-start',
-                }}>
-                    {/* Middle Name */}
-                    <Text
-                        style={{
-                            color: COLORS.black,
-                            ...FONTS.h3,
-                            fontSize: 15,
-                            marginTop: SIZES.base,
-                            marginLeft: SIZES.padding
+                        label="First Name"
+                        value={firstname}
+                        placeholder={isLoading ? "Josh" : data[0].firstname}
+                        maxLength={15}
+                        onChange={(value) => {
+                            setFirstName(value);
+                            utils.validateInput(value, 1, setFirstNameError);
                         }}
-                    >
-                        Middle Name
-                    </Text>
+                        errorMsg={firstnameError}
+                        appendComponent={
+                            <FormInputCheck value={firstname} error={firstnameError} />
+                        }
+                    />
                 </View>
 
                 <View style={{
@@ -186,83 +154,51 @@ const Names = ({ navigation }) => {
                 }}>
 
                     {/* Middle Name */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
+                    <FormInput
+                        containerStyle={{
                             borderRadius: SIZES.radius,
-                            elevation: 5,
+                            marginBottom: SIZES.radius,
+                            width: 300
                         }}
-                    >
-                        <Image
-                            source={icons.Name}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-                            {isLoading ? "Josh" : data[0].middlename}
-                        </Text>
-                    </View>
-                </View>
-
-                <View style={{
-                    justifyContent: 'flex-start',
-                }}>
-                    {/* Last Name */}
-                    <Text
-                        style={{
-                            color: COLORS.black,
-                            ...FONTS.h3,
-                            fontSize: 15,
-                            marginTop: SIZES.base,
-                            marginLeft: SIZES.padding
+                        label="Middle Name"
+                        value={middleName}
+                        placeholder={isLoading ? "Josh" : data[0].middlename}
+                        maxLength={15}
+                        onChange={(value) => {
+                            setMiddleName(value);
+                            utils.validateInput(value, 1, setMiddleNameError);
                         }}
-                    >
-                        Last Name
-                    </Text>
+                        errorMsg={middleNameError}
+                        appendComponent={
+                            <FormInputCheck value={middleName} error={middleNameError} />
+                        }
+                    />
                 </View>
 
                 <View style={{
                     alignItems: "center",
                 }}>
 
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
+                    {/* Last Name */}
+                    <FormInput
+                        containerStyle={{
                             borderRadius: SIZES.radius,
-                            elevation: 5,
+                            marginBottom: SIZES.radius,
+                            width: 300
                         }}
-                    >
-                        <Image
-                            source={icons.Name}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-                            {isLoading ? "Josh" : data[0].lastname}
-                        </Text>
-                    </View>
+                        label="Last Name"
+                        value={lastname}
+                        placeholder={isLoading ? "Josh" : data[0].lastname}
+                        maxLength={15}
+                        onChange={(value) => {
+                            setLastName(value);
+                            utils.validateInput(value, 1, setLastNameError);
+                        }}
+                        errorMsg={lastnameError}
+                        appendComponent={
+                            <FormInputCheck value={lastname} error={lastnameError} />
+                        }
+                    />
                 </View>
 
                 <View style={{
@@ -329,10 +265,10 @@ const Names = ({ navigation }) => {
                     )}
                 </View>
 
-                <View style = {{
-                    alignItems: "center",
+                <View style = {{ 
+                    alignItems: 'center',
                 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate("EditNames")}>
+                    <TouchableOpacity onPress={HandleSubmit}>
                         <View
                             style={{
                                 flexDirection: "row",
@@ -358,7 +294,7 @@ const Names = ({ navigation }) => {
                                 }}
                             /> */}
 
-                            <Text style={{ ...FONTS.h3, color: COLORS.white }}>Edit Details</Text>
+                            <Text style={{ ...FONTS.h3, color: COLORS.white }}>Submit</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -368,7 +304,7 @@ const Names = ({ navigation }) => {
 };
 
 
-export default Names;
+export default EditNames;
 
 const styles = StyleSheet.create({
     container: {

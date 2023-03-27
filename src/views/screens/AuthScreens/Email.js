@@ -192,9 +192,10 @@ const Email = ({ navigation, route }) => {
                 borderRadius: SIZES.radius,
               }}
               onChangeText={setPhoneNumber}
+              keyboardType="number-pad"
               value={phoneNumber}
               label="+63 Phone Number"
-              maxLength={10}
+              maxLength={11}
             />
           </View>
 
