@@ -177,9 +177,11 @@ const Email = ({ navigation, route }) => {
             </View>
           </View>
 
-          <View style = {{
-            marginBottom: SIZES.radius
-          }}>
+          <View
+            style={{
+              marginBottom: SIZES.radius,
+            }}
+          >
             <TextInput
               style={{
                 ...FONTS.h3,
@@ -188,7 +190,7 @@ const Email = ({ navigation, route }) => {
               }}
               onChangeText={setPhoneNumber}
               value={phoneNumber}
-              label="+63"
+              label="+63 Phone Number"
               maxLength={10}
             />
           </View>
@@ -259,8 +261,6 @@ const Email = ({ navigation, route }) => {
               onPress={togglePassword}
             />
           </View>
-
-
 
           <TextButton
             label="Next"
