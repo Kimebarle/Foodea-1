@@ -116,24 +116,28 @@ const SurveyScreenInitial = ({ navigation, route }) => {
   function renderFormInput() {
     return (
       <View style={{ width: "80%", height: "80%", left: 30, top: 10 }}>
+        <View style ={{
+          alignItems: "center",
+        }}>
+          <TextInput
+            style={{
+              ...FONTS.h3,
+              width: 265,
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.padding
+            }}
+            onChangeText={(value) => {
+              setQuestion1(value);
+            }}
+            value={question1}
+            label="Answer"
+            editable
+            multiline
+            numberOfLines={4}
+            maxLength={100}
+          />
 
-        <TextInput
-          style={{
-            ...FONTS.h3,
-            width: 250,
-            borderRadius: SIZES.radius,
-            marginBottom: SIZES.padding
-          }}
-          onChangeText={(value) => {
-            setQuestion1(value);
-          }}
-          value={question1}
-          label="Answer"
-          editable
-          multiline
-          numberOfLines={4}
-          maxLength={100}
-        />
+        </View>
 
         <TextButton
           label={"Submit"}

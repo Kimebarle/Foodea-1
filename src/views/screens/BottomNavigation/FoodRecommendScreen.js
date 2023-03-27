@@ -118,7 +118,7 @@ const FoodRecommendScreen = ({ navigation }) => {
             <RecommendationComponent
               containerStyle={{
                 marginLeft: index == 0 ? SIZES.padding : 18,
-                height: 400,
+                height: 500,
                 width: 250,
               }}
               item={item}

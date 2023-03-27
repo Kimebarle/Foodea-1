@@ -380,5 +380,6 @@ const styles = StyleSheet.create({
     input: {
         width: 270,
         height: 50,
+        textAlign: 'center'
     },
 });

@@ -184,25 +184,29 @@ const RecommendationComponent = ({
         </View>
       </View>
 
-      {/* Text */}
-      <View style={{ flexDirection: "row", marginTop: SIZES.radius }}>
-        <Text style={{ ...FONTS.h3, marginLeft: 5, marginRight: 30 }}>
-          {item.product_name}
-        </Text>
-      </View>
+      <View style = {{
+        marginTop: 50
+      }}>
+        {/* Text */}
+        <View style={{ flexDirection: "row", marginTop: SIZES.radius }}>
+          <Text style={{ ...FONTS.h3, marginLeft: 5, marginRight: 30 }}>
+            {item.product_name}
+          </Text>
+        </View>
 
-      {/* Description */}
-      <View style={{ marginTop: 10 }}>
-        <Text style={{ marginLeft: 5, ...FONTS.h3, color: COLORS.primary }}>
-          Description
-        </Text>
-        <Text style={{ marginLeft: 5, fontSize: 12 }}>{item.description}</Text>
-      </View>
-      <View style={{ marginTop: 20 }}>
-        <Text style={{ marginLeft: 5, ...FONTS.h3, color: COLORS.primary }}>
-          Ingredients
-        </Text>
-        <Text style={{ marginLeft: 5, fontSize: 12 }}>{item.description}</Text>
+        {/* Description */}
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ marginLeft: 5, ...FONTS.h3, color: COLORS.primary }}>
+            Description
+          </Text>
+          <Text style={{ marginLeft: 5, fontSize: 12 }}>{item.description}</Text>
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <Text style={{ marginLeft: 5, ...FONTS.h3, color: COLORS.primary }}>
+            Ingredients
+          </Text>
+          <Text style={{ marginLeft: 5, fontSize: 12 }}>{item.description}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );

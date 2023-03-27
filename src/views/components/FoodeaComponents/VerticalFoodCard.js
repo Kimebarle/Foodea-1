@@ -130,6 +130,7 @@ const VerticalFoodCard = ({
     <TouchableOpacity
       style={{
         width: 200,
+        height: 250,
         padding: SIZES.radius,
         borderRadius: SIZES.radius,
         backgroundColor: "#FAF9F6",
@@ -167,8 +168,6 @@ const VerticalFoodCard = ({
       {/* Image */}
       <View
         style={{
-          height: 150,
-          width: 150,
           alignSelf: "center",
           justifyContent: "center",
           marginTop: SIZES.base,
@@ -179,8 +178,8 @@ const VerticalFoodCard = ({
             uri: item.product_image,
           }}
           style={{
-            height: "100%",
-            width: "100%",
+            height: 110,
+            width: 110,
           }}
         />
       </View>
@@ -189,7 +188,7 @@ const VerticalFoodCard = ({
       <View
         style={{
           alignItems: "center",
-          marginTop: -20,
+          marginTop: SIZES.radius,
         }}
       >
         <Text

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet, } from "react-native";
 import { TextInput } from "react-native-paper";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { BASE_URL } from "../../../api/context/auth/config";
@@ -22,6 +22,7 @@ import {
     FormInputCheck,
     EditButton,
 } from "../../components/FoodeaComponents";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const EditEmailPhone = ({ navigation }) => {
     const { user } = useContext(AuthContext);
@@ -32,6 +33,20 @@ const EditEmailPhone = ({ navigation }) => {
     const [phoneError, setPhoneError] = React.useState("");
     const [data, setData] = React.useState();
     const [next, setNext] = React.useState();
+    const [checkValidEmail, setCheckValidEmail] = React.useState(false);
+
+    const handleCheckEmail = (value) => {
+        let re = /\S+@\S+\.\S+/;
+        let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+        setEmail(value);
+        if (re.test(value) || regex.test(value)) {
+            setCheckValidEmail(false);
+        } else {
+            setCheckValidEmail(true);
+        }
+    };
+
     const getUserData = async () => {
         const userID = user.user_id;
         setIsLoading(true);
@@ -48,6 +63,10 @@ const EditEmailPhone = ({ navigation }) => {
     const HandleSubmit = () => {
         console.log("Saved Details")
     }
+
+    const disabledButton = () => {
+        return !phone || !email
+    };
 
     function renderHeader() {
         return (
@@ -99,89 +118,113 @@ const EditEmailPhone = ({ navigation }) => {
             {/* HEADER */}
             {renderHeader()}
 
-            <View style={{ marginTop: SIZES.padding, }}>
+            <KeyboardAwareScrollView
+                enableOnAndroid={true}
+                keyboardDismissMode="on-drag"
+                keyboardShouldPersistTaps={"handled"}
+                extraScrollHeight={-200}
+                contentContainerStyle={{
+                    marginTop: SIZES.base,
+                    flexGrow: 1,
+                    paddingBottom: SIZES.padding * 2,
+                }}
+            >
+                <View style={{ marginTop: SIZES.padding, }}>
 
-                <View style={{
-                    alignItems: 'center',
-                }}>
-                    <FormInput
-                        containerStyle={{
-                            borderRadius: SIZES.radius,
-                            marginBottom: SIZES.radius,
-                            width: 300
-                        }}
-                        label="Email"
-                        value={email}
-                        maxLength={3}
-                        placeholder={isLoading ? "Josh" : data[0].email}
-                        onChange={(value) => {
-                            setEmail(value);
-                            utils.validateInput(value, 1, setEmailError);
-                        }}
-                    />
-                </View>
+                    <View style = {{
+                        alignItems: 'center',
+                    }}>
+                        <View style={{
+                            flexDirection: 'row',
+                        }}>
+                            {/* Email */}
+                            <FormInput
+                                containerStyle={{
+                                    borderRadius: SIZES.radius,
+                                    marginBottom: SIZES.radius,
+                                    width: 300
+                                }}
+                                label="Email"
+                                value={email}
+                                maxLength={50}
+                                placeholder={isLoading ? "Josh" : data[0].email}
+                                onChange={(value) => {
+                                    setEmail(value);
+                                    handleCheckEmail(value);
+                                }}
+                            />
+                            <View
+                                style={{
+                                    position: "absolute",
+                                    bottom: 45,
+                                    right: 2,
+                                }}
+                            >
+                                {checkValidEmail ? (
+                                    <Text style={styles.textFailed}>Wrong format email</Text>
+                                ) : (
+                                    <Text style={styles.textFailed}> </Text>
+                                )}
+                            </View>
+                        </View>
+                    </View>
 
-                <View style={{
-                    alignItems: 'center',
-                }}>
+                    <View style={{
+                        alignItems: 'center',
+                    }}>
 
-                    {/* Middle Name */}
-                    <FormInput
-                        containerStyle={{
-                            borderRadius: SIZES.radius,
-                            marginBottom: SIZES.radius,
-                            width: 300
-                        }}
-                        label="Phone Number"
-                        value={phone}
-                        keyboardType="number-pad"
-                        maxLength={11}
-                        placeholder={isLoading ? "Josh" : data[0].contact_number}
-                        onChange={(value) => {
-                            setPhone(value);
-                            utils.validateInput(value, 1, setPhoneError);
-                        }}
-                    />
-                </View>
+                        {/* Phone Number */}
+                        <FormInput
+                            containerStyle={{
+                                borderRadius: SIZES.radius,
+                                marginBottom: SIZES.radius,
+                                width: 300
+                            }}
+                            label="Phone Number"
+                            value={phone}
+                            keyboardType="number-pad"
+                            maxLength={11}
+                            placeholder={isLoading ? "Josh" : data[0].contact_number}
+                            onChange={(value) => {
+                                setPhone(value);
+                                utils.validateInput(value, 1, setPhoneError);
+                            }}
+                        />
+                    </View>
 
-                <View style={{
-                    alignItems: "center",
-                }}>
-
-                    <TouchableOpacity onPress={HandleSubmit}>
-                        <View
-                            style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "center",
+                    <View style={{
+                        alignItems: 'center',
+                    }}>
+                        <TextButton
+                            label="Submit"
+                            disabled={disabledButton()}
+                            buttonContainerStyle={{
                                 height: 50,
                                 width: 300,
-                                backgroundColor: COLORS.primary,
+                                marginTop: SIZES.padding,
+                                alignItems: "center",
                                 borderRadius: SIZES.radius,
-                                marginTop: 100,
-                                elevation: 5,
+                                marginBottom: SIZES.padding,
+                                backgroundColor: !disabledButton() ? COLORS.primary : COLORS.gray,
                             }}
-                        >
-                            {/* <Image
-                                source={icons.edit}
-                                style={{
-                                    height: 20,
-                                    width: 20,
-                                    tintColor: COLORS.white,
-                                    position: "absolute",
-                                    right: 15
-
-                                }}
-                            /> */}
-
-                            <Text style={{ ...FONTS.h3, color: COLORS.white }}>Submit</Text>
-                        </View>
-                    </TouchableOpacity>
+                            onPress={HandleSubmit}
+                        />
+                    </View>
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
         </View>
     );
 };
 
 
 export default EditEmailPhone;
+
+const styles = StyleSheet.create({
+    textFailed: {
+        alignSelf: "flex-end",
+        color: "red",
+        position: "absolute",
+        bottom: 10,
+        ...FONTS.h5,
+    },
+});

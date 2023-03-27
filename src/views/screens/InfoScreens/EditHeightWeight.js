@@ -22,8 +22,9 @@ import {
     FormInputCheck,
     EditButton,
 } from "../../components/FoodeaComponents";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const EditHeightWeight= ({ navigation }) => {
+const EditHeightWeight = ({ navigation }) => {
     const { user } = useContext(AuthContext);
     const [isLoading, setIsLoading] = React.useState(true);
     const [height, setHeight] = React.useState("");
@@ -49,6 +50,10 @@ const EditHeightWeight= ({ navigation }) => {
     const HandleSubmit = () => {
         console.log("Saved Details")
     }
+
+    const disabledButton = () => {
+        return !height || !weight
+    };
 
     function renderHeader() {
         return (
@@ -100,85 +105,81 @@ const EditHeightWeight= ({ navigation }) => {
             {/* HEADER */}
             {renderHeader()}
 
-            <View style={{ marginTop: SIZES.padding, }}>
+            <KeyboardAwareScrollView
+                enableOnAndroid={true}
+                keyboardDismissMode="on-drag"
+                keyboardShouldPersistTaps={"handled"}
+                extraScrollHeight={-200}
+                contentContainerStyle={{
+                    marginTop: SIZES.base,
+                    flexGrow: 1,
+                    paddingBottom: SIZES.padding * 2,
+                }}
+            >
+                <View style={{ marginTop: SIZES.padding, }}>
 
-                <View style={{
-                    alignItems: 'center',
-                }}>
-                    <FormInput
-                        containerStyle={{
-                            borderRadius: SIZES.radius,
-                            marginBottom: SIZES.radius,
-                            width: 300
-                        }}
-                        label="Height"
-                        keyboardType="number-pad"
-                        value={height}
-                        maxLength={3}
-                        onChange={(value) => {
-                            setHeight(value);
-                            utils.validateInput(value, 1, setHeightError);
-                        }}
-                    />
-                </View>
+                    <View style={{
+                        alignItems: 'center',
+                    }}>
+                        <FormInput
+                            containerStyle={{
+                                borderRadius: SIZES.radius,
+                                marginBottom: SIZES.radius,
+                                width: 300
+                            }}
+                            label="Height"
+                            keyboardType="number-pad"
+                            value={height}
+                            maxLength={3}
+                            onChange={(value) => {
+                                setHeight(value);
+                                utils.validateInput(value, 1, setHeightError);
+                            }}
+                        />
+                    </View>
 
-                <View style={{
-                    alignItems: 'center',
-                }}>
+                    <View style={{
+                        alignItems: 'center',
+                    }}>
 
-                    {/* Middle Name */}
-                    <FormInput
-                        containerStyle={{
-                            borderRadius: SIZES.radius,
-                            marginBottom: SIZES.radius,
-                            width: 300
-                        }}
-                        label="Weight"
-                        value={weight}
-                        keyboardType="number-pad"
-                        maxLength={2}
-                        onChange={(value) => {
-                            setWeight(value);
-                            utils.validateInput(value, 1, setWeightError);
-                        }}
-                    />
-                </View>
+                        {/* Middle Name */}
+                        <FormInput
+                            containerStyle={{
+                                borderRadius: SIZES.radius,
+                                marginBottom: SIZES.radius,
+                                width: 300
+                            }}
+                            label="Weight"
+                            value={weight}
+                            keyboardType="number-pad"
+                            maxLength={2}
+                            onChange={(value) => {
+                                setWeight(value);
+                                utils.validateInput(value, 1, setWeightError);
+                            }}
+                        />
+                    </View>
 
-                <View style={{
-                    alignItems: "center",
-                }}>
-
-                    <TouchableOpacity onPress={HandleSubmit}>
-                        <View
-                            style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "center",
+                    <View style={{
+                        alignItems: 'center',
+                    }}>
+                        <TextButton
+                            label="Submit"
+                            disabled={disabledButton()}
+                            buttonContainerStyle={{
                                 height: 50,
                                 width: 300,
-                                backgroundColor: COLORS.primary,
+                                marginTop: SIZES.padding,
+                                alignItems: "center",
                                 borderRadius: SIZES.radius,
-                                marginTop: 100,
-                                elevation: 5,
+                                marginBottom: SIZES.padding,
+                                backgroundColor: !disabledButton() ? COLORS.primary : COLORS.gray,
                             }}
-                        >
-                            {/* <Image
-                                source={icons.edit}
-                                style={{
-                                    height: 20,
-                                    width: 20,
-                                    tintColor: COLORS.white,
-                                    position: "absolute",
-                                    right: 15
-
-                                }}
-                            /> */}
-
-                            <Text style={{ ...FONTS.h3, color: COLORS.white }}>Submit</Text>
-                        </View>
-                    </TouchableOpacity>
+                            onPress={HandleSubmit}
+                        />
+                    </View>
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
         </View>
     );
 };

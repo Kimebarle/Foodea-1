@@ -173,17 +173,16 @@ const SignupName = ({ navigation, route }) => {
                         {/* Birthday */}
                         <Text
                             style={{
-                                color: COLORS.black,
+                                color: COLORS.gray,
                                 ...FONTS.h3,
                                 fontSize: 15,
                                 marginTop: SIZES.base,
-                                marginLeft: SIZES.padding
                             }}
                         >
                             Birthday
                         </Text>
                     </View>
-                    
+
                     <View
                         style={{
                             alignItems: "center",
@@ -205,15 +204,19 @@ const SignupName = ({ navigation, route }) => {
                                     justifyContent: "center",
                                 }}
                             >
-                                <Button
-                                    title="Show"
+                                <TouchableOpacity style={{
+                                    marginLeft: SIZES.base
+                                }}
                                     onPress={showDatePicker}
-                                    style={{
-                                        borderRadius: SIZES.radius,
-                                        marginLeft: SIZES.base,
-                                        width: 100,
-                                    }}
-                                />
+                                >
+                                    <Image
+                                        source={require("../../../../assets/img/icons/calendar.png")}
+                                        style={{
+                                            height: 25,
+                                            width: 25,
+                                            tintColor: COLORS.primary
+                                        }} />
+                                </TouchableOpacity>
                             </View>
                         </View>
 
@@ -339,7 +342,7 @@ const styles = StyleSheet.create({
     },
     signup_text: {},
     input: {
-        width: 190,
+        width: 230,
         height: 50,
     },
 });
