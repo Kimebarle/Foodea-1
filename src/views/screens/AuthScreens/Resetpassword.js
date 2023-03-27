@@ -58,7 +58,7 @@ const Resetpassword = ({ navigation, route }) => {
         password: newpassword,
       });
       console.log(response.data);
-      Alert.alert("Success", "", [
+      Alert.alert("Success", "Your password has been changed", [
         {
           text: "Confirm",
           onPress: () => navigation.navigate("LoginScreen"),

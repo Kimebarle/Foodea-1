@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
@@ -16,14 +16,15 @@ import {
   FONTS,
   images,
 } from "../../../constants";
+import AuthContext from "../../../api/context/auth/AuthContext";
 
 const CheckOut = ({ navigation, route }) => {
-  const { passedValues } = route.params;
+  const { user } = useContext(AuthContext);
+  const [coupon, setCoupon] = React.useState();
 
   const [selectedCard, setSelectedCard] = React.useState(null);
   React.useEffect(() => {
     let { selectedCard } = route.params;
-
     setSelectedCard(selectedCard);
   }, []);
 
@@ -115,17 +116,27 @@ const CheckOut = ({ navigation, route }) => {
             borderColor: COLORS.lightGray2,
           }}
         >
-          <Image
-            source={icons.pinlocation}
+          <TouchableOpacity
             style={{
-              width: 40,
-              height: 40,
-              tintColor: COLORS.black,
+              flexDirection: "row",
+              alignItems: "center",
             }}
-          />
-          <Text style={{ marginLeft: SIZES.radius, width: "85%", ...FONTS.h3 }}>
-            Phase 7B Package 1 Block 57 Bagong Silang Caloocan City
-          </Text>
+            onPress={() => {}}
+          >
+            <Image
+              source={icons.pinlocation}
+              style={{
+                width: 40,
+                height: 40,
+                tintColor: COLORS.black,
+              }}
+            />
+            <Text
+              style={{ marginLeft: SIZES.radius, width: "85%", ...FONTS.h3 }}
+            >
+              {user.address}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -137,7 +148,7 @@ const CheckOut = ({ navigation, route }) => {
         <Text style={{ ...FONTS.h3 }}>Add Coupon</Text>
 
         <FormInput
-          inputContainerStyle={{
+          ContainerStyle={{
             marginTop: 0,
             paddingLeft: SIZES.padding,
             paddingRight: 0,
@@ -145,6 +156,10 @@ const CheckOut = ({ navigation, route }) => {
             borderColor: COLORS.lightGray2,
             backgroundColor: COLORS.white,
             overflow: "hidden",
+          }}
+          value={coupon}
+          onChange={(value) => {
+            setCoupon(value);
           }}
           placeholder="Coupon Code"
         />

@@ -36,7 +36,7 @@ const TestScreen = ({ navigation }) => {
   const [menuList, setMenuList] = React.useState([]);
   const [itemId, setItemId] = React.useState([]);
   const [favoritesDisplay, setFavoritesDisplay] = React.useState();
-  const [itemsDisplay, setItemDisplay] = React.useState();
+  const [itemsDisplay, setItemDisplay] = React.useState([]);
   const [foodDisplay, setFoodDisplay] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
   const [restaurantData, setRestaurantData] = React.useState();
@@ -46,26 +46,23 @@ const TestScreen = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       setIsLoading(true);
-      handleChangeCategory();
+
       getItemTable();
       getFavorites();
       getFood();
       setItemDisplay();
-      console.log("asdasd");
       getRestaurant();
       setSelectedCategoryId();
     }, [getItemTable])
   );
 
   const handleChangeCategory = useCallback(async (id) => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}foods?merchant_id[eq]=${id}&limit=4`
-      );
-      setItemDisplay(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await getFood();
+    const list = [...data];
+    const updatedList = list
+      .filter((item) => item.merchant_id === id)
+      .splice(0, 4);
+    setItemDisplay(updatedList);
   }, []);
 
   const getFavorites = useCallback(async () => {
@@ -78,7 +75,7 @@ const TestScreen = ({ navigation }) => {
   }, []);
 
   const getFood = async () => {
-    const foodResponse = await axios.get(`${BASE_URL}foods?merchant_id[eq]=1`);
+    const foodResponse = await axios.get(`${BASE_URL}foods?limit=20`);
     setFoodDisplay(foodResponse.data);
     const data = foodResponse.data;
     return data;
