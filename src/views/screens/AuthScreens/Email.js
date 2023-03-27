@@ -95,12 +95,10 @@ const Email = ({ navigation, route }) => {
         ...item,
         email: email,
         password: password,
+        phone: phoneNumber,
       }));
       navigation.navigate("SurveyScreen", { passedList4: list4 });
     }
-    // console.log(result);
-    // console.log(passedList3);
-    // navigation.navigate("SurveyScreen")
   };
 
   function renderDetails() {
@@ -140,9 +138,11 @@ const Email = ({ navigation, route }) => {
           </Text>
 
           {/* Email */}
-          <View style={{
-            alignItems: 'center',
-          }}>
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
             <View
               style={{
                 flexDirection: "row",
@@ -181,10 +181,12 @@ const Email = ({ navigation, route }) => {
             </View>
           </View>
 
-          <View style={{
-            alignItems: 'center',
-            marginBottom: SIZES.radius
-          }}>
+          <View
+            style={{
+              alignItems: "center",
+              marginBottom: SIZES.radius,
+            }}
+          >
             <TextInput
               style={{
                 ...FONTS.h3,
@@ -199,9 +201,11 @@ const Email = ({ navigation, route }) => {
           </View>
 
           {/* Password  */}
-          <View style={{
-            alignItems: 'center',
-          }}>
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
             <View
               style={{
                 flexDirection: "row",
@@ -237,9 +241,11 @@ const Email = ({ navigation, route }) => {
           </View>
 
           {/* Re-Enter Password */}
-          <View style = {{
-            alignItems: "center",
-          }}>
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
             <View
               style={{
                 flexDirection: "row",
@@ -272,8 +278,6 @@ const Email = ({ navigation, route }) => {
               />
             </View>
           </View>
-
-
 
           <TextButton
             label="Next"
@@ -372,7 +376,7 @@ const Email = ({ navigation, route }) => {
 
       {/* Logo
             {renderLogo()} */}
-      
+
       {/* Email Address */}
       {renderDetails()}
     </View>

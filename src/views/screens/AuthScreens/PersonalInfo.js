@@ -49,7 +49,8 @@ const PersonalInfo = ({ navigation, route }) => {
       bmi: bmi,
       gender: selected,
     }));
-    console.log(list2);
+    // console.log(list2);
+    // console.log(bmi);
     navigation.navigate("Location", { passedList2: list2 });
   };
 
@@ -141,13 +142,13 @@ const PersonalInfo = ({ navigation, route }) => {
               setSelected={setSelected}
               notFoundText="No Data Exists, Please Input Suitable Gender"
               boxStyles={{
-                  backgroundColor: COLORS.lightGray2,
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  height: SIZES.height > 800 ? 55 : 45,
-                  marginTop: SIZES.height > 800 ? SIZES.base : 0,
-                  borderRadius: SIZES.radius,
-                  backgroundColor: COLORS.lightGray2,
+                backgroundColor: COLORS.lightGray2,
+                alignItems: "center",
+                flexDirection: "row",
+                height: SIZES.height > 800 ? 55 : 45,
+                marginTop: SIZES.height > 800 ? SIZES.base : 0,
+                borderRadius: SIZES.radius,
+                backgroundColor: COLORS.lightGray2,
               }}
             />
           </View>

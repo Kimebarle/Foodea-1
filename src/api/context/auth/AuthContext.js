@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
         gender: data[0].gender,
         address: data[0].address,
         age: data[0].age,
-        contact_number: data[0].contact_number,
+        contact_number: data[0].phone,
         bmi: data[0].bmi,
         email: data[0].email,
         password: data[0].password,
@@ -31,9 +31,7 @@ export const AuthProvider = ({ children }) => {
         preferences: data[0].preferences,
       });
       console.log(response.data);
-
-      let id = response.data.user_id;
-      setUserId(id);
+      setUserId(response.data.user_id);
       Alert.alert("Successfully ", "Registered", [
         {
           text: "Confirm",
@@ -43,9 +41,24 @@ export const AuthProvider = ({ children }) => {
           style: "cancel",
         },
       ]);
-      console.log(data);
     } catch (error) {
       console.log(error);
+      console.log(
+        data[0].firstname,
+        data[0].firstname,
+        data[0].lastname,
+        data[0].weight,
+        data[0].height,
+        data[0].gender,
+        data[0].address,
+        data[0].age,
+        data[0].phone,
+        data[0].bmi,
+        data[0].email,
+        data[0].password,
+        data[0].lifestyle,
+        data[0].preferences
+      );
     }
   };
 
@@ -64,11 +77,19 @@ export const AuthProvider = ({ children }) => {
             "user",
             JSON.stringify(response.data.length > 0)
           );
+          SecureStore.setItemAsync(
+            "userId",
+            JSON.stringify(response.data[0].user_id)
+          );
           console.log(remember);
 
           // console.log(remember);
           if (remember) {
             SecureStore.setItemAsync("user", JSON.stringify(response.data[0]));
+            SecureStore.setItemAsync(
+              "userId",
+              JSON.stringify(response.data[0].user_id)
+            );
             SecureStore.setItemAsync("logged_in", "true");
             console.log(remember);
           }
