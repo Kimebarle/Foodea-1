@@ -128,7 +128,7 @@ const SignupName = ({ navigation, route }) => {
                             ...FONTS.h5,
                         }}
                     >
-                        Input your First Name, Middle Name (optional), Last Name, Birthday.
+                        Input your First Name, Middle Name, Last Name, Birthday.
                     </Text>
 
 
