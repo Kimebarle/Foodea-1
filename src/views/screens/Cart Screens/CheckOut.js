@@ -22,19 +22,30 @@ import { BASE_URL } from "../../../api/context/auth/config";
 import { Alert } from "react-native";
 
 const CheckOut = ({ navigation, route }) => {
-  const { user } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   const [coupon, setCoupon] = React.useState();
   const [totalPrice, setTotalPrice] = React.useState(5);
   const [fee, setFee] = React.useState(50);
   const [calories, setCalories] = React.useState();
-
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [userData, setUserData] = React.useState(null);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const { passedValues } = route.params;
+
   React.useEffect(() => {
+    setIsLoading(true);
+    getUser();
     getTotal();
     let { selectedCard } = route.params;
     setSelectedCard(selectedCard);
   }, []);
+
+  const getUser = async () => {
+    setIsLoading(true);
+    const response = await axios.get(`${BASE_URL}app_users/${userId}`);
+    setUserData(response.data);
+    setIsLoading(false);
+  };
 
   const getTotal = async () => {
     const list = [...passedValues];
@@ -44,7 +55,6 @@ const CheckOut = ({ navigation, route }) => {
       totalPrice += item.product_details.price * item.quantity;
       totalCalories += item.product_details.calories * item.quantity;
     });
-
     setCalories(totalCalories);
     setTotalPrice(totalPrice);
   };
@@ -68,7 +78,7 @@ const CheckOut = ({ navigation, route }) => {
   const addToOrders = async (list1) => {
     for (let i = 0; i < passedValues.length; i++) {
       const response = await axios.post(`${BASE_URL}orders`, {
-        customer_id: user.user_id,
+        customer_id: userId,
         merchant_id: list1[i].restaurant_id,
         product_id: list1[i].product_id,
         restaurant_id: list1[i].restaurant_id,
@@ -207,7 +217,7 @@ const CheckOut = ({ navigation, route }) => {
             <Text
               style={{ marginLeft: SIZES.radius, width: "85%", ...FONTS.h3 }}
             >
-              {user.address}
+              {isLoading ? "address" : userData[0].address}
             </Text>
           </TouchableOpacity>
         </View>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import {
   Header,
@@ -15,9 +15,26 @@ import {
   images,
 } from "../../../constants";
 import AuthContext from "../../../api/context/auth/AuthContext";
+import { BASE_URL } from "../../../api/context/auth/config";
+import axios from "axios";
 
 const MyAvatar = ({ navigation }) => {
-  const { userInfo, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const [userInfo, setUserInfo] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const getUserData = async () => {
+    setIsLoading(true);
+    const response = await axios.get(
+      `${BASE_URL}app_users?user_id[eq]=${user.user_id}`
+    );
+    setUserInfo(response.data);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    getUserData();
+  }, []);
 
   function renderHeader() {
     return (
@@ -81,7 +98,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h2,
             }}
           >
-            {user.height}
+            {isLoading ? "placeholder" : userInfo[0].height}
             <Text> cm</Text>
           </Text>
           <Text
@@ -108,7 +125,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h2,
             }}
           >
-            {user.bmi}
+            {isLoading ? "placeholder" : userInfo[0].bmi}
           </Text>
           <Text
             style={{
@@ -132,7 +149,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h2,
             }}
           >
-            {user.weight} kg
+            {isLoading ? "placeholder" : userInfo[0].weight} kg
           </Text>
           <Text
             style={{
@@ -218,7 +235,13 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h4,
             }}
           >
-            {user.firstname} {user.middlename} {user.lastname}
+            {isLoading
+              ? "placeholder"
+              : userInfo[0].firstname +
+                " " +
+                userInfo[0].middlename +
+                " " +
+                userInfo[0].lastname}
           </Text>
         </View>
 
@@ -250,7 +273,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h4,
             }}
           >
-            {user.email}
+            {isLoading ? "placeholder" : userInfo[0].email}
           </Text>
         </View>
 
@@ -282,7 +305,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h4,
             }}
           >
-            {user.address}
+            {isLoading ? "placeholder" : userInfo[0].address}
           </Text>
         </View>
 
@@ -314,7 +337,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h4,
             }}
           >
-            {user.contact_number}
+            {isLoading ? "0999999999999" : userInfo[0].contact_number}
           </Text>
         </View>
       </View>

@@ -33,7 +33,7 @@ const Email = ({ navigation, route }) => {
   const [passwordError, setPasswordError] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [phoneNumberError, setPhoneNumberError] = React.useState("");
-  const [reenterpassword, setReEnterPassword] = React.useState("");
+
   const [reenterpasswordError, setReEnterPasswordError] = React.useState("");
   const [reshowPassword, setReShowPasswod] = React.useState(false);
   const { passedList3 } = route.params;
@@ -42,17 +42,8 @@ const Email = ({ navigation, route }) => {
   const [password, setPassword] = React.useState("");
   const [resetpassword, setResetPassword] = React.useState("");
   const [checkValidEmail, setCheckValidEmail] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(true);
+
   const [showPassword, setShowPasswod] = React.useState(false);
-
-
-  const toggleHidePassword = () => {
-    setShowPasswod(!showPassword);
-  };
-
-  const togglePassword = () => {
-    setResetShowPasswod(!resetshowPassword);
-  };
 
   const handleCheckEmail = (value) => {
     let re = /\S+@\S+\.\S+/;
@@ -67,17 +58,23 @@ const Email = ({ navigation, route }) => {
   };
 
   const disabledButton = () => {
-    return !email || !password || !resetpassword;
+    return (
+      !email ||
+      !password ||
+      !resetpassword ||
+      password != resetpassword ||
+      passwordError != "" ||
+      checkValidEmail != false
+    );
   };
 
   const emailChecker = async () => {
     const response = await axios.get(`${BASE_URL}app_users?email[eq]=${email}`);
     return response.data.length > 0;
   };
-
   const handleSignUpPress = async () => {
     const result = await emailChecker();
-
+    console.log(disabledButton());
     if (result) {
       Alert.alert(
         "Error",

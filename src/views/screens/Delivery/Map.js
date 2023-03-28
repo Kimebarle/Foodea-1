@@ -82,16 +82,14 @@ const Map = ({ navigation }) => {
           >
             {dummyData.track_order_status.map((item, index) => {
               return (
-                <View style = {{
-                }} 
-                key={`StatusList-${index}`}>
+                <View style={{}} key={`StatusList-${index}`}>
                   <View
                     style={{
                       flexDirection: "column",
-                      justifyContent: 'center',
+                      justifyContent: "center",
                       flex: 1,
                       alignItems: "center",
-                      width: 105
+                      width: 105,
                     }}
                   >
                     <Image
@@ -105,37 +103,6 @@ const Map = ({ navigation }) => {
                             : COLORS.lightGray1,
                       }}
                     />
-
-                    {/* {index < dummyData.track_order_status.length - 1 &&
-                                            <View style = {{
-                                                flexDirection: 'row',
-                                            }}>
-                                                {index < currentStep &&
-                                                    <Image
-                                                    source={icons.dottedline}
-                                                    resizeMode="contain"
-                                                    style={{
-                                                        width: 4,
-                                                        height: 20,
-                                                        backgroundColor: COLORS.primary,
-                                                        marginTop: 1,
-                                                    }}
-                                                />
-                                                }
-                                                {index >= currentStep &&
-                                                    <Image
-                                                        source={icons.horizontal_line}
-                                                        resizeMode="contain"
-                                                        style={{
-                                                            width: 4,
-                                                            height: 20,
-                                                            backgroundColor: COLORS.primary,
-                                                            marginTop: 1,
-                                                        }}
-                                                    />
-                                                }
-                                            </View>
-                                        } */}
                     <View
                       style={{
                         marginLeft: SIZES.radius,
@@ -144,7 +111,7 @@ const Map = ({ navigation }) => {
                       <Text
                         style={{
                           fontSize: 10,
-                          fontWeight: 'bold',
+                          fontWeight: "bold",
                         }}
                       >
                         {item.title}

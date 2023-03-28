@@ -107,97 +107,99 @@ const TestScreen = ({ navigation }) => {
     const response = await axios.get(`${BASE_URL}restaurants`);
     setRestaurantData(response.data);
     setIsLoading(false);
+    console.log(response.data[0].documents.logo);
   };
 
-  function renderOtherRestaurant() {
-    return (
-      <FlatList
-        data={isLoading ? dummyData.other_restaurant : restaurantData}
-        keyExtractor={(item) => `${item.merchant_id}`}
-        vertical
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              height: 100,
-              marginLeft: SIZES.padding,
-              marginRight: SIZES.padding,
-              marginBottom: SIZES.base,
-              paddingHorizontal: 8,
-              borderRadius: SIZES.radius,
-              backgroundColor: COLORS.white,
-            }}
-            onPress={() => {
-              // setItemId(item.merchant_id);
-              console.log(item.merchant_id);
-              navigation.navigate("HomeScreen", {
-                restaurantId: item.merchant_id,
-              });
-            }}
-          >
-            <Image
-              source={require("../../../../assets/img/images/kfc-logo-1.png")}
-              style={{
-                marginTop: 5,
-                height: 75,
-                width: 75,
-                alignSelf: "center",
-                marginRight: SIZES.radius,
-              }}
-            />
+  // function renderOtherRestaurant() {
+  //   return (
+  //     <FlatList
+  //       data={restaurantData}
+  //       keyExtractor={(item) => `${item.merchant_id}`}
+  //       vertical
+  //       renderItem={({ item }) => (
+  //         <TouchableOpacity
+  //           style={{
+  //             flexDirection: "row",
+  //             alignItems: "center",
+  //             height: 100,
+  //             marginLeft: SIZES.padding,
+  //             marginRight: SIZES.padding,
+  //             marginBottom: SIZES.base,
+  //             paddingHorizontal: 8,
+  //             borderRadius: SIZES.radius,
+  //             backgroundColor: COLORS.white,
+  //           }}
+  //           onPress={() => {
+  //             // setItemId(item.merchant_id);
+  //             console.log(item.merchant_id);
+  //             navigation.navigate("HomeScreen", {
+  //               restaurantId: item.merchant_id,
+  //             });
+  //           }}
+  //         >
+  //           {/* <Text>{item.documents.merchant_id}</Text> */}
+  //           {/* <Image
+  //             source={{ uri: item.documents.logo }}
+  //             style={{
+  //               marginTop: 5,
+  //               height: 75,
+  //               width: 75,
+  //               alignSelf: "center",
+  //               marginRight: SIZES.radius,
+  //             }}
+  //           /> */}
 
-            <View
-              style={{
-                marginTop: 5,
-              }}
-            >
-              <Text
-                style={{
-                  marginRight: SIZES.base,
-                  color: COLORS.black,
-                  ...FONTS.h2,
-                }}
-              >
-                {item.business_name}
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginTop: SIZES.base,
-                }}
-              >
-                <Text
-                  style={{
-                    ...FONTS.h4,
-                    color: COLORS.gray,
-                  }}
-                >
-                  {item.time} mins • {item.distance} km
-                </Text>
-              </View>
+  //           <View
+  //             style={{
+  //               marginTop: 5,
+  //             }}
+  //           >
+  //             <Text
+  //               style={{
+  //                 marginRight: SIZES.base,
+  //                 color: COLORS.black,
+  //                 ...FONTS.h2,
+  //               }}
+  //             >
+  //               {item.business_name}
+  //             </Text>
+  //             <View
+  //               style={{
+  //                 flexDirection: "row",
+  //                 marginTop: SIZES.base,
+  //               }}
+  //             >
+  //               <Text
+  //                 style={{
+  //                   ...FONTS.h4,
+  //                   color: COLORS.gray,
+  //                 }}
+  //               >
+  //                 {item.time} mins • {item.distance} km
+  //               </Text>
+  //             </View>
 
-              <View
-                style={{
-                  flexDirection: "row",
-                }}
-              >
-                <Text
-                  style={{
-                    ...FONTS.h5,
-                    fontSize: 10,
-                    color: COLORS.gray,
-                  }}
-                >
-                  {item.label} • {item.food} • {item.type}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        )}
-      />
-    );
-  }
+  //             <View
+  //               style={{
+  //                 flexDirection: "row",
+  //               }}
+  //             >
+  //               <Text
+  //                 style={{
+  //                   ...FONTS.h5,
+  //                   fontSize: 10,
+  //                   color: COLORS.gray,
+  //                 }}
+  //               >
+  //                 {item.label} • {item.food} • {item.type}
+  //               </Text>
+  //             </View>
+  //           </View>
+  //         </TouchableOpacity>
+  //       )}
+  //     />
+  //   );
+  // }
 
   // DISCOUNT
   function renderMenuTypes() {
@@ -439,7 +441,7 @@ const TestScreen = ({ navigation }) => {
             </View>
 
             {/* Other Restaurant */}
-            {renderOtherRestaurant()}
+            {/* {renderOtherRestaurant()} */}
           </View>
         }
         // renderItem={({ item, index }) => {

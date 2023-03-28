@@ -53,7 +53,7 @@ const EditProfile = ({ navigation, route }) => {
   };
 
   const disabledButton = () => {
-    return !password || !resetpassword;
+    return !password || !resetpassword || password != resetpassword;
   };
 
   const generateHash = (str) => {
@@ -80,7 +80,7 @@ const EditProfile = ({ navigation, route }) => {
 
   const updatePassword = async (password, resetpassword) => {
     const hash = generateHash(password);
-
+    console.log(user.password);
     const response = axios.patch(`${BASE_URL}app_users/${user.user_id}`, {
       password: hash,
     });
@@ -89,7 +89,7 @@ const EditProfile = ({ navigation, route }) => {
 
   const onPressHandler = async () => {
     const passwordBeforeChecker = await passwordChecker();
-    // console.log(passwordBeforeChecker);
+    console.log(passwordBeforeChecker);
     if (passwordBeforeChecker) {
       Alert.alert(
         "Warning",

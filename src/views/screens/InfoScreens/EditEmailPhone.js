@@ -88,167 +88,196 @@ const EditEmailPhone = ({ navigation }) => {
     });
   };
 
+  const updateInfo = async () => {
+    const response = await axios.patch(`${BASE_URL}app_users/${user.user_id}`, {
+      email: email,
+      phone: phone,
+    });
+  };
+
+  const emailChecker = async () => {
+    const response = await axios.get(`${BASE_URL}app_users?email[eq]=${email}`);
+    if (response.data.length > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const HandleSubmit = async () => {
     const decision = await confirmAction();
     if (decision) {
+      const emailCheck = await emailChecker();
+      if (emailCheck) {
+        const update = await updateInfo();
+        navigation.navigate("AccountScreen");
+      } else {
+        Alert.alert("Email Existing Already", "", [
+          {
+            text: "Confirm",
+            style: "cancel",
+            onPress: () => {},
+          },
+        ]);
+      }
     } else {
       console.log(decision);
     }
-  }
-    const disabledButton = () => {
-      return !phone || !email;
-    };
+  };
+  const disabledButton = () => {
+    return !phone || !email;
+  };
 
-    function renderHeader() {
-      return (
-        <Header
-          containerStyle={{
-            height: 80,
-            marginHorizontal: SIZES.padding,
-            alignItems: "center",
-          }}
-          title={"Edit Email and Number"}
-          leftComponent={
-            <TouchableOpacity
-              style={{
-                width: 40,
-                height: 40,
-                alignItems: "center",
-                justifyContent: "center",
-                borderWidth: 1,
-                borderColor: COLORS.gray2,
-                borderRadius: SIZES.radius,
-              }}
-              onPress={() => navigation.goBack()}
-            >
-              <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
-            </TouchableOpacity>
-          }
-          rightComponent={
-            <View
-              style={{
-                width: 40,
-              }}
-            ></View>
-          }
-        />
-      );
-    }
-
+  function renderHeader() {
     return (
-      <View
-        style={{
-          flex: 1,
-          height: SIZES.height,
-          width: SIZES.width,
-          backgroundColor: COLORS.white,
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        title={"Edit Email and Number"}
+        leftComponent={
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
+            }}
+            onPress={() => navigation.goBack()}
+          >
+            <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
+  }
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        height: SIZES.height,
+        width: SIZES.width,
+        backgroundColor: COLORS.white,
+      }}
+    >
+      {/* HEADER */}
+      {renderHeader()}
+
+      <KeyboardAwareScrollView
+        enableOnAndroid={true}
+        keyboardDismissMode="on-drag"
+        keyboardShouldPersistTaps={"handled"}
+        extraScrollHeight={-200}
+        contentContainerStyle={{
+          marginTop: SIZES.base,
+          flexGrow: 1,
+          paddingBottom: SIZES.padding * 2,
         }}
       >
-        {/* HEADER */}
-        {renderHeader()}
+        <View style={{ marginTop: SIZES.padding }}>
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            {/* Email */}
 
-        <KeyboardAwareScrollView
-          enableOnAndroid={true}
-          keyboardDismissMode="on-drag"
-          keyboardShouldPersistTaps={"handled"}
-          extraScrollHeight={-200}
-          contentContainerStyle={{
-            marginTop: SIZES.base,
-            flexGrow: 1,
-            paddingBottom: SIZES.padding * 2,
-          }}
-        >
-          <View style={{ marginTop: SIZES.padding }}>
-            <View
-              style={{
-                alignItems: "center",
+            <FormInput
+              containerStyle={{
+                borderRadius: SIZES.radius,
+                marginBottom: SIZES.radius,
+                width: 300,
               }}
-            >
-              {/* Email */}
-              
-              <FormInput
-                containerStyle={{
-                  borderRadius: SIZES.radius,
-                  marginBottom: SIZES.radius,
-                  width: 300,
-                }}
-                autoCapitalize
-                label="Email"
-                value={email}
-                placeholder={isLoading ? "Josh" : data[0].email}
-                onChange={(value) => {
-                  setEmail(value);
-                  handleCheckEmail(value);
-                }}
-                appendComponent={
-                  <View
-                    style={{
-                      position: "absolute",
-                      bottom: 45,
-                      right: 2,
-                    }}
-                  >
-                    {checkValidEmail ? (
-                      <Text style={styles.textFailed}>Wrong format email</Text>
-                    ) : (
-                      <Text style={styles.textFailed}> </Text>
-                    )}
-                  </View>
-                }
-              />
-            </View>
-
-            <View
-              style={{
-                alignItems: "center",
+              autoCapitalize
+              label="Email"
+              value={email}
+              placeholder={isLoading ? "Josh" : data[0].email}
+              onChange={(value) => {
+                setEmail(value);
+                handleCheckEmail(value);
               }}
-            >
-              {/* Phone Number */}
-              <FormInput
-                containerStyle={{
-                  borderRadius: SIZES.radius,
-                  marginBottom: SIZES.radius,
-                  width: 300,
-                }}
-                label="Phone Number"
-                value={phone}
-                keyboardType="number-pad"
-                maxLength={11}
-                placeholder={isLoading ? "Josh" : data[0].contact_number}
-                onChange={(value) => {
-                  setPhone(value);
-                  utils.validateInput(value, 1, setPhoneError);
-                }}
-              />
-            </View>
-
-            <View
-              style={{
-                alignItems: "center",
-              }}
-            >
-              <TextButton
-                label="Submit"
-                disabled={disabledButton()}
-                buttonContainerStyle={{
-                  height: 50,
-                  width: 300,
-                  marginTop: SIZES.padding,
-                  alignItems: "center",
-                  borderRadius: SIZES.radius,
-                  marginBottom: SIZES.padding,
-                  backgroundColor: !disabledButton()
-                    ? COLORS.primary
-                    : COLORS.gray,
-                }}
-                onPress={HandleSubmit}
-              />
-            </View>
+              appendComponent={
+                <View
+                  style={{
+                    position: "absolute",
+                    bottom: 45,
+                    right: 2,
+                  }}
+                >
+                  {checkValidEmail ? (
+                    <Text style={styles.textFailed}>Wrong format email</Text>
+                  ) : (
+                    <Text style={styles.textFailed}> </Text>
+                  )}
+                </View>
+              }
+            />
           </View>
-        </KeyboardAwareScrollView>
-      </View>
-    );
-  };
+
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            {/* Phone Number */}
+            <FormInput
+              containerStyle={{
+                borderRadius: SIZES.radius,
+                marginBottom: SIZES.radius,
+                width: 300,
+              }}
+              label="Phone Number"
+              value={phone}
+              keyboardType="number-pad"
+              maxLength={11}
+              placeholder={isLoading ? "Josh" : data[0].contact_number}
+              onChange={(value) => {
+                setPhone(value);
+                utils.validateInput(value, 1, setPhoneError);
+              }}
+            />
+          </View>
+
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <TextButton
+              label="Submit"
+              disabled={disabledButton()}
+              buttonContainerStyle={{
+                height: 50,
+                width: 300,
+                marginTop: SIZES.padding,
+                alignItems: "center",
+                borderRadius: SIZES.radius,
+                marginBottom: SIZES.padding,
+                backgroundColor: !disabledButton()
+                  ? COLORS.primary
+                  : COLORS.gray,
+              }}
+              onPress={HandleSubmit}
+            />
+          </View>
+        </View>
+      </KeyboardAwareScrollView>
+    </View>
+  );
+};
 export default EditEmailPhone;
 
 const styles = StyleSheet.create({
