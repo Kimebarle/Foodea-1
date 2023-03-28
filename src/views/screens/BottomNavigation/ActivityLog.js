@@ -36,8 +36,6 @@ const ActivityLogScreen = ({ navigation }) => {
       setItemLength(response.data.length > 0);
       setMyActivityLogList(data);
     }
-
-    //console.log(myActivityLogList);
   };
 
   useEffect(() => {
@@ -200,11 +198,13 @@ const ActivityLogScreen = ({ navigation }) => {
             }}
           />
         ) : (
-          <View style={{
-            flex: 1,
-            alignSelf: "center",
-            justifyContent: "center",
-          }}>
+          <View
+            style={{
+              flex: 1,
+              alignSelf: "center",
+              justifyContent: "center",
+            }}
+          >
             <LoadingActivity
               containerStyle={{
                 width: 250,

@@ -6,19 +6,19 @@
 
 const Restaurant = [
   {
-    id: 3,
+    id: 7,
     name: "Jollibee",
     icon: require("../../assets/img/images/jollibee_logo.png"),
     distance: 2,
   },
   {
-    id: 4,
+    id: 8,
     name: "McDonalds",
     icon: require("../../assets/img/images/mcdonalds-png-logo-simple-m-1.png"),
     distance: "3.8",
   },
   {
-    id: 7,
+    id: 9,
     name: "Chowking",
     icon: require("../../assets/img/images/chowking.png"),
     distance: "1.1",
@@ -53,12 +53,16 @@ const other_restaurant = [
     merchant_id: 1,
     restaurantcategories: [1],
     name: "Mang Inasal",
-    icon: require("../../assets/img/images/manginasal.png"),
     time: 15,
     distance: 3,
     label: "Filipino",
     food: "Chicken",
     type: "Fast Food",
+    documents: [
+      {
+        logo: require("../../assets/img/images/manginasal.png"),
+      },
+    ],
   },
   {
     merchant_id: 2,

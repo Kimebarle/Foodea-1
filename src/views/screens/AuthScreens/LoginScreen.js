@@ -8,6 +8,7 @@ import {
   Button,
   TextButton,
   Remember,
+  FormInput,
 } from "../../components/FoodeaComponents";
 
 import {
@@ -88,7 +89,7 @@ const LoginScreen = ({ navigation }) => {
               touched,
             }) => (
               <>
-                <TextInput
+                {/* <TextInput
                   label="Email"
                   value={values.email}
                   onChangeText={handleChange("email")}
@@ -96,11 +97,34 @@ const LoginScreen = ({ navigation }) => {
                   error={touched.email && errors.email ? true : false}
                   errorMsg={touched.email && errors.email ? errors.email : ""}
                   roundness={10}
-                />
-                <TextInput
+                /> */}
+                {/* <TextInput
                   label="Password"
                   value={values.password}
                   onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  error={touched.password && errors.password ? true : false}
+                  errorMsg={
+                    touched.password && errors.password ? errors.password : ""
+                  }
+                  secureTextEntry
+                  roundness={10}
+                /> */}
+
+                <FormInput
+                  label="Email"
+                  value={values.email}
+                  onChange={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  error={touched.email && errors.email ? true : false}
+                  errorMsg={touched.email && errors.email ? errors.email : ""}
+                  roundness={10}
+                />
+
+                <FormInput
+                  label="Password"
+                  value={values.password}
+                  onChange={handleChange("password")}
                   onBlur={handleBlur("password")}
                   error={touched.password && errors.password ? true : false}
                   errorMsg={
@@ -138,13 +162,13 @@ const LoginScreen = ({ navigation }) => {
                       ...FONTS.h3,
                       textAlign: "center",
                       marginBottom: SIZES.padding,
-                      marginTop: SIZES.radius
+                      marginTop: SIZES.radius,
                     }}
                   >
                     Forgot Password
                   </Text>
                 </TouchableOpacity>
-                
+
                 {/* <TouchableOpacity onPress={handleSignUpPress}> 
                   <Text>
                     Welcome

@@ -26,7 +26,7 @@ const HorizontalFoodCard = ({
   };
 
   return (
-    <View style={{ alignItems: 'center' }}>
+    <View style={{ alignItems: "center" }}>
       <TouchableOpacity
         style={{
           width: 300,
@@ -39,27 +39,26 @@ const HorizontalFoodCard = ({
         onPress={onPress}
       >
         {/* image */}
-        <Image
-          source={require("../../../../assets/img/dummyData/hamburger.png")}
-          style={imageStyle}
-        />
+        <Image source={{ uri: item.product_image }} style={imageStyle} />
         <View style={{ flex: 1 }}>
-          <View style = {{
-            justifyContent: 'center',
-          }}>
+          <View
+            style={{
+              justifyContent: "center",
+            }}
+          >
             {/* price */}
             <Text
               style={{
                 ...FONTS.h2,
                 fontWeight: "bold",
-                color: COLORS.primary
+                color: COLORS.primary,
               }}
             >
               ₱ {item.price}
             </Text>
 
             {/* name */}
-            <Text style={{ ...FONTS.h4, fontWeight: "bold", }}>
+            <Text style={{ ...FONTS.h4, fontWeight: "bold" }}>
               {item.product_name}
             </Text>
 
@@ -77,7 +76,7 @@ const HorizontalFoodCard = ({
           </View>
 
           {/* images */}
-          <View style={{ position: 'absolute', top: -20, right: 15 }}>
+          <View style={{ position: "absolute", top: -20, right: 15 }}>
             <IconButton
               icon={isFavorite ? icons.favourite : icons.love}
               iconStyle={{

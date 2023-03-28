@@ -106,35 +106,35 @@ const Favorite = ({ navigation, data }) => {
           alignItems: "center",
         }}
         title={"Favorite"}
-      // leftComponent={
-      //   <TouchableOpacity
-      //     style={{
-      //       width: 40,
-      //       height: 40,
-      //       alignItems: "center",
-      //       justifyContent: "center",
-      //       borderWidth: 1,
-      //       borderColor: COLORS.gray2,
-      //       borderRadius: SIZES.radius,
-      //     }}
-      //     onPress={navigation.goBack}
-      //   >
-      //     <Image
-      //       source={icons.backarrow}
-      //       style={{
-      //         borderRadius: SIZES.radius,
-      //         color: COLORS.gray2,
-      //       }}
-      //     />
-      //   </TouchableOpacity>
-      // }
-      // rightComponent={
-      //   <View
-      //     style={{
-      //       width: 40,
-      //     }}
-      //   ></View>
-      // }
+        // leftComponent={
+        //   <TouchableOpacity
+        //     style={{
+        //       width: 40,
+        //       height: 40,
+        //       alignItems: "center",
+        //       justifyContent: "center",
+        //       borderWidth: 1,
+        //       borderColor: COLORS.gray2,
+        //       borderRadius: SIZES.radius,
+        //     }}
+        //     onPress={navigation.goBack}
+        //   >
+        //     <Image
+        //       source={icons.backarrow}
+        //       style={{
+        //         borderRadius: SIZES.radius,
+        //         color: COLORS.gray2,
+        //       }}
+        //     />
+        //   </TouchableOpacity>
+        // }
+        // rightComponent={
+        //   <View
+        //     style={{
+        //       width: 40,
+        //     }}
+        //   ></View>
+        // }
       />
     );
   }
@@ -151,10 +151,11 @@ const Favorite = ({ navigation, data }) => {
       {/* Header */}
       {renderHeader()}
 
-      <View style={{
-        flex: 1,
-      }}>
-
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
         {itemLength ? (
           <FlatList
             data={favorite}
@@ -176,7 +177,7 @@ const Favorite = ({ navigation, data }) => {
                 >
                   {/* image */}
                   <Image
-                    source={require("../../../../assets/img/dummyData/hamburger.png")}
+                    source={{ uri: item.product_details.product_image }}
                     style={{
                       marginTop: 20,
                       marginLeft: 20,
@@ -187,7 +188,11 @@ const Favorite = ({ navigation, data }) => {
                   <View style={{ flex: 1, justifyContent: "center" }}>
                     {/* name */}
                     <Text
-                      style={{ fontSize: 15, marginLeft: 10, fontWeight: "bold" }}
+                      style={{
+                        fontSize: 15,
+                        marginLeft: 10,
+                        fontWeight: "bold",
+                      }}
                     >
                       {item.product_details.product_name}
                     </Text>
@@ -232,11 +237,13 @@ const Favorite = ({ navigation, data }) => {
             }}
           />
         ) : (
-          <View style={{
-            flex: 1,
-            alignSelf: "center",
-            justifyContent: "center",
-          }}>
+          <View
+            style={{
+              flex: 1,
+              alignSelf: "center",
+              justifyContent: "center",
+            }}
+          >
             <LoadingActivity
               containerStyle={{
                 width: 250,

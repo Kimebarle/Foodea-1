@@ -49,6 +49,7 @@ const Section = ({ title, onPress, children }) => {
 };
 
 const HomeScreen = ({ navigation, route }) => {
+  const { userId } = useContext(AuthContext);
   //   const { logout, user } = useContext(AuthContext);
   const { restaurantId } = route.params;
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
@@ -155,8 +156,12 @@ const HomeScreen = ({ navigation, route }) => {
                 marginRight: index == trending.length - 1 ? SIZES.padding : 0,
               }}
               item={item}
-              itemId={item.id}
-              // userId={userId}
+              userId={userId}
+              Favorite={item.isFavorite}
+              favorite_Id={item.favoriteId + 0}
+              itemId={item.product_id}
+              user_id={userId}
+              merchant_id={item.merchant_id}
               onPress={() => {
                 navigation.navigate("FoodInfo", { itemId: item.product_id });
               }}
