@@ -30,7 +30,7 @@ const ActivityLogScreen = ({ navigation }) => {
     if (userId === undefined) {
     } else {
       const response = await axios.get(
-        `${BASE_URL}orders?customer_id[eq]=${userId}r`
+        `${BASE_URL}orders?customer_id[eq]=${userId}`
       );
       const data = response.data;
       setItemLength(response.data.length > 0);
