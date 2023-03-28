@@ -36,7 +36,7 @@ const CheckOut = ({ navigation, route }) => {
     setSelectedCard(selectedCard);
   }, []);
 
-  const getTotal = () => {
+  const getTotal = async () => {
     const list = [...passedValues];
     let totalCalories = 0;
     let totalPrice = 0;

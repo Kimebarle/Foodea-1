@@ -12,6 +12,7 @@ import {
   IconButton,
   Header,
   TextInput,
+  FormInput,
 } from "../../components/FoodeaComponents";
 import {
   COLORS,
@@ -63,7 +64,7 @@ const Email = ({ navigation, route }) => {
   };
 
   const disabledButton = () => {
-    return !email || !password || !resetpassword;
+    // return !email || !password || !resetpassword;
   };
 
   const emailChecker = async () => {
@@ -151,18 +152,20 @@ const Email = ({ navigation, route }) => {
               }}
             >
               {/* Email */}
-              <TextInput
-                style={{
+
+              <FormInput
+                inputContainerStyle={{
                   ...FONTS.h3,
                   width: 250,
                   borderRadius: SIZES.radius,
                 }}
-                onChangeText={(value) => {
+                label="Email"
+                value={email}
+                onChange={(value) => {
                   handleCheckEmail(value);
                   setEmail(value);
                 }}
-                value={email}
-                label="Email"
+                roundness={10}
               />
 
               <View
@@ -187,17 +190,18 @@ const Email = ({ navigation, route }) => {
               marginBottom: SIZES.radius,
             }}
           >
-            <TextInput
-              style={{
+            <FormInput
+              inputContainerStyle={{
                 ...FONTS.h3,
                 width: 250,
                 borderRadius: SIZES.radius,
               }}
-              onChangeText={setPhoneNumber}
+              onChange={setPhoneNumber}
               keyboardType="number-pad"
               value={phoneNumber}
               label="+63 Phone Number"
               maxLength={11}
+              roundness={10}
             />
           </View>
 
@@ -213,14 +217,14 @@ const Email = ({ navigation, route }) => {
                 marginBottom: SIZES.radius,
               }}
             >
-              <TextInput
-                style={{
+              <FormInput
+                inputContainerStyle={{
                   ...FONTS.h3,
                   width: 250,
                   borderRadius: SIZES.radius,
                 }}
                 secureTextEntry={showPassword}
-                onChangeText={setPassword}
+                onChange={setPassword}
                 value={password}
                 label="Password"
               />
@@ -252,17 +256,17 @@ const Email = ({ navigation, route }) => {
                 flexDirection: "row",
               }}
             >
-              <TextInput
-                style={{
+              {/* <FormInput
+                inputContainerStyle={{
                   ...FONTS.h3,
                   width: 250,
                   borderRadius: SIZES.radius,
                 }}
                 secureTextEntry={resetshowPassword}
-                onChangeText={setResetPassword}
+                onChange={setResetPassword}
                 value={resetpassword}
                 label="Confirm Password"
-              />
+              /> */}
 
               <IconButton
                 icon={resetshowPassword ? icons.eye : icons.disable_eye}
