@@ -90,17 +90,34 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
           }}
         />
         {/* info */}
-        <View
-          style={{
-            flex: 1,
-            marginLeft: SIZES.radius,
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ color: COLORS.gray, ...FONTS.h4 }}>Restaurant</Text>
-          <Text style={{ color: COLORS.gray, ...FONTS.h4 }}>
-            1.2 km away from you
-          </Text>
+        <View style = {{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <View
+            style={{
+              marginLeft: SIZES.radius,
+              marginRight: SIZES.radius,
+              justifyContent: "center",
+            }}
+          >
+            <Text style={{ color: COLORS.black, ...FONTS.h4 }}>Restaurant</Text>
+            <Text style={{ color: COLORS.black, ...FONTS.h5 }}>
+              1.2 km away from you
+            </Text>
+          </View>
+
+          {/* Add or Minus Quantity */}
+          <StepperInput
+            value={quantity}
+            onAdd={() => setQuantity(quantity + 1)}
+            onMinus={() => {
+              if (quantity > 1) {
+                setQuantity(quantity - 1);
+              }
+            }}
+          />
         </View>
       </View>
     );
@@ -238,32 +255,8 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
           </Text>
 
           <LineDivider />
-
-          {/* Distance, Duration */}
-          <View
-            style={{
-              alignItems: 'center',
-              marginTop: 10,
-              paddingBottom: 10,
-              marginHorizontal: SIZES.radius,
-              justifyContent: "space-between",
-            }}
-          >
-            {/* Add or Minus Quantity */}
-
-            <StepperInput
-              value={quantity}
-              onAdd={() => setQuantity(quantity + 1)}
-              onMinus={() => {
-                if (quantity > 1) {
-                  setQuantity(quantity - 1);
-                }
-              }}
-            />
-          </View>
         </View>
 
-        <LineDivider />
         {/* Restaurant Ratings */}
         {renderRestaurant()}
 

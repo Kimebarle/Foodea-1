@@ -210,54 +210,6 @@ const EditHeightWeight = ({ navigation }) => {
           />
         </View>
 
-        <View style={{
-          justifyContent: 'flex-start',
-        }}>
-          {/* BMI */}
-          <Text
-            style={{
-              color: COLORS.gray,
-              ...FONTS.h3,
-              fontSize: 15,
-              marginTop: SIZES.base,
-              marginLeft: SIZES.padding * 1.3
-            }}
-          >
-            BMI
-          </Text>
-        </View>
-        <View
-          style={{
-            alignItems: "center",
-          }}
-        >
-          {/* BMI */}
-          <TextInput
-            label="BMI"
-            disabled
-            style={{
-              width: 300,
-              height: 50,
-              borderRadius: SIZES.radius,
-              marginBottom: SIZES.radius,
-            }} />
-          {/* <FormInput
-            containerStyle={{
-              borderRadius: SIZES.radius,
-              marginBottom: SIZES.radius,
-              width: 300,
-            }}
-            label="Weight"
-            value={bmi}
-            keyboardType="number-pad"
-            maxLength={2}
-            onChange={(value) => {
-              setBMI(value);
-              utils.validateInput(value, 1, setBMIError);
-            }}
-          /> */}
-        </View>
-
         <View
           style={{
             alignItems: "center",
