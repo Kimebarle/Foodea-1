@@ -37,7 +37,7 @@ const EditEmailPhone = ({ navigation }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [email, setEmail] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
-  const [phone, setPhone] = React.useState("");
+  const [phone, setPhone] = React.useState('');
   const [phoneError, setPhoneError] = React.useState("");
   const [data, setData] = React.useState();
   const [next, setNext] = React.useState();
@@ -124,8 +124,11 @@ const EditEmailPhone = ({ navigation }) => {
       console.log(decision);
     }
   };
+  
+  const phoneLength = 11;
+
   const disabledButton = () => {
-    return !phone || !email;
+    return phone.length !== phoneLength || !email;
   };
 
   function renderHeader() {
@@ -246,7 +249,7 @@ const EditEmailPhone = ({ navigation }) => {
               placeholder={isLoading ? "Josh" : data[0].contact_number}
               onChange={(value) => {
                 setPhone(value);
-                utils.validateInput(value, 1, setPhoneError);
+                utils.validateInput(value, 11, setPhoneError);
               }}
             />
           </View>

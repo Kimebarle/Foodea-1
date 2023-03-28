@@ -210,7 +210,7 @@ const MyAvatar = ({ navigation }) => {
         <View
           style={{
             height: 40,
-            width: 250,
+            width: 330,
             marginTop: 40,
             backgroundColor: COLORS.white,
             borderRadius: SIZES.radius,
@@ -224,15 +224,15 @@ const MyAvatar = ({ navigation }) => {
             source={icons.My_Profile}
             style={{
               position: "absolute",
-              left: 2,
+              left: 5,
               tintColor: COLORS.red,
-              height: 30,
-              width: 30,
+              height: 20,
+              width: 20,
             }}
           />
           <Text
             style={{
-              ...FONTS.h4,
+              ...FONTS.h5,
             }}
           >
             {isLoading
@@ -248,7 +248,7 @@ const MyAvatar = ({ navigation }) => {
         <View
           style={{
             height: 40,
-            width: 250,
+            width: 330,
             marginTop: 10,
             backgroundColor: COLORS.white,
             borderRadius: SIZES.radius,
@@ -262,15 +262,15 @@ const MyAvatar = ({ navigation }) => {
             source={icons.Email}
             style={{
               position: "absolute",
-              left: 2,
+              left: 5,
               tintColor: COLORS.red,
-              height: 30,
-              width: 30,
+              height: 20,
+              width: 20,
             }}
           />
           <Text
             style={{
-              ...FONTS.h4,
+              ...FONTS.h5,
             }}
           >
             {isLoading ? "placeholder" : userInfo[0].email}
@@ -280,7 +280,7 @@ const MyAvatar = ({ navigation }) => {
         <View
           style={{
             height: 40,
-            width: 250,
+            width: 330,
             marginTop: SIZES.base,
             backgroundColor: COLORS.white,
             borderRadius: SIZES.radius,
@@ -294,15 +294,15 @@ const MyAvatar = ({ navigation }) => {
             source={icons.location}
             style={{
               position: "absolute",
-              left: 2,
+              left: 5,
               tintColor: COLORS.red,
-              height: 30,
-              width: 30,
+              height: 20,
+              width: 20,
             }}
           />
           <Text
             style={{
-              ...FONTS.h4,
+              ...FONTS.h5,
             }}
           >
             {isLoading ? "placeholder" : userInfo[0].address}
@@ -312,7 +312,7 @@ const MyAvatar = ({ navigation }) => {
         <View
           style={{
             height: 40,
-            width: 250,
+            width: 330,
             marginTop: SIZES.base,
             backgroundColor: COLORS.white,
             borderRadius: SIZES.radius,
@@ -323,18 +323,18 @@ const MyAvatar = ({ navigation }) => {
           }}
         >
           <Image
-            source={icons.Phone}
+            source={icons.phone}
             style={{
               position: "absolute",
-              left: 2,
+              left: 5,
               tintColor: COLORS.red,
-              height: 30,
-              width: 30,
+              height: 20,
+              width: 20,
             }}
           />
           <Text
             style={{
-              ...FONTS.h4,
+              ...FONTS.h5,
             }}
           >
             {isLoading ? "0999999999999" : userInfo[0].contact_number}

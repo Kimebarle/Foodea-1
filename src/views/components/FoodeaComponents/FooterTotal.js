@@ -36,6 +36,10 @@ const FooterTotal = ({
           <Text style={{ flex: 1, ...FONTS.h3 }}>Sub Total</Text>
           <Text style={{ ...FONTS.h3 }}>₱{subTotal.toFixed(2)}</Text>
         </View>
+
+        {/* Line Divider */}
+        <LineDivider />
+
         <View
           style={{
             flexDirection: "row",
@@ -50,6 +54,9 @@ const FooterTotal = ({
           <Text style={{ ...FONTS.h3 }}>{totalCalories}</Text>
         </View>
 
+        {/* Line Divider */}
+        <LineDivider />
+
         {/* Shipping Fee */}
         <View
           style={{
@@ -62,11 +69,14 @@ const FooterTotal = ({
           <Text style={{ ...FONTS.h3 }}>₱{shippingFee.toFixed(2)}</Text>
         </View>
 
+        {/* Line Divider */}
+        <LineDivider />
+
         {/* Quantity Details */}
         <View
           style={{
             flexDirection: "row",
-            marginBottom: SIZES.padding,
+            marginBottom: SIZES.base,
           }}
         >
           <Text style={{ flex: 1, ...FONTS.h3 }}>Number of Orders</Text>
