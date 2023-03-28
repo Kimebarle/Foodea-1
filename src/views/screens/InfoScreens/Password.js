@@ -97,21 +97,28 @@ const Password = ({ navigation }) => {
 
             <View style={{ flex: 1, marginTop: SIZES.padding }}>
 
-                <View style={{
-                    alignItems: 'center',
-                    marginBottom: SIZES.padding
-                }}>
+                <View
+                    style={{
+                        justifyContent: "flex-start",
+                    }}
+                >
                     {/* Password */}
                     <Text
                         style={{
                             color: COLORS.black,
                             ...FONTS.h3,
                             fontSize: 15,
-                            marginTop: SIZES.base
+                            marginTop: SIZES.base,
+                            marginLeft: SIZES.padding,
                         }}
                     >
                         Password
                     </Text>
+                </View>
+                <View style={{
+                    alignItems: 'center',
+                    marginBottom: SIZES.padding
+                }}>
                     <View
                         style={{
                             flexDirection: "row",
@@ -137,7 +144,15 @@ const Password = ({ navigation }) => {
                             }}
                         />
 
-                        <TextInput
+                        <View style={{
+                            alignItems: "center",
+                        }}>
+                            <Text>
+                                ************
+                            </Text>
+                        </View>
+
+                        {/* <TextInput
                             disabled
                             style={{
                                 ...FONTS.h3,
@@ -149,7 +164,7 @@ const Password = ({ navigation }) => {
                             }}
                             secureTextEntry
                             value={isLoading ? "Josh" : data[0].password}
-                        />
+                        /> */}
                     </View>
                 </View>
             </View>

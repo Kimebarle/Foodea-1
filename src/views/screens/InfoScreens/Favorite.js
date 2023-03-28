@@ -106,35 +106,35 @@ const Favorite = ({ navigation, data }) => {
           alignItems: "center",
         }}
         title={"Favorite"}
-        // leftComponent={
-        //   <TouchableOpacity
-        //     style={{
-        //       width: 40,
-        //       height: 40,
-        //       alignItems: "center",
-        //       justifyContent: "center",
-        //       borderWidth: 1,
-        //       borderColor: COLORS.gray2,
-        //       borderRadius: SIZES.radius,
-        //     }}
-        //     onPress={navigation.goBack}
-        //   >
-        //     <Image
-        //       source={icons.backarrow}
-        //       style={{
-        //         borderRadius: SIZES.radius,
-        //         color: COLORS.gray2,
-        //       }}
-        //     />
-        //   </TouchableOpacity>
-        // }
-        // rightComponent={
-        //   <View
-        //     style={{
-        //       width: 40,
-        //     }}
-        //   ></View>
-        // }
+      // leftComponent={
+      //   <TouchableOpacity
+      //     style={{
+      //       width: 40,
+      //       height: 40,
+      //       alignItems: "center",
+      //       justifyContent: "center",
+      //       borderWidth: 1,
+      //       borderColor: COLORS.gray2,
+      //       borderRadius: SIZES.radius,
+      //     }}
+      //     onPress={navigation.goBack}
+      //   >
+      //     <Image
+      //       source={icons.backarrow}
+      //       style={{
+      //         borderRadius: SIZES.radius,
+      //         color: COLORS.gray2,
+      //       }}
+      //     />
+      //   </TouchableOpacity>
+      // }
+      // rightComponent={
+      //   <View
+      //     style={{
+      //       width: 40,
+      //     }}
+      //   ></View>
+      // }
       />
     );
   }
@@ -151,92 +151,108 @@ const Favorite = ({ navigation, data }) => {
       {/* Header */}
       {renderHeader()}
 
-      {itemLength ? (
-        <FlatList
-          data={favorite}
-          keyExtractor={(item, index) => {
-            return index.toString();
-          }}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: SIZES.radius,
-                  borderRadius: 15,
-                  backgroundColor: "#FAF9F6",
-                  height: 130,
-                  width: 350,
-                }}
-              >
-                {/* image */}
-                <Image
-                  source={require("../../../../assets/img/dummyData/hamburger.png")}
+      <View style={{
+        flex: 1,
+      }}>
+
+        {itemLength ? (
+          <FlatList
+            data={favorite}
+            keyExtractor={(item, index) => {
+              return index.toString();
+            }}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
                   style={{
-                    marginTop: 20,
-                    marginLeft: 20,
-                    height: 100,
-                    width: 100,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginBottom: SIZES.radius,
+                    borderRadius: 15,
+                    backgroundColor: "#FAF9F6",
+                    height: 130,
+                    width: 350,
                   }}
-                />
-                <View style={{ flex: 1, justifyContent: "center" }}>
-                  {/* name */}
-                  <Text
-                    style={{ fontSize: 15, marginLeft: 10, fontWeight: "bold" }}
-                  >
-                    {item.product_details.product_name}
-                  </Text>
-                  {/* price */}
-                  <Text
+                >
+                  {/* image */}
+                  <Image
+                    source={require("../../../../assets/img/dummyData/hamburger.png")}
                     style={{
-                      fontSize: 14,
-                      fontWeight: "bold",
-                      marginLeft: 10,
-                      marginTop: 5,
+                      marginTop: 20,
+                      marginLeft: 20,
+                      height: 100,
+                      width: 100,
                     }}
-                  >
-                    ₱ {item.product_details.price}
-                  </Text>
-
-                  {/* distance and waiting time */}
-                  <View style={{ flexDirection: "row", marginTop: 20 }}>
-                    <Image source={icons.location} />
-                    <Text style={{ marginRight: 10 }}>3 km</Text>
-                    <Image source={icons.Waiting_Time} />
-                    <Text style={{ marginRight: 20 }}>20 mins</Text>
-                  </View>
-
-                  {/* images */}
-                  <View style={{ position: "absolute", top: 0, right: 23 }}>
-                    <IconButton
-                      icon={isFavorite ? icons.favourite : icons.love}
-                      iconStyle={{
-                        tintColor: COLORS.primary,
-                        position: "absolute",
-                        height: 25,
-                        width: 25,
-                        top: 20,
-                        right: 7,
+                  />
+                  <View style={{ flex: 1, justifyContent: "center" }}>
+                    {/* name */}
+                    <Text
+                      style={{ fontSize: 15, marginLeft: 10, fontWeight: "bold" }}
+                    >
+                      {item.product_details.product_name}
+                    </Text>
+                    {/* price */}
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        fontWeight: "bold",
+                        marginLeft: 10,
+                        marginTop: 5,
                       }}
-                      onPress={() => removeFavorite(item.id)}
-                    />
+                    >
+                      ₱ {item.product_details.price}
+                    </Text>
+
+                    {/* distance and waiting time */}
+                    <View style={{ flexDirection: "row", marginTop: 20 }}>
+                      <Image source={icons.location} />
+                      <Text style={{ marginRight: 10 }}>3 km</Text>
+                      <Image source={icons.Waiting_Time} />
+                      <Text style={{ marginRight: 20 }}>20 mins</Text>
+                    </View>
+
+                    {/* images */}
+                    <View style={{ position: "absolute", top: 0, right: 23 }}>
+                      <IconButton
+                        icon={isFavorite ? icons.favourite : icons.love}
+                        iconStyle={{
+                          tintColor: COLORS.primary,
+                          position: "absolute",
+                          height: 25,
+                          width: 25,
+                          top: 20,
+                          right: 7,
+                        }}
+                        onPress={() => removeFavorite(item.id)}
+                      />
+                    </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      ) : (
-        <LoadingActivity
-          containerStyle={{
+                </TouchableOpacity>
+              );
+            }}
+          />
+        ) : (
+          <View style={{
+            flex: 1,
             alignSelf: "center",
             justifyContent: "center",
-            width: 250,
-            height: 250,
-          }}
-        />
-      )}
+          }}>
+            <LoadingActivity
+              containerStyle={{
+                width: 250,
+                height: 250,
+              }}
+              imageStyle={{
+                width: 170,
+                height: 190,
+              }}
+              onPress={() => {
+                navigation.navigate("Home");
+              }}
+            />
+          </View>
+        )}
+      </View>
     </View>
   );
 };

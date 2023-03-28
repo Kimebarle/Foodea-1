@@ -231,6 +231,7 @@ const MainStack = () => {
       <Stack.Screen name="EditHeightWeight" component={EditHeightWeight} />
       <Stack.Screen name="EditEmailPhone" component={EditEmailPhone} />
       <Stack.Screen name="EditFirstName" component={EditFirstName} />
+      
     </Stack.Navigator>
   );
 };

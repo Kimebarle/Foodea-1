@@ -59,9 +59,9 @@ const SignupName = ({ navigation, route }) => {
     setShowPicker(true);
   };
 
-  const disabledButton = () => {
-    // return !Name || !LastName || age < 18;
-  };
+    const disabledButton = () => {
+        return !Name || !LastName || age < 18;
+    };
 
   const list = [{}];
 
@@ -95,94 +95,94 @@ const SignupName = ({ navigation, route }) => {
     }
   };
 
-  function renderDetails() {
-    return (
-      <View
-        style={{
-          marginTop: SIZES.padding,
-          height: 650,
-        }}
-      >
-        <View
-          style={{
-            flex: 1,
-            width: SIZES.width - SIZES.padding * 2,
-            paddingHorizontal: SIZES.padding,
-            paddingVertical: SIZES.radius,
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.white,
-            elevation: 5,
-          }}
-        >
-          <Text
-            style={{
-              width: "100%",
-              color: COLORS.black,
-              ...FONTS.h1,
-            }}
-          >
-            Sign up your information
-          </Text>
-          <Text
-            style={{
-              ...FONTS.h5,
-            }}
-          >
-            Input your First Name, Middle Name (optional), Last Name, Birthday.
-          </Text>
+    function renderDetails() {
+        return (
+            <View
+                style={{
+                    marginTop: SIZES.padding,
+                    height: 600,
+                }}
+            >
+                <View
+                    style={{
+                        flex: 1,
+                        width: SIZES.width - SIZES.padding * 2,
+                        paddingHorizontal: SIZES.padding,
+                        paddingVertical: SIZES.radius,
+                        borderRadius: SIZES.radius,
+                        backgroundColor: COLORS.white,
+                        elevation: 5,
+                    }}
+                >
+                    <Text
+                        style={{
+                            width: "100%",
+                            color: COLORS.black,
+                            ...FONTS.h1,
+                        }}
+                    >
+                        Sign up your information
+                    </Text>
+                    <Text
+                        style={{
+                            ...FONTS.h5,
+                        }}
+                    >
+                        Input your First Name, Middle Name (optional), Last Name, Birthday.
+                    </Text>
 
-          {/* First Name */}
-          <FormInput
-            containerStyle={{
-              borderRadius: SIZES.radius,
-              marginBottom: SIZES.radius,
-              marginTop: SIZES.radius,
-            }}
-            label="First Name"
-            value={Name}
-            maxLength={10}
-            onChange={(value) => {
-              setName(value);
-              utils.validateInput(value, 1, setNameError);
-            }}
-            errorMsg={NameError}
-            appendComponent={<FormInputCheck value={Name} error={NameError} />}
-          />
 
-          {/* Middle Name */}
-          <FormInput
-            containerStyle={{
-              borderRadius: SIZES.radius,
-              marginBottom: SIZES.radius,
-            }}
-            label="Middle Name"
-            placeholder={"optional"}
-            value={MiddleName}
-            maxLength={10}
-            onChange={(value) => {
-              setMiddleName(value);
-              utils.validateInput(value, 1, setMiddleNameError);
-            }}
-          />
+                    {/* First Name */}
+                    <FormInput
+                        containerStyle={{
+                            borderRadius: SIZES.radius,
+                            marginBottom: SIZES.radius,
+                            marginTop: SIZES.radius,
+                        }}
+                        label="First Name"
+                        value={Name}
+                        maxLength={30}
+                        onChange={(value) => {
+                            setName(value);
+                            utils.validateInput(value, 1, setNameError);
+                        }}
+                        errorMsg={NameError}
+                        appendComponent={<FormInputCheck value={Name} error={NameError} />}
+                    />
 
-          {/* Last Name */}
-          <FormInput
-            containerStyle={{
-              borderRadius: SIZES.radius,
-              marginBottom: SIZES.radius,
-            }}
-            label="Last Name"
-            value={LastName}
-            maxLength={10}
-            onChange={(value) => {
-              setLastName(value);
-              utils.validateInput(value, 1, setLastNameError);
-            }}
-            errorMsg={LastNameError}
-            appendComponent={
-              <FormInputCheck value={LastName} error={LastNameError} />
-            }
-          />
+                    {/* Middle Name */}
+                    <FormInput
+                        containerStyle={{
+                            borderRadius: SIZES.radius,
+                            marginBottom: SIZES.radius,
+                        }}
+                        label="Middle Name"
+                        value={MiddleName}
+                        maxLength={30}
+                        onChange={(value) => {
+                            setMiddleName(value);
+                            utils.validateInput(value, 1, setMiddleNameError);
+                        }}
+                    />
+
+                    {/* Last Name */}
+                    <FormInput
+                        containerStyle={{
+                            borderRadius: SIZES.radius,
+                            marginBottom: SIZES.radius,
+                        }}
+                        label="Last Name"
+                        value={LastName}
+                        maxLength={30}
+                        onChange={(value) => {
+                            setLastName(value);
+                            utils.validateInput(value, 1, setLastNameError);
+                        }}
+                        errorMsg={LastNameError}
+                        appendComponent={
+                            <FormInputCheck value={LastName} error={LastNameError} />
+                        }
+                    />
 
           <View
             style={{
@@ -348,11 +348,18 @@ const SignupName = ({ navigation, route }) => {
 
       {/* Logo
             {renderLogo()} */}
+            <KeyboardAwareScrollView
+                enableOnAndroid={true}
+                contentContainerStyle={{
+                    extraHeight: 300,
+                }}
+            >
+                {/* Email Address */}
+                {renderDetails()}
 
-      {/* Email Address */}
-      {renderDetails()}
-    </View>
-  );
+            </KeyboardAwareScrollView>
+        </View>
+    );
 };
 
 export default SignupName;

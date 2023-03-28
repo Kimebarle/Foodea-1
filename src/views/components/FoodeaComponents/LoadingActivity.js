@@ -18,6 +18,7 @@ const LoadingActivity = ({
     imageStyle,
     item,
     onPress,
+    navigation
 }) => {
     const [isFavorite, setIsFavorite] = React.useState(true);
 
@@ -27,7 +28,7 @@ const LoadingActivity = ({
     };
 
     return (
-        <View style={{ alignItems: 'center' }}>
+        <View style={{ alignItems: 'center', justifyContent: 'center', ...containerStyle }}>
             {/* image */}
             <Image
                 source={require("../../../../assets/img/images/Banner2.png")}
@@ -55,7 +56,7 @@ const LoadingActivity = ({
                     borderRadius: SIZES.radius,
                     backgroundColor: COLORS.primary
                 }}
-                onPress={() => navigation.navigate("FoodRecommendationScreen")}
+                onPress={onPress}
             />
         </View>
     );

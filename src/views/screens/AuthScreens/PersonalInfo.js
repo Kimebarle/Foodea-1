@@ -31,7 +31,7 @@ const PersonalInfo = ({ navigation, route }) => {
   ];
 
   const disabledButton = () => {
-    // return !height || !weight;
+    return !height || !weight;
   };
 
   const getBmi = () => {
@@ -250,8 +250,16 @@ const PersonalInfo = ({ navigation, route }) => {
       {/* Logo */}
       {renderLogo()}
 
-      {/* Email Address */}
-      {renderDetails()}
+      <KeyboardAwareScrollView
+        enableOnAndroid={true}
+        contentContainerStyle={{
+          extraHeight: 150,
+        }}
+      >
+        {/* Email Address */}
+        {renderDetails()}
+
+      </KeyboardAwareScrollView>
     </View>
   );
 };

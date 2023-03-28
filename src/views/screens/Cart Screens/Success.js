@@ -42,7 +42,7 @@ const Success = ({ navigation }) => {
                 }}>Congratulations!</Text>
                 <Text style = {{
                     textAlign: 'center', marginTop: SIZES.base, color: COLORS.darkGray, ...FONTS.h3
-                }}>Payment was successfully made</Text>
+                }}>Your order has been placed</Text>
             </View>
 
             <TextButton

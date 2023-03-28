@@ -27,7 +27,7 @@ const LoadingFavorite = ({
   };
 
   return (
-    <View style={{ alignItems: "center" }}>
+    <View style={{ alignItems: "center", justifyContent: 'center' }}>
       {/* image */}
       <Image
         source={require("../../../../assets/img/images/favoriteasset.png")}

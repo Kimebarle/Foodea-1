@@ -200,21 +200,25 @@ const ActivityLogScreen = ({ navigation }) => {
             }}
           />
         ) : (
-          <LoadingActivity
-            containerStyle={{
-              alignSelf: "center",
-              justifyContent: "center",
-              width: 100,
-              height: 100,
-            }}
-            imageStyle={{
-              width: 150,
-              height: 150,
-            }}
-            onPress={() => {
-              navigation.navigate("Home");
-            }}
-          />
+          <View style={{
+            flex: 1,
+            alignSelf: "center",
+            justifyContent: "center",
+          }}>
+            <LoadingActivity
+              containerStyle={{
+                width: 250,
+                height: 250,
+              }}
+              imageStyle={{
+                width: 170,
+                height: 190,
+              }}
+              onPress={() => {
+                navigation.navigate("Home");
+              }}
+            />
+          </View>
         )}
       </View>
     </View>

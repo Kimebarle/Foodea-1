@@ -41,7 +41,7 @@ const Location = ({ navigation, route }) => {
   const [addressError, setAddressError] = React.useState("");
 
   const disabledButton = () => {
-    // return !address || !city || !brgy || !zipCode;
+    return !address || !city || !brgy || !zipCode;
   };
 
   const handleSignUpPress = () => {
@@ -126,24 +126,24 @@ const Location = ({ navigation, route }) => {
             appendComponent={<FormInputCheck value={city} error={cityError} />}
           />
 
-                    {/* Barangay */}
-                    <FormInput
-                        containerStyle={{
-                            borderRadius: SIZES.radius,
-                        }}
-                        label="Barangay"
-                        value={brgy}
-                        maxLength={3}
-                        keyboardType="number-pad"
-                        onChange={(value) => {
-                            setBrgy(value);
-                            utils.validateInput(value, 1, setBrgyError);
-                        }}
-                        errorMsg={brgyError}
-                        appendComponent={
-                            <FormInputCheck value={brgy} error={brgyError} />
-                        }
-                    />
+          {/* Barangay */}
+          <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+            }}
+            label="Barangay"
+            value={brgy}
+            maxLength={3}
+            keyboardType="number-pad"
+            onChange={(value) => {
+              setBrgy(value);
+              utils.validateInput(value, 1, setBrgyError);
+            }}
+            errorMsg={brgyError}
+            appendComponent={
+              <FormInputCheck value={brgy} error={brgyError} />
+            }
+          />
 
           {/* ZIP CODE */}
           <FormInput
@@ -261,8 +261,15 @@ const Location = ({ navigation, route }) => {
       {/* Logo */}
       {renderLogo()}
 
-      {/* Email Address */}
-      {renderDetails()}
+      <KeyboardAwareScrollView
+        enableOnAndroid={true}
+        contentContainerStyle={{
+          extraHeight: 400,
+        }}
+      >
+        {/* Email Address */}
+        {renderDetails()}
+      </KeyboardAwareScrollView>
     </View>
   );
 };

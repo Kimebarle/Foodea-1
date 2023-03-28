@@ -242,22 +242,13 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
           {/* Distance, Duration */}
           <View
             style={{
-              flexDirection: "row",
+              alignItems: 'center',
               marginTop: 10,
               paddingBottom: 10,
               marginHorizontal: SIZES.radius,
               justifyContent: "space-between",
             }}
           >
-            {/* Duration */}
-            <IconLabel
-              containerStyle={{
-                marginRight: 1,
-              }}
-              icon={icons.Waiting_Time}
-              label="35 mins"
-            />
-
             {/* Add or Minus Quantity */}
 
             <StepperInput
