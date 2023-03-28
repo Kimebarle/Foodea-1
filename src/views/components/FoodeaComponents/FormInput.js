@@ -6,6 +6,7 @@ import IconButton from "./IconButton";
 const FormInput = ({
     containerStyle,
     inputContainerStyle,
+    autoCapitalize = "none",
     label,
     placeholder,
     inputStyle,
@@ -16,7 +17,6 @@ const FormInput = ({
     secureTextEntry,
     keyboardType = "default",
     autoCompleteType = "off",
-    autoCapitalize = "none",
     errorMsg = "",
     maxLength
 }) => {
@@ -28,10 +28,10 @@ const FormInput = ({
                 flexDirection: 'row',
                 justifyContent: 'space-between',
             }}>
-                <Text style={{ color: COLORS.gray, ...FONTS.h4 }}>
+                <Text style={{ color: COLORS.gray, ...FONTS.h5 }}>
                     {label}
                 </Text>
-                <Text style={{ color: COLORS.red, ...FONTS.h5 }}>
+                <Text style={{ color: COLORS.red, fontSize: 12 }}>
                     {errorMsg}
                 </Text>
             </View>

@@ -228,6 +228,7 @@ const EditFirstName = ({ navigation, route }) => {
                 marginBottom: SIZES.radius,
                 width: 300,
               }}
+              autoCapitalize
               label="First Name"
               value={firstname}
               placeholder={isLoading ? "Josh" : data[0].firstname}
@@ -254,6 +255,7 @@ const EditFirstName = ({ navigation, route }) => {
                 marginBottom: SIZES.radius,
                 width: 300,
               }}
+              autoCapitalize
               label="Middle Name"
               value={middleName}
               placeholder={isLoading ? "Josh" : data[0].middlename}
@@ -280,6 +282,7 @@ const EditFirstName = ({ navigation, route }) => {
                 marginBottom: SIZES.radius,
                 width: 300,
               }}
+              autoCapitalize
               label="Last Name"
               value={lastname}
               placeholder={isLoading ? "Josh" : data[0].lastname}

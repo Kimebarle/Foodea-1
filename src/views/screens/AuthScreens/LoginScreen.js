@@ -9,6 +9,7 @@ import {
   TextButton,
   Remember,
   FormInput,
+  IconButton,
 } from "../../components/FoodeaComponents";
 
 import {
@@ -19,14 +20,23 @@ import {
   constants,
   dummyData,
 } from "../../../constants";
+
 import Colors from "../../../utils/Colors";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import * as yup from "yup";
 import { Formik } from "formik";
+import utils, { Utils } from "../../../utils/Utils";
 
 const LoginScreen = ({ navigation }) => {
   const { login } = useContext(AuthContext);
   const [remember, setRemember] = React.useState(false);
+  const [checkValidEmail, setCheckValidEmail] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPasswod] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState("");
+  
+
 
   const handleOnSubmit = (values) => {
     login(values.email, values.password, remember);
@@ -52,6 +62,19 @@ const LoginScreen = ({ navigation }) => {
       .required("Email is required"),
     password: yup.string().trim().required("Password is required"),
   });
+
+  const handleCheckEmail = (value) => {
+    let re = /\S+@\S+\.\S+/;
+    let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+    setEmail(value);
+    if (re.test(value) || regex.test(value)) {
+      setCheckValidEmail(false);
+    } else {
+      setCheckValidEmail(true);
+    }
+  };
+  
 
   return (
     <View
@@ -114,11 +137,27 @@ const LoginScreen = ({ navigation }) => {
                 <FormInput
                   label="Email"
                   value={values.email}
+                  autoCapitalize
                   onChange={handleChange("email")}
                   onBlur={handleBlur("email")}
                   error={touched.email && errors.email ? true : false}
                   errorMsg={touched.email && errors.email ? errors.email : ""}
                   roundness={10}
+                  appendComponent={
+                    <View
+                      style={{
+                        position: "absolute",
+                        bottom: 45,
+                        right: 2,
+                      }}
+                    >
+                      {checkValidEmail ? (
+                        <Text style={styles.textFailed}>Wrong format email</Text>
+                      ) : (
+                        <Text style={styles.textFailed}> </Text>
+                      )}
+                    </View>
+                  }
                 />
 
                 <FormInput
@@ -130,8 +169,23 @@ const LoginScreen = ({ navigation }) => {
                   errorMsg={
                     touched.password && errors.password ? errors.password : ""
                   }
-                  secureTextEntry
+                  secureTextEntry={!showPassword}
                   roundness={10}
+                  appendComponent={
+                    <IconButton
+                      icon={showPassword ? icons.disable_eye : icons.eye}
+                      iconStyle={{
+                        tintColor: COLORS.gray,
+                        width: 20,
+                        height: 20,
+                        marginLeft: SIZES.base,
+                        position: "absolute",
+                        right: 0,
+                        top: 12,
+                      }}
+                      onPress={() => setShowPasswod(!showPassword)}
+                    />
+                  }
                 />
 
                 <Remember
@@ -213,4 +267,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   signup_text: {},
+  textFailed: {
+    alignSelf: "flex-end",
+    color: "red",
+    position: "absolute",
+    bottom: 10,
+    ...FONTS.h4,
+  },
 });

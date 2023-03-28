@@ -97,6 +97,7 @@ const Location = ({ navigation, route }) => {
               marginTop: SIZES.radius,
             }}
             label="Address"
+            autoCapitalize
             value={address}
             placeholder="Block, Lot, Street..."
             maxLength={50}
@@ -115,6 +116,7 @@ const Location = ({ navigation, route }) => {
             containerStyle={{
               borderRadius: SIZES.radius,
             }}
+            autoCapitalize
             label="City"
             value={city}
             maxLength={50}
@@ -131,6 +133,7 @@ const Location = ({ navigation, route }) => {
             containerStyle={{
               borderRadius: SIZES.radius,
             }}
+            autoCapitalize
             label="Barangay"
             value={brgy}
             maxLength={3}

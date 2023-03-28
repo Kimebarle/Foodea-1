@@ -133,6 +133,7 @@ const SurveyScreenInitial = ({ navigation, route }) => {
             onChangeText={(value) => {
               setQuestion1(value);
             }}
+            autoCapitalize
             value={question1}
             label="Answer"
             editable

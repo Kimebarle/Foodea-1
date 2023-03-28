@@ -32,17 +32,20 @@ import { Alert } from "react-native";
 const Email = ({ navigation, route }) => {
   const [passwordError, setPasswordError] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
+  const [phoneNumberError, setPhoneNumberError] = React.useState("");
   const [reenterpassword, setReEnterPassword] = React.useState("");
   const [reenterpasswordError, setReEnterPasswordError] = React.useState("");
   const [reshowPassword, setReShowPasswod] = React.useState(false);
   const { passedList3 } = route.params;
   const [email, setEmail] = React.useState("");
-  const [showPassword, setShowPasswod] = React.useState(true);
   const [resetshowPassword, setResetShowPasswod] = React.useState(true);
   const [password, setPassword] = React.useState("");
   const [resetpassword, setResetPassword] = React.useState("");
   const [checkValidEmail, setCheckValidEmail] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [showPassword, setShowPasswod] = React.useState(false);
+
+
   const toggleHidePassword = () => {
     setShowPasswod(!showPassword);
   };
@@ -64,7 +67,7 @@ const Email = ({ navigation, route }) => {
   };
 
   const disabledButton = () => {
-    // return !email || !password || !resetpassword;
+    return !email || !password || !resetpassword;
   };
 
   const emailChecker = async () => {
@@ -107,7 +110,7 @@ const Email = ({ navigation, route }) => {
       <View
         style={{
           marginTop: SIZES.padding,
-          height: 500,
+          height: 600,
         }}
       >
         <View
@@ -156,9 +159,10 @@ const Email = ({ navigation, route }) => {
               <FormInput
                 inputContainerStyle={{
                   ...FONTS.h3,
-                  width: 250,
+                  width: 280,
                   borderRadius: SIZES.radius,
                 }}
+                autoCapitalize
                 label="Email"
                 value={email}
                 onChange={(value) => {
@@ -193,10 +197,14 @@ const Email = ({ navigation, route }) => {
             <FormInput
               inputContainerStyle={{
                 ...FONTS.h3,
-                width: 250,
+                width: 280,
                 borderRadius: SIZES.radius,
               }}
-              onChange={setPhoneNumber}
+              onChange={(value) => {
+                setPhoneNumber(value);
+                utils.validateInput(value, 11, setPhoneNumberError);
+              }}
+              errorMsg={phoneNumberError}
               keyboardType="number-pad"
               value={phoneNumber}
               label="+63 Phone Number"
@@ -211,38 +219,36 @@ const Email = ({ navigation, route }) => {
               alignItems: "center",
             }}
           >
-            <View
-              style={{
-                flexDirection: "row",
-                marginBottom: SIZES.radius,
+            <FormInput
+              containerStyle={{
+                borderRadius: SIZES.radius,
+                width: 280,
               }}
-            >
-              <FormInput
-                inputContainerStyle={{
-                  ...FONTS.h3,
-                  width: 250,
-                  borderRadius: SIZES.radius,
-                }}
-                secureTextEntry={showPassword}
-                onChange={setPassword}
-                value={password}
-                label="Password"
-              />
-
-              <IconButton
-                icon={showPassword ? icons.eye : icons.disable_eye}
-                iconStyle={{
-                  tintColor: COLORS.gray,
-                  width: 20,
-                  height: 20,
-                  marginLeft: SIZES.base,
-                  position: "absolute",
-                  right: 15,
-                  top: 20,
-                }}
-                onPress={toggleHidePassword}
-              />
-            </View>
+              autoCapitalize
+              label="Password"
+              value={password}
+              secureTextEntry={!showPassword}
+              onChange={(value) => {
+                setPassword(value);
+                utils.validatePassword(value, setPasswordError);
+              }}
+              errorMsg={passwordError}
+              appendComponent={
+                <IconButton
+                  icon={showPassword ? icons.disable_eye : icons.eye}
+                  iconStyle={{
+                    tintColor: COLORS.gray,
+                    width: 20,
+                    height: 20,
+                    marginLeft: SIZES.base,
+                    position: "absolute",
+                    right: 0,
+                    top: 12,
+                  }}
+                  onPress={() => setShowPasswod(!showPassword)}
+                />
+              }
+            />
           </View>
 
           {/* Re-Enter Password */}
@@ -251,37 +257,37 @@ const Email = ({ navigation, route }) => {
               alignItems: "center",
             }}
           >
-            <View
-              style={{
-                flexDirection: "row",
+            <FormInput
+              containerStyle={{
+                borderRadius: SIZES.radius,
+                width: 280,
               }}
-            >
-              <FormInput
-                inputContainerStyle={{
-                  ...FONTS.h3,
-                  width: 250,
-                  borderRadius: SIZES.radius,
-                }}
-                secureTextEntry={resetshowPassword}
-                onChange={setResetPassword}
-                value={resetpassword}
-                label="Confirm Password"
-              />
-
-              <IconButton
-                icon={resetshowPassword ? icons.eye : icons.disable_eye}
-                iconStyle={{
-                  tintColor: COLORS.gray,
-                  width: 20,
-                  height: 20,
-                  marginLeft: SIZES.base,
-                  position: "absolute",
-                  right: 15,
-                  top: 20,
-                }}
-                onPress={togglePassword}
-              />
-            </View>
+              autoCapitalize
+              label="Re-Enter Password"
+              value={resetpassword}
+              secureTextEntry={!reshowPassword}
+              password={password}
+              onChange={(value) => {
+                setResetPassword(value);
+                utils.validatePassword(value, setReEnterPasswordError);
+              }}
+              errorMsg={reenterpasswordError}
+              appendComponent={
+                <IconButton
+                  icon={reshowPassword ? icons.disable_eye : icons.eye}
+                  iconStyle={{
+                    tintColor: COLORS.gray,
+                    width: 20,
+                    height: 20,
+                    marginLeft: SIZES.base,
+                    position: "absolute",
+                    right: 0,
+                    top: 12,
+                  }}
+                  onPress={() => setReShowPasswod(!reshowPassword)}
+                />
+              }
+            />
           </View>
 
           <TextButton

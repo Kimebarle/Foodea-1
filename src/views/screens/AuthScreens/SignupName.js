@@ -139,6 +139,7 @@ const SignupName = ({ navigation, route }) => {
                             marginBottom: SIZES.radius,
                             marginTop: SIZES.radius,
                         }}
+                        autoCapitalize
                         label="First Name"
                         value={Name}
                         maxLength={30}
@@ -156,6 +157,7 @@ const SignupName = ({ navigation, route }) => {
                             borderRadius: SIZES.radius,
                             marginBottom: SIZES.radius,
                         }}
+                        autoCapitalize
                         label="Middle Name"
                         value={MiddleName}
                         maxLength={30}
@@ -171,6 +173,7 @@ const SignupName = ({ navigation, route }) => {
                             borderRadius: SIZES.radius,
                             marginBottom: SIZES.radius,
                         }}
+                        autoCapitalize
                         label="Last Name"
                         value={LastName}
                         maxLength={30}

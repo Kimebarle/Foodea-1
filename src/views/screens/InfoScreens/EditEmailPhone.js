@@ -172,6 +172,7 @@ const EditEmailPhone = ({ navigation }) => {
                   marginBottom: SIZES.radius,
                   width: 300,
                 }}
+                autoCapitalize
                 label="Email"
                 value={email}
                 placeholder={isLoading ? "Josh" : data[0].email}
