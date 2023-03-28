@@ -256,7 +256,7 @@ const Email = ({ navigation, route }) => {
                 flexDirection: "row",
               }}
             >
-              {/* <FormInput
+              <FormInput
                 inputContainerStyle={{
                   ...FONTS.h3,
                   width: 250,
@@ -266,7 +266,7 @@ const Email = ({ navigation, route }) => {
                 onChange={setResetPassword}
                 value={resetpassword}
                 label="Confirm Password"
-              /> */}
+              />
 
               <IconButton
                 icon={resetshowPassword ? icons.eye : icons.disable_eye}
