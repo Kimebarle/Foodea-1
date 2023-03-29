@@ -167,7 +167,7 @@ const HomeScreen = ({ navigation, route }) => {
           <TouchableOpacity
             style={{
               // flexDirection: "row",
-              alignItems: 'center',
+              alignItems: "center",
               justifyContent: "center",
               height: 55,
               marginTop: SIZES.padding,
@@ -193,7 +193,7 @@ const HomeScreen = ({ navigation, route }) => {
             <Text
               style={{
                 alignSelf: "center",
-                textAlign: 'center',
+                textAlign: "center",
                 color:
                   selectedCategoryId == item.id ? COLORS.white : COLORS.gray,
                 ...FONTS.h3,

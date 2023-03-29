@@ -9,21 +9,9 @@ import {
 } from "react-native";
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import AuthContext from "../../../api/context/auth/AuthContext";
-import { Button, Container } from "../../components/FoodeaComponents";
-import {
-  COLORS,
-  FONTS,
-  SIZES,
-  icons,
-  constants,
-  dummyData,
-  images,
-} from "../../../constants";
-import {
-  Header,
-  HorizontalFoodCard,
-  VerticalFoodCard,
-} from "../../components/FoodeaComponents";
+
+import { COLORS, FONTS, SIZES, icons, dummyData } from "../../../constants";
+import { Header, VerticalFoodCard } from "../../components/FoodeaComponents";
 import { BASE_URL } from "../../../api/context/auth/config";
 import axios from "axios";
 import { List } from "react-native-paper";
@@ -40,13 +28,13 @@ const TestScreen = ({ navigation }) => {
   const [foodDisplay, setFoodDisplay] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
   const [restaurantData, setRestaurantData] = React.useState();
+  const [restaurantImage, setRestaurantImage] = React.useState(null);
 
   // useFocusEffect(() => {}, [getItemTable]);
 
   useFocusEffect(
     useCallback(() => {
       setIsLoading(true);
-
       getItemTable();
       getFavorites();
       getFood();
@@ -102,13 +90,18 @@ const TestScreen = ({ navigation }) => {
     navigation.push("Search");
   }
 
-  const getRestaurant = async () => {
+  const getRestaurant = useCallback(async () => {
     setIsLoading(true);
     const response = await axios.get(`${BASE_URL}restaurants`);
     setRestaurantData(response.data);
     setIsLoading(false);
-    console.log(response.data[0].documents.logo);
-  };
+    //console.log(response.data[18].documents.logo);
+    try {
+      setRestaurantImage(response.data.documents.logo);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   function renderOtherRestaurant() {
     return (
