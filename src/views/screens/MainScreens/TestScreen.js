@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import AuthContext from "../../../api/context/auth/AuthContext";
-
 import { COLORS, FONTS, SIZES, icons, dummyData } from "../../../constants";
 import { Header, VerticalFoodCard } from "../../components/FoodeaComponents";
 import { BASE_URL } from "../../../api/context/auth/config";
@@ -18,8 +17,8 @@ import { List } from "react-native-paper";
 import { useFocusEffect } from "@react-navigation/native";
 
 const TestScreen = ({ navigation }) => {
-  const { userId, user } = useContext(AuthContext);
-  const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
+  const { userId, user } = React.useContext(AuthContext);
+  const [selectedCategoryId, setSelectedCategoryId] = React.useState(2);
   const [trending, setTrending] = React.useState([]);
   const [menuList, setMenuList] = React.useState([]);
   const [itemId, setItemId] = React.useState([]);
@@ -33,71 +32,58 @@ const TestScreen = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       setIsLoading(true);
-      getFavorites();
-      getFood();
-      setItemDisplay();
+      updatedList();
       getRestaurant();
-      setSelectedCategoryId();
-      getItemTable();
-    }, [getItemTable])
+    }, [])
   );
 
-  const handleChangeCategory = useCallback(async (id) => {
-    const data = await getItemTable();
-    const list = [...data];
-    const updatedList = list
-      .filter((item) => item.merchant_id === id)
-      .splice(0, 10);
-    setItemDisplay(updatedList);
-    console.log(id);
-  }, []);
-
-  const getFavorites = useCallback(async () => {
-    const favoritesResponse = await axios.get(
-      `${BASE_URL}favorites?user_id[eq]=${userId}`
-    );
-    setFavoritesDisplay(favoritesResponse.data);
-    const data = favoritesResponse.data;
-    return data;
-  }, []);
-
   const getFood = async () => {
-    const foodResponse = await axios.get(`${BASE_URL}foods`);
-    setFoodDisplay(foodResponse.data);
-    const data = foodResponse.data;
-    return data;
+    const response = await axios.get(`${BASE_URL}foods`);
+    return response.data;
   };
 
-  const getItemTable = useCallback(async () => {
+  const getFavorites = async () => {
+    const response = await axios.get(
+      `${BASE_URL}favorites?user_id[eq]=${user.user_id}`
+    );
+    return response.data;
+  };
+
+  const updatedList = useCallback(async () => {
     setIsLoading(true);
-    const foodData = await getFood();
-    const favoritesData = await getFavorites();
-    let food = [...foodData];
-    let favorite = [...favoritesData];
-
-    const foodWithFavorites = food.map((item) => ({
+    const favorites = await getFavorites();
+    const food = await getFood();
+    const favoritesList = [...favorites];
+    const foodList = [...food];
+    const updatedWithFavorites = foodList.map((item) => ({
       ...item,
-      isFavorite: favorite.some((fav) => fav.product_id === item.product_id),
-      favoriteId: favorite
-        .filter((id) => id.product_id === item.product_id)
-        .map((favorite) => favorite.id),
+      isFavorite: favoritesList.some(
+        (fave) => fave.product_id === item.product_id
+      ),
     }));
-    setItemDisplay(foodWithFavorites);
+    setItemDisplay(updatedWithFavorites);
     setIsLoading(false);
-
-    return foodWithFavorites;
+    return updatedWithFavorites;
   }, []);
+
+  const handleChangeCategory = async (itemId) => {
+    const list = await updatedList();
+    const update = [...list];
+    const updatedListFavorites = update.filter(
+      (item) => item.merchant_id === itemId
+    );
+
+    setItemDisplay(updatedListFavorites);
+  };
+
+  const getRestaurant = async () => {
+    const response = await axios.get(`${BASE_URL}restaurants`);
+    setRestaurantData(response.data);
+  };
 
   function search() {
     navigation.push("Search");
   }
-
-  const getRestaurant = useCallback(async () => {
-    setIsLoading(true);
-    const response = await axios.get(`${BASE_URL}restaurants`);
-    setRestaurantData(response.data);
-    setIsLoading(false);
-  }, []);
 
   function renderOtherRestaurant() {
     return (
@@ -126,7 +112,6 @@ const TestScreen = ({ navigation }) => {
               });
             }}
           >
-            {/* <Text>{item.documents.merchant_id}</Text> */}
             <Image
               source={{ uri: item.documents.logo }}
               style={{
@@ -219,13 +204,13 @@ const TestScreen = ({ navigation }) => {
               user_id={userId}
               merchant_id={item.merchant_id}
               onPress={() => {
-                // navigation.navigate("FoodInfo", {
-                //   itemId: item.product_id,
-                //   isFavorite: item.isFavorite,
-                //   foodImage: { uri: item.product_image },
-                //   key: Date.now(),
-                // });
-                console.log(item.isFavorite);
+                navigation.navigate("FoodInfo", {
+                  itemId: item.product_id,
+                  isFavorite: item.isFavorite,
+                  foodImage: { uri: item.product_image },
+                  key: Date.now(),
+                });
+                console.log(item.FavoriteId);
               }}
             />
           )}

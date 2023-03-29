@@ -25,7 +25,7 @@ import axios from "axios";
 import { useContext } from "react";
 import AuthContext from "../../../api/context/auth/AuthContext";
 
-const FoodInfoScreen = ({ navigation, route, itemValue }) => {
+const FoodInfoScreen = ({ navigation, route }) => {
   const { addToCart, userId } = useContext(AuthContext);
   const { itemId } = route.params;
   const [isLoading, setIsLoading] = useState(true);
@@ -75,11 +75,9 @@ const FoodInfoScreen = ({ navigation, route, itemValue }) => {
     const foodItem = [...getFood];
     const list = response.data;
     const fave = [...list];
-
     const isFavorite = foodItem.some((item1) =>
       fave.some((item2) => item2.product_id === item1.product_id)
     );
-
     setFavorite(isFavorite);
     setIsLoading(false);
   };
@@ -136,9 +134,6 @@ const FoodInfoScreen = ({ navigation, route, itemValue }) => {
             >
               Quantity
             </Text>
-            {/* <Text style={{ color: COLORS.black, ...FONTS.h4 }}>
-              {isLoading ? "asdasdads" : displayFood[0].product_name}
-            </Text> */}
           </View>
 
           <View

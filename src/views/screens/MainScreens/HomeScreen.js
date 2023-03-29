@@ -55,69 +55,62 @@ const HomeScreen = ({ navigation, route }) => {
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
   const [trending, setTrending] = React.useState([]);
-  const [categoryId, setCategoryId] = React.useState();
+  const [categoryId, setCategoryId] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
-  const getCategories = async () => {
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(true);
+      updateWithFavorites();
+      getRestaurantCategory();
+    }, [])
+  );
+
+  const getData = async () => {
     const response = await axios.get(
-      `${BASE_URL}restaurants?merchant_id[eq]=${restaurantId}`
+      `${BASE_URL}foods?merchant_id[eq]=${restaurantId}`
     );
-    try {
-      setCategoryId(response.data[0].categories);
-    } catch (error) {
-      console.log(error);
-    }
+    return response.data;
   };
 
-  const fetchFoodFromRestaurant = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}foods?merchant_id[eq]=${restaurantId}`
-      );
-      const data = [...response.data];
-      setTrending(data.slice(0, 5));
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const favoritesTable = async () => {
+  const favorites = async () => {
     const response = await axios.get(
       `${BASE_URL}favorites?user_id[eq]=${userId}`
     );
     return response.data;
   };
 
-  const updateWithFavorites = async () => {
-    const favorites = await favoritesTable();
-    const restaurant = await fetchFoodFromRestaurant();
+  const updateWithFavorites = useCallback(async () => {
+    setIsLoading(true);
+    const favorite = await favorites();
+    const food = await getData();
 
-    const favorite = [...favorites];
-    const food = [...restaurant];
+    const favoritesList = [...favorite];
+    const getFood = [...food];
 
-    const foodWithFavorites = food.map((item) => ({
+    const updatedList = getFood.map((item) => ({
       ...item,
-      isFavorite: favorite.some((fav) => fav.product_id === item.product_id),
-      favoriteId: favorite
-        .filter((id) => id.product_id === item.product_id)
-        .map((favorite) => favorite.id),
+      isFavorite: favoritesList.some(
+        (fave) => fave.product_id === item.product_id
+      ),
     }));
-    setTrending(foodWithFavorites);
-  };
-
-  useEffect(() => {
-    updateWithFavorites();
-    fetchFoodFromRestaurant();
-    getCategories();
+    setTrending(updatedList);
+    setIsLoading(false);
+    return updatedList;
   }, []);
 
-  const handleChangeCategory = async (categoryId) => {
-    const data = await fetchFoodFromRestaurant();
-    const foodList = [...data];
-    const updatedFood = foodList.filter(
-      (item) => item.category_id === categoryId
+  const getRestaurantCategory = async () => {
+    const response = await axios.get(
+      `${BASE_URL}restaurants?merchant_id[eq]=${restaurantId}`
     );
-    setTrending(updatedFood);
+    setCategoryId(response.data[0].categories);
+  };
+
+  const handleChangeCategory = async (id) => {
+    const list = await updateWithFavorites();
+    const update = [...list];
+    const updated = update.filter((item) => item.category_id === id);
+    setTrending(updated);
   };
 
   function renderMenuTypes() {
