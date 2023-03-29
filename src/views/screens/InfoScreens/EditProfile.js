@@ -206,12 +206,7 @@ const EditProfile = ({ navigation, route }) => {
           }}
         >
           {/* Password  */}
-          <View
-            style={{
-              flexDirection: "row",
-              marginBottom: SIZES.radius,
-            }}
-          >
+          
             {/* <TextInput
               style={{
                 ...FONTS.h3,
@@ -235,29 +230,25 @@ const EditProfile = ({ navigation, route }) => {
                 setPassword(value);
               }}
               label="Password"
+              appendComponent={
+                <IconButton
+                  icon={showPassword ? icons.eye : icons.disable_eye}
+                  iconStyle={{
+                    tintColor: COLORS.gray,
+                    width: 20,
+                    height: 20,
+                    marginLeft: SIZES.base,
+                    position: "absolute",
+                    right: 15,
+                    top: 12,
+                  }}
+                  onPress={toggleHidePassword}
+                />
+              }
             />
-
-            <IconButton
-              icon={showPassword ? icons.eye : icons.disable_eye}
-              iconStyle={{
-                tintColor: COLORS.gray,
-                width: 20,
-                height: 20,
-                marginLeft: SIZES.base,
-                position: "absolute",
-                right: 15,
-                top: 20,
-              }}
-              onPress={toggleHidePassword}
-            />
-          </View>
 
           {/* Re-Enter Password */}
-          <View
-            style={{
-              flexDirection: "row",
-            }}
-          >
+          
             <FormInput
               inputContainerStyle={{
                 ...FONTS.h3,
@@ -270,22 +261,22 @@ const EditProfile = ({ navigation, route }) => {
                 setResetPassword(value);
               }}
               label="Confirm Password"
+              appendComponent={
+                <IconButton
+                  icon={resetshowPassword ? icons.eye : icons.disable_eye}
+                  iconStyle={{
+                    tintColor: COLORS.gray,
+                    width: 20,
+                    height: 20,
+                    marginLeft: SIZES.base,
+                    position: "absolute",
+                    right: 15,
+                    top: 12,
+                  }}
+                  onPress={togglePassword}
+                />
+              }
             />
-
-            <IconButton
-              icon={resetshowPassword ? icons.eye : icons.disable_eye}
-              iconStyle={{
-                tintColor: COLORS.gray,
-                width: 20,
-                height: 20,
-                marginLeft: SIZES.base,
-                position: "absolute",
-                right: 15,
-                top: 20,
-              }}
-              onPress={togglePassword}
-            />
-          </View>
         </KeyboardAwareScrollView>
 
         <TextButton

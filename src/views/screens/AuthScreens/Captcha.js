@@ -317,6 +317,7 @@ const Captcha = ({ navigation, route }) => {
     <View
       style={{
         alignItems: "center",
+        backgroundColor: COLORS.white,
       }}
     >
       {/* Header */}
