@@ -68,7 +68,7 @@ const TestScreen = ({ navigation }) => {
 
   const getFavorites = useCallback(async () => {
     const favoritesResponse = await axios.get(
-      `${BASE_URL}favorites?user_id[eq]=${user.user_id}`
+      `${BASE_URL}favorites?user_id[eq]=${userId}`
     );
     setFavoritesDisplay(favoritesResponse.data);
     const data = favoritesResponse.data;
@@ -110,154 +110,98 @@ const TestScreen = ({ navigation }) => {
     console.log(response.data[0].documents.logo);
   };
 
-  // function renderOtherRestaurant() {
-  //   return (
-  //     <FlatList
-  //       data={restaurantData}
-  //       keyExtractor={(item) => `${item.merchant_id}`}
-  //       vertical
-  //       renderItem={({ item }) => (
-  //         <TouchableOpacity
-  //           style={{
-  //             flexDirection: "row",
-  //             alignItems: "center",
-  //             height: 100,
-  //             marginLeft: SIZES.padding,
-  //             marginRight: SIZES.padding,
-  //             marginBottom: SIZES.base,
-  //             paddingHorizontal: 8,
-  //             borderRadius: SIZES.radius,
-  //             backgroundColor: COLORS.white,
-  //           }}
-  //           onPress={() => {
-  //             // setItemId(item.merchant_id);
-  //             console.log(item.merchant_id);
-  //             navigation.navigate("HomeScreen", {
-  //               restaurantId: item.merchant_id,
-  //             });
-  //           }}
-  //         >
-  //           {/* <Text>{item.documents.merchant_id}</Text> */}
-  //           {/* <Image
-  //             source={{ uri: item.documents.logo }}
-  //             style={{
-  //               marginTop: 5,
-  //               height: 75,
-  //               width: 75,
-  //               alignSelf: "center",
-  //               marginRight: SIZES.radius,
-  //             }}
-  //           /> */}
-
-  //           <View
-  //             style={{
-  //               marginTop: 5,
-  //             }}
-  //           >
-  //             <Text
-  //               style={{
-  //                 marginRight: SIZES.base,
-  //                 color: COLORS.black,
-  //                 ...FONTS.h2,
-  //               }}
-  //             >
-  //               {item.business_name}
-  //             </Text>
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 marginTop: SIZES.base,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   ...FONTS.h4,
-  //                   color: COLORS.gray,
-  //                 }}
-  //               >
-  //                 {item.time} mins • {item.distance} km
-  //               </Text>
-  //             </View>
-
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   ...FONTS.h5,
-  //                   fontSize: 10,
-  //                   color: COLORS.gray,
-  //                 }}
-  //               >
-  //                 {item.label} • {item.food} • {item.type}
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //       )}
-  //     />
-  //   );
-  // }
-
-  // DISCOUNT
-  function renderMenuTypes() {
+  function renderOtherRestaurant() {
     return (
       <FlatList
-        horizontal
-        data={dummyData.Discount}
-        keyExtractor={(item) => `${item.id}`}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{
-          marginTop: 10,
-          marginBottom: 10,
-        }}
-        renderItem={({ item, index }) => (
+        data={restaurantData}
+        keyExtractor={(item) => `${item.merchant_id}`}
+        vertical
+        renderItem={({ item }) => (
           <TouchableOpacity
             style={{
               flexDirection: "row",
-              height: 70,
-              marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
-              marginRight:
-                index == dummyData.Discount.length - 1 ? SIZES.padding : 0,
-              borderWidth: 1,
-              borderColor: COLORS.primary,
+              alignItems: "center",
+              height: 100,
+              marginLeft: SIZES.padding,
+              marginRight: SIZES.padding,
+              marginBottom: SIZES.base,
               paddingHorizontal: 8,
               borderRadius: SIZES.radius,
               backgroundColor: COLORS.white,
-              elavation: 5,
             }}
             onPress={() => {
-              setItemId(item.id);
-              console.log(item.favoriteId);
+              // setItemId(item.merchant_id);
+              console.log(item.merchant_id);
+              navigation.navigate("HomeScreen", {
+                restaurantId: item.merchant_id,
+              });
             }}
           >
-            <Image
-              source={item.icon}
+            {/* <Text>{item.documents.merchant_id}</Text> */}
+            {/* <Image
+              source={{ uri: item.documents.logo }}
               style={{
                 marginTop: 5,
-                height: 40,
-                width: 40,
+                height: 75,
+                width: 75,
                 alignSelf: "center",
                 marginRight: SIZES.radius,
-                tintColor: COLORS.primary,
               }}
-            />
-            <Text
+            /> */}
+
+            <View
               style={{
-                color: COLORS.primary,
-                alignSelf: "center",
-                ...FONTS.h3,
+                marginTop: 5,
               }}
             >
-              {item.name}
-            </Text>
+              <Text
+                style={{
+                  marginRight: SIZES.base,
+                  color: COLORS.black,
+                  ...FONTS.h2,
+                }}
+              >
+                {item.business_name}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: SIZES.base,
+                }}
+              >
+                <Text
+                  style={{
+                    ...FONTS.h4,
+                    color: COLORS.gray,
+                  }}
+                >
+                  {item.time} mins • {item.distance} km
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
+                <Text
+                  style={{
+                    ...FONTS.h5,
+                    fontSize: 10,
+                    color: COLORS.gray,
+                  }}
+                >
+                  {item.label} • {item.food} • {item.type}
+                </Text>
+              </View>
+            </View>
           </TouchableOpacity>
         )}
       />
     );
   }
+
+  // DISCOUNT
 
   // BEST SELLER ON EACH RESTAURANT
   function renderTrendingSection() {
@@ -286,7 +230,12 @@ const TestScreen = ({ navigation }) => {
               user_id={userId}
               merchant_id={item.merchant_id}
               onPress={() => {
-                navigation.navigate("FoodInfo", { itemId: item.product_id });
+                navigation.navigate("FoodInfo", {
+                  itemId: item.product_id,
+                  isFavorite: item.isFavorite,
+                  foodImage: { uri: item.product_image },
+                  key: Date.now(),
+                });
               }}
             />
           )}
@@ -441,7 +390,7 @@ const TestScreen = ({ navigation }) => {
             </View>
 
             {/* Other Restaurant */}
-            {/* {renderOtherRestaurant()} */}
+            {renderOtherRestaurant()}
           </View>
         }
         // renderItem={({ item, index }) => {

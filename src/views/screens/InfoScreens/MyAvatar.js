@@ -19,13 +19,13 @@ import { BASE_URL } from "../../../api/context/auth/config";
 import axios from "axios";
 
 const MyAvatar = ({ navigation }) => {
-  const { user } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const getUserData = async () => {
     setIsLoading(true);
     const response = await axios.get(
-      `${BASE_URL}app_users?user_id[eq]=${user.user_id}`
+      `${BASE_URL}app_users?user_id[eq]=${userId}`
     );
     setUserInfo(response.data);
     setIsLoading(false);

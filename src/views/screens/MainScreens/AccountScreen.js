@@ -66,60 +66,6 @@ const AccountScreen = ({ navigation }) => {
     );
   }
 
-  function renderDetails() {
-    return (
-      <View
-        style={{
-          justifyContent: "center",
-          marginTop: 10,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            paddingVertical: 20,
-            backgroundColor: COLORS.primary,
-            borderRadius: SIZES.radius,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {/* DETAILS */}
-          <View
-            style={{
-              marginLeft: SIZES.radius,
-            }}
-          >
-            <Text
-              style={{
-                color: COLORS.white,
-                ...FONTS.h2,
-              }}
-            >
-              Christopher Calleja
-            </Text>
-            <Text
-              style={{
-                color: COLORS.white,
-                ...FONTS.h5,
-              }}
-            >
-              christopher_calleja@gmail.com
-            </Text>
-            <Text
-              style={{
-                color: COLORS.white,
-                ...FONTS.h5,
-              }}
-            >
-              09123456789
-            </Text>
-          </View>
-        </View>
-      </View>
-    );
-  }
-
   function renderLogout() {
     return (
       <View>
@@ -168,18 +114,12 @@ const AccountScreen = ({ navigation }) => {
       {/* Header */}
       {renderHeader()}
 
-      {/* Logout */}
-      {/* {renderLogout()} */}
-
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: SIZES.radius,
           paddingBottom: 150,
         }}
       >
-        {/* Details */}
-        {/* {renderDetails()} */}
-
         <View
           style={{
             alignItems: "center",

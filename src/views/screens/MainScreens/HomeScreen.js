@@ -50,18 +50,22 @@ const Section = ({ title, onPress, children }) => {
 
 const HomeScreen = ({ navigation, route }) => {
   const { userId } = useContext(AuthContext);
-  //   const { logout, user } = useContext(AuthContext);
   const { restaurantId } = route.params;
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
   const [trending, setTrending] = React.useState();
   const [foodId, setFoodId] = React.useState();
 
-  // React.useEffect(() => {
-  //   handleChangeCategory(selectedCategoryId, selectedMenuType);
-  // }, []);
+  useEffect(() => {
+    getCategories();
+  }, []);
 
-  // Handler
+  const getCategories = async () => {
+    const response = await axios.get(
+      `${BASE_URL}restaurants?merchant_id[eq]=${restaurantId}`
+    );
+    console.log(response.data.categories);
+  };
 
   const fetchFoodFromRestaurant = async () => {
     try {
@@ -77,26 +81,6 @@ const HomeScreen = ({ navigation, route }) => {
   useEffect(() => {
     fetchFoodFromRestaurant();
   }, []);
-
-  // function handleChangeCategory(categoryId, menuTypeId) {
-  //   // Retrieve the Trending Food Menu
-  //   let selectedTrending = dummyData.Greenwich_menu.find(
-  //     (a) => a.name == "Trending"
-  //   );
-
-  //   // Find the menu
-  //   let selectedMenu = dummyData.Greenwich_menu.find((a) => a.id == menuTypeId);
-
-  //   // Set the trending menu based on the cateroryID
-  //   setTrending(
-  //     selectedTrending?.list.filter((a) => a.categories.includes(categoryId))
-  //   );
-
-  //   // Set menu based on the category ID
-  //   setMenuList(
-  //     selectedMenu?.list.filter((a) => a.categories.includes(categoryId))
-  //   );
-  // }
 
   function onPressHandler() {}
 

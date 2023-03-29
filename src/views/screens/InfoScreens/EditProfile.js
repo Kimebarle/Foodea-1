@@ -110,7 +110,7 @@ const EditProfile = ({ navigation, route }) => {
               style: "cancel",
               onPress: () => {
                 console.log("Confirm");
-                navigation.goBack();
+                navigation.navigate("AccountScreen");
               },
             },
           ]
@@ -283,28 +283,6 @@ const EditProfile = ({ navigation, route }) => {
             backgroundColor: !disabledButton() ? COLORS.primary : COLORS.gray,
           }}
           onPress={onPressHandler}
-        />
-      </View>
-    );
-  }
-
-  function renderImage() {
-    return (
-      <View
-        style={{
-          marginTop: SIZES.padding,
-          height: 40,
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: SIZES.padding,
-        }}
-      >
-        <Image
-          source={require("../../../../assets/img/images/Sample.png")}
-          resizeMode="contain"
-          style={{
-            width: 130,
-          }}
         />
       </View>
     );

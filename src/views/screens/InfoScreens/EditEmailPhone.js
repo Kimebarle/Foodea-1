@@ -33,11 +33,11 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const EditEmailPhone = ({ navigation }) => {
-  const { user } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(true);
   const [email, setEmail] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
-  const [phone, setPhone] = React.useState('');
+  const [phone, setPhone] = React.useState("");
   const [phoneError, setPhoneError] = React.useState("");
   const [data, setData] = React.useState();
   const [next, setNext] = React.useState();
@@ -56,9 +56,8 @@ const EditEmailPhone = ({ navigation }) => {
   };
 
   const getUserData = async () => {
-    const userID = user.user_id;
     setIsLoading(true);
-    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+    const response = await axios.get(`${BASE_URL}app_users/${userId}`);
     setData(response.data);
     setIsLoading(false);
   };
@@ -89,9 +88,9 @@ const EditEmailPhone = ({ navigation }) => {
   };
 
   const updateInfo = async () => {
-    const response = await axios.patch(`${BASE_URL}app_users/${user.user_id}`, {
+    const response = await axios.patch(`${BASE_URL}app_users/${userId}`, {
       email: email,
-      phone: phone,
+      contact_number: phone,
     });
   };
 
@@ -124,7 +123,7 @@ const EditEmailPhone = ({ navigation }) => {
       console.log(decision);
     }
   };
-  
+
   const phoneLength = 11;
 
   const disabledButton = () => {
