@@ -5,3 +5,6 @@ export const BASE_URL_RECOMMENDATION =
 
 export const apiKey =
   "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";
+
+export const mapKey =
+  "AIzaSyAAqvOIpCSuljCLCfPVjgnxKikBMwqO21Y";
