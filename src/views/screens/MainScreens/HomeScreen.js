@@ -182,14 +182,16 @@ const HomeScreen = ({ navigation, route }) => {
         renderItem={({ item, index }) => (
           <TouchableOpacity
             style={{
-              flexDirection: "row",
+              // flexDirection: "row",
+              alignItems: 'center',
+              justifyContent: "center",
               height: 55,
               marginTop: SIZES.padding,
               marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
               marginRight:
                 index == dummyData.categories.length - 1 ? SIZES.padding : 0,
-              paddingHorizontal: 8,
               borderRadius: SIZES.radius,
+              paddingHorizontal: 15,
               backgroundColor:
                 selectedCategoryId == item.id
                   ? COLORS.primary
@@ -200,14 +202,14 @@ const HomeScreen = ({ navigation, route }) => {
               handleChangeCategory(item.id, selectedMenuType);
             }}
           >
-            <Image
+            {/* <Image
               source={item.icon}
               style={{ marginTop: 5, height: 50, width: 50 }}
-            />
+            /> */}
             <Text
               style={{
                 alignSelf: "center",
-                marginRight: SIZES.base,
+                textAlign: 'center',
                 color:
                   selectedCategoryId == item.id ? COLORS.white : COLORS.gray,
                 ...FONTS.h3,
