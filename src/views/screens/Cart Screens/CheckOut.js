@@ -22,7 +22,7 @@ import { BASE_URL } from "../../../api/context/auth/config";
 import { Alert } from "react-native";
 
 const CheckOut = ({ navigation, route }) => {
-  const { userId } = useContext(AuthContext);
+  const { userId, userInfo } = useContext(AuthContext);
   const [coupon, setCoupon] = React.useState();
   const [totalPrice, setTotalPrice] = React.useState(5);
   const [fee, setFee] = React.useState(50);
@@ -38,6 +38,7 @@ const CheckOut = ({ navigation, route }) => {
     getTotal();
     let { selectedCard } = route.params;
     setSelectedCard(selectedCard);
+    console.log(userInfo);
   }, []);
 
   const getUser = async () => {
@@ -76,6 +77,8 @@ const CheckOut = ({ navigation, route }) => {
   };
 
   const addToOrders = async (list1) => {
+    const randomNumber = Math.floor(Math.random() * 1000000);
+    const otpString = randomNumber.toString().padStart(6, "0");
     for (let i = 0; i < passedValues.length; i++) {
       const response = await axios.post(`${BASE_URL}orders`, {
         customer_id: userId,
@@ -86,9 +89,13 @@ const CheckOut = ({ navigation, route }) => {
         total: list1[i].total,
         status: "Pending",
         payment_type: "Cash",
+        latitude: 0,
+        longitude: 0,
+        order_key: `${userData[0].firstname}` + otpString,
       });
       console.log(response.data);
     }
+    // console.log(list1);
   };
 
   const deleteFromCarts = async () => {

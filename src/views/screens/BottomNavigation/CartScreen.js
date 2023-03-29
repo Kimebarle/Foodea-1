@@ -99,6 +99,7 @@ const CartScreen = ({ navigation, route }) => {
     const decision = await confirmAction();
 
     if (decision) {
+      console.log(myCartList);
       navigation.navigate("CardPayment", { passingValue: myCartList });
     } else {
       console.log("cancel");
@@ -202,7 +203,7 @@ const CartScreen = ({ navigation, route }) => {
         contentContainerStyle={{
           marginTop: SIZES.radius,
           paddingHorizontal: SIZES.padding,
-          paddingBottom: SIZES.padding4,
+          paddingBottom: SIZES.padding,
         }}
         renderItem={(data) => (
           <View

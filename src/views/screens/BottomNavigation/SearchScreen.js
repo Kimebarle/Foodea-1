@@ -16,7 +16,7 @@ import {
   constants,
   dummyData,
 } from "../../../constants";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Header,
   HorizontalFoodCard,
@@ -26,8 +26,10 @@ import {
 } from "../../components/FoodeaComponents";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
+import AuthContext from "../../../api/context/auth/AuthContext";
 
 const SearchScreen = ({ navigation }) => {
+  const { userId } = useContext(AuthContext);
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
   const [trending, setTrending] = React.useState([]);
@@ -38,7 +40,7 @@ const SearchScreen = ({ navigation }) => {
   const [search, setSearch] = React.useState("");
   const [display, setDisplay] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(true);
-  // const [dummyData, setDummyData] = React.useState(null);
+
   React.useEffect(() => {
     setIsLoading(true);
     getFoodData();
@@ -58,8 +60,13 @@ const SearchScreen = ({ navigation }) => {
     filteredItems(text);
   };
 
+  const getFavorite = async () => {
+    const response = axios.get(`${BASE_URL}favorites?user_id[eq]=${userId}`);
+  };
+
   const filteredItems = async (text) => {
     const list = await getFoodData();
+    const favorite = await getFavorite();
     const newList = [...list];
 
     const filteredList = newList.filter((item) => {
@@ -132,6 +139,7 @@ const SearchScreen = ({ navigation }) => {
           renderItem={({ item, index }) => (
             <SearchFoodCard
               item={item}
+              itemId={item.id}
               onPress={() => {
                 navigation.navigate("FoodInfo", {
                   itemId: item.product_id,

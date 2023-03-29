@@ -6,7 +6,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   dummyData,
   icons,
@@ -27,6 +27,7 @@ const ActivityLogScreen = ({ navigation }) => {
   const [itemLength, setItemLength] = React.useState(true);
   const [data, setData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
+  const [list1, setList1] = useState([]);
 
   const fetchOrder = async () => {
     if (userId === undefined) {
@@ -35,14 +36,44 @@ const ActivityLogScreen = ({ navigation }) => {
         `${BASE_URL}orders?customer_id[eq]=${userId}`
       );
       const data = response.data;
+      const list = [...data];
       setItemLength(response.data.length > 0);
       setMyActivityLogList(data);
+      // let price = 0;
+
+      // const updatedList = list.forEach((item) => {
+      //   // price += item.order_details.total;
+      //   // item.forEach((item2) => {
+      //   //   console.log(item2);
+      //   // });
+      //   let orderTotal = 0;
+      //   for (let i = 0; i < item.order_details.length; i++) {
+      //     orderTotal = orderTotal + item.order_details[i].total;
+      //   }
+      //   console.log(orderTotal);
+      //   let newItem = { ...item, totalPrice: orderTotal };
+      //   //setList1(newItem);
+      //   // list.map((item) => ({
+      //   //   ...item,
+      //   //   totalPrice: orderTotal,
+      //   // }));
+      //   // const newItem = { ...item, totalPrice: orderTotal };
+      //   // setList1(newItem);
+      // });
+
+      // console.log(list1);
+      // const newList = list.map;
+      // for (let i = 0; i < list[0].order_details[0].length; i++) {
+      //   console.log(i);
+      // }
+
+      // console.log(price);
     }
   };
 
   const getData = async () => {
     const response = await axios.get(
-      `${BASE_URL}app_users?user_id[eq]=${userId}`
+      `${BASE_URL}app_users?customer_id[eq]=${userId}`
     );
     setData(response.data);
     setIsLoading(false);
@@ -114,8 +145,8 @@ const ActivityLogScreen = ({ navigation }) => {
         {itemLength ? (
           <FlatList
             data={myActivityLogList}
-            keyExtractor={(item, index) => {
-              return index.toString();
+            keyExtractor={(item) => {
+              `${item.order_key}`;
             }}
             renderItem={({ item }) => {
               return (
@@ -133,7 +164,11 @@ const ActivityLogScreen = ({ navigation }) => {
                     borderRadius: SIZES.radius,
                   }}
                 >
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      console.log(item.order_details);
+                    }}
+                  >
                     <View
                       style={{
                         flexDirection: "row",
@@ -142,7 +177,8 @@ const ActivityLogScreen = ({ navigation }) => {
                       }}
                     >
                       <Text style={{ ...FONTS.h3, width: 100 }}>
-                        {item.date}{" "}
+                        {item.order_details[0].date}{" "}
+                        {/* {console.log(item.order_details[0].date)} */}
                       </Text>
                       {/* <Text style={{ ...FONTS.h3 }}>{item.time}</Text> */}
                     </View>
@@ -151,7 +187,7 @@ const ActivityLogScreen = ({ navigation }) => {
                         <View style={{ flexDirection: "row", marginBottom: 5 }}>
                           <Image source={icons.Restaurant} />
                           <Text style={{ ...FONTS.h5 }}>
-                            {item.product_details.product_name}
+                            {/* {item.order_details.product_details.product_name} */}
                           </Text>
                         </View>
                         <View style={{ flexDirection: "row", marginBottom: 5 }}>
@@ -178,7 +214,7 @@ const ActivityLogScreen = ({ navigation }) => {
                           />
                           <Text style={{ ...FONTS.h5 }}>
                             {" "}
-                            {item.product_details.price}
+                            {item.order_totalPrice}
                           </Text>
                         </View>
                       </View>

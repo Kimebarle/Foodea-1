@@ -7,9 +7,16 @@ import AuthContext from "../../../api/context/auth/AuthContext";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
 
-const FoodDetails = ({ food, calories, img, favorite, product_id }) => {
+const FoodDetails = ({
+  food,
+  calories,
+  img,
+  favorite,
+  product_id,
+  onPress,
+}) => {
   const { userId } = useContext(AuthContext);
-  const [isFavorite, setIsFavorite] = React.useState();
+  const [isFavorite, setIsFavorite] = React.useState(favorite);
 
   const confirmAction = async () => {
     return new Promise((resolve, reject) => {
@@ -39,7 +46,7 @@ const FoodDetails = ({ food, calories, img, favorite, product_id }) => {
     const response = await axios.get(
       `${BASE_URL}favorites?product_id[eq]=${product_id}&user_id[eq]=${userId}`
     );
-
+    //console.log(response.data);
     return response.data.length > 0;
   };
 
@@ -48,25 +55,42 @@ const FoodDetails = ({ food, calories, img, favorite, product_id }) => {
       user_id: userId,
       product_id: product_id,
     });
-    console.log(response.data);
     return response.data.length > 0;
   };
 
   const deleteItemFromFavorites = async () => {
     const response = await axios.delete(`${BASE_URL}favorites/${product_id}`);
-    console.log(response.data);
     return response.data.length > 0;
+  };
+
+  const getItem = async () => {
+    const response = await axios.get(
+      `${BASE_URL}favorites?product_id[eq]=${product_id}&user_id[eq]=${userId}`
+    );
+    return response.data[0].id;
   };
 
   const onPressHandler = async () => {
     const checkIfFavorite = await favoriteChecker();
+
     //console.log(checkIfFavorite);
     if (checkIfFavorite) {
-      const get = await deleteItemFromFavorites();
-      console.log(get);
+      const decision = await confirmAction();
+      if (decision) {
+        setIsFavorite(false);
+      } else {
+        console.log("true");
+      }
+      // const remove = await getItem();
+      // const get = await deleteItemFromFavorites(remove);
+      // setIsFavorite(false);
+      // console.log(get);
     } else {
       const addTo = await addToFavorites();
       setIsFavorite(true);
+      // console.log(addTo);
+      //console.log(addTo);
+      //console.log(checkIfFavorite);
     }
   };
 
@@ -110,7 +134,7 @@ const FoodDetails = ({ food, calories, img, favorite, product_id }) => {
               width: 25,
               right: 0,
             }}
-            onPress={onPressHandler}
+            onPress={onPress}
           />
         </View>
         {/* food image */}
