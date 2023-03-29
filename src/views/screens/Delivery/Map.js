@@ -30,24 +30,23 @@ import axios from "axios";
 const Map = ({ navigation }) => {
   const [currentStep, setCurrentStep] = React.useState(1);
 
-  const { user } = useContext(AuthContext);
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [data, setData] = React.useState();
-    const [next, setNext] = React.useState();
-    const [userData, setUserData] = React.useState(null);
+  const { userId } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [data, setData] = React.useState();
+  const [next, setNext] = React.useState();
+  const [userData, setUserData] = React.useState(null);
 
-    const getUserData = async () => {
-        const userID = user.user_id;
-        setIsLoading(true);
-        const response = await axios.get(`${BASE_URL}app_users/${userID}`);
-        setData(response.data);
-        setIsLoading(false);
-    };
+  const getUserData = async () => {
+    setIsLoading(true);
+    const response = await axios.get(`${BASE_URL}app_users/${userId}`);
+    setData(response.data);
+    setIsLoading(false);
+  };
 
-    useEffect(() => {
-        setIsLoading(true);
-        getUserData();
-    }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    getUserData();
+  }, []);
 
   function renderHeader() {
     return (

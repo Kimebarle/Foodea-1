@@ -283,8 +283,7 @@ const Captcha = ({ navigation, route }) => {
 
   function renderFooter() {
     return (
-      <View
-      >
+      <View>
         {/* <TouchableOpacity onPress={onPressHandler}>
           <Text
             style={{
@@ -297,21 +296,20 @@ const Captcha = ({ navigation, route }) => {
         </TouchableOpacity> */}
 
         <TextButton
-            label="Submit"
-            disabled={disabledButton()}
-            onPress={onPressHandler}
-            buttonContainerStyle={{
-              marginTop: SIZES.padding,
-              height: 55,
-              borderRadius: SIZES.radius,
-              backgroundColor: !disabledButton()
-                ? COLORS.primary
-                : COLORS.transparentPrimray,
-            }}
-            labelStyle={{
-              ...FONTS.h3,
-            }}
-          />
+          label="Submit"
+          disabled={disabledButton()}
+          onPress={onPressHandler}
+          buttonContainerStyle={{
+            height: 55,
+            borderRadius: SIZES.radius,
+            backgroundColor: !disabledButton()
+              ? COLORS.primary
+              : COLORS.transparentPrimray,
+          }}
+          labelStyle={{
+            ...FONTS.h3,
+          }}
+        />
       </View>
     );
   }
@@ -330,16 +328,13 @@ const Captcha = ({ navigation, route }) => {
           extraHeight: 400,
         }}
       >
+        {/* Terms of Use */}
+        {renderTerms()}
 
-      {/* Terms of Use */}
-      {renderTerms()}
+        {/* Captcha */}
+        {renderCaptcha()}
 
-
-      {/* Captcha */}
-      {renderCaptcha()}
-
-      
-        <TextInput
+        {/* <TextInput
           style={{
             ...FONTS.h3,
             width: 330,
@@ -350,6 +345,18 @@ const Captcha = ({ navigation, route }) => {
             setCaptcha(value);
           }}
           value={Captcha}
+        /> */}
+        <FormInput
+          inputContainerStyle={{
+            ...FONTS.h3,
+            width: 330,
+            borderRadius: SIZES.radius,
+            textAlign: "center",
+          }}
+          onChange={(value) => {
+            setCaptcha(value);
+          }}
+          value={Captcha}
         />
 
         <View
@@ -357,7 +364,6 @@ const Captcha = ({ navigation, route }) => {
             alignItems: "center",
             justifyContent: "center",
             marginTop: SIZES.base,
-            marginBottom: SIZES.padding,
           }}
         >
           <Text
@@ -368,8 +374,8 @@ const Captcha = ({ navigation, route }) => {
               lineHeight: 15,
             }}
           >
-            By pressing the submit button, you agreeing to our Terms and that you
-            have read our Data Use Policy.
+            By pressing the submit button, you agreeing to our Terms and that
+            you have read our Data Use Policy.
           </Text>
         </View>
 

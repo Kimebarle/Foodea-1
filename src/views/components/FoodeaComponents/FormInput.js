@@ -26,6 +26,7 @@ const FormInput = ({
   autoCapitalize = "none",
   errorMsg = "",
   maxLength,
+  multiline,
 }) => {
   return (
     <View
@@ -66,6 +67,7 @@ const FormInput = ({
           autoCapitalize={autoCapitalize}
           maxLength={maxLength}
           onChangeText={(text) => onChange(text)}
+          multiline={multiline}
         />
 
         {appendComponent}

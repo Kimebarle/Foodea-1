@@ -27,7 +27,7 @@ import AuthContext from "../../../api/context/auth/AuthContext";
 
 const FoodInfoScreen = ({ navigation, route, itemValue }) => {
   const { addToCart, userId } = useContext(AuthContext);
-  const { itemId, isFavorite, foodImage, item } = route.params;
+  const { itemId } = route.params;
   const [isLoading, setIsLoading] = useState(true);
 
   const [quantity, setQuantity] = React.useState(1);
@@ -106,19 +106,18 @@ const FoodInfoScreen = ({ navigation, route, itemValue }) => {
           alignItems: "center",
         }}
       >
-        <Image
+        {/* <Image
           source={images.jollibee_logo}
           style={{
             width: 50,
             height: 50,
             borderRadius: SIZES.radius,
           }}
-        />
+        /> */}
         {/* info */}
         <View
           style={{
             flexDirection: "row",
-            marginLeft: SIZES.radius,
             justifyContent: "center",
           }}
         >
@@ -127,17 +126,24 @@ const FoodInfoScreen = ({ navigation, route, itemValue }) => {
               flexDirection: "column",
             }}
           >
-            <Text style={{ color: COLORS.gray, ...FONTS.h5 }}>
-              Product Name
+            <Text
+              style={{
+                color: COLORS.black,
+                ...FONTS.h3,
+                alignItems: "center",
+                top: 8,
+              }}
+            >
+              Quantity
             </Text>
-            <Text style={{ color: COLORS.gray, ...FONTS.h5 }}>
+            {/* <Text style={{ color: COLORS.black, ...FONTS.h4 }}>
               {isLoading ? "asdasdads" : displayFood[0].product_name}
-            </Text>
+            </Text> */}
           </View>
 
           <View
             style={{
-              marginLeft: 20,
+              marginLeft: 120,
             }}
           >
             <StepperInput

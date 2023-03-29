@@ -9,7 +9,12 @@ import {
   FONTS,
   SIZES,
 } from "../../../constants";
-import { FormInput, TextButton, Header, TextInput } from "../../components/FoodeaComponents";
+import {
+  FormInput,
+  TextButton,
+  Header,
+  TextInput,
+} from "../../components/FoodeaComponents";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
 import AuthContext from "../../../api/context/auth/AuthContext";
@@ -120,15 +125,35 @@ const SurveyScreenInitial = ({ navigation, route }) => {
   function renderFormInput() {
     return (
       <View style={{ width: "80%", height: 550, left: 30, top: 10 }}>
-        <View style={{
-          alignItems: "center",
-        }}>
-          <TextInput
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <FormInput
+            inputContainerStyle={{
+              ...FONTS.h3,
+              width: 265,
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.padding,
+            }}
+            onChange={(value) => {
+              setQuestion1(value);
+            }}
+            autoCapitalize
+            value={question1}
+            label="Answer"
+            editable
+            multiline
+            numberOfLines={4}
+            maxLength={100}
+          />
+          {/* <TextInput
             style={{
               ...FONTS.h3,
               width: 265,
               borderRadius: SIZES.radius,
-              marginBottom: SIZES.padding
+              marginBottom: SIZES.padding,
             }}
             onChangeText={(value) => {
               setQuestion1(value);
@@ -140,8 +165,7 @@ const SurveyScreenInitial = ({ navigation, route }) => {
             multiline
             numberOfLines={4}
             maxLength={100}
-          />
-
+          /> */}
         </View>
 
         <TextButton
@@ -166,20 +190,20 @@ const SurveyScreenInitial = ({ navigation, route }) => {
       style={{
         height: SIZES.height,
         width: SIZES.width,
-        alignItems: 'center',
+        alignItems: "center",
       }}
     >
-
       {/* Header */}
       {renderHeader()}
 
-      <View style={{
-        width: 350,
-        height: 550,
-        backgroundColor: COLORS.white,
-        borderRadius: SIZES.radius
-      }}>
-
+      <View
+        style={{
+          width: 350,
+          height: 550,
+          backgroundColor: COLORS.white,
+          borderRadius: SIZES.radius,
+        }}
+      >
         <Text
           style={{
             paddingTop: SIZES.padding,
@@ -198,9 +222,7 @@ const SurveyScreenInitial = ({ navigation, route }) => {
           20 words.{" "}
         </Text>
 
-        
-          {renderFormInput()}
-        
+        {renderFormInput()}
       </View>
     </View>
   );

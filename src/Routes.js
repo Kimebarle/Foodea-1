@@ -8,7 +8,7 @@ import * as SecureStore from "expo-secure-store";
 import { useEffect } from "react";
 
 export default function App() {
-  const { logged_in, setLogged_in, setUser, setUserId } =
+  const { logged_in, setLogged_in, setUser, setUserId, setUserInfo } =
     useContext(AuthContext);
 
   useEffect(() => {
@@ -18,14 +18,13 @@ export default function App() {
         setUser(user);
         setLogged_in(true);
         setUserId(user.user_id);
+        setUserInfo(user);
       }
     });
   }, []);
 
   return (
     <NavigationContainer>
-      {/* <MainStack /> */}
-      {/* <AuthStack /> */}
       {logged_in ? <MainStack /> : <AuthStack />}
     </NavigationContainer>
   );

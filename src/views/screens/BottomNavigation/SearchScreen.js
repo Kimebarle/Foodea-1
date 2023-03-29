@@ -79,9 +79,6 @@ const SearchScreen = ({ navigation }) => {
     );
   }
 
-  const handleOnPress = () => {
-    console.log("Search Food Card");
-  };
   function renderSearch() {
     return (
       <View
@@ -133,7 +130,14 @@ const SearchScreen = ({ navigation }) => {
           vertical
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
-            <SearchFoodCard item={item} onPress={handleOnPress} />
+            <SearchFoodCard
+              item={item}
+              onPress={() => {
+                navigation.navigate("FoodInfo", {
+                  itemId: item.product_id,
+                });
+              }}
+            />
           )}
         />
       </View>

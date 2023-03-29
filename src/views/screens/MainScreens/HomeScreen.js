@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../api/context/auth/AuthContext";
-import { Button, Container } from "../../components/FoodeaComponents";
+
 import {
   COLORS,
   FONTS,
@@ -53,8 +53,7 @@ const HomeScreen = ({ navigation, route }) => {
   const { restaurantId } = route.params;
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
-  const [trending, setTrending] = React.useState();
-  const [foodId, setFoodId] = React.useState();
+  const [trending, setTrending] = React.useState([]);
   const [categoryId, setCategoryId] = React.useState();
 
   useEffect(() => {
@@ -77,17 +76,28 @@ const HomeScreen = ({ navigation, route }) => {
       const response = await axios.get(
         `${BASE_URL}foods?merchant_id[eq]=${restaurantId}`
       );
-      setTrending(response.data);
+      const data = [...response.data];
+      setTrending(data.slice(0, 5));
+      return response.data;
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
+    handleChangeCategory();
     fetchFoodFromRestaurant();
   }, []);
 
-  function onPressHandler() {}
+  const handleChangeCategory = async (categoryId) => {
+    const data = await fetchFoodFromRestaurant();
+    const foodList = [...data];
+    const updatedFood = foodList.filter(
+      (item) => item.category_id === categoryId
+    );
+    //console.log(updatedFood);
+    setTrending(updatedFood);
+  };
 
   function renderMenuTypes() {
     return (
@@ -134,7 +144,7 @@ const HomeScreen = ({ navigation, route }) => {
         onPress={() => console.log(" Show All Trending Near You")}
       >
         <FlatList
-          data={trending}
+          data={trending.slice(0, 5)}
           keyExtractor={(item) => `${item.product_id}`}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -181,6 +191,10 @@ const HomeScreen = ({ navigation, route }) => {
                 index == dummyData.categories.length - 1 ? SIZES.padding : 0,
               borderRadius: SIZES.radius,
               paddingHorizontal: 15,
+              borderColor:
+                selectedCategoryId == item.category_id
+                  ? COLORS.white
+                  : COLORS.primary,
               backgroundColor:
                 selectedCategoryId == item.id
                   ? COLORS.primary
@@ -188,7 +202,7 @@ const HomeScreen = ({ navigation, route }) => {
             }}
             onPress={() => {
               setSelectedCategoryId(item.category_id);
-              //handleChangeCategory(item.category_id, selectedMenuType);
+              handleChangeCategory(item.category_id);
             }}
           >
             {/* <Image
@@ -294,7 +308,7 @@ const HomeScreen = ({ navigation, route }) => {
             {renderMenuTypes()}
           </View>
         }
-        renderItem={({ item, index }) => {
+        renderItem={({ item }) => {
           return (
             <HorizontalFoodCard
               containerStyle={{
@@ -309,7 +323,9 @@ const HomeScreen = ({ navigation, route }) => {
               }}
               itemId={item.product_id}
               item={item}
-              onPress={onPressHandler(foodId, item.id)}
+              onPress={() => {
+                navigation.navigate("FoodInfo", { itemId: item.product_id });
+              }}
             />
           );
         }}

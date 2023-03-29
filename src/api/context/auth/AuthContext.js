@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
       console.log(response.data);
       setUserId(response.data.user_id);
       setUser(response.data);
+      setUserInfo(response.data);
       Alert.alert("Successfully ", "Registered", [
         {
           text: "Confirm",
@@ -64,17 +65,15 @@ export const AuthProvider = ({ children }) => {
           let id = response.data[0].user_id;
           AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
           setUserId(id);
-
-          SecureStore.setItemAsync(
-            "userId",
-            JSON.stringify(response.data[0].user_id)
-          );
-          SecureStore.setItemAsync("user", JSON.stringify(response.data[0]));
-
+          // SecureStore.setItemAsync(
+          //   "userId",
+          //   JSON.stringify(response.data[0].user_id)
+          // );
+          // SecureStore.setItemAsync("user", JSON.stringify(response.data[0]));
           setUserId(response.data[0].user_id);
           setLogged_in(true);
           setUserId(id);
-
+          setUserInfo(response.data);
           if (remember) {
             SecureStore.setItemAsync("user", JSON.stringify(response.data[0]));
             SecureStore.setItemAsync(
@@ -82,7 +81,7 @@ export const AuthProvider = ({ children }) => {
               JSON.stringify(response.data[0].user_id)
             );
             setUserId(response.data[0].user_id);
-            // console.log(response.data[0].user_id);
+            setUserInfo(response.data);
             SecureStore.setItemAsync("logged_in", "true");
             console.log(remember);
           }

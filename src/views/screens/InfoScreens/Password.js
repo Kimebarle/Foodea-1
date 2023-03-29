@@ -39,10 +39,6 @@ const Password = ({ navigation }) => {
     getUserData();
   }, []);
 
-  const generateHash = (str) => {
-    return sha256(str);
-  };
-
   const goToNext = () => {
     setNext(data);
     //console.log(next);

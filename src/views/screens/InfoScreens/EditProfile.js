@@ -38,7 +38,7 @@ import sha256 from "sha256";
 import { BASE_URL } from "../../../api/context/auth/config";
 
 const EditProfile = ({ navigation, route }) => {
-  const { user } = useContext(AuthContext);
+  const { userId, userInfo } = useContext(AuthContext);
   const [showPassword, setShowPasswod] = React.useState(true);
   const [resetshowPassword, setResetShowPasswod] = React.useState(true);
   const [password, setPassword] = React.useState("");
@@ -75,13 +75,13 @@ const EditProfile = ({ navigation, route }) => {
   };
 
   const passwordChecker = async () => {
-    return password == user.password;
+    return password == userInfo.password;
   };
 
   const updatePassword = async (password, resetpassword) => {
     const hash = generateHash(password);
-    console.log(user.password);
-    const response = axios.patch(`${BASE_URL}app_users/${user.user_id}`, {
+    // console.log(user.password);
+    const response = axios.patch(`${BASE_URL}app_users/${userId}`, {
       password: hash,
     });
     console.log(response.data);
@@ -212,7 +212,7 @@ const EditProfile = ({ navigation, route }) => {
               marginBottom: SIZES.radius,
             }}
           >
-            <TextInput
+            {/* <TextInput
               style={{
                 ...FONTS.h3,
                 width: 300,
@@ -221,6 +221,19 @@ const EditProfile = ({ navigation, route }) => {
               secureTextEntry={showPassword}
               onChangeText={setPassword}
               value={password}
+              label="Password"
+            /> */}
+            <FormInput
+              inputContainerStyle={{
+                ...FONTS.h3,
+                width: 300,
+                borderRadius: SIZES.radius,
+              }}
+              value={password}
+              secureTextEntry={showPassword}
+              onChange={(value) => {
+                setPassword(value);
+              }}
               label="Password"
             />
 
@@ -245,15 +258,17 @@ const EditProfile = ({ navigation, route }) => {
               flexDirection: "row",
             }}
           >
-            <TextInput
-              style={{
+            <FormInput
+              inputContainerStyle={{
                 ...FONTS.h3,
                 width: 300,
                 borderRadius: SIZES.radius,
               }}
               secureTextEntry={resetshowPassword}
-              onChangeText={setResetPassword}
               value={resetpassword}
+              onChange={(value) => {
+                setResetPassword(value);
+              }}
               label="Confirm Password"
             />
 
