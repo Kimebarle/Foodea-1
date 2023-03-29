@@ -34,7 +34,15 @@ const NotificationScreen = () => {
         width: SIZES.width,
       }}
     >
-      {renderHeader()}
+      {/* {renderHeader()} */}
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        title={"Notification"}
+      />
       <View style={{
         flex: 1,
       }}>

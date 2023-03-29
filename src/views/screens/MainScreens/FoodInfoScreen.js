@@ -222,11 +222,13 @@ const FoodInfoScreen = ({ navigation, route, itemValue }) => {
             <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
           </TouchableOpacity>
         }
-        // rightComponent={
-        //   {}
-        //   // Search Component
-        //   // <CartQuantityButton quantity={3} />
-        // }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
       />
 
       {/* contents */}

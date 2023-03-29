@@ -308,6 +308,7 @@ const CartScreen = ({ navigation, route }) => {
       {itemLength ? <LoadingAsset /> : renderCartList()}
       <FooterTotal
         disable={myCartList}
+        calorieLimit={calories}
         totalCalories={calories}
         subTotal={price}
         shippingFee={fee}

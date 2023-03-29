@@ -65,6 +65,10 @@ const UserDetails = ({ navigation }) => {
     navigation.push("AddressDisplay");
   };
 
+  const HandleMaps = () => {
+    navigation.push("MapsView");
+  }
+
   function renderHeader() {
     return (
       <Header
@@ -198,7 +202,7 @@ const UserDetails = ({ navigation }) => {
                   right: 0,
                 }}
               />
-              <Text style={{ ...FONTS.h3 }}>Name's</Text>
+              <Text style={{ ...FONTS.h3 }}>Name</Text>
             </View>
           </TouchableOpacity>
 
@@ -319,6 +323,35 @@ const UserDetails = ({ navigation }) => {
                 }}
               />
               <Text style={{ ...FONTS.h3 }}>Password</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={HandleMaps}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                height: 50,
+                width: 300,
+                backgroundColor: COLORS.white,
+                borderRadius: SIZES.radius,
+                marginTop: SIZES.base,
+                elevation: 5,
+              }}
+            >
+              <Image
+                source={icons.Lock}
+                style={{
+                  height: 25,
+                  width: 25,
+                  tintColor: COLORS.primary,
+                  position: "absolute",
+                  left: 5,
+                  right: 0,
+                }}
+              />
+              <Text style={{ ...FONTS.h3 }}>Maps</Text>
             </View>
           </TouchableOpacity>
         </View>

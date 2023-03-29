@@ -38,12 +38,12 @@ import Names from "../screens/InfoScreens/Names";
 import HeightWeight from "../screens/InfoScreens/HeightWeight";
 import EmailPhoneNumber from "../screens/InfoScreens/EmailPhoneNumber";
 import Password from "../screens/InfoScreens/Password";
-import EditNames from "../screens/InfoScreens/EditNames";
 import EditHeightWeight from "../screens/InfoScreens/EditHeightWeight";
 import EditEmailPhone from "../screens/InfoScreens/EditEmailPhone";
 import EditFirstName from "../screens/InfoScreens/EditFirstName";
 import AddressDisplay from "../screens/InfoScreens/AddressDisplay";
 import EditAddress from "../screens/InfoScreens/EditAddress";
+import MapsView from "../screens/Delivery/MapsView";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -229,13 +229,12 @@ const MainStack = () => {
       <Stack.Screen name="HeightWeight" component={HeightWeight} />
       <Stack.Screen name="EmailPhoneNumber" component={EmailPhoneNumber} />
       <Stack.Screen name="Password" component={Password} />
-      <Stack.Screen name="EditNames" component={EditNames} />
       <Stack.Screen name="EditHeightWeight" component={EditHeightWeight} />
       <Stack.Screen name="EditEmailPhone" component={EditEmailPhone} />
       <Stack.Screen name="EditFirstName" component={EditFirstName} />
       <Stack.Screen name="AddressDisplay" component={AddressDisplay} />
       <Stack.Screen name="EditAddress" component={EditAddress} />
-      
+      <Stack.Screen name="MapsView" component={MapsView} />
     </Stack.Navigator>
   );
 };

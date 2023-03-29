@@ -249,9 +249,9 @@ const TestScreen = ({ navigation }) => {
               height: 100,
               marginTop: SIZES.padding,
               marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
-              borderWidth: selectedCategoryId == item.id ? 2 : 0,
+              borderWidth: 2,
               borderColor:
-                selectedCategoryId == item.id ? COLORS.primary : COLORS.white,
+                COLORS.primary,
               marginRight:
                 index == dummyData.Restaurant.length - 1 ? SIZES.padding : 0,
               paddingHorizontal: 8,

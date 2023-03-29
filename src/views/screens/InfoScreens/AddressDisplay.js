@@ -105,7 +105,7 @@ const AddressDisplay = ({ navigation }) => {
               ...FONTS.h3,
               fontSize: 15,
               marginTop: SIZES.base,
-              marginLeft: SIZES.padding,
+              marginLeft: SIZES.radius,
             }}
           >
             Address
@@ -123,7 +123,7 @@ const AddressDisplay = ({ navigation }) => {
               alignItems: "center",
               justifyContent: "center",
               height: 50,
-              width: 320,
+              width: 350,
               backgroundColor: COLORS.white,
               borderRadius: SIZES.radius,
               marginTop: SIZES.base,
