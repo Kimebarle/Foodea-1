@@ -95,12 +95,6 @@ const TestScreen = ({ navigation }) => {
     const response = await axios.get(`${BASE_URL}restaurants`);
     setRestaurantData(response.data);
     setIsLoading(false);
-    //console.log(response.data[18].documents.logo);
-    try {
-      setRestaurantImage(response.data.documents.logo);
-    } catch (error) {
-      console.log(error);
-    }
   }, []);
 
   function renderOtherRestaurant() {
@@ -131,7 +125,7 @@ const TestScreen = ({ navigation }) => {
             }}
           >
             {/* <Text>{item.documents.merchant_id}</Text> */}
-            {/* <Image
+            <Image
               source={{ uri: item.documents.logo }}
               style={{
                 marginTop: 5,
@@ -140,7 +134,7 @@ const TestScreen = ({ navigation }) => {
                 alignSelf: "center",
                 marginRight: SIZES.radius,
               }}
-            /> */}
+            />
 
             <View
               style={{
