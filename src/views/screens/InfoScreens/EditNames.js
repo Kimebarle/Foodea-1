@@ -35,7 +35,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Alert } from "react-native";
 
 const EditFirstName = ({ navigation }) => {
-  const { user } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(true);
   const [firstname, setFirstName] = React.useState("");
   const [firstnameError, setFirstNameError] = React.useState("");
@@ -65,9 +65,8 @@ const EditFirstName = ({ navigation }) => {
   };
 
   const getUserData = async () => {
-    const userID = user.user_id;
     setIsLoading(true);
-    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+    const response = await axios.get(`${BASE_URL}app_users/${userId}`);
     setData(response.data);
     setIsLoading(false);
   };
@@ -103,15 +102,12 @@ const EditFirstName = ({ navigation }) => {
 
   const updateDetails = async () => {
     try {
-      const response = await axios.patch(
-        `${BASE_URL}app_users/${user.user_id}`,
-        {
-          firstname: firstname,
-          middleName: middleName,
-          lastname: lastname,
-          age: age,
-        }
-      );
+      const response = await axios.patch(`${BASE_URL}app_users/${userId}`, {
+        firstname: firstname,
+        middleName: middleName,
+        lastname: lastname,
+        age: age,
+      });
       return response.data.length > 0;
     } catch (error) {
       console.log(error);
@@ -144,7 +140,7 @@ const EditFirstName = ({ navigation }) => {
               style: "cancel",
               onPress: () => {
                 console.log("Confirm");
-                navigation.goBack();
+                navigation.navigate("AccountScreen");
               },
             },
           ]

@@ -23,14 +23,13 @@ import {
 } from "../../components/FoodeaComponents";
 
 const Password = ({ navigation }) => {
-  const { user } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [next, setNext] = React.useState();
   const getUserData = async () => {
-    const userID = user.user_id;
     setIsLoading(true);
-    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+    const response = await axios.get(`${BASE_URL}app_users/${userId}`);
     setData(response.data);
     setIsLoading(false);
   };

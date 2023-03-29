@@ -28,7 +28,7 @@ import { Alert } from "react-native";
 
 const CartScreen = ({ navigation, route }) => {
   const { restaurantID } = route.params;
-  const { userInfo, user, userId } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   const [myCartList, setMyCartList] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [price, setPrice] = React.useState(0);
@@ -54,7 +54,6 @@ const CartScreen = ({ navigation, route }) => {
         totalPrice += price;
       }
 
-      // console.log("total " + response.data[0].quantity);
       for (let i = 0; i < response.data.length; i++) {
         const calories = response.data[i].product_details.calories;
         totalCalories += calories;
@@ -75,13 +74,6 @@ const CartScreen = ({ navigation, route }) => {
       fetchCart();
     }
   }, [myCartList, fetchCart]);
-
-  // function updateQuantityHandler(newquantity, id) {
-  //   const newMyCartList = myCartList.map((cl) =>
-  //     cl.id === id ? { ...cl, quantity: newquantity } : cl
-  //   );
-  //   setMyCartList(newMyCartList);
-  // }
 
   const confirmAction = async () => {
     return new Promise((resolve, reject) => {
@@ -108,30 +100,6 @@ const CartScreen = ({ navigation, route }) => {
 
     if (decision) {
       navigation.navigate("CardPayment", { passingValue: myCartList });
-      // for (let i = 0; i < myCartList.length; i++) {
-      //   const response = await axios.post(`${BASE_URL}orders`, {
-      //     customer_id: userId,
-      //     merchant_id: restaurantID,
-      //     product_id: myCartList[i].product_id,
-      //     restaurant_id: restaurantID,
-      //     quantity: myCartList[i].quantity,
-      //     total: myCartList[i].total,
-      //     status: "Pending",
-      //     payment_type: "Cash",
-      //   });
-      //   console.log(response.data);
-      // }
-      // let newCart = [...myCartList];
-      // for (let i = 0; i < newCart.length; i++) {
-      //   const response = await axios.delete(
-      //     `${BASE_URL}carts/${newCart[i].id}`
-      //   );
-      // }
-      // newCart.splice(0, newCart.length);
-      // setMyCartList(newCart);
-      // setCalories(0);
-      // setPrice(0);
-      // setOrderQuantity(0);
     } else {
       console.log("cancel");
     }
@@ -253,7 +221,7 @@ const CartScreen = ({ navigation, route }) => {
               }}
             >
               <Image
-                source={require("../../../../assets/img/dummyData/hamburger.png")}
+                source={{ uri: data.item.product_details.product_image }}
                 resizeMode="contain"
                 style={{
                   width: "100%",

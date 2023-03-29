@@ -25,9 +25,9 @@ import axios from "axios";
 import { useContext } from "react";
 import AuthContext from "../../../api/context/auth/AuthContext";
 
-const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
+const FoodInfoScreen = ({ navigation, route, itemValue }) => {
   const { addToCart, userId } = useContext(AuthContext);
-  const { itemId } = route.params;
+  const { itemId, isFavorite, foodImage, item } = route.params;
   const [isLoading, setIsLoading] = useState(true);
 
   const [quantity, setQuantity] = React.useState(1);
@@ -38,6 +38,9 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
   const [quantity_product, setQuantity_Product] = React.useState(1);
   const [total, setTotal] = React.useState(1);
   const [price, setPrice] = React.useState(1);
+  const [ingredients, setIngredients] = React.useState();
+  const [image, setImage] = React.useState();
+  const [favorite, setFavorite] = React.useState();
 
   // declare variable that would be used inside the function
   const fetchFood = async () => {
@@ -49,19 +52,41 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
       const product = await response.data[0].product_id;
       const rest_id = await response.data[0].merchant_id;
       const price_id = await response.data[0].price;
+      const ingredients = await response.data[0].ingredients;
+      const image = await response.data[0].product_image;
+      setImage(image);
       setProduct_Id(product);
       setPrice(price_id);
-      console.log(userId);
       setDisplayFood(data);
       setRestaurant_Id(rest_id);
+      setIngredients(ingredients);
       setIsLoading(false);
+      return response.data;
     } catch (error) {
       console.log(error);
     }
   };
 
+  const fetchFavorite = async () => {
+    const getFood = await fetchFood();
+    const response = await axios.get(
+      `${BASE_URL}favorites?user_id[eq]=${userId}`
+    );
+    const foodItem = [...getFood];
+    const list = response.data;
+    const fave = [...list];
+
+    const isFavorite = foodItem.some((item1) =>
+      fave.some((item2) => item2.product_id === item1.product_id)
+    );
+
+    setFavorite(isFavorite);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     setIsLoading(true);
+    fetchFavorite();
     fetchFood();
   }, []);
 
@@ -90,34 +115,17 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
           }}
         />
         {/* info */}
-        <View style = {{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <View
-            style={{
-              marginLeft: SIZES.radius,
-              marginRight: SIZES.radius,
-              justifyContent: "center",
-            }}
-          >
-            <Text style={{ color: COLORS.black, ...FONTS.h4 }}>Restaurant</Text>
-            <Text style={{ color: COLORS.black, ...FONTS.h5 }}>
-              1.2 km away from you
-            </Text>
-          </View>
-
-          {/* Add or Minus Quantity */}
-          <StepperInput
-            value={quantity}
-            onAdd={() => setQuantity(quantity + 1)}
-            onMinus={() => {
-              if (quantity > 1) {
-                setQuantity(quantity - 1);
-              }
-            }}
-          />
+        <View
+          style={{
+            flex: 1,
+            marginLeft: SIZES.radius,
+            justifyContent: "center",
+          }}
+        >
+          <Text style={{ color: COLORS.gray, ...FONTS.h4 }}>Restaurant</Text>
+          <Text style={{ color: COLORS.gray, ...FONTS.h4 }}>
+            1.2 km away from you
+          </Text>
         </View>
       </View>
     );
@@ -199,9 +207,15 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
         {/* food info */}
         <FoodDetails
           calories={isLoading ? "Loading" : displayFood[0].calories}
+          product_id={isLoading ? 5 : displayFood[0].product_id}
+          favorite={isLoading ? favorite : favorite}
           img={
             <Image
-              source={require("../../../../assets/img/dummyData/hamburger.png")}
+              source={
+                isLoading
+                  ? require("../../../../assets/img/dummyData/hamburger.png")
+                  : { uri: displayFood[0].product_image }
+              }
               resizeMode="contain"
               style={{ width: 250, height: 150, alignSelf: "center" }}
             />
@@ -251,10 +265,33 @@ const FoodInfoScreen = ({ item, navigation, route, itemValue }) => {
               marginBottom: SIZES.base,
             }}
           >
-            {dummyData.hamburger.ingredients}
+            {isLoading ? dummyData.hamburger.ingredients : ingredients}
           </Text>
 
           <LineDivider />
+
+          {/* Distance, Duration */}
+          <View
+            style={{
+              alignItems: "center",
+              marginTop: 10,
+              paddingBottom: 10,
+              marginHorizontal: SIZES.radius,
+              justifyContent: "space-between",
+            }}
+          >
+            {/* Add or Minus Quantity */}
+
+            <StepperInput
+              value={quantity}
+              onAdd={() => setQuantity(quantity + 1)}
+              onMinus={() => {
+                if (quantity > 1) {
+                  setQuantity(quantity - 1);
+                }
+              }}
+            />
+          </View>
         </View>
 
         {/* Restaurant Ratings */}

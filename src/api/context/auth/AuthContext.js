@@ -70,8 +70,8 @@ export const AuthProvider = ({ children }) => {
             JSON.stringify(response.data[0].user_id)
           );
           SecureStore.setItemAsync("user", JSON.stringify(response.data[0]));
-          console.log(remember);
-          setUserInfo(response.data);
+
+          setUserId(response.data[0].user_id);
           setLogged_in(true);
           setUserId(id);
 
@@ -82,6 +82,7 @@ export const AuthProvider = ({ children }) => {
               JSON.stringify(response.data[0].user_id)
             );
             setUserId(response.data[0].user_id);
+            // console.log(response.data[0].user_id);
             SecureStore.setItemAsync("logged_in", "true");
             console.log(remember);
           }

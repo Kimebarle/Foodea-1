@@ -8,7 +8,11 @@ import {
   icons,
   FONTS,
 } from "../../../constants";
-import { Header, FormInput, TextButton } from "../../components/FoodeaComponents";
+import {
+  Header,
+  FormInput,
+  TextButton,
+} from "../../components/FoodeaComponents";
 import { Alert } from "react-native";
 import React from "react";
 import { useContext, useState, useEffect } from "react";
@@ -18,7 +22,7 @@ import axios from "axios";
 import { TextInput } from "react-native-paper";
 
 const EditHeightWeight = ({ navigation }) => {
-  const { user } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [height, setHeight] = useState();
   const [heightError, setHeightError] = useState("");
@@ -33,9 +37,8 @@ const EditHeightWeight = ({ navigation }) => {
   };
 
   const getUserData = async () => {
-    const userID = user.user_id;
     setIsLoading(true);
-    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+    const response = await axios.get(`${BASE_URL}app_users/${userId}`);
     setHeight(response.data[0].height);
     setData(response.data);
     setIsLoading(false);
@@ -73,14 +76,11 @@ const EditHeightWeight = ({ navigation }) => {
 
   const updateHeightWeight = async (bmi) => {
     try {
-      const response = await axios.patch(
-        `${BASE_URL}app_users/${user.user_id}`,
-        {
-          height: height,
-          weight: weight,
-          bmi: bmi,
-        }
-      );
+      const response = await axios.patch(`${BASE_URL}app_users/${userId}`, {
+        height: height,
+        weight: weight,
+        bmi: bmi,
+      });
       console.log(response.data);
       return response.data.length > 0;
     } catch (error) {
@@ -105,7 +105,7 @@ const EditHeightWeight = ({ navigation }) => {
             style: "cancel",
             onPress: () => {
               console.log("Confirm");
-              navigation.goBack();
+              navigation.navigate("AccountScreen");
             },
           },
         ]
@@ -212,6 +212,57 @@ const EditHeightWeight = ({ navigation }) => {
 
         <View
           style={{
+            justifyContent: "flex-start",
+          }}
+        >
+          {/* BMI */}
+          <Text
+            style={{
+              color: COLORS.gray,
+              ...FONTS.h3,
+              fontSize: 15,
+              marginTop: SIZES.base,
+              marginLeft: SIZES.padding * 1.3,
+            }}
+          >
+            BMI
+          </Text>
+        </View>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          {/* BMI */}
+          <TextInput
+            label="BMI"
+            disabled
+            style={{
+              width: 300,
+              height: 50,
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+            }}
+          />
+          {/* <FormInput
+            containerStyle={{
+              borderRadius: SIZES.radius,
+              marginBottom: SIZES.radius,
+              width: 300,
+            }}
+            label="Weight"
+            value={bmi}
+            keyboardType="number-pad"
+            maxLength={2}
+            onChange={(value) => {
+              setBMI(value);
+              utils.validateInput(value, 1, setBMIError);
+            }}
+          /> */}
+        </View>
+
+        <View
+          style={{
             alignItems: "center",
           }}
         >
@@ -225,9 +276,7 @@ const EditHeightWeight = ({ navigation }) => {
               alignItems: "center",
               borderRadius: SIZES.radius,
               marginBottom: SIZES.padding,
-              backgroundColor: !disabledButton()
-                ? COLORS.primary
-                : COLORS.gray,
+              backgroundColor: !disabledButton() ? COLORS.primary : COLORS.gray,
             }}
             onPress={HandleSubmit}
           />

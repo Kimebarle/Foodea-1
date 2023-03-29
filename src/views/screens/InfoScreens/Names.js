@@ -32,7 +32,7 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 const Names = ({ navigation }) => {
-  const { user } = useContext(AuthContext);
+  const { user, userId } = useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [next, setNext] = React.useState();
@@ -57,10 +57,11 @@ const Names = ({ navigation }) => {
   };
 
   const getUserData = async () => {
-    const userID = user.user_id;
     setIsLoading(true);
-    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+
+    const response = await axios.get(`${BASE_URL}app_users/${userId}`);
     setData(response.data);
+
     setIsLoading(false);
   };
 
