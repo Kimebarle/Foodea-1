@@ -55,6 +55,7 @@ const HomeScreen = ({ navigation, route }) => {
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
   const [trending, setTrending] = React.useState();
   const [foodId, setFoodId] = React.useState();
+  const [categoryId, setCategoryId] = React.useState();
 
   useEffect(() => {
     getCategories();
@@ -64,7 +65,11 @@ const HomeScreen = ({ navigation, route }) => {
     const response = await axios.get(
       `${BASE_URL}restaurants?merchant_id[eq]=${restaurantId}`
     );
-    console.log(response.data.categories);
+    try {
+      setCategoryId(response.data[0].categories);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchFoodFromRestaurant = async () => {
@@ -159,8 +164,8 @@ const HomeScreen = ({ navigation, route }) => {
   function renderFoodCategories() {
     return (
       <FlatList
-        data={dummyData.Greenwich_categories}
-        keyExtractor={(item) => `${item.id}`}
+        data={categoryId}
+        keyExtractor={(item) => `${item.category_id}`}
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({ item, index }) => (
@@ -182,8 +187,8 @@ const HomeScreen = ({ navigation, route }) => {
                   : COLORS.lightGray2,
             }}
             onPress={() => {
-              setSelectedCategoryId(item.id);
-              handleChangeCategory(item.id, selectedMenuType);
+              setSelectedCategoryId(item.category_id);
+              //handleChangeCategory(item.category_id, selectedMenuType);
             }}
           >
             {/* <Image
@@ -199,7 +204,7 @@ const HomeScreen = ({ navigation, route }) => {
                 ...FONTS.h3,
               }}
             >
-              {item.name}
+              {item.main_category}
             </Text>
           </TouchableOpacity>
         )}
