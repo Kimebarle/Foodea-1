@@ -117,23 +117,29 @@ const FoodInfoScreen = ({ navigation, route, itemValue }) => {
         {/* info */}
         <View
           style={{
-            flexDirection: 'row',
+            flexDirection: "row",
             marginLeft: SIZES.radius,
             justifyContent: "center",
           }}
         >
-          <View style = {{
-            flexDirection: 'column',
-          }}>
-            <Text style={{ color: COLORS.gray, ...FONTS.h5 }}>Restaurant</Text>
+          <View
+            style={{
+              flexDirection: "column",
+            }}
+          >
             <Text style={{ color: COLORS.gray, ...FONTS.h5 }}>
-              1.2 km away from you
+              Product Name
+            </Text>
+            <Text style={{ color: COLORS.gray, ...FONTS.h5 }}>
+              {isLoading ? "asdasdads" : displayFood[0].product_name}
             </Text>
           </View>
 
-          <View style = {{
-            marginLeft: 10,
-          }}>
+          <View
+            style={{
+              marginLeft: 20,
+            }}
+          >
             <StepperInput
               value={quantity}
               onAdd={() => setQuantity(quantity + 1)}
@@ -210,10 +216,11 @@ const FoodInfoScreen = ({ navigation, route, itemValue }) => {
             <Image source={icons.backarrow} style={{ color: COLORS.gray2 }} />
           </TouchableOpacity>
         }
-        rightComponent={
-          // Search Component
-          <CartQuantityButton quantity={3} />
-        }
+        // rightComponent={
+        //   {}
+        //   // Search Component
+        //   // <CartQuantityButton quantity={3} />
+        // }
       />
 
       {/* contents */}

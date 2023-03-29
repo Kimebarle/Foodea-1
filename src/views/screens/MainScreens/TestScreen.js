@@ -162,7 +162,7 @@ const TestScreen = ({ navigation }) => {
                     color: COLORS.gray,
                   }}
                 >
-                  {item.time} mins • {item.distance} km
+                  • {item.time} mins
                 </Text>
               </View>
 
@@ -281,9 +281,6 @@ const TestScreen = ({ navigation }) => {
                 }}
               >
                 {item.name}
-              </Text>
-              <Text style={{ color: COLORS.black, ...FONTS.h4 }}>
-                {item.distance} km
               </Text>
             </View>
           </TouchableOpacity>

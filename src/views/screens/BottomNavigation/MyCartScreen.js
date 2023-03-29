@@ -200,7 +200,6 @@ const MyCartScreen = ({ navigation }) => {
                         </Text>
                         <Text style={{ ...FONTS.h5 }}>
                           {item.totalItems} item • {item.time} mins •{" "}
-                          {item.distance} km
                         </Text>
                       </View>
                     </View>
@@ -220,11 +219,13 @@ const MyCartScreen = ({ navigation }) => {
             }}
           />
         ) : (
-          <View style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <LoadingAsset
               containerStyle={{
                 width: 250,

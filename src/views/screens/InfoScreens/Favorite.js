@@ -211,7 +211,7 @@ const Favorite = ({ navigation, data }) => {
                     {/* distance and waiting time */}
                     <View style={{ flexDirection: "row", marginTop: 20 }}>
                       <Image source={icons.location} />
-                      <Text style={{ marginRight: 10 }}>3 km</Text>
+
                       <Image source={icons.Waiting_Time} />
                       <Text style={{ marginRight: 20 }}>20 mins</Text>
                     </View>
