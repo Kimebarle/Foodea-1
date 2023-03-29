@@ -66,7 +66,7 @@ const EditFirstName = ({ navigation, route }) => {
 
   const getUserData = async () => {
     setIsLoading(true);
-    const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+    const response = await axios.get(`${BASE_URL}app_users/${userId}`);
     setData(response.data);
     setIsLoading(false);
   };
@@ -321,8 +321,8 @@ const EditFirstName = ({ navigation, route }) => {
                 flexDirection: "row",
               }}
             >
-              <TextInput
-                style={styles.input}
+              <FormInput
+                inputContainerStyle={styles.input}
                 placeholder="Birthday"
                 editable={false}
                 disabled

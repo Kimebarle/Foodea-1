@@ -27,6 +27,7 @@ const FormInput = ({
   errorMsg = "",
   maxLength,
   multiline,
+  disabled,
 }) => {
   return (
     <View
@@ -68,6 +69,7 @@ const FormInput = ({
           maxLength={maxLength}
           onChangeText={(text) => onChange(text)}
           multiline={multiline}
+          editable={disabled}
         />
 
         {appendComponent}

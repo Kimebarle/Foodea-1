@@ -57,9 +57,9 @@ const FoodInfoScreen = ({ navigation, route, itemValue }) => {
       setImage(image);
       setProduct_Id(product);
       setPrice(price_id);
-      setDisplayFood(data);
       setRestaurant_Id(rest_id);
       setIngredients(ingredients);
+      setDisplayFood(data);
       setIsLoading(false);
       return response.data;
     } catch (error) {

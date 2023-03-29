@@ -7,7 +7,7 @@ import {
   ScrollView,
   Text,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import AuthContext from "../../../api/context/auth/AuthContext";
 
 import {
@@ -26,6 +26,7 @@ import {
 } from "../../components/FoodeaComponents";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Section = ({ title, onPress, children }) => {
   return (
@@ -56,10 +57,6 @@ const HomeScreen = ({ navigation, route }) => {
   const [trending, setTrending] = React.useState([]);
   const [categoryId, setCategoryId] = React.useState();
 
-  useEffect(() => {
-    getCategories();
-  }, []);
-
   const getCategories = async () => {
     const response = await axios.get(
       `${BASE_URL}restaurants?merchant_id[eq]=${restaurantId}`
@@ -78,15 +75,17 @@ const HomeScreen = ({ navigation, route }) => {
       );
       const data = [...response.data];
       setTrending(data.slice(0, 5));
-      return response.data;
+      console.log(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    handleChangeCategory();
     fetchFoodFromRestaurant();
+    getCategories();
+    //handleChangeCategory();
   }, []);
 
   const handleChangeCategory = async (categoryId) => {
@@ -95,7 +94,6 @@ const HomeScreen = ({ navigation, route }) => {
     const updatedFood = foodList.filter(
       (item) => item.category_id === categoryId
     );
-    //console.log(updatedFood);
     setTrending(updatedFood);
   };
 

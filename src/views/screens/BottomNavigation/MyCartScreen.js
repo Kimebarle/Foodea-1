@@ -205,7 +205,7 @@ const MyCartScreen = ({ navigation }) => {
                     </View>
 
                     <Image
-                      source={require("../../../../assets/img/images/kfc-logo-1.png")}
+                      source={{ uri: item.documents.logo }}
                       style={{
                         height: 80,
                         width: 80,

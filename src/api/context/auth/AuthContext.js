@@ -154,6 +154,7 @@ export const AuthProvider = ({ children }) => {
         addToCart,
         setLogged_in,
         setUserId,
+        setUserInfo,
       }}
     >
       {children}

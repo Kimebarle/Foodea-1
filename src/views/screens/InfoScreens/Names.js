@@ -311,11 +311,11 @@ const Names = ({ navigation }) => {
               flexDirection: "row",
             }}
           >
-            <TextInput
-              style={styles.input}
+            <FormInput
+              inputContainerStyle={styles.input}
               placeholder="Birthday"
-              editable={false}
-              value={date.toLocaleDateString()}
+              value={"Birthday"}
+              disabled={false}
             />
             <View
               style={{
@@ -326,7 +326,6 @@ const Names = ({ navigation }) => {
                 style={{
                   marginLeft: SIZES.base,
                 }}
-                onPress={showDatePicker}
               >
                 <Image
                   source={require("../../../../assets/img/icons/calendar.png")}

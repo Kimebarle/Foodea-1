@@ -28,7 +28,6 @@ import {
   FormInputCheck,
   EditButton,
   Button,
-  TextInput,
 } from "../../components/FoodeaComponents";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -225,7 +224,6 @@ const EditFirstName = ({ navigation }) => {
                 }}
                 label="First Name"
                 value={firstname}
-                placeholder={isLoading ? "Josh" : data[0].firstname}
                 maxLength={15}
                 onChange={(value) => {
                   setFirstName(value);
@@ -252,7 +250,6 @@ const EditFirstName = ({ navigation }) => {
                 }}
                 label="Middle Name"
                 value={middleName}
-                placeholder={isLoading ? "Josh" : data[0].middlename}
                 maxLength={15}
                 onChange={(value) => {
                   setMiddleName(value);
@@ -279,7 +276,6 @@ const EditFirstName = ({ navigation }) => {
                 }}
                 label="Last Name"
                 value={lastname}
-                placeholder={isLoading ? "Josh" : data[0].lastname}
                 maxLength={15}
                 onChange={(value) => {
                   setLastName(value);
@@ -321,8 +317,8 @@ const EditFirstName = ({ navigation }) => {
                   flexDirection: "row",
                 }}
               >
-                <TextInput
-                  style={styles.input}
+                <FormInput
+                  inputContainerStyle={styles.input}
                   placeholder="Birthday"
                   editable={false}
                   disabled
@@ -360,28 +356,6 @@ const EditFirstName = ({ navigation }) => {
                 />
               )}
             </View>
-
-            {/* <View style={{
-                        alignItems: 'center',
-                    }}>
-                        <TouchableOpacity onPress={HandleSubmit}>
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    height: 50,
-                                    width: 300,
-                                    backgroundColor: COLORS.primary,
-                                    borderRadius: SIZES.radius,
-                                    marginTop: 100,
-                                    elevation: 5,
-                                }}
-                            >
-                                <Text style={{ ...FONTS.h3, color: COLORS.white }}>Submit</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View> */}
 
             <View
               style={{
