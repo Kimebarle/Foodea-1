@@ -117,15 +117,33 @@ const FoodInfoScreen = ({ navigation, route, itemValue }) => {
         {/* info */}
         <View
           style={{
-            flex: 1,
+            flexDirection: 'row',
             marginLeft: SIZES.radius,
             justifyContent: "center",
           }}
         >
-          <Text style={{ color: COLORS.gray, ...FONTS.h4 }}>Restaurant</Text>
-          <Text style={{ color: COLORS.gray, ...FONTS.h4 }}>
-            1.2 km away from you
-          </Text>
+          <View style = {{
+            flexDirection: 'column',
+          }}>
+            <Text style={{ color: COLORS.gray, ...FONTS.h5 }}>Restaurant</Text>
+            <Text style={{ color: COLORS.gray, ...FONTS.h5 }}>
+              1.2 km away from you
+            </Text>
+          </View>
+
+          <View style = {{
+            marginLeft: 10,
+          }}>
+            <StepperInput
+              value={quantity}
+              onAdd={() => setQuantity(quantity + 1)}
+              onMinus={() => {
+                if (quantity > 1) {
+                  setQuantity(quantity - 1);
+                }
+              }}
+            />
+          </View>
         </View>
       </View>
     );
@@ -269,29 +287,6 @@ const FoodInfoScreen = ({ navigation, route, itemValue }) => {
           </Text>
 
           <LineDivider />
-
-          {/* Distance, Duration */}
-          <View
-            style={{
-              alignItems: "center",
-              marginTop: 10,
-              paddingBottom: 10,
-              marginHorizontal: SIZES.radius,
-              justifyContent: "space-between",
-            }}
-          >
-            {/* Add or Minus Quantity */}
-
-            <StepperInput
-              value={quantity}
-              onAdd={() => setQuantity(quantity + 1)}
-              onMinus={() => {
-                if (quantity > 1) {
-                  setQuantity(quantity - 1);
-                }
-              }}
-            />
-          </View>
         </View>
 
         {/* Restaurant Ratings */}
