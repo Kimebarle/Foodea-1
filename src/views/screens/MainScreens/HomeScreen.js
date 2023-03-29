@@ -200,15 +200,18 @@ const HomeScreen = ({ navigation, route }) => {
               justifyContent: "center",
               height: 55,
               marginTop: SIZES.padding,
+              borderWidth: selectedCategoryId == item.category_id ? 2 : 0,
+              borderColor:
+                selectedCategoryId == item.category_id ? COLORS.primary : COLORS.white,
               marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
               marginRight:
                 index == dummyData.categories.length - 1 ? SIZES.padding : 0,
               borderRadius: SIZES.radius,
               paddingHorizontal: 15,
-              borderColor:
-                selectedCategoryId == item.category_id
-                  ? COLORS.white
-                  : COLORS.primary,
+              // borderColor:
+              //   selectedCategoryId == item.category_id
+              //     ? COLORS.white
+              //     : COLORS.primary,
               backgroundColor:
                 selectedCategoryId == item.id
                   ? COLORS.primary

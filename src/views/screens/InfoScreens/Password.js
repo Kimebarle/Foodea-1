@@ -27,6 +27,10 @@ const Password = ({ navigation }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [next, setNext] = React.useState();
+  const [showPassword, setShowPasswod] = React.useState(true);
+  const toggleHidePassword = () => {
+    setShowPasswod(!showPassword);
+  };
   const getUserData = async () => {
     setIsLoading(true);
     const response = await axios.get(`${BASE_URL}app_users/${userId}`);
@@ -150,19 +154,22 @@ const Password = ({ navigation }) => {
               <Text>************</Text>
             </View>
 
-            {/* <TextInput
-                            disabled
-                            style={{
-                                ...FONTS.h3,
-                                width: "100%",
-                                alignItems: "center",
-                                backfaceVisibility: COLORS.white,
-                                //left: 20,
-                                borderRadius: SIZES.radius,
-                            }}
-                            secureTextEntry
-                            value={isLoading ? "Josh" : data[0].password}
-                        /> */}
+            <View style={{
+              marginLeft: SIZES.base,
+              position: "absolute",
+              right: 15,
+              top: 15,
+            }}>
+              <IconButton
+                icon={showPassword ? icons.eye : icons.disable_eye}
+                iconStyle={{
+                  tintColor: COLORS.gray,
+                  width: 20,
+                  height: 20,
+                }}
+                onPress={toggleHidePassword}
+              />
+            </View>
           </View>
         </View>
       </View>

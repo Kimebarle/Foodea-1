@@ -82,7 +82,7 @@ const Names = ({ navigation }) => {
           marginHorizontal: SIZES.padding,
           alignItems: "center",
         }}
-        title={"Name's"}
+        title={"Name"}
         leftComponent={
           <TouchableOpacity
             style={{
@@ -121,7 +121,7 @@ const Names = ({ navigation }) => {
       {/* HEADER */}
       {renderHeader()}
 
-      <View style={{ flex: 1, marginTop: SIZES.padding }}>
+      <View style={{ marginTop: SIZES.padding }}>
         <View
           style={{
             justifyContent: "flex-start",
@@ -282,12 +282,12 @@ const Names = ({ navigation }) => {
           </View>
         </View>
 
-        <View
+        {/* <View
           style={{
             justifyContent: "flex-start",
           }}
         >
-          {/* Birthday */}
+          Birthday
           <Text
             style={{
               color: COLORS.black,
@@ -299,7 +299,7 @@ const Names = ({ navigation }) => {
           >
             Birthday
           </Text>
-        </View>
+        </View> */}
 
         <View
           style={{
@@ -309,45 +309,45 @@ const Names = ({ navigation }) => {
           <View
             style={{
               flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <FormInput
-              inputContainerStyle={styles.input}
+              containerStyle={styles.input}
               placeholder="Birthday"
               value={"Birthday"}
+              label={"Birthday"}
               disabled={false}
             />
-            <View
+
+            <TouchableOpacity
               style={{
-                justifyContent: "center",
+                marginLeft: SIZES.base,
+                top: 15
               }}
             >
-              <TouchableOpacity
+              <Image
+                source={require("../../../../assets/img/icons/calendar.png")}
                 style={{
-                  marginLeft: SIZES.base,
+                  height: 25,
+                  width: 25,
+                  tintColor: COLORS.primary,
                 }}
-              >
-                <Image
-                  source={require("../../../../assets/img/icons/calendar.png")}
-                  style={{
-                    height: 25,
-                    width: 25,
-                    tintColor: COLORS.primary,
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
+              />
+            </TouchableOpacity>
           </View>
-
-          {showPicker && (
-            <DateTimePicker
-              value={date}
-              mode="date"
-              display="default"
-              onChange={handleDateChange}
-            />
-          )}
         </View>
+
+        {showPicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
+
         <View
           style={{
             alignItems: "center",
@@ -389,7 +389,8 @@ const styles = StyleSheet.create({
   },
   input: {
     width: 270,
-    height: 50,
-    textAlign: "center",
+    borderRadius: SIZES.radius,
+    marginBottom: SIZES.radius,
+    top: 10,
   },
 });

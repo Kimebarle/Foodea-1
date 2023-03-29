@@ -31,7 +31,7 @@ const LoadingActivity = ({
         <View style={{ alignItems: 'center', justifyContent: 'center', ...containerStyle }}>
             {/* image */}
             <Image
-                source={require("../../../../assets/img/images/Banner2.png")}
+                source={require("../../../../assets/img/images/banner3.png")}
                 style={imageStyle}
             />
             <View style={{ flex: 1, alignItems: 'center' }}>
