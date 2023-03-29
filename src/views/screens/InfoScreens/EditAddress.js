@@ -8,7 +8,7 @@ import {
     icons,
     FONTS,
 } from "../../../constants";
-import { Header, FormInput, TextButton } from "../../components/FoodeaComponents";
+import { Header, FormInput, TextButton, FormInputCheck, } from "../../components/FoodeaComponents";
 import { Alert } from "react-native";
 import React from "react";
 import { useContext, useState, useEffect } from "react";
@@ -24,6 +24,14 @@ const EditAddress = ({ navigation }) => {
     const [data, setData] = React.useState();
     const [address, setAddress] = React.useState("");
     const [addressError, setAddressError] = React.useState("");
+    const [city, setCity] = React.useState("");
+    const [cityError, setCityError] = React.useState("");
+    const [brgy, setBrgy] = React.useState("");
+    const [brgyError, setBrgyError] = React.useState("");
+    const [zipCode, setZipCode] = React.useState("");
+    const [zipCodeError, setZipCodeError] = React.useState("");
+
+
 
     const getUserData = async () => {
         const userID = user.user_id;
@@ -43,7 +51,7 @@ const EditAddress = ({ navigation }) => {
     }
 
     const disabledButton = () => {
-        return !address;
+        return !address || !city || !brgy || !zipCode;
     };
 
     function renderHeader() {
@@ -135,6 +143,105 @@ const EditAddress = ({ navigation }) => {
                             />
                         </View>
                     </View>
+                    <View
+                        style={{
+                            alignItems: "center",
+                        }}
+                    >
+                        <View
+                            style={{
+                                alignItems: "center",
+                            }}
+                        >
+                            {/* City */}
+                            <FormInput
+                                containerStyle={{
+                                    borderRadius: SIZES.radius,
+                                    marginBottom: SIZES.radius,
+                                    width: 330,
+                                }}
+                                autoCapitalize
+                                label="City"
+                                value={city}
+                                maxLength={50}
+                                onChange={(value) => {
+                                    setCity(value);
+                                    utils.validateInput(value, 1, setCityError);
+                                }}
+                                errorMsg={cityError}
+                                appendComponent={<FormInputCheck value={city} error={cityError} />}
+                            />
+                        </View>
+                    </View>
+
+                    <View
+                        style={{
+                            alignItems: "center",
+                        }}
+                    >
+                        <View
+                            style={{
+                                alignItems: "center",
+                            }}
+                        >
+                            {/* Barangay */}
+                            <FormInput
+                                containerStyle={{
+                                    borderRadius: SIZES.radius,
+                                    marginBottom: SIZES.radius,
+                                    width: 330,
+                                }}
+                                autoCapitalize
+                                label="Barangay"
+                                value={brgy}
+                                maxLength={3}
+                                keyboardType="number-pad"
+                                onChange={(value) => {
+                                    setBrgy(value);
+                                    utils.validateInput(value, 1, setBrgyError);
+                                }}
+                                errorMsg={brgyError}
+                                appendComponent={
+                                    <FormInputCheck value={brgy} error={brgyError} />
+                                }
+                            />
+                        </View>
+                    </View>
+
+                    <View
+                        style={{
+                            alignItems: "center",
+                        }}
+                    >
+                        <View
+                            style={{
+                                alignItems: "center",
+                            }}
+                        >
+
+                            {/* ZIP CODE */}
+                            <FormInput
+                                containerStyle={{
+                                    borderRadius: SIZES.radius,
+                                    marginBottom: SIZES.radius,
+                                    width: 330,
+                                }}
+                                label="ZIP CODE"
+                                value={zipCode}
+                                maxLength={4}
+                                keyboardType="number-pad"
+                                onChange={(value) => {
+                                    setZipCode(value);
+                                    utils.validateInput(value, 1, setZipCodeError);
+                                }}
+                                errorMsg={zipCodeError}
+                                appendComponent={
+                                    <FormInputCheck value={zipCode} error={zipCodeError} />
+                                }
+                            />
+                        </View>
+                    </View>
+                    
                     <View
                         style={{
                             alignItems: "center",
