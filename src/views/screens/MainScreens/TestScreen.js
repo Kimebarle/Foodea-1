@@ -210,7 +210,7 @@ const TestScreen = ({ navigation }) => {
                   foodImage: { uri: item.product_image },
                   key: Date.now(),
                 });
-                console.log(item.FavoriteId);
+                console.log(item.product_id);
               }}
             />
           )}
@@ -234,9 +234,9 @@ const TestScreen = ({ navigation }) => {
               height: 100,
               marginTop: SIZES.padding,
               marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
-              borderWidth: 2,
+              borderWidth: selectedCategoryId == item.id ? 2 : 0,
               borderColor:
-                COLORS.primary,
+                selectedCategoryId == item.id ? COLORS.primary : COLORS.white,
               marginRight:
                 index == dummyData.Restaurant.length - 1 ? SIZES.padding : 0,
               paddingHorizontal: 8,

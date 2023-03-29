@@ -89,10 +89,13 @@ const CheckOut = ({ navigation, route }) => {
         total: list1[i].total,
         status: "Pending",
         payment_type: "Cash",
-        order_key: `${userInfo.firstname}` + otpString,
+        latitude: 0,
+        longitude: 0,
+        order_key: `${userData[0].firstname}` + otpString,
       });
       console.log(response.data);
     }
+    // console.log(list1);
   };
 
   const deleteFromCarts = async () => {

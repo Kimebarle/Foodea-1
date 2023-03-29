@@ -7,7 +7,14 @@ import AuthContext from "../../../api/context/auth/AuthContext";
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
 
-const FoodDetails = ({ food, calories, img, favorite, product_id }) => {
+const FoodDetails = ({
+  food,
+  calories,
+  img,
+  favorite,
+  product_id,
+  onPress,
+}) => {
   const { userId } = useContext(AuthContext);
   const [isFavorite, setIsFavorite] = React.useState(favorite);
 
@@ -119,7 +126,7 @@ const FoodDetails = ({ food, calories, img, favorite, product_id }) => {
           </View>
           {/* Favorites */}
           <IconButton
-            icon={isFavorite ? icons.love : icons.favourite}
+            icon={favorite ? icons.love : icons.favourite}
             iconStyle={{
               tintColor: COLORS.primary,
               position: "absolute",
@@ -127,7 +134,7 @@ const FoodDetails = ({ food, calories, img, favorite, product_id }) => {
               width: 25,
               right: 0,
             }}
-            onPress={onPressHandler}
+            onPress={onPress}
           />
         </View>
         {/* food image */}

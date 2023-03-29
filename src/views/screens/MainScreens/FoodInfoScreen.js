@@ -27,7 +27,7 @@ import AuthContext from "../../../api/context/auth/AuthContext";
 
 const FoodInfoScreen = ({ navigation, route }) => {
   const { addToCart, userId } = useContext(AuthContext);
-  const { itemId } = route.params;
+  const { itemId, isFavorite } = route.params;
   const [isLoading, setIsLoading] = useState(true);
 
   const [quantity, setQuantity] = React.useState(1);
@@ -42,7 +42,6 @@ const FoodInfoScreen = ({ navigation, route }) => {
   const [image, setImage] = React.useState();
   const [favorite, setFavorite] = React.useState();
 
-  // declare variable that would be used inside the function
   const fetchFood = async () => {
     try {
       const response = await axios.get(
@@ -72,8 +71,8 @@ const FoodInfoScreen = ({ navigation, route }) => {
     const response = await axios.get(
       `${BASE_URL}favorites?user_id[eq]=${userId}`
     );
-    const foodItem = [...getFood];
     const list = response.data;
+    const foodItem = [...getFood];
     const fave = [...list];
     const isFavorite = foodItem.some((item1) =>
       fave.some((item2) => item2.product_id === item1.product_id)
@@ -89,10 +88,50 @@ const FoodInfoScreen = ({ navigation, route }) => {
   }, []);
 
   function buyNowHandler() {
-    console.log(userId, product_id, restaurant_id, quantity_product, total);
-    addToCart(userId, product_id, restaurant_id, quantity, total);
+    let total1 = quantity * price;
+    //console.log(userId, product_id, restaurant_id, quantity_product, total1);
+    addToCart(userId, product_id, restaurant_id, quantity, total1);
     navigation.navigate("Cart");
   }
+
+  const checkFavorite = async () => {
+    const response = await axios.get(
+      `${BASE_URL}favorites?user_id[eq]=${userId}&product_id[eq]=${itemId}`
+    );
+    return response.data.length > 0;
+  };
+
+  const addToFavorites = async () => {
+    const response = await axios.post(`${BASE_URL}favorites`, {
+      user_id: userId,
+      product_id: itemId,
+    });
+    // console.log(response.data[0]);
+  };
+
+  const getItemId = async () => {
+    const response = await axios.get(
+      `${BASE_URL}favorites?user_id[eq]=${userId}&product_id[eq]=${itemId}`
+    );
+    return response.data[0].id;
+  };
+
+  const updateFavorites = async (remove) => {
+    const response = await axios.delete(`${BASE_URL}favorites/${remove}`);
+    return response.data.length > 0;
+  };
+
+  const onPressHandler = async () => {
+    const check = await checkFavorite();
+    if (check) {
+      const remove = await getItemId();
+      const update = await updateFavorites(remove);
+      setFavorite(!favorite);
+    } else {
+      const add = await addToFavorites();
+      setFavorite(!favorite);
+    }
+  };
 
   function renderRestaurant() {
     return (
@@ -104,15 +143,6 @@ const FoodInfoScreen = ({ navigation, route }) => {
           alignItems: "center",
         }}
       >
-        {/* <Image
-          source={images.jollibee_logo}
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: SIZES.radius,
-          }}
-        /> */}
-        {/* info */}
         <View
           style={{
             flexDirection: "row",
@@ -235,6 +265,9 @@ const FoodInfoScreen = ({ navigation, route }) => {
         {/* food info */}
         <FoodDetails
           calories={isLoading ? "Loading" : displayFood[0].calories}
+          onPress={() => {
+            onPressHandler();
+          }}
           product_id={isLoading ? 5 : displayFood[0].product_id}
           favorite={isLoading ? favorite : favorite}
           img={

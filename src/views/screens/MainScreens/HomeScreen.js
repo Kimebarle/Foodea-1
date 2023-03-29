@@ -51,7 +51,7 @@ const Section = ({ title, onPress, children }) => {
 
 const HomeScreen = ({ navigation, route }) => {
   const { userId } = useContext(AuthContext);
-  const { restaurantId } = route.params;
+  const { restaurantId, isFavorite } = route.params;
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
   const [trending, setTrending] = React.useState([]);
@@ -63,6 +63,10 @@ const HomeScreen = ({ navigation, route }) => {
       setIsLoading(true);
       updateWithFavorites();
       getRestaurantCategory();
+
+      return () => {
+        console.log("reload");
+      };
     }, [])
   );
 
@@ -202,7 +206,9 @@ const HomeScreen = ({ navigation, route }) => {
               marginTop: SIZES.padding,
               borderWidth: selectedCategoryId == item.category_id ? 2 : 0,
               borderColor:
-                selectedCategoryId == item.category_id ? COLORS.primary : COLORS.white,
+                selectedCategoryId == item.category_id
+                  ? COLORS.primary
+                  : COLORS.white,
               marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
               marginRight:
                 index == dummyData.categories.length - 1 ? SIZES.padding : 0,
