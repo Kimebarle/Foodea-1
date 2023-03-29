@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
   ScrollView,
   Image,
@@ -23,9 +23,31 @@ import {
   FooterTotal,
   LineDivider,
 } from "../../components/FoodeaComponents";
+import AuthContext from "../../../api/context/auth/AuthContext";
+import { BASE_URL } from "../../../api/context/auth/config";
+import axios from "axios";
 
 const Map = ({ navigation }) => {
   const [currentStep, setCurrentStep] = React.useState(1);
+
+  const { user } = useContext(AuthContext);
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [data, setData] = React.useState();
+    const [next, setNext] = React.useState();
+    const [userData, setUserData] = React.useState(null);
+
+    const getUserData = async () => {
+        const userID = user.user_id;
+        setIsLoading(true);
+        const response = await axios.get(`${BASE_URL}app_users/${userID}`);
+        setData(response.data);
+        setIsLoading(false);
+    };
+
+    useEffect(() => {
+        setIsLoading(true);
+        getUserData();
+    }, []);
 
   function renderHeader() {
     return (
@@ -198,7 +220,7 @@ const Map = ({ navigation }) => {
                   ...FONTS.h4,
                 }}
               >
-                Phase 7B Package 1 Block 57 Excess Lot
+                {isLoading ? "address" : data[0].address}
               </Text>
             </View>
           </View>

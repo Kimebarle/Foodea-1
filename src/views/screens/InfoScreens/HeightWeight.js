@@ -203,60 +203,6 @@ const HeightWeight = ({ navigation }) => {
                 </View>
 
                 <View style={{
-                    justifyContent: 'flex-start',
-                }}>
-                    {/* Weight */}
-                    <Text
-                        style={{
-                            color: COLORS.black,
-                            ...FONTS.h3,
-                            fontSize: 15,
-                            marginTop: SIZES.base,
-                            marginLeft: SIZES.padding
-                        }}
-                    >
-                        BMI
-                    </Text>
-                </View>
-
-                <View style={{
-                    alignItems: 'center',
-                    marginBottom: SIZES.padding,
-                }}>
-
-                    {/* BMI */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.weight}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h3, color: COLORS.black }}>
-                            {" "}
-                            
-                        </Text>
-                    </View>
-                </View>
-
-                <View style={{
                     alignItems: 'center',
                 }}>
                     <TouchableOpacity onPress={() => navigation.navigate("EditHeightWeight")}>

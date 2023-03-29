@@ -42,6 +42,8 @@ import EditNames from "../screens/InfoScreens/EditNames";
 import EditHeightWeight from "../screens/InfoScreens/EditHeightWeight";
 import EditEmailPhone from "../screens/InfoScreens/EditEmailPhone";
 import EditFirstName from "../screens/InfoScreens/EditFirstName";
+import AddressDisplay from "../screens/InfoScreens/AddressDisplay";
+import EditAddress from "../screens/InfoScreens/EditAddress";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -231,6 +233,8 @@ const MainStack = () => {
       <Stack.Screen name="EditHeightWeight" component={EditHeightWeight} />
       <Stack.Screen name="EditEmailPhone" component={EditEmailPhone} />
       <Stack.Screen name="EditFirstName" component={EditFirstName} />
+      <Stack.Screen name="AddressDisplay" component={AddressDisplay} />
+      <Stack.Screen name="EditAddress" component={EditAddress} />
       
     </Stack.Navigator>
   );

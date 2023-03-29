@@ -22,11 +22,12 @@ import {
     EditButton,
 } from "../../components/FoodeaComponents";
 
-const EmailPhoneNumber = ({ navigation }) => {
+const AddressDisplay = ({ navigation }) => {
     const { user } = useContext(AuthContext);
     const [isLoading, setIsLoading] = React.useState(true);
     const [data, setData] = React.useState();
     const [next, setNext] = React.useState();
+
     const getUserData = async () => {
         const userID = user.user_id;
         setIsLoading(true);
@@ -40,6 +41,11 @@ const EmailPhoneNumber = ({ navigation }) => {
         getUserData();
     }, []);
 
+    // const getBmi = () => {
+    //     const bmi = (weight / (height * height)) * 10000;
+    //     return bmi;
+    // };
+
     function renderHeader() {
         return (
             <Header
@@ -48,7 +54,7 @@ const EmailPhoneNumber = ({ navigation }) => {
                     marginHorizontal: SIZES.padding,
                     alignItems: "center",
                 }}
-                title={"Email and Number"}
+                title={"Address"}
                 leftComponent={
                     <TouchableOpacity
                         style={{
@@ -104,7 +110,7 @@ const EmailPhoneNumber = ({ navigation }) => {
                             marginLeft: SIZES.padding
                         }}
                     >
-                        Email
+                        Address
                     </Text>
                 </View>
 
@@ -118,7 +124,7 @@ const EmailPhoneNumber = ({ navigation }) => {
                             alignItems: "center",
                             justifyContent: "center",
                             height: 50,
-                            width: 300,
+                            width: 320,
                             backgroundColor: COLORS.white,
                             borderRadius: SIZES.radius,
                             marginTop: SIZES.base,
@@ -126,7 +132,7 @@ const EmailPhoneNumber = ({ navigation }) => {
                         }}
                     >
                         <Image
-                            source={icons.at}
+                            source={icons.pinlocation}
                             style={{
                                 height: 20,
                                 width: 20,
@@ -136,67 +142,17 @@ const EmailPhoneNumber = ({ navigation }) => {
                                 right: 0,
                             }}
                         />
-                        <Text style={{ ...FONTS.h4, color: COLORS.black }}>
+                        <Text style={{ ...FONTS.h5, color: COLORS.black }}>
                             {" "}
-                            {isLoading ? "Josh" : data[0].email}
+                            {isLoading ? "Josh" : data[0].address}
                         </Text>
                     </View>
-                </View>
-
-                <View style={{
-                    justifyContent: 'flex-start',
-                }}>
-                    {/* Phone Number */}
-                    <Text
-                        style={{
-                            color: COLORS.black,
-                            ...FONTS.h3,
-                            fontSize: 15,
-                            marginTop: SIZES.base,
-                            marginLeft: SIZES.padding
-                        }}
-                    >
-                        Phone Number
-                    </Text>
                 </View>
 
                 <View style={{
                     alignItems: 'center',
-                    marginBottom: SIZES.padding,
                 }}>
-
-                    {/* Phone Number */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 50,
-                            width: 300,
-                            backgroundColor: COLORS.white,
-                            borderRadius: SIZES.radius,
-                            marginTop: SIZES.base,
-                            elevation: 5,
-                        }}
-                    >
-                        <Image
-                            source={icons.phone}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.black,
-                                position: "absolute",
-                                left: 5,
-                                right: 0,
-                            }}
-                        />
-                        <Text style={{ ...FONTS.h4, color: COLORS.black }}>
-                            {" "}
-                            {isLoading ? "Josh" : data[0].contact_number}
-                        </Text>
-                    </View>
-
-                    <TouchableOpacity onPress={() => navigation.navigate("EditEmailPhone")}>
+                    <TouchableOpacity onPress={() => navigation.navigate("EditAddress")}>
                         <View
                             style={{
                                 flexDirection: "row",
@@ -232,4 +188,4 @@ const EmailPhoneNumber = ({ navigation }) => {
 };
 
 
-export default EmailPhoneNumber;
+export default AddressDisplay;

@@ -292,6 +292,7 @@ const CartScreen = ({ navigation, route }) => {
                   {isLoading ? "Loading" : data.item.product_details.calories}{" "}
                   calories
                 </Text>
+                {"\n"}
                 <Text
                   style={{
                     color: COLORS.gray,

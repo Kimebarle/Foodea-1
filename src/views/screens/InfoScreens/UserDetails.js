@@ -61,6 +61,10 @@ const UserDetails = ({ navigation }) => {
     navigation.push("Password");
   };
 
+  const HandleAddress = () => {
+    navigation.push("AddressDisplay");
+  };
+
   function renderHeader() {
     return (
       <Header
@@ -195,6 +199,36 @@ const UserDetails = ({ navigation }) => {
                 }}
               />
               <Text style={{ ...FONTS.h3 }}>Name's</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* Address */}
+          <TouchableOpacity onPress={HandleAddress}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                height: 50,
+                width: 300,
+                backgroundColor: COLORS.white,
+                borderRadius: SIZES.radius,
+                marginTop: SIZES.base,
+                elevation: 5,
+              }}
+            >
+              <Image
+                source={icons.pinlocation}
+                style={{
+                  height: 25,
+                  width: 25,
+                  tintColor: COLORS.primary,
+                  position: "absolute",
+                  left: 5,
+                  right: 0,
+                }}
+              />
+              <Text style={{ ...FONTS.h3 }}>Address</Text>
             </View>
           </TouchableOpacity>
 
