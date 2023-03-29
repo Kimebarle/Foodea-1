@@ -33,7 +33,6 @@ const VerticalFoodCard = ({
       const response = await axios.get(
         `${BASE_URL}favorites?user_id[eq]=${user_id}&&product_id[eq]=${itemId}`
       );
-
       setData(response.data);
       return response.data.length > 0;
     } catch (error) {

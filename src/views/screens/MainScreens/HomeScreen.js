@@ -75,17 +75,40 @@ const HomeScreen = ({ navigation, route }) => {
       );
       const data = [...response.data];
       setTrending(data.slice(0, 5));
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
     }
   };
 
+  const favoritesTable = async () => {
+    const response = await axios.get(
+      `${BASE_URL}favorites?user_id[eq]=${userId}`
+    );
+    return response.data;
+  };
+
+  const updateWithFavorites = async () => {
+    const favorites = await favoritesTable();
+    const restaurant = await fetchFoodFromRestaurant();
+
+    const favorite = [...favorites];
+    const food = [...restaurant];
+
+    const foodWithFavorites = food.map((item) => ({
+      ...item,
+      isFavorite: favorite.some((fav) => fav.product_id === item.product_id),
+      favoriteId: favorite
+        .filter((id) => id.product_id === item.product_id)
+        .map((favorite) => favorite.id),
+    }));
+    setTrending(foodWithFavorites);
+  };
+
   useEffect(() => {
+    updateWithFavorites();
     fetchFoodFromRestaurant();
     getCategories();
-    //handleChangeCategory();
   }, []);
 
   const handleChangeCategory = async (categoryId) => {

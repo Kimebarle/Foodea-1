@@ -81,6 +81,7 @@ export const AuthProvider = ({ children }) => {
               JSON.stringify(response.data[0].user_id)
             );
             setUserId(response.data[0].user_id);
+            SecureStore.setItemAsync("userInfo", JSON.stringify(response.data));
             setUserInfo(response.data);
             SecureStore.setItemAsync("logged_in", "true");
             console.log(remember);

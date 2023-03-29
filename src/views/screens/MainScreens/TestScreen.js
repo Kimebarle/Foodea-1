@@ -24,28 +24,26 @@ const TestScreen = ({ navigation }) => {
   const [menuList, setMenuList] = React.useState([]);
   const [itemId, setItemId] = React.useState([]);
   const [favoritesDisplay, setFavoritesDisplay] = React.useState();
-  const [itemsDisplay, setItemDisplay] = React.useState([]);
+  const [itemsDisplay, setItemDisplay] = React.useState();
   const [foodDisplay, setFoodDisplay] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
   const [restaurantData, setRestaurantData] = React.useState();
-  const [restaurantImage, setRestaurantImage] = React.useState(null);
-
-  // useFocusEffect(() => {}, [getItemTable]);
+  const [dummy, setDummy] = React.useState();
 
   useFocusEffect(
     useCallback(() => {
       setIsLoading(true);
-      getItemTable();
       getFavorites();
       getFood();
       setItemDisplay();
       getRestaurant();
       setSelectedCategoryId();
+      getItemTable();
     }, [getItemTable])
   );
 
   const handleChangeCategory = useCallback(async (id) => {
-    const data = await getFood();
+    const data = await getItemTable();
     const list = [...data];
     const updatedList = list
       .filter((item) => item.merchant_id === id)
@@ -71,6 +69,7 @@ const TestScreen = ({ navigation }) => {
   };
 
   const getItemTable = useCallback(async () => {
+    setIsLoading(true);
     const foodData = await getFood();
     const favoritesData = await getFavorites();
     let food = [...foodData];
@@ -84,6 +83,9 @@ const TestScreen = ({ navigation }) => {
         .map((favorite) => favorite.id),
     }));
     setItemDisplay(foodWithFavorites);
+    setIsLoading(false);
+
+    return foodWithFavorites;
   }, []);
 
   function search() {
@@ -199,7 +201,7 @@ const TestScreen = ({ navigation }) => {
         }}
       >
         <FlatList
-          data={itemsDisplay}
+          data={isLoading ? dummy : itemsDisplay}
           keyExtractor={(item) => `${item.product_id}`}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -217,12 +219,13 @@ const TestScreen = ({ navigation }) => {
               user_id={userId}
               merchant_id={item.merchant_id}
               onPress={() => {
-                navigation.navigate("FoodInfo", {
-                  itemId: item.product_id,
-                  isFavorite: item.isFavorite,
-                  foodImage: { uri: item.product_image },
-                  key: Date.now(),
-                });
+                // navigation.navigate("FoodInfo", {
+                //   itemId: item.product_id,
+                //   isFavorite: item.isFavorite,
+                //   foodImage: { uri: item.product_image },
+                //   key: Date.now(),
+                // });
+                console.log(item.isFavorite);
               }}
             />
           )}

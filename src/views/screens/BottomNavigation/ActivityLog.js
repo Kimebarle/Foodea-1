@@ -22,9 +22,11 @@ import { BASE_URL } from "../../../api/context/auth/config";
 import AuthContext from "../../../api/context/auth/AuthContext";
 
 const ActivityLogScreen = ({ navigation }) => {
-  const { userId } = useContext(AuthContext);
+  const { userId, userInfo } = useContext(AuthContext);
   const [myActivityLogList, setMyActivityLogList] = React.useState(null);
   const [itemLength, setItemLength] = React.useState(true);
+  const [data, setData] = React.useState();
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const fetchOrder = async () => {
     if (userId === undefined) {
@@ -38,8 +40,17 @@ const ActivityLogScreen = ({ navigation }) => {
     }
   };
 
+  const getData = async () => {
+    const response = await axios.get(
+      `${BASE_URL}app_users?user_id[eq]=${userId}`
+    );
+    setData(response.data);
+    setIsLoading(false);
+  };
   useEffect(() => {
+    setIsLoading(true);
     fetchOrder();
+    getData();
   }, []);
 
   function renderHeader() {
@@ -152,7 +163,10 @@ const ActivityLogScreen = ({ navigation }) => {
                               tintColor: COLORS.blue,
                             }}
                           />
-                          <Text style={{ ...FONTS.h5 }}> Celina Homes</Text>
+                          <Text style={{ ...FONTS.h5 }}>
+                            {" "}
+                            {isLoading ? "address" : data[0].address}
+                          </Text>
                         </View>
                         <View style={{ flexDirection: "row" }}>
                           <Image
