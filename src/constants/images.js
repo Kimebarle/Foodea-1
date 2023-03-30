@@ -23,6 +23,10 @@ const OverweightMale = require("../../assets/img/images/OverweightMale.png");
 const SuperObeseMale = require("../../assets/img/images/SuperObeseMale.png");
 const FemaleNormal = require("../../assets/img/images/FemaleNormal.png");
 const FemaleObese = require("../../assets/img/images/FemaleObese.png");
+const obeseG = require("../../assets/img/images/obeseG.png");
+const overweightG = require("../../assets/img/images/overweightG.png");
+const underweightGirl = require("../../assets/img/images/underweightGirl.png");
+
 
 export default {
   profile,
@@ -49,6 +53,8 @@ export default {
   OverweightMale,
   SuperObeseMale,
   FemaleNormal,
-  FemaleObese
-
+  FemaleObese,
+  obeseG,
+  overweightG,
+  underweightGirl
 };
