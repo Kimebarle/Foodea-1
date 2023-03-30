@@ -17,9 +17,11 @@ import {
     FONTS,
 } from "../../../constants";
 import { Header, LoadingActivity } from "../../components/FoodeaComponents";
+import Constants from "expo-constants";
 
 
 const ActivityLogDetails = ({ navigation }) => {
+    const [myCartList, setMyCartList] = React.useState(null);
 
     function renderHeader() {
         return (
@@ -42,7 +44,7 @@ const ActivityLogDetails = ({ navigation }) => {
                             borderColor: COLORS.gray2,
                             borderRadius: SIZES.radius,
                         }}
-                        onPress={() => navigation.goBack()}
+                        onPress={() => {console.log(Constants.statusBarHeight)}}
                     >
                         <Image
                             source={icons.backarrow}
@@ -64,81 +66,103 @@ const ActivityLogDetails = ({ navigation }) => {
         );
     }
 
+    function renderCartList() {
+        return (
+            <FlatList
+                data={myCartList}
+                keyExtractor={(item) => `${item.id}`}
+                contentContainerStyle={{
+                    marginTop: SIZES.radius,
+                    paddingHorizontal: SIZES.padding,
+                    paddingBottom: SIZES.padding,
+                }}
+                renderItem={(data) => (
+                    <View
+                        style={{
+                            height: 100,
+                            backgroundColor: COLORS.lightGray2,
+                            ...styles.cartItemContainer,
+                        }}
+                    >
+                        {/*   Food Image */}
+                        <View
+                            style={{
+                                width: 90,
+                                height: 100,
+                                marginLeft: -10,
+                            }}
+                        >
+                            <Image
+                                source={{ }}
+                                resizeMode="contain"
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    position: "absolute",
+                                    top: 1,
+                                }}
+                            />
+                        </View>
+
+                        {/*   Food Info */}
+                        <View
+                            style={{
+                                flex: 1,
+                                flexDirection: "row",
+                            }}
+                        >
+                            <Text style={{ width: 150, ...FONTS.h5, fontSize: 13 }}>
+                                Product Name
+                                {"\n"}
+                                <Text
+                                    style={{
+                                        color: COLORS.primary,
+                                        ...FONTS.h3,
+                                    }}
+                                >
+                                    ₱ Price
+                                </Text>
+                                {"\n"}
+                                <Text
+                                    style={{
+                                        color: COLORS.gray,
+                                        ...FONTS.h5,
+                                    }}
+                                >
+                                    {" "}
+                                    calories
+                                </Text>
+                                {"\n"}
+                                <Text
+                                    style={{
+                                        color: COLORS.gray,
+                                        ...FONTS.h5,
+                                    }}
+                                >
+                                    Quantity
+                                </Text>
+                            </Text>
+                        </View>
+                    </View>
+                )}
+            />
+        );
+    }
+
+
+
+
     return (
         <View style={{
-            flex: 1,
+            
             alignItems: 'center',
+            top: Constants.statusBarHeight - 32,
         }}>
             {/* Header */}
             {renderHeader()}
-            {/*   Food Image */}
-            <View
-                style={{
-                    height: 100,
-                    width: 300,
-                    backgroundColor: COLORS.lightGray2,
-                    ...styles.cartItemContainer,
-                }}
-            >
-                {/*   Food Image */}
-                <View
-                    style={{
-                        width: 90,
-                        height: 100,
-                        marginLeft: -10,
-                    }}
-                >
-                    <Image
-                        source={{}}
-                        resizeMode="contain"
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            position: "absolute",
-                            top: 1,
-                        }}
-                    />
-                </View>
-
-                {/*   Food Info */}
-                <View
-                    style={{
-                        flex: 1,
-                        flexDirection: "row",
-                    }}
-                >
-                    <Text style={{ width: 150, ...FONTS.h5, fontSize: 13 }}>
-                        Product Name
-                        {"\n"}
-                        <Text
-                            style={{
-                                color: COLORS.primary,
-                                ...FONTS.h3,
-                            }}
-                        >
-                            ₱ Price
-                        </Text>
-                        {"\n"}
-                        <Text
-                            style={{
-                                color: COLORS.gray,
-                                ...FONTS.h5,
-                            }}
-                        >
-                            calories
-                        </Text>
-                        {"\n"}
-                        <Text
-                            style={{
-                                color: COLORS.gray,
-                                ...FONTS.h5,
-                            }}
-                        >
-                            Quantity
-                        </Text>
-                    </Text>
-                </View>
-            </View>
+            
+            {/* CartList */}
+            {renderCartList()}
         </View>
     )
 }
