@@ -218,29 +218,6 @@ const ActivityLogScreen = ({ navigation }) => {
                           </Text>
                         </View>
                       </View>
-                      <View
-                        style={{
-                          top: 70,
-                          left: 215,
-                          flexDirection: "column",
-                          position: "absolute",
-                        }}
-                      >
-                        <TouchableOpacity onPress={() => {}}>
-                          <Image source={icons.delete_icon} style={{}} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={() => {}}>
-                          <Text
-                            style={{
-                              ...FONTS.h3,
-                              fontSize: 12,
-                              color: COLORS.primary,
-                            }}
-                          >
-                            Order Again
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
                     </View>
                   </TouchableOpacity>
                 </View>
