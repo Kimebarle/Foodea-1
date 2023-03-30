@@ -199,7 +199,7 @@ const MyCartScreen = ({ navigation }) => {
                           {item.business_name}
                         </Text>
                         <Text style={{ ...FONTS.h5 }}>
-                          {item.totalItems} item • {item.time} mins •{" "}
+                          {item.totalItems} item
                         </Text>
                       </View>
                     </View>

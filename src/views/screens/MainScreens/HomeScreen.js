@@ -249,32 +249,6 @@ const HomeScreen = ({ navigation, route }) => {
     );
   }
 
-  function renderDeliveryTo() {
-    return (
-      <View
-        style={{ marginTop: SIZES.padding, marginHorizontal: SIZES.padding }}
-      >
-        <Text style={{ color: COLORS.primary, ...FONTS.h4 }}>DELIVER TO :</Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Address")}
-          style={{
-            flexDirection: "row",
-            marginTop: SIZES.base,
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ ...FONTS.h4 }}>
-            Celina Homes Camarin Caloocan City
-          </Text>
-          <Image
-            source={icons.down_arrow}
-            style={{ marginLeft: SIZES.base, height: 20, width: 20 }}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
   return (
     <View style={styles.topcontainer}>
       {/* Header */}
@@ -318,8 +292,7 @@ const HomeScreen = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <View>
-            {/* Delivery to section */}
-            {renderDeliveryTo()}
+          
 
             {/* Food Categories */}
             {renderFoodCategories()}

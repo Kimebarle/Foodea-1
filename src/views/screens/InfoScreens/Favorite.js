@@ -208,14 +208,6 @@ const Favorite = ({ navigation, data }) => {
                       ₱ {item.product_details.price}
                     </Text>
 
-                    {/* distance and waiting time */}
-                    <View style={{ flexDirection: "row", marginTop: 20 }}>
-                      <Image source={icons.location} />
-
-                      <Image source={icons.Waiting_Time} />
-                      <Text style={{ marginRight: 20 }}>20 mins</Text>
-                    </View>
-
                     {/* images */}
                     <View style={{ position: "absolute", top: 0, right: 23 }}>
                       <IconButton

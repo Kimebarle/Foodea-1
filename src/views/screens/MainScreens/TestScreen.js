@@ -137,21 +137,6 @@ const TestScreen = ({ navigation }) => {
               >
                 {item.business_name}
               </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginTop: SIZES.base,
-                }}
-              >
-                <Text
-                  style={{
-                    ...FONTS.h4,
-                    color: COLORS.gray,
-                  }}
-                >
-                  • {item.time} mins
-                </Text>
-              </View>
 
               <View
                 style={{
