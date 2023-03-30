@@ -138,8 +138,9 @@ const ActivityLogScreen = ({ navigation }) => {
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate("ActivityLogDetails", {
-                        itemValue: item,
+                        itemValue: item.order_key,
                       });
+                      // console.log(item.order_key);
                     }}
                   >
                     <View

@@ -5,6 +5,7 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import {
@@ -18,139 +19,74 @@ import {
 } from "../../../constants";
 import { Header, LoadingActivity } from "../../components/FoodeaComponents";
 import Constants from "expo-constants";
+import axios from "axios";
+import { BASE_URL } from "../../../api/context/auth/config";
 
 const ActivityLogDetails = ({ navigation, route }) => {
+  const [myCartList, setMyCartList] = React.useState(null);
   const { itemValue } = route.params;
+  const [data, setData] = React.useState({ id: 1, name: "chris" });
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [dummy, setDummy] = React.useState(null);
 
-  const ActivityLogDetails = ({ navigation }) => {
-    function renderHeader() {
-      return (
-        <Header
-          containerStyle={{
-            height: 80,
-            marginHorizontal: SIZES.padding,
-            alignItems: "center",
-          }}
-          title={"Activity Details"}
-          leftComponent={
-            // Open Custom Drawer
-            <TouchableOpacity
-              style={{
-                width: 40,
-                height: 40,
-                alignItems: "center",
-                justifyContent: "center",
-                borderWidth: 1,
-                borderColor: COLORS.gray2,
-                borderRadius: SIZES.radius,
-              }}
-              onPress={() => {
-                console.log(Constants.statusBarHeight);
-              }}
-            >
-              <Image
-                source={icons.backarrow}
-                style={{
-                  borderRadius: SIZES.radius,
-                  color: COLORS.gray2,
-                }}
-              />
-            </TouchableOpacity>
-          }
-          rightComponent={
-            <View
-              style={{
-                width: 40,
-              }}
-            ></View>
-          }
-        />
-      );
-    }
+  useEffect(() => {
+    getItemTable();
+  }, []);
 
-    function renderCartList() {
-      return (
-        <FlatList
-          data={myCartList}
-          keyExtractor={(item) => `${item.id}`}
-          contentContainerStyle={{
-            marginTop: SIZES.radius,
-            paddingHorizontal: SIZES.padding,
-            paddingBottom: SIZES.padding,
-          }}
-          renderItem={(data) => (
-            <View
-              style={{
-                height: 100,
-                backgroundColor: COLORS.lightGray2,
-                ...styles.cartItemContainer,
-              }}
-            >
-              {/*   Food Image */}
-              <View
-                style={{
-                  width: 90,
-                  height: 100,
-                  marginLeft: -10,
-                }}
-              >
-                <Image
-                  source={{}}
-                  resizeMode="contain"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    position: "absolute",
-                    top: 1,
-                  }}
-                />
-              </View>
-
-              {/*   Food Info */}
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "row",
-                }}
-              >
-                <Text style={{ width: 150, ...FONTS.h5, fontSize: 13 }}>
-                  Product Name
-                  {"\n"}
-                  <Text
-                    style={{
-                      color: COLORS.primary,
-                      ...FONTS.h3,
-                    }}
-                  >
-                    ₱ Price
-                  </Text>
-                  {"\n"}
-                  <Text
-                    style={{
-                      color: COLORS.gray,
-                      ...FONTS.h5,
-                    }}
-                  >
-                    {" "}
-                    calories
-                  </Text>
-                  {"\n"}
-                  <Text
-                    style={{
-                      color: COLORS.gray,
-                      ...FONTS.h5,
-                    }}
-                  >
-                    Quantity
-                  </Text>
-                </Text>
-              </View>
-            </View>
-          )}
-        />
-      );
-    }
+  const getItemTable = async () => {
+    setIsLoading(true);
+    const response = await axios.get(
+      `${BASE_URL}orders?order_key[eq]=${itemValue}`
+    );
+    console.log(response.data[0].order_details);
+    setData(response.data[0].order_details);
+    setIsLoading(false);
   };
+
+  function renderHeader() {
+    return (
+      <Header
+        containerStyle={{
+          height: 80,
+          marginHorizontal: SIZES.padding,
+          alignItems: "center",
+        }}
+        title={"Activity Details"}
+        leftComponent={
+          // Open Custom Drawer
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
+              borderRadius: SIZES.radius,
+            }}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Image
+              source={icons.backarrow}
+              style={{
+                borderRadius: SIZES.radius,
+                color: COLORS.gray2,
+              }}
+            />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <View
+            style={{
+              width: 40,
+            }}
+          ></View>
+        }
+      />
+    );
+  }
 
   return (
     <View
@@ -162,8 +98,29 @@ const ActivityLogDetails = ({ navigation, route }) => {
       {/* Header */}
       {renderHeader()}
 
-      {/* CartList */}
-      {renderCartList()}
+      <FlatList
+        data={data}
+        keyExtractor={(item, index) => `${item.order_key}`}
+        renderItem={({ item, index }) => (
+          <View>
+            <Text>{item.product_details.price}</Text>
+            <Text>{item.product_details.product_name}</Text>
+            <Text>{item.total}</Text>
+            <Text>{item.product_details.calories}</Text>
+            <Text>{item.quantity}</Text>
+            <Image
+              style={{ width: 40, height: 40 }}
+              source={{ uri: item.product_details.product_image }}
+            />
+          </View>
+        )}
+      />
+
+      {/* <Button
+        onPress={() => {
+          console.log(item);
+        }}
+      /> */}
     </View>
   );
 };
