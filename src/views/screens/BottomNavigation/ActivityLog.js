@@ -116,8 +116,8 @@ const ActivityLogScreen = ({ navigation }) => {
         {itemLength ? (
           <FlatList
             data={myActivityLogList}
-            keyExtractor={(item) => {
-              `${item.order_key}`;
+            keyExtractor={(item, index) => {
+              index.toString();
             }}
             renderItem={({ item }) => {
               return (

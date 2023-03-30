@@ -38,7 +38,7 @@ const ActivityLogDetails = ({ navigation, route }) => {
     const response = await axios.get(
       `${BASE_URL}orders?order_key[eq]=${itemValue}`
     );
-    console.log(response.data[0].order_details);
+    console.log(`${BASE_URL}orders?order_key[eq]=${itemValue}`);
     setData(response.data[0].order_details);
     setIsLoading(false);
   };
@@ -100,73 +100,108 @@ const ActivityLogDetails = ({ navigation, route }) => {
 
       <FlatList
         data={data}
-        keyExtractor={(item, index) => `${item.order_key}`}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
           <View
             style={{
               width: 350,
               height: 120,
               borderRadius: SIZES.radius,
-              alignItems: 'center',
+              alignItems: "center",
 
-              justifyContent: 'center',
-              backgroundColor: COLORS.lightGray1
-            }}>
-
-            <View style = {{
-              alignItems: 'center'
-            }}>
-              <View style={{
-                flexDirection: 'row',
-              }}>
+              justifyContent: "center",
+              backgroundColor: COLORS.lightGray1,
+            }}
+          >
+            <View
+              style={{
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
                 <Image
                   style={{ width: 70, height: 70 }}
                   source={{ uri: item.product_details.product_image }}
                 />
 
-                <View style={{
-                  flexDirection: 'column',
-                  marginLeft: 10,
-                }}>
-
-                  <Text style={{
-                    ...FONTS.h4, color: COLORS.primary
-                  }}>{item.product_details.product_name}</Text>
-
-                  <View style={{
-                    flexDirection: 'row',
-                  }}>
-                    <Text style={{
+                <View
+                  style={{
+                    flexDirection: "column",
+                    marginLeft: 10,
+                  }}
+                >
+                  <Text
+                    style={{
                       ...FONTS.h4,
-                    }}>PRICE = ₱ {item.product_details.price} </Text>
+                      color: COLORS.primary,
+                    }}
+                  >
+                    {item.product_details.product_name}
+                  </Text>
 
-                    <Text style = {{...FONTS.h4}}> • </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        ...FONTS.h4,
+                      }}
+                    >
+                      PRICE = ₱ {item.product_details.price}{" "}
+                    </Text>
 
-                    <Text style={{
-                      ...FONTS.h4
-                    }}> TOTAL = {item.total}</Text>
+                    <Text style={{ ...FONTS.h4 }}> • </Text>
+
+                    <Text
+                      style={{
+                        ...FONTS.h4,
+                      }}
+                    >
+                      {" "}
+                      TOTAL = {item.total}
+                    </Text>
                   </View>
 
-                  <View style={{
-                    flexDirection: 'row'
-                  }}>
-                    <Text style={{
-                      ...FONTS.h4
-                    }}>CALORIES = {item.product_details.calories} </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        ...FONTS.h4,
+                      }}
+                    >
+                      CALORIES = {item.product_details.calories}{" "}
+                    </Text>
 
-                    <Text style = {{
-                      ...FONTS.h4
-                    }}> • </Text>
+                    <Text
+                      style={{
+                        ...FONTS.h4,
+                      }}
+                    >
+                      {" "}
+                      •{" "}
+                    </Text>
 
-                    <Text style={{
-                      ...FONTS.h4
-                    }}> QUATITY = {item.quantity}</Text>
+                    <Text
+                      style={{
+                        ...FONTS.h4,
+                      }}
+                    >
+                      {" "}
+                      QUATITY = {item.quantity}
+                    </Text>
                   </View>
-
                 </View>
               </View>
             </View>
-
           </View>
         )}
       />
