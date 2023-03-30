@@ -25,7 +25,7 @@ const MyAvatar = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [gender, setGender] = useState("");
   const [bmi, setBmi] = useState();
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(images.body);
   const getUserData = async () => {
     setIsLoading(true);
     const response = await axios.get(
@@ -47,15 +47,23 @@ const MyAvatar = ({ navigation }) => {
     if (data.gender === "F") {
       if (data.bmi <= 23) {
         setGender("Normal");
+        setImage(images.FemaleNormal);
       } else {
         setGender("Overweight");
+        setImage(images.FemaleObese);
       }
     } else {
       if (data.bmi <= 19) {
         setGender("UnderWeight");
+        setImage(images.underweightMale);
       } else if (data.bmi <= 25.8) {
         setGender("Normal");
+        setImage(images.body);
       } else if (data.bmi <= 27.3) {
+        setImage(images.BoyObese);
+        setGender("OverWeight");
+      } else {
+        setImage(images.SuperObeseMale);
         setGender("Obese");
       }
     }
@@ -112,7 +120,7 @@ const MyAvatar = ({ navigation }) => {
       >
         {/* {console.log(bmiChecker())} */}
         <Image
-          source={bmiChecker}
+          source={image}
           style={{
             width: 300,
             height: 400,
