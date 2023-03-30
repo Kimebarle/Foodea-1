@@ -1,10 +1,10 @@
 import {
   StyleSheet,
-  Text,
   View,
   FlatList,
   Image,
   ScrollView,
+  Text,
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -16,8 +16,9 @@ import {
   SIZES,
   constants,
   FONTS,
+
 } from "../../../constants";
-import { Header } from "../../components/FoodeaComponents";
+import { Header, } from "../../components/FoodeaComponents";
 import { BASE_URL } from "../../../api/context/auth/config";
 import axios from "axios";
 
@@ -83,62 +84,57 @@ const NotificationScreen = () => {
               <TouchableOpacity disabled>
                 <View
                   style={{
-                    flex: 1,
-                    alignSelf: "center",
-                    justifyContent: "center",
-                    width: "90%",
-                    height: "100%",
+                    alignSelf: 'center',
+                    width: 330,
+                    height: 80,
                     padding: SIZES.padding,
                     backgroundColor: COLORS.lightGray2,
-                    flexDirection: "row",
                     marginTop: SIZES.base,
                     borderRadius: SIZES.radius,
                   }}
                 >
-                  <Image
-                    source={require("../../../../assets/img/icons/coupon.png")}
-                    style={{
-                      height: 40,
-                      width: 40,
-                      tintColor: COLORS.primary,
-                      marginTop: SIZES.radius,
-                    }}
-                  />
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginLeft: SIZES.radius,
-                    }}
-                  >
-                    <View style={{ marginLeft: SIZES.padding }}>
-                      <Text
+                  <View style={{
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                  }}>
+                    <View style={{
+                      position: 'absolute',
+                      left: 10,
+                    }}>
+                      <Image
+                        source={require("../../../../assets/img/icons/coupon.png")}
                         style={{
-                          ...FONTS.h3,
-                          marginBottom: 5,
-                          color: COLORS.primary,
+                          height: 40,
+                          width: 40,
+                          tintColor: COLORS.primary,
+                          marginTop: SIZES.radius,
                         }}
-                      >
-                        {item.voucher_name}
-                      </Text>
-                      <Text style={{ ...FONTS.h5 }}>{item.description}</Text>
+                      />
+                    </View>
+
+                    <View style = {{
+                      alignItems: 'center',
+                    }}>
+                        <Text
+                          style={{
+                            ...FONTS.h3,
+                          }}
+                        >
+                          {item.voucher_name}
+                        </Text>
+                        <Text style={{ ...FONTS.h4, color: COLORS.primary }}>{item.voucher_code}</Text>
+                        <Text style={{ ...FONTS.h5 }}>{item.description}</Text>
                     </View>
 
                     <View
                       style={{
-                        position: "absolute",
+                        position: 'absolute',
                         right: 10,
+                        top: 10,
                       }}
                     >
-                      <Text style={{ ...FONTS.h4 }}>{item.voucher_code}</Text>
+                      <Text style={{ ...FONTS.h4 }}>{item.discount} %</Text>
                     </View>
-                  </View>
-                  <View
-                    style={{
-                      position: "absolute",
-                      right: 10,
-                    }}
-                  >
-                    <Text style={{ ...FONTS.h4 }}>{item.discount} %</Text>
                   </View>
                 </View>
               </TouchableOpacity>

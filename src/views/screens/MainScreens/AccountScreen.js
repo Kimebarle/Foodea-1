@@ -114,6 +114,18 @@ const AccountScreen = ({ navigation }) => {
       {/* Header */}
       {renderHeader()}
 
+      <View style = {{
+        alignItems: 'center',
+      }}>
+        <Image 
+        source = {icons.iconprofile} 
+        style = {{
+          height: 100,
+          width: 100,
+          tintColor: COLORS.gray
+        }}/>
+      </View>
+
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: SIZES.radius,

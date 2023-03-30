@@ -1,6 +1,6 @@
 import { View, StyleSheet, TouchableOpacity, Image, Switch, Dimensions, } from 'react-native'
-import React, { useState, useEffect, useRef } from 'react'
-import { Container, SafeAreaView, Button, Text,  } from '../../components/FoodeaComponents'
+import React, { useState, useEffect, useRef, useContext } from 'react'
+import { Container, SafeAreaView, Button, Text, TextButton } from '../../components/FoodeaComponents'
 import MapView, { Callout, Circle, LatLng, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
 import {
@@ -12,17 +12,29 @@ import {
     dummyData,
     images,
 } from "../../../constants";
+import AuthContext from '../../../api/context/auth/AuthContext';
 
 
 const MapsView = ({ navigation }) => {
-
+    const { setAddress } = useContext(AuthContext);
+    const [isLoading, setIsLoading] = React.useState(true);
     const [pin, setPin] = React.useState({
-        latitude: 14.7744064,
-        longitude: 121.0461308,
+        latitude: 0.0,
+        longitude: 0.0,
     });
+    const [myHouse, setMyHouse] = React.useState({})
 
+    const handleLocation = () => {
+        console.log(pin);
+        //console.log('location.coords.longitude');
+        setAddress({
+            latitude: pin.latitude,
+            longitude: pin.longitude,
+        })
+    }
 
     useEffect(() => {
+        displayData();
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
@@ -36,8 +48,14 @@ const MapsView = ({ navigation }) => {
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude
             })
+
         })();
+
     }, []);
+
+    const displayData = () => {
+        console.log("my_location");
+    }
 
     const { width, height } = Dimensions.get("window");
     const ASPECT_RATIO = width / height;
@@ -56,7 +74,9 @@ const MapsView = ({ navigation }) => {
 
 
     return (
-        
+        <View style={{
+            flex: 1,
+        }}>
             <Container style={styles.topContainer} top padding={3}>
                 <View style={styles.Map}>
                     <View style={styles.mapcontainer}>
@@ -75,16 +95,33 @@ const MapsView = ({ navigation }) => {
                                 </Callout>
                             </Marker>
                         </MapView>
+
+                        <TextButton
+                            label="Submit"
+                            buttonContainerStyle={{
+                                height: 50,
+                                width: 300,
+                                marginTop: SIZES.padding,
+                                position: 'absolute',
+                                bottom: 10,
+                                right: 25,
+                                borderRadius: SIZES.radius,
+                                marginBottom: SIZES.padding,
+                                backgroundColor: COLORS.primary
+                            }}
+                            onPress={handleLocation}
+                        />
                     </View>
                 </View>
             </Container>
-
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     topContainer: {
         backgroundColor: '#FAFAFA',
+        flex: 1,
         height: Dimensions.get('window').height,
     },
     Map: {

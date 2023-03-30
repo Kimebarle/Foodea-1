@@ -9,6 +9,7 @@ import sha256 from "sha256";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [address, setAddress] = useState("");
   const [user, setUser] = useState(false);
   const [logged_in, setLogged_in] = useState(false);
   const [userInfo, setUserInfo] = useState([]);
@@ -156,6 +157,7 @@ export const AuthProvider = ({ children }) => {
         setLogged_in,
         setUserId,
         setUserInfo,
+        setAddress,
       }}
     >
       {children}

@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from 'react'
 import {
   View,
-  Text,
   Animated,
   ScrollView,
   TouchableWithoutFeedback,
   Modal,
+  Dimensions,
+  StyleSheet
 } from "react-native";
+import MapView, { Callout, Circle, LatLng, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import * as Location from 'expo-location';
 import {
   COLORS,
   FONTS,
@@ -19,6 +22,9 @@ import {
 import IconButton from "./IconButton";
 import TwoPointSlider from "./TwoPointSlider";
 import TextButton from "./TextButton";
+import Container from "./Container";
+import Text from "./Text";
+
 
 const Section = ({ containerStyle, title, children }) => {
   return (
@@ -38,6 +44,30 @@ const FilterModal = ({ isVisible, onClose }) => {
   const [showFilterModal, setShowFilterModal] = React.useState(isVisible);
   const [deliveryTime, setDeliveryTime] = React.useState("");
   const [tags, setTags] = React.useState("");
+  
+    
+
+  const [isLoading, setIsLoading] = React.useState(true);
+    const [pin, setPin] = React.useState({
+        latitude: 14.7744064,
+        longitude: 121.0461308,
+    });
+
+    const handleLocation = () => {
+        console.log('location.coords.latitude');
+        console.log('location.coords.longitude');
+    }
+
+    const { width, height } = Dimensions.get("window");
+    const ASPECT_RATIO = width / height;
+    const LATITUDE_DELTA = 0.02;
+    const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+    const my_location = {
+        latitude: pin.latitude,
+        longitude: pin.longitude,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+    }
 
   React.useEffect(() => {
     if (showFilterModal) {
@@ -55,107 +85,76 @@ const FilterModal = ({ isVisible, onClose }) => {
     }
   }, [showFilterModal]);
 
+  useEffect(() => {
+    (async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+            console.log("Permission to access location was denied");
+            return;
+        }
+        let location = await Location.getCurrentPositionAsync({});
+        console.log(location);
+
+        setPin({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude
+        })
+    })();
+}, []);
+
   const modalY = modalAnimatedValue.interpolate({
     inputRange: [0, 1],
     outputRange: [SIZES.height, SIZES.height - 680],
   });
 
-  function renderDistance() {
-    return (
-      <Section title="Distance">
-        <View style={{ alignItems: "center" }}>
-          <TwoPointSlider
-            values={[3, 10]}
-            min={1}
-            max={20}
-            postfix="km"
-            onValuesChange={(values) => console.log(values)}
-          />
-        </View>
-      </Section>
-    );
-  }
 
-  function renderDeliveryTime() {
-    return (
-      <Section
-        title="Delivery Time"
-        containerStyle={{
-          marginTop: 40,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            marginTop: SIZES.radius,
-          }}
-        >
-          {constants.delivery_time.map((item, index) => {
-            return (
-              <TextButton
-                key={`delivery_time-${index}`}
-                label={item.label}
-                labelStyle={{
-                  color: item.id == deliveryTime ? COLORS.white : COLORS.gray,
-                  ...FONTS.h3,
-                }}
-                buttonContainerStyle={{
-                  width: "30%",
-                  height: 50,
-                  margin: 5,
-                  alignItems: "center",
-                  borderRadius: SIZES.base,
-                  backgroundColor:
-                    item.id == deliveryTime
-                      ? COLORS.primary
-                      : COLORS.lightGray2,
-                }}
-                onPress={() => setDeliveryTime(item.id)}
-              />
-            );
-          })}
-        </View>
-      </Section>
-    );
-  }
 
-  function renderTags() {
-    return (
-      <Section title="Tags">
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            marginBottom: SIZES.padding,
-          }}
-        >
-          {constants.tags.map((item, index) => {
-            return (
-              <TextButton
-                key={`Tags-${index}`}
-                label={item.label}
-                labelStyle={{
-                  color: item.id == tags ? COLORS.white : COLORS.gray,
-                  ...FONTS.h4,
-                }}
-                buttonContainerStyle={{
-                  height: 30,
-                  margin: 5,
-                  paddingHorizontal: SIZES.base,
-                  alignItems: "center",
-                  borderRadius: SIZES.base,
-                  backgroundColor:
-                    tags == item.id ? COLORS.primary : COLORS.lightGray1,
-                }}
-                onPress={() => setTags(item.id)}
-              />
-            );
-          })}
-        </View>
-      </Section>
-    );
-  }
+  function renderMapView() {
+    return(
+      <View style={{
+        flex: 1,
+    }}>
+        <Container style={styles.topContainer} top padding={3}>
+            <View style={styles.Map}>
+                <View style={styles.mapcontainer}>
+                    <MapView style={styles.map}
+                        // ref={map}
+                        provider={PROVIDER_GOOGLE}
+                        initialRegion={my_location}
+                        showsUserLocation={true}
+                    >
+                        <Marker
+                            coordinate={my_location}
+                            pinColor="red"
+                        >
+                            <Callout>
+                                <Text> My Location </Text>
+                            </Callout>
+                        </Marker>
+                    </MapView>
+
+                    <TextButton
+                        label="Submit"
+                        buttonContainerStyle={{
+                            height: 50,
+                            width: 300,
+                            marginTop: SIZES.padding,
+                            position: 'absolute',
+                            bottom: 10,
+                            right: 25,
+                            borderRadius: SIZES.radius,
+                            marginBottom: SIZES.padding,
+                            backgroundColor: COLORS.primary
+                        }}
+                        onPress={handleLocation}
+                    />
+                </View>
+            </View>
+        </Container>
+    </View>
+    )
+  };
+
 
   return (
     <Modal animationType="fade" transparent={true} visible={isVisible}>
@@ -189,7 +188,7 @@ const FilterModal = ({ isVisible, onClose }) => {
           {/* Header */}
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text style={{ flex: 1, ...FONTS.h3, fontSize: 18 }}>
-              Filter your Search
+              Map
             </Text>
 
             <IconButton
@@ -205,39 +204,39 @@ const FilterModal = ({ isVisible, onClose }) => {
               onPress={() => setShowFilterModal(false)}
             />
           </View>
-
-          {/* Distance */}
-          {renderDistance()}
-
-          {/* Delivery Time */}
-          {renderDeliveryTime()}
-
-          {/* Tags */}
-          {renderTags()}
-
-          {/* Apply Button */}
-          <View
-            style={{
-              backgroundColor: COLORS.primary,
-              borderRadius: SIZES.radius,
-              marginTop: SIZES.padding,
-            }}
-          >
-            <TextButton
-              label="Apply Filters"
-              buttonContainerStyle={{
-                height: 50,
-                alignItems: "center",
-                borderRadius: SIZES.radius,
-                backgroundColor: COLORS.primary,
-              }}
-              onPress={() => console.log("Applied Filters")}
-            />
-          </View>
+          
+          {/* Map View */}
+          {renderMapView()}
         </Animated.View>
       </View>
     </Modal>
   );
 };
+
+
+const styles = StyleSheet.create({
+  topContainer: {
+      backgroundColor: '#FAFAFA',
+      height: Dimensions.get('window').height,
+  },
+  Map: {
+      height: '100%',
+      width: window.width,
+      backgroundColor: '#fff',
+      borderColor: '#F54748',
+  },
+  button: {
+      marginTop: 20,
+      bottom: 0,
+      alignItems: 'center'
+  },
+  mapcontainer: {
+      flex: 1,
+  },
+  map: {
+      width: Dimensions.get('window').width,
+      height: '100%',
+  },
+});
 
 export default FilterModal;

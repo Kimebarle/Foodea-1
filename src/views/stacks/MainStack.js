@@ -44,6 +44,7 @@ import EditFirstName from "../screens/InfoScreens/EditFirstName";
 import AddressDisplay from "../screens/InfoScreens/AddressDisplay";
 import EditAddress from "../screens/InfoScreens/EditAddress";
 import MapsView from "../screens/Delivery/MapsView";
+import ActivityLogDetails from "../screens/BottomNavigation/ActivityLogDetails";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -235,6 +236,7 @@ const MainStack = () => {
       <Stack.Screen name="AddressDisplay" component={AddressDisplay} />
       <Stack.Screen name="EditAddress" component={EditAddress} />
       <Stack.Screen name="MapsView" component={MapsView} />
+      <Stack.Screen name="ActivityLogDetails" component={ActivityLogDetails} />
     </Stack.Navigator>
   );
 };

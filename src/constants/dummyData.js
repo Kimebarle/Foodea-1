@@ -207,7 +207,7 @@ const myCard = [
   {
     id: 1,
     name: "COD",
-    image: require("../../assets/img/icons/PayPalLogo.png"),
+    image: require("../../assets/img/icons/5578525.png"),
   },
 ];
 

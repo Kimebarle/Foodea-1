@@ -22,7 +22,7 @@ import { BASE_URL } from "../../../api/context/auth/config";
 import { Alert } from "react-native";
 
 const CheckOut = ({ navigation, route }) => {
-  const { userId, userInfo } = useContext(AuthContext);
+  const { userId, userInfo, userAddress } = useContext(AuthContext);
   const [coupon, setCoupon] = React.useState();
   const [totalPrice, setTotalPrice] = React.useState(5);
   const [fee, setFee] = React.useState(50);
@@ -36,6 +36,7 @@ const CheckOut = ({ navigation, route }) => {
     setIsLoading(true);
     getUser();
     getTotal();
+    console.log(userAddress);
     let { selectedCard } = route.params;
     setSelectedCard(selectedCard);
     console.log(userInfo);
@@ -117,6 +118,10 @@ const CheckOut = ({ navigation, route }) => {
       console.log(decision);
     }
   };
+
+  const HandleMap = () => {
+    navigation.push("MapsView");
+  }
 
   function renderHeader() {
     return (
@@ -211,7 +216,7 @@ const CheckOut = ({ navigation, route }) => {
               flexDirection: "row",
               alignItems: "center",
             }}
-            onPress={() => {}}
+            onPress={HandleMap}
           >
             <Image
               source={icons.pinlocation}
