@@ -39,35 +39,6 @@ const ActivityLogScreen = ({ navigation }) => {
       const list = [...data];
       setItemLength(response.data.length > 0);
       setMyActivityLogList(data);
-      // let price = 0;
-
-      // const updatedList = list.forEach((item) => {
-      //   // price += item.order_details.total;
-      //   // item.forEach((item2) => {
-      //   //   console.log(item2);
-      //   // });
-      //   let orderTotal = 0;
-      //   for (let i = 0; i < item.order_details.length; i++) {
-      //     orderTotal = orderTotal + item.order_details[i].total;
-      //   }
-      //   console.log(orderTotal);
-      //   let newItem = { ...item, totalPrice: orderTotal };
-      //   //setList1(newItem);
-      //   // list.map((item) => ({
-      //   //   ...item,
-      //   //   totalPrice: orderTotal,
-      //   // }));
-      //   // const newItem = { ...item, totalPrice: orderTotal };
-      //   // setList1(newItem);
-      // });
-
-      // console.log(list1);
-      // const newList = list.map;
-      // for (let i = 0; i < list[0].order_details[0].length; i++) {
-      //   console.log(i);
-      // }
-
-      // console.log(price);
     }
   };
 

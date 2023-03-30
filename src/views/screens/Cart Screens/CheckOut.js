@@ -30,6 +30,8 @@ const CheckOut = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [userData, setUserData] = React.useState(null);
   const [selectedCard, setSelectedCard] = React.useState(null);
+  const [discount, setDiscount] = React.useState(0);
+  const [button, setButton] = React.useState(false);
   const { passedValues } = route.params;
 
   React.useEffect(() => {
@@ -38,7 +40,7 @@ const CheckOut = ({ navigation, route }) => {
     getTotal();
     let { selectedCard } = route.params;
     setSelectedCard(selectedCard);
-    console.log(userInfo);
+    //console.log(userInfo);
   }, []);
 
   const getUser = async () => {
@@ -58,6 +60,45 @@ const CheckOut = ({ navigation, route }) => {
     });
     setCalories(totalCalories);
     setTotalPrice(totalPrice);
+  };
+
+  const getVouchers = async () => {
+    const response = await axios.get(
+      `${BASE_URL}vouchers?merchant_id[eq]=${passedValues[0].restaurant_id}`
+    );
+    // console.log(passedValues[0].restaurant_id);
+    return response.data;
+  };
+
+  const getVoucher = (coupon, list2) => {
+    const list = [...list2];
+    const updated = list.find((voucher) => voucher.voucher_code === coupon);
+    return updated ? updated : false;
+  };
+
+  const handleVoucher = async () => {
+    const voucher = await getVouchers();
+    const list2 = [...voucher];
+    const check = getVoucher(coupon, list2);
+    if (check) {
+      setButton(true);
+      setDiscount(check.discount);
+    } else {
+      Alert.alert("Voucher not Available", "try another one", [
+        {
+          text: "Confirm",
+          onPress: () => {},
+        },
+      ]);
+      setButton(false);
+    }
+
+    // if (check.status) {
+    //   console.log(check.updated.voucher_code[0]);
+    // } else {
+
+    // }
+    // console.log(coupon);
   };
 
   const confirmAction = async () => {
@@ -86,7 +127,9 @@ const CheckOut = ({ navigation, route }) => {
         product_id: list1[i].product_id,
         restaurant_id: list1[i].restaurant_id,
         quantity: list1[i].quantity,
-        total: list1[i].total,
+        total:
+          fee / passedValues.length +
+          (list1[i].total - discount / passedValues.length),
         status: "Pending",
         payment_type: "Cash",
         latitude: 0,
@@ -253,13 +296,18 @@ const CheckOut = ({ navigation, route }) => {
           }}
           placeholder="Coupon Code"
           appendComponent={
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                handleVoucher();
+              }}
+              disabled={button}
+            >
               <View
                 style={{
                   width: 60,
                   alignItems: "center",
                   justifyContent: "center",
-                  backgroundColor: COLORS.primary,
+                  backgroundColor: button ? COLORS.gray : COLORS.primary,
                 }}
               >
                 <Image
@@ -314,7 +362,7 @@ const CheckOut = ({ navigation, route }) => {
         subTotal={totalPrice}
         disable={true}
         shippingFee={fee}
-        total={totalPrice}
+        total={totalPrice - discount}
         onPress={onPressHandler}
         number={passedValues.length}
         totalCalories={calories}
