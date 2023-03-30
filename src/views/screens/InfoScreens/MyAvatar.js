@@ -45,16 +45,22 @@ const MyAvatar = ({ navigation }) => {
     const data = await getUserData();
 
     if (data.gender === "F") {
-      if (data.bmi <= 23) {
+      if (data.bmi <= 18.5) {
+        setGender("Underweight");
+        setImage(images.underweightGirl);
+      } else if (data.bmi <= 24.9) {
         setGender("Normal");
         setImage(images.FemaleNormal);
+      } else if (data.bmi <= 29) {
+        setGender("Overweight");
+        setImage(images.overweightG);
       } else {
         setGender("Overweight");
         setImage(images.FemaleObese);
       }
     } else {
       if (data.bmi <= 19) {
-        setGender("UnderWeight");
+        setGender("Underweight");
         setImage(images.underweightMale);
       } else if (data.bmi <= 25.8) {
         setGender("Normal");
