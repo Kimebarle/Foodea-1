@@ -23,8 +23,9 @@ const MyAvatar = ({ navigation }) => {
   const { userId } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [gender, setGender] = useState();
+  const [gender, setGender] = useState("");
   const [bmi, setBmi] = useState();
+  const [image, setImage] = useState();
   const getUserData = async () => {
     setIsLoading(true);
     const response = await axios.get(
@@ -33,9 +34,7 @@ const MyAvatar = ({ navigation }) => {
     setUserInfo(response.data);
     const bmi = await response.data[0].bmi;
     const gender = await response.data[0].gender;
-
     setIsLoading(false);
-
     return {
       bmi,
       gender,
@@ -45,24 +44,27 @@ const MyAvatar = ({ navigation }) => {
   const bmiChecker = async () => {
     const data = await getUserData();
 
-    if (data.gender === "M") {
-      if (data.bmi <= 20.7) {
-        return images;
-      } else if (bmi <= 26.4) {
-        return "assets/images/normal-male.png";
-      } else if (bmi <= 27.8) {
-        return "assets/images/semi-obese-male.png";
+    if (data.gender === "F") {
+      if (data.bmi <= 23) {
+        setGender("Normal");
       } else {
-        return "assets/images/obese-male.png";
+        setGender("Overweight");
       }
     } else {
+      if (data.bmi <= 19) {
+        setGender("UnderWeight");
+      } else if (data.bmi <= 25.8) {
+        setGender("Normal");
+      } else if (data.bmi <= 27.3) {
+        setGender("Obese");
+      }
     }
   };
 
   useEffect(() => {
     setIsLoading(true);
-    bmiChecker();
     getUserData();
+    bmiChecker();
   }, []);
 
   function renderHeader() {
@@ -108,9 +110,12 @@ const MyAvatar = ({ navigation }) => {
           marginTop: SIZES.padding,
         }}
       >
+        {/* {console.log(bmiChecker())} */}
         <Image
           source={bmiChecker}
           style={{
+            width: 300,
+            height: 400,
             justifyContent: "center",
           }}
         />
@@ -203,7 +208,7 @@ const MyAvatar = ({ navigation }) => {
               ...FONTS.h2,
             }}
           >
-            Normal
+            {isLoading ? "Status" : gender}
           </Text>
           <Text
             style={{
