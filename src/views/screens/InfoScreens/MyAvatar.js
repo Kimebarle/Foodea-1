@@ -28,6 +28,7 @@ const MyAvatar = ({ navigation }) => {
       `${BASE_URL}app_users?user_id[eq]=${userId}`
     );
     setUserInfo(response.data);
+    console.log(response.data);
     setIsLoading(false);
   };
 
