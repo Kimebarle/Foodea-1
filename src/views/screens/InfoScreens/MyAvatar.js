@@ -13,6 +13,7 @@ import {
   dummyData,
   FONTS,
   images,
+  constants,
 } from "../../../constants";
 import AuthContext from "../../../api/context/auth/AuthContext";
 import { BASE_URL } from "../../../api/context/auth/config";
@@ -22,18 +23,45 @@ const MyAvatar = ({ navigation }) => {
   const { userId } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [gender, setGender] = useState();
+  const [bmi, setBmi] = useState();
   const getUserData = async () => {
     setIsLoading(true);
     const response = await axios.get(
       `${BASE_URL}app_users?user_id[eq]=${userId}`
     );
     setUserInfo(response.data);
-    console.log(response.data);
+    const bmi = await response.data[0].bmi;
+    const gender = await response.data[0].gender;
+
     setIsLoading(false);
+
+    return {
+      bmi,
+      gender,
+    };
+  };
+
+  const bmiChecker = async () => {
+    const data = await getUserData();
+
+    if (data.gender === "M") {
+      if (data.bmi <= 20.7) {
+        return images;
+      } else if (bmi <= 26.4) {
+        return "assets/images/normal-male.png";
+      } else if (bmi <= 27.8) {
+        return "assets/images/semi-obese-male.png";
+      } else {
+        return "assets/images/obese-male.png";
+      }
+    } else {
+    }
   };
 
   useEffect(() => {
     setIsLoading(true);
+    bmiChecker();
     getUserData();
   }, []);
 
@@ -81,7 +109,7 @@ const MyAvatar = ({ navigation }) => {
         }}
       >
         <Image
-          source={images.body}
+          source={bmiChecker}
           style={{
             justifyContent: "center",
           }}
