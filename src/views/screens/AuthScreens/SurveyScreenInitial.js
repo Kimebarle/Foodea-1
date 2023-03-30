@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import {
   icons,
@@ -23,19 +23,28 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 const SurveyScreenInitial = ({ navigation, route }) => {
   const { passedList5 } = route.params;
   const [question1, setQuestion1] = React.useState();
+  const [wordCount, setWordCount] = React.useState();
 
   async function submitHandler() {
-    const tempList6 = [...passedList5];
+    // const press = check(question1);
 
+    const tempList6 = [...passedList5];
     const list6 = tempList6.map((item) => ({
       ...item,
       preferences: question1,
     }));
-
     navigation.navigate("Captcha", { passedList6: list6 });
   }
+
+  // const check = (question1) => {
+  //   const Answer = question1;
+  //   const words = Answer.split(" ");
+  //   const count = words.length;
+  //   return count;
+  // };
+
   const disabledButton = () => {
-    return !question1;
+    return !question1 || wordCount <= 25;
   };
 
   function renderHeader() {
@@ -138,6 +147,9 @@ const SurveyScreenInitial = ({ navigation, route }) => {
               marginBottom: SIZES.padding,
             }}
             onChange={(value) => {
+              const str = value.split(" ");
+              const words = str.length;
+              setWordCount(words);
               setQuestion1(value);
             }}
             autoCapitalize
@@ -146,7 +158,7 @@ const SurveyScreenInitial = ({ navigation, route }) => {
             editable
             multiline
             numberOfLines={4}
-            maxLength={100}
+            maxLength={500}
           />
           {/* <TextInput
             style={{

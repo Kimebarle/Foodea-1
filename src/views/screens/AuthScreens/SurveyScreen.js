@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
-import { SIZES, FONTS, COLORS, icons, } from "../../../constants";
+import { SIZES, FONTS, COLORS, icons } from "../../../constants";
 import { Header, TextButton } from "../../components/FoodeaComponents";
 import RadioForm, {
   RadioButtonInput,
@@ -128,16 +128,15 @@ const SurveyScreen = ({ navigation, route }) => {
       {/* Header */}
       {renderHeader()}
 
-      <View style={{
-        height: 600,
-        width: 350,
-        justifyContent: 'center',
-        backgroundColor: COLORS.white,
-        borderRadius: SIZES.radius,
-      }}>
-
-
-
+      <View
+        style={{
+          height: 600,
+          width: 350,
+          justifyContent: "center",
+          backgroundColor: COLORS.white,
+          borderRadius: SIZES.radius,
+        }}
+      >
         <Text style={{ padding: SIZES.padding, ...FONTS.h2 }}>
           Let us know about yourself ...{" "}
         </Text>
@@ -158,7 +157,7 @@ const SurveyScreen = ({ navigation, route }) => {
             initial={value}
             onPress={(value) => setValue(value)}
             buttonColor={COLORS.gray3}
-            labelStyle={{ ...FONTS.h4, marginBottom: SIZES.padding, }}
+            labelStyle={{ ...FONTS.h4, marginBottom: SIZES.padding }}
             selectedButtonColor={COLORS.primary}
           />
         </View>

@@ -47,8 +47,18 @@ const EditAddress = ({ navigation }) => {
     getUserData();
   }, []);
 
-  const handleEdit = () => {
-    console.log("Saved");
+  const handleEdit = async () => {
+    const response = await axios.patch(`${BASE_URL}app_users/${userId}`, {
+      address: `${address}  ${city}  ${brgy}  ${zipCode}`,
+    });
+    Alert.alert("Successfully ", "Edited your Address", [
+      {
+        text: "Confirm",
+        onPress: () => {},
+        style: "cancel",
+      },
+    ]);
+    navigation.navigate("AccountScreen");
   };
 
   const disabledButton = () => {
