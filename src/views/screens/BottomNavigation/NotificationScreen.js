@@ -1,5 +1,13 @@
-import { StyleSheet, Text, View, FlatList, Image, ScrollView, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import {
   dummyData,
   icons,
@@ -10,20 +18,24 @@ import {
   FONTS,
 } from "../../../constants";
 import { Header } from "../../components/FoodeaComponents";
+import { BASE_URL } from "../../../api/context/auth/config";
+import axios from "axios";
 
 const NotificationScreen = () => {
-  function renderHeader() {
-    return (
-      <Header
-        containerStyle={{
-          height: 80,
-          marginHorizontal: SIZES.padding,
-          alignItems: "center",
-        }}
-        title={"Notification"}
-      />
-    );
-  }
+  const [vouchers, setVouchers] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setIsLoading(true);
+    getVouchers();
+  }, []);
+
+  const getVouchers = async () => {
+    setIsLoading(true);
+    const response = await axios.get(`${BASE_URL}vouchers`);
+    setVouchers(response.data);
+    setIsLoading(false);
+    // console.log(response.data);
+  };
 
   return (
     <View
@@ -43,26 +55,32 @@ const NotificationScreen = () => {
         }}
         title={"Notification"}
       />
-      <View style={{
-        flex: 1,
-      }}>
-        <View style={{
-          marginLeft: SIZES.padding,
-        }}>
-          <Text style={{
-            ...FONTS.h3
-          }}>
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <View
+          style={{
+            marginLeft: SIZES.padding,
+          }}
+        >
+          <Text
+            style={{
+              ...FONTS.h3,
+            }}
+          >
             Notifications
           </Text>
         </View>
         <FlatList
-          data={constants.messages}
+          data={isLoading ? constants.messages : vouchers}
           keyExtractor={(item, index) => {
             return index.toString();
           }}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity>
+              <TouchableOpacity disabled>
                 <View
                   style={{
                     flex: 1,
@@ -74,11 +92,11 @@ const NotificationScreen = () => {
                     backgroundColor: COLORS.lightGray2,
                     flexDirection: "row",
                     marginTop: SIZES.base,
-                    borderRadius: SIZES.radius
+                    borderRadius: SIZES.radius,
                   }}
                 >
                   <Image
-                    source={item.icon}
+                    source={require("../../../../assets/img/icons/coupon.png")}
                     style={{
                       height: 40,
                       width: 40,
@@ -86,25 +104,41 @@ const NotificationScreen = () => {
                       marginTop: SIZES.radius,
                     }}
                   />
-                  <View style={{
-                    flexDirection: 'row',
-                    marginLeft: SIZES.radius
-                  }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginLeft: SIZES.radius,
+                    }}
+                  >
                     <View style={{ marginLeft: SIZES.padding }}>
-                      <Text style={{ ...FONTS.h3, marginBottom: 5, color: COLORS.primary }}>
-                        {item.title}
+                      <Text
+                        style={{
+                          ...FONTS.h3,
+                          marginBottom: 5,
+                          color: COLORS.primary,
+                        }}
+                      >
+                        {item.voucher_name}
                       </Text>
-                      <Text style={{ ...FONTS.h5 }}>
-                        {item.description}
-                      </Text>
+                      <Text style={{ ...FONTS.h5 }}>{item.description}</Text>
                     </View>
 
-                    <View style={{
-                      position: 'absolute',
-                      right: 10,
-                    }}>
-                      <Text style={{ ...FONTS.h4, }}>{item.time}</Text>
+                    <View
+                      style={{
+                        position: "absolute",
+                        right: 10,
+                      }}
+                    >
+                      <Text style={{ ...FONTS.h4 }}>{item.voucher_code}</Text>
                     </View>
+                  </View>
+                  <View
+                    style={{
+                      position: "absolute",
+                      right: 10,
+                    }}
+                  >
+                    <Text style={{ ...FONTS.h4 }}>{item.discount} %</Text>
                   </View>
                 </View>
               </TouchableOpacity>
