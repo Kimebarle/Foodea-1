@@ -122,7 +122,7 @@ const MyAvatar = ({ navigation }) => {
         <Image
           source={image}
           style={{
-            width: 300,
+            width: 310,
             height: 400,
             justifyContent: "center",
           }}
@@ -137,7 +137,7 @@ const MyAvatar = ({ navigation }) => {
         >
           <Text
             style={{
-              ...FONTS.h2,
+              ...FONTS.h3,
             }}
           >
             {isLoading ? "placeholder" : userInfo[0].height}
@@ -159,12 +159,12 @@ const MyAvatar = ({ navigation }) => {
           style={{
             position: "absolute",
             top: 70,
-            left: 220,
+            left: 260,
           }}
         >
           <Text
             style={{
-              ...FONTS.h2,
+              ...FONTS.h3,
             }}
           >
             {isLoading ? "placeholder" : userInfo[0].bmi}
@@ -188,7 +188,7 @@ const MyAvatar = ({ navigation }) => {
         >
           <Text
             style={{
-              ...FONTS.h2,
+              ...FONTS.h3,
             }}
           >
             {isLoading ? "placeholder" : userInfo[0].weight} kg
@@ -208,12 +208,12 @@ const MyAvatar = ({ navigation }) => {
           style={{
             position: "absolute",
             top: 250,
-            left: 210,
+            left: 230,
           }}
         >
           <Text
             style={{
-              ...FONTS.h2,
+              ...FONTS.h3,
             }}
           >
             {isLoading ? "Status" : gender}
