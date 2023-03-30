@@ -29,7 +29,7 @@ const CardPayment = ({ navigation, route }) => {
   const onPressHandler = () => {
     const newList = [...passingValue];
 
-    navigation.navigate("CheckOut", {
+    navigation.navigate("MapsView", {
       selectedCard: selectedCard,
       passedValues: newList,
     });

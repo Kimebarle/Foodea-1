@@ -133,8 +133,8 @@ const CheckOut = ({ navigation, route }) => {
           (list1[i].total - discount / passedValues.length),
         status: "Pending",
         payment_type: "Cash",
-        latitude: 0,
-        longitude: 0,
+        latitude: passedValues[i].latitude,
+        longitude: passedValues[i].longitude,
         order_key: `${userData[0].firstname}` + otpString,
       });
       console.log(response.data);
@@ -164,7 +164,7 @@ const CheckOut = ({ navigation, route }) => {
 
   const HandleMap = () => {
     navigation.push("MapsView");
-  }
+  };
 
   function renderHeader() {
     return (
