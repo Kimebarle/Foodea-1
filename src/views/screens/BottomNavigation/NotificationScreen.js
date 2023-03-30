@@ -16,9 +16,8 @@ import {
   SIZES,
   constants,
   FONTS,
-
 } from "../../../constants";
-import { Header, } from "../../components/FoodeaComponents";
+import { Header } from "../../components/FoodeaComponents";
 import { BASE_URL } from "../../../api/context/auth/config";
 import axios from "axios";
 
@@ -84,7 +83,7 @@ const NotificationScreen = () => {
               <TouchableOpacity disabled>
                 <View
                   style={{
-                    alignSelf: 'center',
+                    alignSelf: "center",
                     width: 330,
                     height: 80,
                     padding: SIZES.padding,
@@ -93,14 +92,18 @@ const NotificationScreen = () => {
                     borderRadius: SIZES.radius,
                   }}
                 >
-                  <View style={{
-                    justifyContent: 'space-evenly',
-                    alignItems: 'center',
-                  }}>
-                    <View style={{
-                      position: 'absolute',
-                      left: 10,
-                    }}>
+                  <View
+                    style={{
+                      justifyContent: "space-evenly",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        position: "absolute",
+                        left: 10,
+                      }}
+                    >
                       <Image
                         source={require("../../../../assets/img/icons/coupon.png")}
                         style={{
@@ -112,28 +115,32 @@ const NotificationScreen = () => {
                       />
                     </View>
 
-                    <View style = {{
-                      alignItems: 'center',
-                    }}>
-                        <Text
-                          style={{
-                            ...FONTS.h3,
-                          }}
-                        >
-                          {item.voucher_name}
-                        </Text>
-                        <Text style={{ ...FONTS.h4, color: COLORS.primary }}>{item.voucher_code}</Text>
-                        <Text style={{ ...FONTS.h5 }}>{item.description}</Text>
+                    <View
+                      style={{
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          ...FONTS.h3,
+                        }}
+                      >
+                        {item.voucher_name}
+                      </Text>
+                      <Text style={{ ...FONTS.h4, color: COLORS.primary }}>
+                        {item.voucher_code}
+                      </Text>
+                      <Text style={{ ...FONTS.h5 }}>{item.description}</Text>
                     </View>
 
                     <View
                       style={{
-                        position: 'absolute',
+                        position: "absolute",
                         right: 10,
                         top: 10,
                       }}
                     >
-                      <Text style={{ ...FONTS.h4 }}>{item.discount} %</Text>
+                      <Text style={{ ...FONTS.h4 }}>₱ {item.discount}.00</Text>
                     </View>
                   </View>
                 </View>

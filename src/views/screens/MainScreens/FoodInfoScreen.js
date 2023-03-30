@@ -230,7 +230,7 @@ const FoodInfoScreen = ({ navigation, route }) => {
           paddingHorizontal: SIZES.padding,
           alignItems: "center",
         }}
-        title={"Hamburger"}
+        title={"Details"}
         leftComponent={
           <TouchableOpacity
             style={{

@@ -84,8 +84,15 @@ const CheckOut = ({ navigation, route }) => {
     if (check) {
       setButton(true);
       setDiscount(check.discount);
+      Alert.alert("Voucher Claimed", "Congratulations", [
+        {
+          text: "Confirm",
+          onPress: () => {},
+        },
+      ]);
+      setButton(false);
     } else {
-      Alert.alert("Voucher not Available", "try another one", [
+      Alert.alert("Voucher not Available", "Invalid Voucher", [
         {
           text: "Confirm",
           onPress: () => {},
