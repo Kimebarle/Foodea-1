@@ -17,6 +17,12 @@ const FOODEA_LOGO = require("../../assets/img/images/FOODEA_LOGO.png");
 const jollibee_logo = require("../../assets/img/images/jollibee_logo.png");
 const Foodea_new_logo = require("../../assets/img/images/Foodea_new_logo.png");
 const Map = require("../../assets/img/images/Map.png");
+const underweight = require("../../assets/img/images/underweight.png");
+const overweight = require("../../assets/img/images/overweight.png");
+const ObeseI = require("../../assets/img/images/ObeseI.png");
+const obese = require("../../assets/img/images/obese.png");
+const NormalG = require("../../assets/img/images/NormalG.png");
+const obese2 = require("../../assets/img/images/obese2.png");
 
 export default {
   profile,
@@ -37,5 +43,12 @@ export default {
   FOODEA_LOGO,
   jollibee_logo,
   Foodea_new_logo,
-  Map
+  Map,
+  underweight,
+  overweight,
+  ObeseI,
+  obese, 
+  NormalG,
+  obese2
+
 };

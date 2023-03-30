@@ -12,7 +12,6 @@ const FooterTotal = ({
   onPress,
   number,
   totalCalories,
-  calorieLimit,
   disable,
   totalPrice,
 }) => {
@@ -38,9 +37,6 @@ const FooterTotal = ({
           <Text style={{ ...FONTS.h3 }}>₱{subTotal.toFixed(2)}</Text>
         </View>
 
-        {/* Line Divider */}
-        <LineDivider />
-
         <View
           style={{
             flexDirection: "row",
@@ -55,26 +51,6 @@ const FooterTotal = ({
           <Text style={{ ...FONTS.h3 }}>{totalCalories}</Text>
         </View>
 
-        {/* Line Divider */}
-        <LineDivider />
-
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: SIZES.base,
-          }}
-        >
-          <Text style={{ flex: 1, ...FONTS.h3 }}>Calorie Limit</Text>
-          <Image
-            source={icons.calories}
-            style={{ width: 25, height: 25, tintColor: COLORS.primary }}
-          />
-          <Text style={{ ...FONTS.h3 }}>{calorieLimit}</Text>
-        </View>
-
-        {/* Line Divider */}
-        <LineDivider />
-
         {/* Shipping Fee */}
         <View
           style={{
@@ -87,9 +63,6 @@ const FooterTotal = ({
           <Text style={{ ...FONTS.h3 }}>₱{shippingFee.toFixed(2)}</Text>
         </View>
 
-        {/* Line Divider */}
-        <LineDivider />
-
         {/* Quantity Details */}
         <View
           style={{
@@ -100,9 +73,6 @@ const FooterTotal = ({
           <Text style={{ flex: 1, ...FONTS.h3 }}>Number of Orders</Text>
           <Text style={{ ...FONTS.h3 }}>{number}</Text>
         </View>
-
-        {/* Line Divider */}
-        <LineDivider />
 
         {/* Total */}
         <View style={{ flexDirection: "row", marginTop: SIZES.padding }}>
