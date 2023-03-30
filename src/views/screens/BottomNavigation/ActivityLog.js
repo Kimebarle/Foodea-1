@@ -187,7 +187,10 @@ const ActivityLogScreen = ({ navigation }) => {
                         <View style={{ flexDirection: "row", marginBottom: 5 }}>
                           <Image source={icons.Restaurant} />
                           <Text style={{ ...FONTS.h5 }}>
-                            {/* {item.order_details.product_details.product_name} */}
+                            {
+                              item.order_details[0].restaurant_details
+                                .business_name
+                            }
                           </Text>
                         </View>
                         <View style={{ flexDirection: "row", marginBottom: 5 }}>
@@ -201,7 +204,10 @@ const ActivityLogScreen = ({ navigation }) => {
                           />
                           <Text style={{ ...FONTS.h5 }}>
                             {" "}
-                            {isLoading ? "address" : data[0].address}
+                            {isLoading
+                              ? "address"
+                              : item.order_details[0].restaurant_details
+                                  .address}
                           </Text>
                         </View>
                         <View style={{ flexDirection: "row" }}>
@@ -213,8 +219,7 @@ const ActivityLogScreen = ({ navigation }) => {
                             }}
                           />
                           <Text style={{ ...FONTS.h5 }}>
-                            {" "}
-                            {item.order_totalPrice}
+                            ₱ {item.order_totalPrice}.00
                           </Text>
                         </View>
                       </View>
