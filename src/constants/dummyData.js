@@ -19,8 +19,8 @@ const Restaurant = [
   },
   {
     id: 9,
-    name: "Chowking",
-    icon: require("../../assets/img/images/chowking.png"),
+    name: "Wendys",
+    icon: require("../../assets/img/images/Wendy's-Logo.wine.png"),
     distance: "1.1",
   },
 ];

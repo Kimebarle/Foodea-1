@@ -243,7 +243,7 @@ const CheckOut = ({ navigation, route }) => {
       >
         <Text
           style={{
-            ...FONTS.h3,
+            ...FONTS.h4,
           }}
         >
           Delivery Address

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React, { useContext, useEffect } from "react";
-
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
   icons,
   dummyData,
@@ -18,7 +18,6 @@ import {
 import axios from "axios";
 import { BASE_URL } from "../../../api/context/auth/config";
 import AuthContext from "../../../api/context/auth/AuthContext";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const SurveyScreenInitial = ({ navigation, route }) => {
   const { passedList5 } = route.params;
@@ -208,34 +207,41 @@ const SurveyScreenInitial = ({ navigation, route }) => {
       {/* Header */}
       {renderHeader()}
 
-      <View
-        style={{
-          width: 350,
-          height: 550,
-          backgroundColor: COLORS.white,
-          borderRadius: SIZES.radius,
+      <KeyboardAwareScrollView
+        enableOnAndroid={true}
+        contentContainerStyle={{
+          extraHeight: 300,
         }}
       >
-        <Text
+        <View
           style={{
-            paddingTop: SIZES.padding,
-            paddingLeft: SIZES.padding,
-            ...FONTS.h1,
-            marginTop: SIZES.radius,
+            width: 350,
+            height: 550,
+            backgroundColor: COLORS.white,
+            borderRadius: SIZES.radius,
           }}
         >
-          Tell us about your preferences
-        </Text>
-        <Text style={{ padding: SIZES.padding, ...FONTS.h4 }}>
-          Describe your food preferences or what you like in words. Use keywords
-          related to your food likings such as: taste of food (spicy, sweet,
-          etc.), name of food (fried chicken, burger, etc. ) or ingredients
-          (cheese, milk, etc.). Use english words only and it should be atleast
-          20 words.{" "}
-        </Text>
+          <Text
+            style={{
+              paddingTop: SIZES.padding,
+              paddingLeft: SIZES.padding,
+              ...FONTS.h1,
+              marginTop: SIZES.radius,
+            }}
+          >
+            Tell us about your preferences
+          </Text>
+          <Text style={{ padding: SIZES.padding, ...FONTS.h4 }}>
+            Describe your food preferences or what you like in words. Use keywords
+            related to your food likings such as: taste of food (spicy, sweet,
+            etc.), name of food (fried chicken, burger, etc. ) or ingredients
+            (cheese, milk, etc.). Use english words only and it should be atleast
+            20 words.{" "}
+          </Text>
 
-        {renderFormInput()}
-      </View>
+          {renderFormInput()}
+        </View>
+      </KeyboardAwareScrollView>
     </View>
   );
 };
