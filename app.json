@@ -25,7 +25,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.calleja1232.navigation"
+      "package": "com.calleja1232.navigation",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAAqvOIpCSuljCLCfPVjgnxKikBMwqO21Y"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
