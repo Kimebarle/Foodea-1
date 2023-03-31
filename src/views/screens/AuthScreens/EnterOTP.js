@@ -24,7 +24,7 @@ const EnterOTP = ({ navigation, route }) => {
   const { emailValue, otpValue } = route.params;
   const [otp, setOtp] = React.useState("");
   const [otpError, setError] = React.useState("");
-  const [timer, setTimer] = React.useState(5);
+  const [timer, setTimer] = React.useState(30);
   const [otpGenerate, setOtpGenerate] = React.useState("default");
   const [newOtp, setNewOtp] = React.useState();
   const FROMEMAIL = "foodea.bscs@gmail.com";
